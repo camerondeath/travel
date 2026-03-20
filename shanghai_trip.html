@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Shanghai & Shaoxing · April 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;--bg2:#f7f5f0;--bg3:#f0ede5;
+  --t:#1c1c1a;--t2:#5a5752;--t3:#9a9590;
+  --bd:#e0dcd4;--bd2:#cdc8be;
+  --serif:Georgia,'Times New Roman',serif;
+  --mono:'SF Mono','Courier New',monospace;
+  --r:10px;--rs:6px;
+  --ok-bg:#eef7f2;--ok-t:#1a5c35;--ok-bd:#b8ddc8;
+  --bk-bg:#fef9ee;--bk-t:#7a4800;--bk-bd:#e8c870;
+  --urg-bg:#fef2f2;--urg-t:#7a1818;--urg-bd:#e8b0b0;
+  --accent:#8B7355;--accent-light:#f5f0e8;--accent-mid:#c4a882;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg2);color:var(--t);font-size:14px;line-height:1.65;min-height:100vh}
+
+.site-hdr{background:var(--bg);border-bottom:1px solid var(--bd);overflow:hidden}
+.hdr-deco{width:100%;height:4px;background:linear-gradient(90deg,#6b5840,#b5956a 40%,#8B7355 60%,#6b5840)}
+.hdr-inner{padding:28px 36px 24px;display:flex;align-items:flex-end;justify-content:space-between}
+.hdr-text h1{font-family:var(--serif);font-size:26px;font-weight:400;letter-spacing:-0.5px}
+.hdr-text .sub{font-size:12px;color:var(--t3);margin-top:6px;letter-spacing:1.2px;text-transform:uppercase}
+.hdr-motif{opacity:0.15}
+
+.nav-wrap{background:var(--bg);border-bottom:1px solid var(--bd);padding:0 24px;overflow-x:auto;scrollbar-width:none;display:flex;gap:2px;align-items:stretch}
+.nav-wrap::-webkit-scrollbar{display:none}
+.nav-tag{display:inline-flex;flex-direction:column;align-items:center;padding:9px 10px 7px;cursor:pointer;text-decoration:none;border-bottom:2px solid transparent;transition:border-color .15s,background .15s;border-radius:4px 4px 0 0;min-width:46px}
+.nav-tag:hover{background:var(--bg2);border-bottom-color:var(--accent-mid)}
+.nt-dow{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--t3);line-height:1}
+.nt-iata{font-size:12px;font-weight:600;color:var(--t);letter-spacing:0.5px;margin-top:2px;font-family:var(--mono)}
+.nt-label{font-size:9px;color:var(--t3);margin-top:1px;white-space:nowrap}
+.nav-tag.nt-text{flex-direction:row;min-width:auto;padding:10px 12px 8px}
+.nav-tag.nt-text .nt-dow{font-size:11px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--t2)}
+
+.main{max-width:860px;margin:0 auto;padding:40px 24px}
+
+.phase{display:flex;align-items:center;gap:14px;margin:40px 0 18px}
+.phase-line{flex:1;height:1px;background:var(--bd)}
+.phase-text{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.8px;color:var(--accent);white-space:nowrap}
+.phase-diamond{width:5px;height:5px;background:var(--accent);transform:rotate(45deg);opacity:0.4;flex-shrink:0}
+
+.dc{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.dc.special{border-color:var(--accent-mid);border-left-width:3px}
+.dh{padding:20px 24px;cursor:pointer;display:grid;grid-template-columns:62px 1fr auto;gap:18px;align-items:start;border-bottom:1px solid transparent;transition:background .12s;user-select:none}
+.dc:not(.special) .dh:hover{background:var(--bg2)}
+.dh.open{border-bottom-color:var(--bd)}
+.dh-date{display:flex;flex-direction:column;gap:1px}
+.dh-dow{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--t3)}
+.dh-num{font-size:22px;font-weight:300;color:var(--t);font-family:var(--serif);line-height:1}
+.dh-mon{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--t3)}
+.dh-icon{padding-top:6px}
+.dh-title{font-size:15px;font-weight:500;color:var(--t);line-height:1.3;margin-bottom:5px}
+.dh-tag{font-size:13px;color:var(--t2);font-family:var(--serif);font-style:italic;line-height:1.55}
+.dh-title.accent{color:var(--accent)}
+.ch{font-size:9px;color:var(--t3);transition:transform .2s;margin-top:5px}
+.ch.open{transform:rotate(180deg)}
+.db{display:none}.db.open{display:block}
+
+.wx{display:flex;align-items:center;gap:14px;padding:11px 24px;background:var(--bg2);border-bottom:1px solid var(--bd);min-height:42px}
+.wx-icon{font-size:18px;opacity:0.7}
+.wx-t{font-size:16px;font-weight:500;color:var(--t)}
+.wx-sub{font-size:12px;color:var(--t2);margin-left:4px}
+.wx-loc{font-size:11px;color:var(--t3);margin-bottom:1px}
+.wx-rain{font-size:11px;color:var(--t3);margin-top:1px}
+.wx-pending{font-size:12px;color:var(--t3);font-style:italic}
+
+.dp{padding:26px 26px 30px}
+.day-intro{font-size:14px;color:var(--t2);line-height:1.8;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--bg3)}
+
+/* TIMELINE */
+.tl-item{display:flex;margin-bottom:0}
+.tl-l{width:64px;flex-shrink:0;text-align:right;padding-right:16px;padding-top:2px}
+.tl-ts{font-size:11px;font-weight:600;color:var(--t3);letter-spacing:0.1px;line-height:1.3}
+.tl-g{width:16px;flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--bd2);margin-top:4px;flex-shrink:0;border:1.5px solid var(--bg)}
+.dot.ok{background:var(--ok-t)}
+.dot.bk{background:#c07818}
+.dot.urg{background:#b03030}
+.dot.rest{background:var(--accent-mid)}
+.stem{width:1px;flex:1;min-height:20px;margin-top:3px;background:var(--bd)}
+.stem.fork{background:transparent;border-left:1px dashed var(--bd2)}
+.tl-r{flex:1;padding:0 0 26px 12px}
+.th{font-size:14px;font-weight:500;color:var(--t);line-height:1.35;margin-bottom:3px}
+.tpre{font-size:13px;color:var(--t2);line-height:1.65;margin-bottom:5px}
+
+/* FORK */
+.fork-wrap{margin:0 0 26px 0;padding-left:12px}
+.fork-intro{font-size:12px;color:var(--t3);font-style:italic;margin-bottom:12px;padding-left:4px}
+.fork-paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+.fork-path{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rs);padding:14px 16px;position:relative}
+.fork-path.fp-wild{background:var(--accent-light);border-color:var(--accent-mid)}
+.fork-path p{font-size:13px;color:var(--t2);line-height:1.65}
+.fork-path p + p{margin-top:8px}
+.fork-path .fp-note{font-size:11px;color:var(--t3);font-style:italic;margin-top:8px}
+.fork-connector{width:1px;height:12px;background:var(--bd);margin:0 0 0 72px}
+
+/* BADGES */
+.badge{font-size:10px;padding:2px 8px;border-radius:20px;display:inline-block;margin-left:6px;vertical-align:middle;font-weight:500}
+.badge.ok{background:var(--ok-bg);color:var(--ok-t);border:0.5px solid var(--ok-bd)}
+.badge.bk{background:var(--bk-bg);color:var(--bk-t);border:0.5px solid var(--bk-bd)}
+.badge.urg{background:var(--urg-bg);color:var(--urg-t);border:0.5px solid var(--urg-bd)}
+
+/* EXPAND */
+.xbtn{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--t3);cursor:pointer;background:none;border:none;font-family:inherit;padding:2px 0;transition:color .12s;margin-top:4px}
+.xbtn:hover{color:var(--accent)}
+.xarr{font-size:9px;transition:transform .18s;display:inline-block}
+.xbtn.open .xarr{transform:rotate(180deg)}
+.xdet{display:none;font-size:13px;color:var(--t2);line-height:1.75;margin-top:12px;padding:16px 18px;border:1px solid var(--bd);border-radius:var(--rs);background:var(--bg2)}
+.xdet.open{display:block}
+.xdet p{margin-bottom:10px}.xdet p:last-child{margin-bottom:0}
+.xdet a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--bk-bd)}
+.xdet a:hover{color:var(--t)}
+.xdet strong{font-weight:500;color:var(--t)}
+
+/* FLIGHT GRID */
+.flt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.flt-row{display:flex;flex-direction:column;gap:2px}
+.flt-lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--t3);font-weight:500}
+.flt-val{font-size:13px;color:var(--t);font-weight:500}
+.flt-val.mono{font-family:var(--mono);font-size:12px}
+
+/* ATTENTION BAR */
+.abar{border-radius:var(--rs);padding:12px 16px;font-size:13px;margin-bottom:20px;line-height:1.6}
+.abar.urg{background:var(--urg-bg);border:1px solid var(--urg-bd);color:var(--urg-t)}
+.abar.bk{background:var(--bk-bg);border:1px solid var(--bk-bd);color:var(--bk-t)}
+
+/* SECTION LABEL */
+.sec-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin:28px 0 12px;display:flex;align-items:center;gap:10px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--bg3)}
+
+/* EVENTS */
+.ev{padding:11px 0;border-bottom:1px solid var(--bg3);display:flex;gap:12px;align-items:flex-start}
+.ev:last-child{border-bottom:none}
+.ev-bar{width:2px;min-height:30px;background:var(--accent);opacity:0.25;border-radius:2px;flex-shrink:0;margin-top:2px}
+.ev-title{font-size:13px;font-weight:500;color:var(--t);margin-bottom:2px}
+.ev-title a{color:var(--t);text-decoration:none}
+.ev-title a:hover{color:var(--accent)}
+.ev-meta{font-size:12px;color:var(--t3);line-height:1.55}
+.ev-meta a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--bk-bd)}
+
+/* BOOKINGS */
+.bk-section{border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:8px}
+.bk-hdr{padding:14px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:var(--bg);transition:background .12s}
+.bk-hdr:hover{background:var(--bg2)}
+.bk-hdr-l{display:flex;align-items:center;gap:12px}
+.bk-ref{font-size:10px;font-family:var(--mono);background:var(--ok-bg);color:var(--ok-t);padding:2px 8px;border-radius:3px;border:0.5px solid var(--ok-bd);white-space:nowrap}
+.bk-name{font-size:13px;font-weight:500;color:var(--t)}
+.bk-sum{font-size:12px;color:var(--t3);margin-top:1px}
+.bk-body{display:none;padding:16px 20px;border-top:1px solid var(--bd);background:var(--bg2)}
+.bk-body.open{display:block}
+.bk-ch{font-size:9px;color:var(--t3);transition:transform .2s;flex-shrink:0}
+.bk-ch.open{transform:rotate(180deg)}
+.bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
+.bk-kv{display:flex;flex-direction:column;gap:2px;padding:4px 0}
+.bk-k{font-size:10px;text-transform:uppercase;letter-spacing:0.7px;color:var(--t3);font-weight:500}
+.bk-v{font-size:13px;color:var(--t);font-weight:500}
+.bk-v.mono{font-family:var(--mono);font-size:12px}
+
+/* INSTAGRAM */
+.ig-wrap{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.ig-suggest{padding:20px}
+.ig-suggest-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--t3);margin-bottom:14px}
+.ig-accounts{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:8px}
+.ig-ac{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 14px}
+.ig-ac-name{font-size:13px;font-weight:500;margin-bottom:3px}
+.ig-ac-name a{color:var(--t);text-decoration:none}
+.ig-ac-name a:hover{color:var(--accent)}
+.ig-ac-desc{font-size:11px;color:var(--t3);line-height:1.5}
+.ig-saved{padding:0 20px 20px}
+.ig-saved-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--t3);margin-bottom:12px;padding-top:20px;border-top:1px solid var(--bd)}
+.ig-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bg3)}
+.ig-item:last-child{border-bottom:none}
+.ig-url{font-size:13px;flex:1;line-height:1.5}
+.ig-url a{color:var(--accent);text-decoration:none}
+.ig-del{background:none;border:none;cursor:pointer;color:var(--t3);font-size:13px;padding:0 2px}
+.ig-del:hover{color:#b03030}
+.ig-add{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--bg3)}
+.ig-add input{flex:1;padding:8px 12px;border:1px solid var(--bd);border-radius:var(--rs);font-size:13px;background:var(--bg);color:var(--t);font-family:inherit;outline:none}
+.ig-add input:focus{border-color:var(--accent)}
+.ig-add button{padding:8px 16px;border-radius:var(--rs);border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-size:12px;font-family:inherit;color:var(--t)}
+.ig-add button:hover{background:var(--accent-light);border-color:var(--accent)}
+.empty{font-size:13px;color:var(--t3);font-style:italic}
+
+/* NOTES */
+.notes-card{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:20px}
+.note-entry{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--bg3)}
+.note-entry:last-child{border-bottom:none}
+.note-dt{font-size:11px;color:var(--t3);min-width:50px;padding-top:2px}
+.note-txt{font-size:13px;color:var(--t);flex:1;line-height:1.55;word-break:break-word}
+.note-del{background:none;border:none;cursor:pointer;color:var(--t3);font-size:13px;padding:0 2px}
+.note-del:hover{color:#b03030}
+.add-wrap{margin-top:16px;padding-top:16px;border-top:1px solid var(--bg3)}
+.nl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--t3);margin-bottom:8px}
+.na{width:100%;border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;font-family:inherit;font-size:13px;color:var(--t);background:var(--bg);resize:vertical;min-height:72px;outline:none;line-height:1.6}
+.na:focus{border-color:var(--accent)}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.btn{padding:6px 16px;border-radius:var(--rs);border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-size:12px;color:var(--t);font-family:inherit}
+.btn:hover{background:var(--accent-light);border-color:var(--accent)}
+
+.foot-deco{margin-top:60px;padding:24px 0;border-top:1px solid var(--bd);text-align:center;opacity:0.2}
+
+@media(max-width:640px){
+  .hdr-inner{padding:20px 16px 18px}
+  .nav-wrap{padding:0 12px}
+  .main{padding:24px 12px}
+  .dh{grid-template-columns:52px 1fr auto;gap:12px;padding:16px}
+  .dp{padding:18px 16px 22px}
+  .tl-l{width:52px}
+  .fork-paths{grid-template-columns:1fr}
+  .flt-grid{grid-template-columns:1fr}
+  .bk-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="site-hdr">
+  <div class="hdr-deco"></div>
+  <div class="hdr-inner">
+    <div class="hdr-text">
+      <h1>Shanghai &amp; Shaoxing</h1>
+      <div class="sub">April 2 &ndash; 12, 2026</div>
+    </div>
+    <div class="hdr-motif">
+      <svg width="120" height="48" viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="28" width="8" height="20" fill="#8B7355"/><rect x="4" y="18" width="4" height="12" fill="#8B7355"/><rect x="5" y="12" width="2" height="8" fill="#8B7355"/>
+        <rect x="14" y="20" width="12" height="28" fill="#8B7355"/><rect x="17" y="10" width="6" height="12" fill="#8B7355"/><rect x="19" y="4" width="2" height="8" fill="#8B7355"/>
+        <rect x="30" y="24" width="10" height="24" fill="#8B7355"/><rect x="32" y="14" width="6" height="12" fill="#8B7355"/>
+        <rect x="48" y="16" width="14" height="32" fill="#8B7355"/><rect x="52" y="6" width="6" height="12" fill="#8B7355"/><rect x="54" y="2" width="2" height="6" fill="#8B7355"/>
+        <rect x="66" y="22" width="10" height="26" fill="#8B7355"/><rect x="68" y="14" width="6" height="10" fill="#8B7355"/>
+        <rect x="80" y="18" width="12" height="30" fill="#8B7355"/><rect x="83" y="8" width="6" height="12" fill="#8B7355"/><rect x="85" y="2" width="2" height="8" fill="#8B7355"/>
+        <rect x="96" y="26" width="8" height="22" fill="#8B7355"/><rect x="98" y="18" width="4" height="10" fill="#8B7355"/>
+        <rect x="108" y="30" width="10" height="18" fill="#8B7355"/><rect x="110" y="22" width="6" height="10" fill="#8B7355"/>
+        <rect x="0" y="47" width="120" height="1" fill="#8B7355"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<nav class="nav-wrap">
+  <a class="nav-tag" href="#apr1"><span class="nt-dow">Wed</span><span class="nt-iata">CHC</span><span class="nt-label">Apr 1</span></a>
+  <a class="nav-tag" href="#apr2"><span class="nt-dow">Thu</span><span class="nt-iata">AKL</span><span class="nt-label">Apr 2</span></a>
+  <a class="nav-tag" href="#apr3"><span class="nt-dow">Fri</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 3</span></a>
+  <a class="nav-tag" href="#apr4"><span class="nt-dow">Sat</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 4</span></a>
+  <a class="nav-tag" href="#apr5"><span class="nt-dow">Sun</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 5</span></a>
+  <a class="nav-tag" href="#apr6"><span class="nt-dow">Mon</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 6</span></a>
+  <a class="nav-tag" href="#apr7"><span class="nt-dow">Tue</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 7</span></a>
+  <a class="nav-tag" href="#apr8"><span class="nt-dow">Wed</span><span class="nt-iata">SHA</span><span class="nt-label">Apr 8</span></a>
+  <a class="nav-tag" href="#apr9"><span class="nt-dow">Thu</span><span class="nt-iata">SHX</span><span class="nt-label">Apr 9</span></a>
+  <a class="nav-tag" href="#apr10"><span class="nt-dow">Fri</span><span class="nt-iata">AKL</span><span class="nt-label">Apr 10</span></a>
+  <a class="nav-tag" href="#apr11"><span class="nt-dow">Sat</span><span class="nt-iata">RAG</span><span class="nt-label">Apr 11</span></a>
+  <a class="nav-tag" href="#apr12"><span class="nt-dow">Sun</span><span class="nt-iata">CHC</span><span class="nt-label">Apr 12</span></a>
+  <a class="nav-tag nt-text" href="#food"><span class="nt-dow">Food</span></a>
+  <a class="nav-tag nt-text" href="#getlost"><span class="nt-dow">Get lost</span></a>
+  <a class="nav-tag nt-text" href="#backpocket"><span class="nt-dow">Back pocket</span></a>
+  <a class="nav-tag nt-text" href="#bookings"><span class="nt-dow">Bookings</span></a>
+  <a class="nav-tag nt-text" href="#instagram"><span class="nt-dow">Instagram</span></a>
+  <a class="nav-tag nt-text" href="#notes"><span class="nt-dow">Notes</span></a>
+</nav>
+
+<main class="main">
+
+<!-- PRE-DEPARTURE -->
+<div class="phase"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Pre-departure</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+
+<div id="apr1" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Wed</div><div class="dh-num">1</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Transit day</div><div class="dh-tag">CHC &rarr; AKL &middot; overnight at the airport</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr1" class="wx"><span class="wx-pending">Christchurch &rarr; Auckland &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="day-intro">A buffer night built into the trip for one reason: logistics. Confirm your VPN is active and tested before you cross the border &mdash; you cannot download one inside China. Download offline maps for Shanghai and Shaoxing. Get a full night of sleep before the long haul tomorrow. That is genuinely all this evening needs to be.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:40 AM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">JQ 232 CHC &rarr; AKL</div>
+        <div class="tpre">Arrives 11:00 AM Auckland.</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><div class="flt-grid"><div class="flt-row"><div class="flt-lbl">Airline</div><div class="flt-val">Jetstar</div></div><div class="flt-row"><div class="flt-lbl">Flight</div><div class="flt-val mono">JQ 232</div></div><div class="flt-row"><div class="flt-lbl">Departs</div><div class="flt-val">9:40 AM CHC</div></div><div class="flt-row"><div class="flt-lbl">Arrives</div><div class="flt-val">11:00 AM AKL</div></div></div></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">2:00 PM</span></div><div class="tl-g"><div class="dot"></div></div><div class="tl-r">
+        <div class="th">Naumi Hotel Auckland Airport</div>
+        <div class="tpre">153 Kirkbride Rd, Mangere &middot; Non-refundable, pre-paid &middot; Check-in 2 PM</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Five minutes from the international terminal by the hotel shuttle. The only task tonight is confirming your VPN works and your offline maps are downloaded. Eat at the terminal or hotel restaurant. Early night. <a href="https://maps.apple.com/?q=Naumi+Hotel+Auckland+Airport,+153+Kirkbride+Road,+Mangere" target="_blank">Directions</a></p></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<div id="apr2" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Thu</div><div class="dh-num">2</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">The long haul</div><div class="dh-tag">AKL &rarr; Guangzhou &rarr; Shanghai &middot; arrives past midnight</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr2" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="day-intro">Two long-haul flights with a transit in Guangzhou. First entry immigration in China takes 45&ndash;60 minutes regardless of queue length. By the time bags are collected and you reach the hotel it will be close to midnight. There is nothing to do in Shanghai tonight. The city will still be there in the morning.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:00 AM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">CZ336 AKL &rarr; Guangzhou Baiyun</div>
+        <div class="tpre">Business Class &middot; Seat 11K &middot; B787-9 &middot; Arrives 4:40 PM</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><div class="flt-grid"><div class="flt-row"><div class="flt-lbl">Flight</div><div class="flt-val mono">CZ 336</div></div><div class="flt-row"><div class="flt-lbl">Aircraft</div><div class="flt-val">Boeing 787-9</div></div><div class="flt-row"><div class="flt-lbl">Class</div><div class="flt-val">Business &middot; Fare D</div></div><div class="flt-row"><div class="flt-lbl">Seat</div><div class="flt-val mono">11K</div></div><div class="flt-row"><div class="flt-lbl">Check-in counter</div><div class="flt-val mono">C201</div></div><div class="flt-row"><div class="flt-lbl">Baggage</div><div class="flt-val">2 pieces free</div></div><div class="flt-row"><div class="flt-lbl">Duration</div><div class="flt-val">11h 40min</div></div></div><p style="margin-top:12px">Flat-bed seat on the long haul. Guangzhou layover is 3h20m. Order the Chinese options on the meal service &mdash; consistently better than the Western alternatives.</p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">8:00 PM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">CZ3595 Guangzhou &rarr; Shanghai Hongqiao T2</div>
+        <div class="tpre">Business Class &middot; Seat 11H &middot; B777-300ER &middot; Arrives 10:20 PM</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><div class="flt-grid"><div class="flt-row"><div class="flt-lbl">Flight</div><div class="flt-val mono">CZ 3595</div></div><div class="flt-row"><div class="flt-lbl">Aircraft</div><div class="flt-val">Boeing 777-300ER</div></div><div class="flt-row"><div class="flt-lbl">Class</div><div class="flt-val">Business &middot; Fare D</div></div><div class="flt-row"><div class="flt-lbl">Seat</div><div class="flt-val mono">11H</div></div><div class="flt-row"><div class="flt-lbl">Check-in</div><div class="flt-val mono">Terminal D</div></div><div class="flt-row"><div class="flt-lbl">Duration</div><div class="flt-val">2h 20min</div></div></div><p style="margin-top:12px">Short domestic leg. At Hongqiao T2: DiDi from ground floor (follow 网约车 signs). Paste address: 上海市黄浦区打浦路15号. ~25&ndash;40 min to the hotel.</p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">~11:30 PM</span></div><div class="tl-g"><div class="dot ok"></div></div><div class="tl-r">
+        <div class="th">Pullman Shanghai Central <span class="badge ok">Conf 1486586039148450</span></div>
+        <div class="tpre">15 Dapu Road, Huangpu &middot; Breakfast included daily &middot; CNY 1,500 deposit at check-in &middot; On arrival tonight: ask for 12:30 PM checkout on Apr 8 before you go to bed.</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><div class="flt-grid"><div class="flt-row"><div class="flt-lbl">Booking ref</div><div class="flt-val mono">1486586039148450</div></div><div class="flt-row"><div class="flt-lbl">PIN</div><div class="flt-val mono">9801</div></div><div class="flt-row"><div class="flt-lbl">Room</div><div class="flt-val">Superior Queen, king bed, non-smoking</div></div><div class="flt-row"><div class="flt-lbl">Floors</div><div class="flt-val">6&ndash;10, city view</div></div><div class="flt-row"><div class="flt-lbl">Deposit</div><div class="flt-val">CNY 1,500 at check-in</div></div><div class="flt-row"><div class="flt-lbl">Late checkout</div><div class="flt-val">Trip.com benefit &mdash; request 12:30 PM on arrival</div></div></div><p style="margin-top:12px"><a href="https://maps.apple.com/?q=Pullman+Shanghai+Central,+15+Dapu+Road,+Huangpu" target="_blank">Directions</a></p></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SHANGHAI -->
+<div class="phase"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Shanghai &middot; Apr 3 &ndash; 7</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+
+<!-- FOOD SECTION -->
+<div id="food" class="dc special">
+  <div class="dh" onclick="toggleDay(this)" style="background:var(--accent-light)">
+    <div class="dh-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#8B7355" stroke-width="1"/><path d="M7 9c0-1.1.9-2 2-2h4a2 2 0 010 4H9a2 2 0 000 4h4" stroke="#8B7355" stroke-width="1" stroke-linecap="round"/></svg></div>
+    <div><div class="dh-title accent">Eat like you live here</div><div class="dh-tag">What to grab, what to order, what to avoid, and how to eat without a plan.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div class="dp">
+      <div class="day-intro">Shanghai&rsquo;s restaurant culture is well documented. Its street food culture is not &mdash; and it&rsquo;s better. The things worth eating are cheap, require no reservation, and are found by following people who look like they eat there every day. The rule: if there&rsquo;s a queue of people who are clearly not tourists, join it without knowing what&rsquo;s at the front.</div>
+      <div class="sec-lbl">Before 10 AM &mdash; breakfast on the street</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Jianbing (煎饼)</div><div class="ev-meta">The breakfast that defines the city more than any restaurant meal. A thin crepe cracked with egg, smeared with hoisin and chilli paste, wrapped around a crispy wonton skin. Made to order at a cart in 90 seconds. Find them at any residential street corner before 10 AM &mdash; after that, the carts pack up. Cost ¥8&ndash;12. Order by pointing and holding up fingers. No Mandarin required.</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Ci fan tuan (粢饭团) &mdash; sticky rice ball</div><div class="ev-meta">Glutinous rice packed around a fried dough stick, pork floss, and pickled mustard greens. Dense, savoury, intensely filling for ¥8. Locals eat it walking to work. Look for the vendor pressing them in their hands &mdash; the youtiao inside gives it a satisfying crunch when you bite through.</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Cong you bing (葱油饼) &mdash; scallion oil pancake</div><div class="ev-meta">Flaky layered flatbread with scallions, pan-fried until the outside blisters. ¥6. The best ones have visible layering when torn. Pair with doujiang (soy milk) from the same stall &mdash; point at the container, sweet or savoury, nod.</div></div></div>
+      <div class="sec-lbl">Anytime &mdash; no sit-down required</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shengjian bao (生煎包) &mdash; pan-fried pork buns</div><div class="ev-meta">Like a soup dumpling but pan-fried until the base is deeply caramelised and crisp. The filling is pork with a jelly that melts to broth when hot. Eat carefully &mdash; they will burn you. A tray of four is ¥12&ndash;18. Yang&rsquo;s Fry-Dumpling near People&rsquo;s Square is the known institution but the best ones are often at unmarked neighbourhood stalls with a long queue of office workers.</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Qingtuan (青团) &mdash; green rice dumplings, early April only</div><div class="ev-meta">A Qingming Festival speciality &mdash; glutinous rice dumplings coloured green with wormwood juice, filled with red bean paste or savoury pork. Available at Shen Dacheng (century-old Shanghai confectionery chain) and from street vendors during the holiday Apr 4&ndash;6. This is a genuinely seasonal thing you can only get in early April.</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Xiaolongbao (小笼包) &mdash; soup dumplings, done right</div><div class="ev-meta">Bite a small hole in the side first, slurp the soup out, then eat the rest. Dip in black Chinkiang vinegar with ginger. The filling should be loose and soupy, not firm. Jia Jia Tang Bao on Huanghe Lu is the local standard-bearer &mdash; queue and point, no menu interaction needed.</div></div></div>
+      <div class="sec-lbl">After 7 PM &mdash; follow the smoke</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shaokao (烧烤) &mdash; street BBQ</div><div class="ev-meta">From around 7 PM, charcoal grills appear on pavements across residential neighbourhoods. Skewers of cumin lamb, corn, squid, tofu. Order by pointing and holding up fingers. The cumin lamb is the thing. Cold Tsingtao from the cart beside the grill. This is the version of Shanghai that goes home when tourists go to bed. No map needed &mdash; just follow smoke.</div></div></div>
+      <div class="sec-lbl">Two streets worth knowing</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Huanghe Lu (黄河路) &mdash; near People&rsquo;s Square</div><div class="ev-meta">Old-school food street, recently famous again after featuring in the TV drama Blossoms Shanghai. Old Shanghainese restaurants, scallion pancake stalls, Jia Jia Tang Bao. Loud, no English menus, point at the steamer. Exactly right. Metro Lines 1/2/8 to People&rsquo;s Square. <a href="https://maps.apple.com/?q=Huanghe+Lu,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Friday Muslim Market &mdash; outside Huxi Mosque, 1328 Changde Lu</div><div class="ev-meta">After Friday prayers, a market materialises: Xinjiang lamb kebabs over charcoal, flatbread from a tandoor, nan with sesame. Only on Fridays, only while it lasts. Apr 3 is a Friday &mdash; this is on the way between the hotel and the French Concession. <a href="https://maps.apple.com/?q=1328+Changde+Road,+Jing%27an,+Shanghai" target="_blank">Map</a></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- APR 3 -->
+<div id="apr3" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Fri</div><div class="dh-num">3</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Soft landing</div><div class="dh-tag">The Bund announces itself at its own pace. Let it.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr3" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="day-intro">You arrived past midnight and the instinct will be to get out early and prove something. Resist it. The Bund is fifteen minutes on foot. Rockbund sits directly behind it and is in the same neighbourhood where Sunday&rsquo;s city walk begins &mdash; useful early orientation, so the streets feel familiar when the guide contextualises them two days later. This day is deliberately light. Nothing needs to be seized. The city will feel different by the time you&rsquo;ve slept in it once. Apr 3 is also a Friday &mdash; the Muslim market outside Huxi Mosque on Changde Lu runs after prayers in the late morning if the street food section sparked anything.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:00 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Breakfast at the Pullman</div>
+        <div class="tpre">Take a full hour. Ask concierge to call Chun for lunch today if jet lag cooperates, and to call Jesse today for a Tuesday lunch reservation.</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:30 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Walk to the Bund</div>
+        <div class="tpre">15 min north along Zhongshan Dong Yi Lu. Colonial facades west, Pudong skyline east. One of the great urban views in the world. No plan required.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>The Bund is also best after dark &mdash; the colonial buildings are lit and the Pudong towers come fully alive. If you have energy around 8 PM, the same 15-minute walk is worth making a second time. The view is materially different and the crowd shifts from tourist to a more mixed evening register. <a href="https://maps.apple.com/?q=The+Bund,+Zhongshan+East+1st+Road,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">11:30 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Rockbund Art Museum</div>
+        <div class="tpre">20 Huqiu Lu &middot; Former Royal Asiatic Society (1932, Art Deco) directly behind the Bund. Current: The Great Camouflage, group show until Apr 26. About an hour.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>The building is the visit &mdash; one of the finest surviving Art Deco interiors in Shanghai. The Rockbund complex is a thoughtful restoration of the entire heritage block behind the Bund. Closed Mondays, which is why today is the right day. This is also where Sunday&rsquo;s Monster Day Tours walk starts &mdash; arriving here first means the streets feel familiar when the guide contextualises them. <a href="https://www.rockbundartmuseum.org" target="_blank">rockbundartmuseum.org</a> &middot; <a href="https://maps.apple.com/?q=Rockbund+Art+Museum,+20+Huqiu+Lu,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">1:00 PM</span></div><div class="tl-g"><div class="dot bk"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Chun (春) &mdash; if jet lag cooperates <span class="badge bk">Concierge books on arrival</span></div>
+        <div class="tpre">124 Jinxian Lu, French Concession. Lion&rsquo;s head meatball, smoked fish, red-braised pork belly. 25 min metro. If not feeling it: Huanghe Lu is five minutes from the Bund &mdash; point at what the next table is eating.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Chun is a genuine introduction to Shanghainese home cooking &mdash; a room that feels like nothing has changed in forty years. Don&rsquo;t force it if the jet lag is bad; Huanghe Lu is a better choice when you don&rsquo;t want to commit. Metro: Line 2 west to People&rsquo;s Square, Line 1 south to South Shaanxi Rd. <a href="https://maps.apple.com/?q=124+Jinxian+Lu,+Xuhui,+Shanghai" target="_blank">Map &mdash; Chun</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">2:30 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem fork"></div></div><div class="tl-r">
+        <div class="th">Xintiandi (新天地)</div>
+        <div class="tpre">10 min walk from the hotel. Shikumen lane houses, preserved and converted. Walk the lanes, get a coffee, sit outside. Good frame of reference for Tuesday&rsquo;s French Concession walk.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Xintiandi is the most commercial version of the shikumen preservation model &mdash; more polished than the French Concession proper, but the architecture is clear and readable. Coming here first gives you a clean reference point. The more lived-in, rougher version is what you&rsquo;ll see properly on Tuesday. <a href="https://maps.apple.com/?q=Xintiandi,+Huangpu,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+
+      <div class="fork-connector"></div>
+      <div class="fork-wrap">
+        <div class="fork-intro">It&rsquo;s now mid-afternoon on your first real day. You&rsquo;re in the neighbourhood. Here&rsquo;s where the day can go from here &mdash;</div>
+        <div class="fork-paths">
+          <div class="fork-path">
+            <p>Hotel, bath, read. The Bund after dark at 8 PM. This is a completely legitimate use of the afternoon &mdash; you arrived past midnight two nights ago and the week ahead is full. Seesaw Coffee is ten minutes away if you want one more coffee first. Being rested tomorrow is worth more than another gallery today.</p>
+          </div>
+          <div class="fork-path">
+            <p>Walk south into the French Concession without a destination. Fuxing Park is 20 minutes on foot &mdash; sit in the rose garden, watch the chess, absorb the neighbourhood before the tours explain it. Pick a side street and follow it until something stops you. You&rsquo;re oriented enough now to wander without getting truly lost.</p>
+          </div>
+          <div class="fork-path fp-wild">
+            <p>Take the metro to Yangpu District (Line 4 to Linping Rd) and walk the Binjiang industrial waterfront. Former wharves, warehouses, nothing from the hotel&rsquo;s world. The Yangpu Bridge area has architectural remnants that Shanghai&rsquo;s renovation projects haven&rsquo;t reached yet. Come back by DiDi, find whatever grill is smoking near the hotel at 8 PM, eat on the street.</p>
+            <p class="fp-note">This part of the city is entirely off the tourist circuit. You will almost certainly be the only foreigner there.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">What&rsquo;s on</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://www.rockbundartmuseum.org" target="_blank">The Great Camouflage &mdash; Rockbund Art Museum</a></div><div class="ev-meta">Until Apr 26 &middot; Group show co-curated by Zhu Qiaorui and Kandis Williams</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://www.westbundmuseum.com" target="_blank">Fluxus, by chance &mdash; West Bund Museum / Centre Pompidou</a></div><div class="ev-meta">Ongoing &middot; First major Fluxus retrospective in China, 200+ works. 20 min DiDi from the hotel.</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Dali at Bund City Hall</div><div class="ev-meta">Ongoing &middot; 150+ works in the historic Bund City Hall building. The venue is more interesting than the show.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- APR 4 -->
+<div id="apr4" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Sat</div><div class="dh-num">4</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Street eats + industrial architecture</div><div class="dh-tag">From wet market lanes to a building that once powered the whole city.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr4" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="day-intro">The breakfast tour drops you into the French Concession&rsquo;s food culture at street level &mdash; the best possible orientation before you walk it properly on Tuesday. Three hours at wet markets and back lanes. La Cava De Laoma on Kangding Road closes Apr 12 &mdash; today is the only viable slot. The afternoon at Power Station of Art is the deliberate gear change: from the intimate scale of lane house yards to the vertiginous interior of a building that used to generate electricity for the whole city. Qingming Festival runs Apr 4&ndash;6 &mdash; parks will be more animated than usual, out-of-town traffic elevated.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">7:45 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Metro Line 1 &rarr; South Shaanxi Rd, Exit 2</div>
+        <div class="tpre">~7 min. Walk one block west to Xiangyang Park.</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">8:00 AM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">UnTour Street Eats Breakfast <span class="badge ok">Conf #334657709</span></div>
+        <div class="tpre">Xiangyang Park entrance, 1008 Huaihai Middle Rd (opposite Gucci). 3 hours. Arrive 5 min early.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Three hours in the wet markets, hole-in-the-wall breakfast joints, and the vendors the neighbourhood actually eats at. The guide contact details arrive the evening before &mdash; check spam. <a href="https://www.untourfoodtours.com" target="_blank">untourfoodtours.com</a> &middot; <a href="https://maps.apple.com/?q=Xiangyang+Park,+1008+Huaihai+Middle+Road,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">11:15 AM</span></div><div class="tl-g"><div class="dot bk"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">La Cava De Laoma <span class="badge urg">Closes Apr 12</span></div>
+        <div class="tpre">Kangding Road, 10 min walk west of tour endpoint. Gallery: Versus &ndash; The Space Between. 30&ndash;40 min. Today is the only viable slot.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Small independent gallery. No crowds, no queue. A good pause between the intensity of the food tour and the scale of what comes this afternoon. <a href="https://maps.apple.com/?q=Kangding+Road,+Jing%27an,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">12:30 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Coffee on Yongkang Lu (永康路)</div>
+        <div class="tpre">You&rsquo;ve been eating since 8 AM. Pick any outdoor seat. No formal lunch needed.</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">1:30 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">DiDi south to Power Station of Art (~15 min)</div>
+        <div class="tpre">200 Huayuangang Lu. Converted 1930s power station, six floors of contemporary art. Free weekends. Closes 5 PM &mdash; don&rsquo;t arrive after 3:30.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Currently running the 15th Shanghai Biennale &ldquo;Does the Flower Hear the Bee?&rdquo; &mdash; 250+ works from 67 international artists. The building alone justifies the visit: the vertiginous atrium of the former turbine hall is unlike anything else in Shanghai. <a href="https://www.powerstationofart.com" target="_blank">powerstationofart.com</a> &middot; <a href="https://maps.apple.com/?q=Power+Station+of+Art,+200+Huayuangang+Lu,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">3:30 PM</span></div><div class="tl-g"><div class="dot rest"></div><div class="stem fork"></div></div><div class="tl-r">
+        <div class="th">You&rsquo;ve done a lot. Here&rsquo;s where the afternoon forks &mdash;</div>
+      </div></div>
+      <div class="fork-connector"></div>
+      <div class="fork-wrap">
+        <div class="fork-paths">
+          <div class="fork-path">
+            <p>Stop here. You&rsquo;ve been going since 7:45 AM. Walk the south Huangpu riverfront path back toward the hotel &mdash; it&rsquo;s on the river, heading north gives a different view of the water than the Bund. Or DiDi home and nap. A drink at the Long Bar at the Waldorf at 7 PM is the only remaining ambition and it&rsquo;s a low bar to clear.</p>
+            <p class="fp-note">This is a perfectly complete day without adding anything.</p>
+          </div>
+          <div class="fork-path">
+            <p>Walk the riverfront north toward the hotel, then keep going to the Bund as it gets dark. The PSA is on the river &mdash; heading north connects the waterfront to the classic Bund view. Arrive at the Bund as the Pudong lights come up. Drink at the Long Bar after.</p>
+          </div>
+          <div class="fork-path fp-wild">
+            <p>Stay in this end of the city. The Dongtai Lu antique market is a 15-min DiDi from the PSA &mdash; a chaotic street of old furniture, clocks, porcelain, Mao memorabilia, and things that are certainly not what they claim to be. Not a tourist trap, just a market. You don&rsquo;t have to buy anything. <a href="https://maps.apple.com/?q=Dongtai+Road+Antique+Market,+Shanghai" target="_blank">Map</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-lbl">What&rsquo;s on</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://www.songkick.com/metro-areas/28033-china-shanghai" target="_blank">Ralston van der Schyff &mdash; Sky Dome Bar</a></div><div class="ev-meta">Sat Apr 4 &middot; South African jazz drummer with a Shanghai residency</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Qingming Festival (清明节)</div><div class="ev-meta">Public holiday Apr 4&ndash;6 &middot; Parks and public spaces more animated, out-of-town traffic elevated. The seasonal green rice dumplings (qingtuan) are available now from street vendors and Shen Dacheng.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- APR 5 -->
+<div id="apr5" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Sun</div><div class="dh-num">5</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Guided morning &mdash; strange afternoon</div><div class="dh-tag">The Bund in context, then 1933 &mdash; the most uncanny building in the city.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr5" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="abar bk">Confirm 1933 Shanghai is open before committing &mdash; occasional event closures. Check 1933shanghai.com or ask hotel to call ahead. Monster Day Tours can be cancelled with 24+ hours notice for credit.</div>
+      <div class="day-intro">The morning tour covers the former International Settlement &mdash; the same neighbourhood where Rockbund sits, which you saw on Friday without the full context. By the time the guide is done, the Art Deco facades will make a different kind of sense. The afternoon move to Hongkou is deliberate: where the French Concession is leafy, where the Bund is monumental, 1933 is strange and slightly uncanny. It&rsquo;s also largely off the tourist circuit &mdash; rougher, less reconstructed.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:00 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Breakfast &mdash; out by 9:30</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:45 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Coffee on Tiantong Lu (天潼路)</div>
+        <div class="tpre">Best-preserved International Settlement streetscapes. Walk 20 minutes before the group assembles.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Tiantong Lu and the surrounding grid is where the former International Settlement feels most intact &mdash; the proportions, the Art Deco facades, the street-to-pavement relationship. Walking this before the tour means you arrive with fresh impressions rather than guidebook context.</p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:15 AM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Monster Day Tours &mdash; Shanghai City Walk <span class="badge ok">Conf MDTSH-T123424212</span></div>
+        <div class="tpre">Meeting: Tiantong Lu 567 &middot; International Settlement and Bund corridor &middot; Runs until 1:15 PM</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Small-group, well-curated. The guide covers colonial architecture in context, treaty port history, the layering of different eras in a single street. Note the operating hours anomaly in the booking PDF &mdash; email cn@monsterdaytours.com before departure to confirm. <a href="https://www.monsterdaytours.com" target="_blank">monsterdaytours.com</a> &middot; <a href="https://maps.apple.com/?q=567+Tiantong+Lu,+Hongkou,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">2:00 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Lunch: Afanti (阿凡提) &mdash; Changde Lu</div>
+        <div class="tpre">Xinjiang food &mdash; deliberate contrast. Hand-pulled lamb noodles, cumin skewers. ~15 min metro from tour endpoint.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>The contrast is deliberate: Xinjiang cooking is as different from Shanghainese as Chinese cuisine gets &mdash; spice-forward, cumin-heavy, lamb-centric. From the tour endpoint take metro Line 4 toward Jing&rsquo;an Temple, one stop to Changshu Rd. <a href="https://maps.apple.com/?q=Afanti+Uyghur+Restaurant,+Changde+Lu,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">3:00 PM</span></div><div class="tl-g"><div class="dot rest"></div><div class="stem fork"></div></div><div class="tl-r">
+        <div class="th">Lunch is done. Here&rsquo;s where the afternoon goes &mdash;</div>
+      </div></div>
+      <div class="fork-connector"></div>
+      <div class="fork-wrap">
+        <div class="fork-paths">
+          <div class="fork-path">
+            <p>Hotel, nap, the Bund after dark. Four days of Shanghai in already &mdash; a genuine rest this afternoon is a rational choice. You can cancel 1933 with a day&rsquo;s notice if you&rsquo;ve booked nothing there. Come back to it next visit. The Bund at 8 PM is the only commitment needed.</p>
+            <p class="fp-note">Leaving things for next time creates a reason to come back. This is a feature, not a failure.</p>
+          </div>
+          <div class="fork-path">
+            <p>DiDi north to Hongkou (20&ndash;25 min) and go to 1933 Shanghai as planned. A former 1933 abattoir &mdash; concrete walkways spiral around a cavernous void, Baroque detailing on an industrial building, genuinely strange. Free. About an hour. Walk the surrounding Hongkou streets after &mdash; rougher and unreconstructed, a version of the city the French Concession renovations haven&rsquo;t touched. <a href="https://maps.apple.com/?q=1933+Shanghai,+611+Liyang+Lu,+Hongkou" target="_blank">Map</a></p>
+          </div>
+          <div class="fork-path fp-wild">
+            <p>Go deep into Hongkou instead of 1933. The Jewish Refugee Museum (Ohel Moishe Synagogue) is ten minutes from the restaurant. Zhapu Lu food street is five minutes further &mdash; one of Shanghai&rsquo;s original food streets, mostly locals, seafood and Shanghainese standards at pavement tables. Then the North Bund waterfront for the river view from the other direction. None of this requires a plan. <a href="https://maps.apple.com/?q=Ohel+Moishe+Synagogue,+Changyang+Road,+Hongkou" target="_blank">Map &mdash; start here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APR 6 -->
+<div id="apr6" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Mon</div><div class="dh-num">6</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Recovery &mdash; then the city after dark</div><div class="dh-tag">Spa, rest, then the same neighbourhood at night &mdash; an entirely different city.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr6" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="day-intro">Four full days of Shanghai behind you. Monday closes the museums &mdash; here that&rsquo;s a gift. The Night Eats tour at 6 PM bookends Saturday&rsquo;s breakfast tour: same neighbourhood, same streets, but the city after dark is a completely different thing. The only fixed points are the spa at 2 PM and the tour at 6 PM. Everything before is genuinely yours. Ask the concierge to call Jesse today for tomorrow&rsquo;s lunch.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:00 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Slow breakfast</div>
+        <div class="tpre">Take a full hour. Ask concierge to call Jesse today for Tuesday lunch.</div>
+      </div></div>
+
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:00 AM</span></div><div class="tl-g"><div class="dot rest"></div><div class="stem fork"></div></div><div class="tl-r">
+        <div class="th">The morning is completely open. Four hours before the spa &mdash;</div>
+      </div></div>
+      <div class="fork-connector"></div>
+      <div class="fork-wrap">
+        <div class="fork-paths">
+          <div class="fork-path">
+            <p>Seesaw Coffee at Xintiandi, sit outside for an hour. Walk to Fuxing Park &mdash; ten minutes south &mdash; and sit in the rose garden. Watch the chess games. Go back to the hotel. Read. Nap before the spa. Being rested for a three-hour night eating event is worth more than another gallery visit.</p>
+          </div>
+          <div class="fork-path">
+            <p>DiDi to M50 on Moganshan Rd (20 min). 120+ galleries in former textile mills along Suzhou Creek &mdash; ShanghART is the serious one, but the walk through the complex is the point. Free, no ticket, quiet on a Monday. Walk back along Suzhou Creek. Return by 12:30 for a light lunch near the hotel, then spa at 2 PM.</p>
+            <button class="xbtn" onclick="toggleDet(this)" style="margin-top:6px">More <span class="xarr">&#9660;</span></button>
+            <div class="xdet"><p><a href="https://maps.apple.com/?q=M50+Creative+Park,+50+Moganshan+Road,+Shanghai" target="_blank">Map &mdash; M50</a></p></div>
+          </div>
+          <div class="fork-path fp-wild">
+            <p>Find the Propaganda Poster Art Centre. It&rsquo;s in a basement on the 7th floor (genuinely &mdash; a basement accessed from a 7th-floor corridor) of a residential apartment building at the corner of Huashan Lu and Yongjia Lu. The Google Maps pin is wrong. That&rsquo;s the point. 300+ original Chinese propaganda posters from 1950&ndash;79. Budget an hour to find it, an hour inside. Back by noon for the spa.</p>
+            <p class="fp-note">Closed Mondays? It may be. The hunt is still worth it if it&rsquo;s not. <a href="https://maps.apple.com/?q=Huashan+Road+Yongjia+Road,+Xuhui,+Shanghai" target="_blank">Approximate map</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">12:30 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Light lunch near the hotel</div>
+        <div class="tpre">A bowl of noodles, a bao. Deliberately modest &mdash; the night tour is a three-hour eating event.</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">2:00 PM</span></div><div class="tl-g"><div class="dot bk"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Dragonfly Therapeutic Retreat <span class="badge bk">Book via WeChat before departure</span></div>
+        <div class="tpre">TCM-influenced massage, 90 min. Xintiandi or Jing&rsquo;an branch. Finish by 5 PM. Don&rsquo;t eat after 5 PM.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Book via WeChat mini-program before leaving NZ. <a href="https://www.dragonfly.net.cn" target="_blank">dragonfly.net.cn</a> &middot; <a href="https://maps.apple.com/?q=Dragonfly+Therapeutic+Retreat+Xintiandi,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">5:45 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Metro Line 2 or 11 &rarr; Jiangsu Rd, Exit 1 (~5 min)</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">6:00 PM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">UnTour Night Eats Tour <span class="badge ok">Conf #335979986</span></div>
+        <div class="tpre">Meeting: Jiangsu Rd Metro Exit 1 (江苏路地铁站-1口). 3 hours. Arrive 5 min early.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>The French Concession after dark &mdash; same neighbourhood as Saturday&rsquo;s breakfast tour, entirely different atmosphere. Guide contact sent evening before. <a href="https://www.untourfoodtours.com" target="_blank">untourfoodtours.com</a> &middot; <a href="https://maps.apple.com/?q=Jiangsu+Road+Metro+Station,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:00 PM</span></div><div class="tl-g"><div class="dot"></div></div><div class="tl-r"><div class="th">DiDi home</div></div></div>
+
+      <div class="sec-lbl">What&rsquo;s on</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://www.smartshanghai.com/events/" target="_blank">VAS ear &mdash; experimental / electronic</a></div><div class="ev-meta">Mon Apr 6 &middot; Worth considering if you have energy after the night tour</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- APR 7 -->
+<div id="apr7" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Tue</div><div class="dh-num">7</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">French Concession day</div><div class="dh-tag">By evening you&rsquo;ll have the complete picture of everything you&rsquo;ve been walking through all week.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr7" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="abar bk">Monster Day Tours can be cancelled with 24+ hours notice for a credit. The tour isn&rsquo;t the only way to spend this afternoon &mdash; see the fork below.</div>
+      <div class="day-intro">The French Concession gets its full day. You&rsquo;ve already walked parts of it &mdash; on Saturday&rsquo;s breakfast tour, Monday morning at Xintiandi, and earlier today. Today you go deeper: Fotografiska for the photography, Jesse for the best meal of the Shanghai leg, then the tour that puts names and histories to everything you&rsquo;ve already absorbed. Tuesday means no weekend photographer crowds on Wukang Lu. Late afternoon light through the plane trees in April is genuinely beautiful.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:30 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Metro Line 1 &rarr; Shaanxi Nan Lu, walk west to Wukang Lu</div>
+        <div class="tpre">Along Fuxing Zhong Lu &rarr; Wukang Lu (武康路). Side streets: Wuyuan Lu, Yongfu Lu, Anfu Lu. No weekend crowds.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Wukang Lu on a Tuesday morning is the version worth seeing &mdash; plane trees arching overhead, lane house walls, the occasional resident. The side streets are quieter still and more genuinely residential. These are streets people actually live on. <a href="https://maps.apple.com/?q=Wukang+Lu,+Xuhui,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:00 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Fotografiska Shanghai</div>
+        <div class="tpre">580 Middle Huaihai Rd &middot; Heritage building &middot; 60&ndash;90 min</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Current shows: The Coexistence of Imperfection (Cho Gi-Seok, first solo in Asia); Something or Nothing (Andrew Grassie, photographic stillness into egg-tempera paintings); A&rsquo;s Fables, Whose Fables? (Chai Mi). <a href="https://www.fotografiska.com/shanghai" target="_blank">fotografiska.com/shanghai</a> &middot; <a href="https://maps.apple.com/?q=Fotografiska+Shanghai,+580+Middle+Huaihai+Road" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">12:30 PM</span></div><div class="tl-g"><div class="dot bk"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Lunch: Jesse (吉士酒家) <span class="badge bk">Concierge calls day before</span></div>
+        <div class="tpre">41 Tianping Lu &middot; Classic Shanghainese &middot; Drunken chicken, braised yellow croaker, pork belly, green onion tofu &middot; The kind of meal you&rsquo;ll think about weeks later</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Concierge should have called on Apr 6. Order generously &mdash; the kitchen is better with a full table spread. The drunken chicken with Shaoxing wine is the dish to anchor around. <a href="https://maps.apple.com/?q=Jesse+Restaurant,+41+Tianping+Lu,+Xuhui,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">2:15 PM</span></div><div class="tl-g"><div class="dot rest"></div><div class="stem fork"></div></div><div class="tl-r">
+        <div class="th">You&rsquo;re in the French Concession, full, happy. Tour starts at 3:30. Here&rsquo;s how the next hour and the rest of the evening can go &mdash;</div>
+      </div></div>
+      <div class="fork-connector"></div>
+      <div class="fork-wrap">
+        <div class="fork-paths">
+          <div class="fork-path">
+            <p>Sinan Books on Sinan Lu &mdash; independent bookshop in a heritage villa, 20 minutes. Or the garden at Sinan Mansions next door, which is one of the genuinely quiet spots in this neighbourhood. Then the Monster Day Tours walk at 3:30. After the tour, Yongkang Lu bar strip for a drink. Last evening in Shanghai &mdash; stay exactly where you are.</p>
+            <button class="xbtn" onclick="toggleDet(this)" style="margin-top:6px">More <span class="xarr">&#9660;</span></button>
+            <div class="xdet"><p><a href="https://maps.apple.com/?q=Sinan+Books,+Sinan+Road,+Shanghai" target="_blank">Map &mdash; Sinan Books</a> &middot; Meeting point for tour: <a href="https://maps.apple.com/?q=317+Ninghai+East+Road,+Huangpu,+Shanghai" target="_blank">317 Ning Hai Dong Lu</a></p></div>
+          </div>
+          <div class="fork-path">
+            <p>Skip the tour and keep walking instead. You&rsquo;ve had five days of context by now &mdash; the tour&rsquo;s value is partly in what you already know. Cancel with 24h notice for a credit. Walk Wukang Lu again in the late afternoon light, try Anfu Lu and Wuyuan Lu at a slower pace. Yongkang Lu for drinks. This is a completely valid choice on a final Shanghai evening.</p>
+            <p class="fp-note">The credit is valid for one year. There&rsquo;s a next time.</p>
+          </div>
+          <div class="fork-path fp-wild">
+            <p>Tianzifang &mdash; the longtang maze on Taikang Lu, ten minutes on foot. Enter from the least obvious entrance and go deep enough that you lose the main alley. Residents still live upstairs. Find a bar in the back that has no sign. Stay for one drink. Then Yongkang Lu. Cancel the tour, this is the better evening.</p>
+            <button class="xbtn" onclick="toggleDet(this)" style="margin-top:6px">More <span class="xarr">&#9660;</span></button>
+            <div class="xdet"><p><a href="https://maps.apple.com/?q=Tianzifang,+Taikang+Lu,+Huangpu,+Shanghai" target="_blank">Map &mdash; enter from Taikang Lu</a></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GET LOST -->
+<div id="getlost" class="dc special">
+  <div class="dh" onclick="toggleDay(this)" style="background:var(--accent-light)">
+    <div class="dh-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#8B7355" stroke-width="1"/><path d="M7 11l2-3 3 2 3-4" stroke="#8B7355" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15" cy="15" r="2" stroke="#8B7355" stroke-width="1"/></svg></div>
+    <div><div class="dh-title accent">Get lost intentionally</div><div class="dh-tag">Metro stops worth getting off at blind. No plan required or advised.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div class="dp">
+      <div class="day-intro">The best hours in Shanghai often come from picking a metro stop you haven&rsquo;t been to and walking until something stops you. The city is large enough that this never gets old. These are the stops and areas worth doing that on. None require booking. None will be crowded with tourists. Some are strange.</div>
+      <div class="sec-lbl">Metro stops worth getting off blind</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Moganshan Rd (M50) &mdash; DiDi or walk from Jing&rsquo;an Temple</div><div class="ev-meta">120+ galleries in former textile mills along Suzhou Creek. Free, no ticket, no queue. ShanghART is the serious gallery. The creek-side walk is the thing. Best on a weekday morning. <a href="https://maps.apple.com/?q=M50+Creative+Park,+50+Moganshan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Fuxing Park (复兴公园) &mdash; Line 1 to South Shaanxi Rd, before 9 AM</div><div class="ev-meta">Ballroom dancing to a portable speaker, tai chi in the rose garden, old men playing chess on stone tables. Locals only. Free. One of those things that looks performative and is completely genuine. <a href="https://maps.apple.com/?q=Fuxing+Park,+105+Fuxing+Middle+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Linping Rd (Yangpu Binjiang) &mdash; Line 4</div><div class="ev-meta">The northern riverfront &mdash; former industrial zone, now walkable waterfront. Historical wharf buildings and warehouses that Shanghai&rsquo;s renovation projects haven&rsquo;t reached. Completely off the tourist circuit, mostly locals and joggers. Strange and quiet in exactly the right way. <a href="https://maps.apple.com/?q=Yangpu+Binjiang+Waterfront,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Tianzifang (田子坊) &mdash; Line 9 to Dapuqiao, enter from a back alley</div><div class="ev-meta">More commercial than it was, but the lanes go deep enough to get genuinely lost in. Find your way in from Taikang Lu and ignore the signs. The difference from Xintiandi is that people still live upstairs. <a href="https://maps.apple.com/?q=Tianzifang,+Taikang+Lu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="sec-lbl">Small things that are hard to find</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Propaganda Poster Art Centre &mdash; find it</div><div class="ev-meta">300+ original Chinese propaganda posters 1950&ndash;79. In a residential apartment building at the corner of Huashan Lu and Yongjia Lu &mdash; 7th floor. The Google Maps pin is wrong. Worth the hunt. Closed Mondays. <a href="https://maps.apple.com/?q=Huashan+Road+Yongjia+Road,+Xuhui,+Shanghai" target="_blank">Approximate location</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Jade Buddha Temple (玉佛禅寺) &mdash; weekday morning</div><div class="ev-meta">A functioning Buddhist temple, not a tourist attraction. People come to pray. The incense smoke in the main hall on a quiet morning is one of the more atmospheric things in Shanghai. Free to stand in. Near Line 13 Jing&rsquo;an Temple. <a href="https://maps.apple.com/?q=Jade+Buddha+Temple,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Dongtai Lu antique market</div><div class="ev-meta">Chaotic street of old furniture, clocks, porcelain, Mao memorabilia, and things that are certainly not what they claim to be. You don&rsquo;t have to buy anything. <a href="https://maps.apple.com/?q=Dongtai+Road+Antique+Market,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Zhaozhou Lu (肇周路) noodles &mdash; after 9 PM</div><div class="ev-meta">Late-night noodle street in the old city. A stall called Long Leg Noodles that closes when the couple running it feel like it &mdash; bad weather, a disagreement, for any reason. Not on any tourist map. Go after 9 PM and point at things. <a href="https://maps.apple.com/?q=Zhaozhou+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SHAOXING -->
+<div class="phase"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Shaoxing &middot; Apr 8 &ndash; 9</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+
+<div id="apr8" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Wed</div><div class="dh-num">8</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Transit + canal arrival</div><div class="dh-tag">An hour by train and you step off into a place operating at a completely different tempo.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr8" class="wx"><span class="wx-pending">Shaoxing &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="abar urg">Checkout timing: standard checkout is 14:00. Your train target is ~1:30 PM. Hongqiao is 30&ndash;40 min by DiDi. Leave the hotel by 12:30 PM at the latest. Request 12:30 checkout on arrival &mdash; listed as a Trip.com benefit.</div>
+      <div class="day-intro">Five days of Shanghai &mdash; the food tours, the galleries, 1933, the French Concession twice over. An hour by high-speed rail and you step off into a place that doesn&rsquo;t assert itself. Canal towns operate at their own pace. The evening&rsquo;s only instruction is to let it arrive on its own terms.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:00 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r"><div class="th">Final Shanghai breakfast &mdash; confirm late checkout</div></div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:00 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Longcao Lu wet market area</div>
+        <div class="tpre">Most local option near the hotel. 30 min, no agenda &mdash; a last look at the neighbourhood.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Wet markets have a particular kind of morning energy &mdash; vendors setting up, negotiation of price for fresh produce and fish, sounds and smells that have nothing to do with the polished restaurant strips nearby. <a href="https://maps.apple.com/?q=Longcao+Lu,+Xuhui,+Shanghai" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">12:00 PM</span></div><div class="tl-g"><div class="dot urg"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Check out &mdash; DiDi to Hongqiao <span class="badge urg">Leave by 12:30 latest</span></div>
+        <div class="tpre">Light lunch near Hongqiao station &mdash; dan dan noodles or a bao from a terminal shop.</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">~1:30 PM</span></div><div class="tl-g"><div class="dot bk"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Train: Shanghai Hongqiao &rarr; Shaoxing North <span class="badge urg">Book NOW on trip.com</span></div>
+        <div class="tpre">G-class HSR, 55 min. Book this and the Apr 10 return at the same time.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>trip.com: search Shanghai Hongqiao (上海虹桥) to Shaoxing North (绍兴北), any G-class service, second class fine. At Shaoxing North: take DiDi from the exit. Show driver: 越城区解放大道与梅南路交叉口景湖湿地公园3号停车场. ~20&ndash;30 min.</p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">~3:00 PM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Check in: Yunhe Yebao Hotel, Jinghu Wetland Park</div>
+        <div class="tpre">Lake and wetland park setting. A complete change from the Pullman. Breakfast included tomorrow and Friday.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>The park is right outside your door &mdash; worth remembering for tomorrow afternoon. <a href="https://maps.apple.com/?q=Yunhe+Yebao+Hotel,+Jinghu+Wetland+Park,+Shaoxing" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">5:00 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Cangqiao Zhijie (仓桥直街)</div>
+        <div class="tpre">The spine of historic Shaoxing &mdash; stone-paved canal street, Qing-dynasty houses. Walk its full length slowly. ~15 min DiDi.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>Long stone-paved lane running alongside a canal, flanked by two-storey Qing-dynasty timber-framed houses. The scale and pace are completely different from anything in Shanghai. Walk the full length without any agenda. <a href="https://maps.apple.com/?q=Cangqiao+Zhijie,+Yuecheng,+Shaoxing" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">7:00 PM</span></div><div class="tl-g"><div class="dot"></div></div><div class="tl-r">
+        <div class="th">Dinner near the canal</div>
+        <div class="tpre">Shaoxing staples: braised pork (梅菜扣肉), fermented stinky tofu, fennel beans, warm Huadiao wine (花雕酒). Older flavours than Shanghai.</div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<div id="apr9" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Thu</div><div class="dh-num">9</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">The slow day</div><div class="dh-tag">Where Shanghai layers Art Deco over brutalism in an afternoon, Shaoxing has been essentially the same for centuries.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr9" class="wx"><span class="wx-pending">Shaoxing &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="day-intro">The furthest the trip gets from Shanghai in every sense. Shaoxing has canals, wine, pickled vegetables, and the weight of literary history. Lu Xun grew up here. The tavern where his characters drank exists, rebuilt, a few minutes from where he was born. The morning follows that thread. The afternoon is genuinely yours. Tonight: pack everything, settle the bill, arrange the 6:45 AM checkout and packed breakfast &mdash; tomorrow&rsquo;s departure timing is unforgiving.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">8:30 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r"><div class="th">Breakfast at the hotel &mdash; no rush</div></div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:30 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Shen&rsquo;s Garden (沈园)</div>
+        <div class="tpre">Song Dynasty garden. The poet Lu You and his first wife Tang Wan, forced to separate, met here once more. He wrote a poem on the wall. Small, quiet, melancholy. ~20 min DiDi. Go early.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>The poem Lu You wrote after that meeting, Chai Tou Feng, is one of the most famous in Chinese literature. Tang Wan wrote a response, equally celebrated. The garden carries considerable emotional weight in Chinese culture. Go before tour groups arrive. <a href="https://maps.apple.com/?q=Shen%27s+Garden,+Shennong+Lu,+Shaoxing" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:30 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Lu Xun&rsquo;s Birthplace Complex (鲁迅故里)</div>
+        <div class="tpre">Walkable from Shen&rsquo;s Garden. Childhood home, Three Flavors Study, surrounding neighbourhood preserved. Allow 90 min.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>His childhood home, the private school (Three Flavors Study, 三味书屋), and the surrounding lane-house neighbourhood &mdash; all preserved at an intimate scale that Shanghai&rsquo;s preservation efforts rarely achieve. Coming here before lunch makes the Xianheng meal more interesting. <a href="https://maps.apple.com/?q=Lu+Xun+Birthplace,+Lu+Xun+Zhong+Lu,+Shaoxing" target="_blank">Map</a></p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">12:15 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Walk canal paths south</div>
+        <div class="tpre">Buy something from a vendor &mdash; sugared lotus root, sticky rice cakes. Sit by the water for 20 minutes.</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">12:45 PM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Lunch: Xianheng Hotel (咸亨酒店)</div>
+        <div class="tpre">The tavern from Lu Xun&rsquo;s stories, rebuilt on the original site. Braised pork in Shaoxing wine, fennel broad beans (茴香豆), stinky tofu, warm Huadiao wine. This meal is about place.</div>
+        <button class="xbtn" onclick="toggleDet(this)">More <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><p>The Xianheng appears in several of Lu Xun&rsquo;s most famous stories. Order the fennel broad beans specifically &mdash; they&rsquo;re the dish from the story. The braised pork belly in Shaoxing wine is the other anchor. <a href="https://maps.apple.com/?q=Xianheng+Hotel,+Lu+Xun+Zhong+Lu,+Shaoxing" target="_blank">Map</a></p></div>
+      </div></div>
+
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">2:00 PM</span></div><div class="tl-g"><div class="dot rest"></div><div class="stem fork"></div></div><div class="tl-r">
+        <div class="th">You&rsquo;re full, in a canal town, at the end of a week of cities. Here&rsquo;s the afternoon &mdash;</div>
+      </div></div>
+      <div class="fork-connector"></div>
+      <div class="fork-wrap">
+        <div class="fork-paths">
+          <div class="fork-path">
+            <p>Return to the hotel and stay in Jinghu Wetland Park. Walk the lake paths, sit by the water, read. After a week of walking cities, the park outside your door may be the best possible use of this afternoon. You don&rsquo;t have to go anywhere. This is the option the itinerary keeps suggesting and meaning. Take it.</p>
+            <p class="fp-note">The best trips leave things for next time. Choosing to stop here is not a failure of ambition.</p>
+          </div>
+          <div class="fork-path">
+            <p>Wupeng Boat (乌篷船) &mdash; Shaoxing&rsquo;s flat-bottomed black-canopied canal gondola. 40-min punted journey through old town waterways. The view from water level is entirely different from walking the same streets. Book at the dock near Shenliquan or the Baita Canal area. Or the Orchid Pavilion (兰亭) &mdash; bamboo forest 14km out, where Wang Xizhi wrote the most celebrated calligraphy in Chinese history in 353 AD. DiDi each way.</p>
+            <button class="xbtn" onclick="toggleDet(this)" style="margin-top:6px">Maps <span class="xarr">&#9660;</span></button>
+            <div class="xdet"><p><a href="https://maps.apple.com/?q=Shenliquan+Wharf,+Shaoxing" target="_blank">Boat dock</a> &middot; <a href="https://maps.apple.com/?q=Orchid+Pavilion,+Shaoxing" target="_blank">Orchid Pavilion</a></p></div>
+          </div>
+          <div class="fork-path fp-wild">
+            <p>Find a Huadiao wine producer and ask to taste from the barrel. Shaoxing is the source of the amber rice wine you&rsquo;ve been drinking all week &mdash; several small producers operate in the old city. Get your DiDi driver to take you to one (show: 黄酒厂 or 绍兴黄酒). This is not on any tourist itinerary. It may not work. The attempt is the point.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">Evening</span></div><div class="tl-g"><div class="dot urg"></div></div><div class="tl-r">
+        <div class="th">Early dinner &rarr; pack everything &rarr; settle bill &rarr; arrange 6:45 AM checkout + packed breakfast</div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DEPARTURE -->
+<div class="phase"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Departure &middot; Apr 10</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+
+<div id="apr10" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Fri</div><div class="dh-num">10</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Early departure</div><div class="dh-tag">Travel only. The timing chain is unforgiving.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr10" class="wx"><span class="wx-pending">Shaoxing &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="abar urg">CZ3534 departs Hongqiao 10:50 AM &middot; check-in closes 8:50 AM &middot; rail 55 min &middot; board train 7:30 AM &middot; leave hotel 6:45 AM &middot; zero buffer. Bill, bags, and breakfast all sorted the night before.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">6:00 AM</span></div><div class="tl-g"><div class="dot urg"></div><div class="stem"></div></div><div class="tl-r"><div class="th">Wake &mdash; packed breakfast from hotel</div></div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">6:45 AM</span></div><div class="tl-g"><div class="dot urg"></div><div class="stem"></div></div><div class="tl-r"><div class="th">Check out &middot; DiDi to Shaoxing North (~20 min)</div></div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">7:30 AM</span></div><div class="tl-g"><div class="dot bk"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">Train: Shaoxing North &rarr; Shanghai Hongqiao <span class="badge urg">Book NOW on trip.com</span></div>
+        <div class="tpre">G-class, 55 min. At Hongqiao: indoor walkway from rail T2 to airport, ~5 min. Allow 15 min platform to check-in desk.</div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">8:30 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r"><div class="th">Arrive Hongqiao T2 &middot; Check in for CZ3534</div></div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:50 AM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r">
+        <div class="th">CZ3534 Shanghai &rarr; Guangzhou</div>
+        <div class="tpre">Business Class &middot; Seat 6K &middot; Boeing 737 &middot; Arrives 1:15 PM</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><div class="flt-grid"><div class="flt-row"><div class="flt-lbl">Flight</div><div class="flt-val mono">CZ 3534</div></div><div class="flt-row"><div class="flt-lbl">Aircraft</div><div class="flt-val">Boeing 737</div></div><div class="flt-row"><div class="flt-lbl">Class</div><div class="flt-val">Business &middot; Fare I</div></div><div class="flt-row"><div class="flt-lbl">Seat</div><div class="flt-val mono">6K</div></div><div class="flt-row"><div class="flt-lbl">Check-in counters</div><div class="flt-val mono">D19&ndash;21</div></div><div class="flt-row"><div class="flt-lbl">Baggage</div><div class="flt-val">2 pieces free</div></div></div><p style="margin-top:10px">Layover in Guangzhou is 2h15m. T2 for both legs.</p></div>
+      </div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">3:30 PM</span></div><div class="tl-g"><div class="dot ok"></div></div><div class="tl-r">
+        <div class="th">CZ335 Guangzhou &rarr; Auckland</div>
+        <div class="tpre">Business Class &middot; Seat 11K &middot; B787-9 &middot; Arrives 6:30 AM Apr 11</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><div class="flt-grid"><div class="flt-row"><div class="flt-lbl">Flight</div><div class="flt-val mono">CZ 335</div></div><div class="flt-row"><div class="flt-lbl">Aircraft</div><div class="flt-val">Boeing 787-9</div></div><div class="flt-row"><div class="flt-lbl">Class</div><div class="flt-val">Business &middot; Fare I</div></div><div class="flt-row"><div class="flt-lbl">Seat</div><div class="flt-val mono">11K</div></div><div class="flt-row"><div class="flt-lbl">Check-in</div><div class="flt-val mono">Counter K</div></div><div class="flt-row"><div class="flt-lbl">Baggage</div><div class="flt-val">2 pieces free</div></div><div class="flt-row"><div class="flt-lbl">Duration</div><div class="flt-val">11h 0min</div></div></div><p style="margin-top:10px">Long-haul flat-bed home. Sleep on this flight.</p></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RETURN -->
+<div class="phase"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Return &middot; Apr 11 &ndash; 12</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+
+<div id="apr11" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Sat</div><div class="dh-num">11</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Land + drive to Raglan</div><div class="dh-tag">Two hours of highway is the right kind of decompression.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr11" class="wx"><span class="wx-pending">Auckland &rarr; Raglan &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="day-intro">You&rsquo;ll land tired. Customs, bags, the brightness of an Auckland morning after a redeye from Guangzhou. The drive to Raglan is 1h45 from the airport. Stop for breakfast on the way out of Auckland &mdash; something warm and familiar, the opposite of what you&rsquo;ve been eating for ten days.</div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">6:30 AM</span></div><div class="tl-g"><div class="dot ok"></div><div class="stem"></div></div><div class="tl-r"><div class="th">Land Auckland &middot; collect bags &middot; clear customs</div></div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">After 3 PM</span></div><div class="tl-g"><div class="dot ok"></div></div><div class="tl-r">
+        <div class="th">Raglan Airbnb <span class="badge ok">Conf HMSNK5BFFX</span></div>
+        <div class="tpre">10 Pokohui Avenue &middot; Self check-in, lockbox &middot; Hosted by Sue &middot; Do nothing this evening</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><div class="flt-grid"><div class="flt-row"><div class="flt-lbl">Confirmation</div><div class="flt-val mono">HMSNK5BFFX</div></div><div class="flt-row"><div class="flt-lbl">Check-in</div><div class="flt-val">Apr 11, after 3:00 PM</div></div><div class="flt-row"><div class="flt-lbl">Check-out</div><div class="flt-val">Apr 12, by 10:00 AM</div></div><div class="flt-row"><div class="flt-lbl">Host &mdash; Sue</div><div class="flt-val">+64 210 659 790</div></div><div class="flt-row"><div class="flt-lbl">Note</div><div class="flt-val">No CO alarm on property</div></div><div class="flt-row"><div class="flt-lbl">Balance due</div><div class="flt-val">$255.90 NZD, Visa 6007, Mar 29</div></div></div><p style="margin-top:10px"><a href="https://maps.apple.com/?q=10+Pokohui+Avenue,+Raglan+3225" target="_blank">Directions</a></p></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<div id="apr12" class="dc">
+  <div class="dh" onclick="toggleDay(this)">
+    <div class="dh-date"><div class="dh-dow">Sun</div><div class="dh-num">12</div><div class="dh-mon">Apr</div></div>
+    <div><div class="dh-title">Home</div><div class="dh-tag">Raglan &rarr; Hamilton &rarr; Christchurch</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div id="wx-apr12" class="wx"><span class="wx-pending">Raglan &rarr; Christchurch &middot; forecast available closer to the date</span></div>
+    <div class="dp">
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">10:00 AM</span></div><div class="tl-g"><div class="dot"></div><div class="stem"></div></div><div class="tl-r"><div class="th">Check out</div></div></div>
+      <div class="tl-item"><div class="tl-l"><span class="tl-ts">11:05 AM</span></div><div class="tl-g"><div class="dot ok"></div></div><div class="tl-r">
+        <div class="th">JQ 273 HLZ &rarr; CHC &middot; arrives 12:20 PM</div>
+        <button class="xbtn" onclick="toggleDet(this)">Details <span class="xarr">&#9660;</span></button>
+        <div class="xdet"><div class="flt-grid"><div class="flt-row"><div class="flt-lbl">Airline</div><div class="flt-val">Jetstar</div></div><div class="flt-row"><div class="flt-lbl">Flight</div><div class="flt-val mono">JQ 273</div></div><div class="flt-row"><div class="flt-lbl">Route</div><div class="flt-val">Hamilton &rarr; Christchurch</div></div><div class="flt-row"><div class="flt-lbl">Arrives</div><div class="flt-val">12:20 PM</div></div></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BACK POCKET -->
+<div id="backpocket" class="dc special">
+  <div class="dh" onclick="toggleDay(this)" style="background:var(--accent-light)">
+    <div class="dh-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#8B7355" stroke-width="1"/><path d="M8 7h6M8 11h4M8 15h5" stroke="#8B7355" stroke-width="1" stroke-linecap="round"/></svg></div>
+    <div><div class="dh-title accent">Back pocket</div><div class="dh-tag">No booking required. No fixed time. Turn up when it feels right.</div></div>
+    <div class="ch">&#9660;</div>
+  </div>
+  <div class="db">
+    <div class="dp">
+      <div class="day-intro">These are the places you go when the itinerary feels like a schedule. None require advance booking. Some are best at specific times &mdash; noted where it counts. The whole point is that you can do any of these on impulse, from wherever you already are.</div>
+      <div class="sec-lbl">Sit somewhere</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Fuxing Park, before 9 AM</div><div class="ev-meta">Ballroom dancing to a portable speaker, tai chi in the rose garden, chess on stone tables. Locals only. Free. Line 1 to South Shaanxi Rd. <a href="https://maps.apple.com/?q=Fuxing+Park,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Sinan Mansions garden</div><div class="ev-meta">A courtyard in the French Concession that is somehow quiet despite being four blocks from Huaihai Lu. Free. Sit. <a href="https://maps.apple.com/?q=Sinan+Mansions,+Sinan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Long Bar, Waldorf Astoria, after 5 PM</div><div class="ev-meta">A genuine 1920s banking hall, strong martinis, no enforced dress code. Prices are high. The room is the reason. The Bund is outside. This is a legitimate place to read for two hours. <a href="https://maps.apple.com/?q=Waldorf+Astoria+Shanghai+on+the+Bund" target="_blank">Map</a></div></div></div>
+      <div class="sec-lbl">Look at something</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">M50 galleries, Moganshan Rd &mdash; any weekday morning</div><div class="ev-meta">120+ galleries in old textile mills on Suzhou Creek. Free to enter. ShanghART is the serious anchor. <a href="https://maps.apple.com/?q=M50+Creative+Park,+50+Moganshan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Propaganda Poster Art Centre &mdash; find it</div><div class="ev-meta">7th floor, residential building, corner of Huashan Lu and Yongjia Lu. Google Maps pin is wrong. 300+ original Chinese propaganda posters 1950&ndash;79. Closed Mondays. <a href="https://maps.apple.com/?q=Huashan+Road+Yongjia+Road,+Xuhui,+Shanghai" target="_blank">Approximate map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">West Bund waterfront walk</div><div class="ev-meta">West Bund Museum, new SOM-designed convention centre, Blue Bottle on the water. More interesting architecturally than the main Bund. DiDi 15 min from the Pullman. <a href="https://maps.apple.com/?q=West+Bund+Art+Center,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="sec-lbl">Eat something with no plan</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Huanghe Lu, any time</div><div class="ev-meta">Old-school food street near People&rsquo;s Square. No English menus. Point at the steamer. Line 1/2/8 to People&rsquo;s Square. <a href="https://maps.apple.com/?q=Huanghe+Lu,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Zhaozhou Lu noodles, after 9 PM</div><div class="ev-meta">Late-night noodle street. Stalls that close when the proprietors feel like it. Go and point. <a href="https://maps.apple.com/?q=Zhaozhou+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shaokao stall, anywhere, after 7 PM</div><div class="ev-meta">Follow smoke from any residential neighbourhood. Cumin lamb skewers. Cold Tsingtao. No map needed.</div></div></div>
+      <div class="sec-lbl">Hear something</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">JZ Club, Hengshan Rd &mdash; evenings</div><div class="ev-meta">Shanghai&rsquo;s serious jazz institution. Intimate, real musicians, real crowd. Cover at the door. <a href="https://maps.apple.com/?q=JZ+Club,+Hengshan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Black Note, Changhua Lu &mdash; late</div><div class="ev-meta">Jazz loft above an unrelated bar. Turquoise door on the right. Very dark, very good. Goes late. <a href="https://maps.apple.com/?q=Changhua+Road,+Jing%27an,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="sec-lbl">If it&rsquo;s raining</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shanghai Museum at People&rsquo;s Square &mdash; book via WeChat 12 days out</div><div class="ev-meta">Free, timed tickets, one of the better collections in China. Tickets open via WeChat at 12:10 PM sharp, gone in 20 minutes. Set an alarm if you want this. <a href="https://maps.apple.com/?q=Shanghai+Museum,+201+Renmin+Avenue,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">West Bund Museum &mdash; Fluxus show (ongoing)</div><div class="ev-meta">Covered and large. The Centre Pompidou collaboration is a serious show. A rainy afternoon here is genuinely well spent. DiDi 15 min from the Pullman. <a href="https://maps.apple.com/?q=West+Bund+Museum,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Any longtang lane in the French Concession on a wet morning</div><div class="ev-meta">Rain makes this neighbourhood look like a different city. The plane trees drip, the stone lane houses go dark and quiet. Anfu Lu or Yongfu Lu &mdash; fewer people, better light, the neighbourhood reveals something it keeps to itself on sunny weekends.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKINGS -->
+<div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Confirmed bookings</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+<div id="bookings">
+  <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">1486586039148450</div><div><div class="bk-name">Pullman Shanghai Central</div><div class="bk-sum">Apr 2&ndash;8 &middot; 6 nights &middot; Breakfast included</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Booking ref</div><div class="bk-v mono">1486586039148450</div></div><div class="bk-kv"><div class="bk-k">PIN</div><div class="bk-v mono">9801</div></div><div class="bk-kv"><div class="bk-k">Room</div><div class="bk-v">Superior Queen, king bed, non-smoking</div></div><div class="bk-kv"><div class="bk-k">Floors</div><div class="bk-v">6&ndash;10, city view</div></div><div class="bk-kv"><div class="bk-k">Check-in</div><div class="bk-v">Apr 2, after 14:00</div></div><div class="bk-kv"><div class="bk-k">Check-out</div><div class="bk-v">Apr 8 &mdash; request 12:30 on arrival</div></div><div class="bk-kv"><div class="bk-k">Deposit</div><div class="bk-v">CNY 1,500 at check-in</div></div><div class="bk-kv"><div class="bk-k">Meals</div><div class="bk-v">Breakfast for 1, Apr 3&ndash;8</div></div></div></div></div>
+  <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">334657709</div><div><div class="bk-name">UnTour Street Eats Breakfast</div><div class="bk-sum">Sat Apr 4 &middot; 8:00&ndash;11:00 AM</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Booking ref</div><div class="bk-v mono">334657709</div></div><div class="bk-kv"><div class="bk-k">Order</div><div class="bk-v mono">FHYGEA</div></div><div class="bk-kv"><div class="bk-k">Meeting point</div><div class="bk-v">Xiangyang Park, 1008 Huaihai Middle Rd</div></div><div class="bk-kv"><div class="bk-k">Show DiDi</div><div class="bk-v">襄阳公园-南门</div></div><div class="bk-kv"><div class="bk-k">Metro</div><div class="bk-v">Line 1/10/12 to South Shaanxi Rd, Exit 2</div></div><div class="bk-kv"><div class="bk-k">Cancellation</div><div class="bk-v">24h+ for full refund</div></div></div></div></div>
+  <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">335979986</div><div><div class="bk-name">UnTour Night Eats Tour</div><div class="bk-sum">Mon Apr 6 &middot; 6:00&ndash;9:00 PM</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Booking ref</div><div class="bk-v mono">335979986</div></div><div class="bk-kv"><div class="bk-k">Meeting point</div><div class="bk-v">Jiangsu Rd Metro Exit 1</div></div><div class="bk-kv"><div class="bk-k">Show DiDi</div><div class="bk-v">江苏路地铁站-1口</div></div><div class="bk-kv"><div class="bk-k">Metro</div><div class="bk-v">Line 2 or 11 to Jiangsu Rd, Exit 1</div></div><div class="bk-kv"><div class="bk-k">Cancellation</div><div class="bk-v">24h+ for full refund</div></div></div></div></div>
+  <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">MDTSH-T123424212</div><div><div class="bk-name">Monster Day Tours &mdash; Shanghai City Walk</div><div class="bk-sum">Sun Apr 5 &middot; 10:15 AM &middot; Confirm tour is running</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Ticket ref</div><div class="bk-v mono">MDTSH-T123424212</div></div><div class="bk-kv"><div class="bk-k">Secondary ref</div><div class="bk-v mono">MDTSH-85934443</div></div><div class="bk-kv"><div class="bk-k">Meeting point</div><div class="bk-v">Tiantong Lu 567</div></div><div class="bk-kv"><div class="bk-k">Time</div><div class="bk-v">10:15 AM&ndash;1:15 PM</div></div><div class="bk-kv"><div class="bk-k">Contact</div><div class="bk-v">cn@monsterdaytours.com</div></div><div class="bk-kv"><div class="bk-k">Cancellation</div><div class="bk-v">24h+ for credit, valid 1 year</div></div></div></div></div>
+  <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">MDTSH-T123424345</div><div><div class="bk-name">Monster Day Tours &mdash; French Concession Walk</div><div class="bk-sum">Tue Apr 7 &middot; 3:30 PM &middot; Confirm tour is running</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Ticket ref</div><div class="bk-v mono">MDTSH-T123424345</div></div><div class="bk-kv"><div class="bk-k">Secondary ref</div><div class="bk-v mono">MDTSH-85934546</div></div><div class="bk-kv"><div class="bk-k">Meeting point</div><div class="bk-v">Ning Hai Dong Lu 317</div></div><div class="bk-kv"><div class="bk-k">Time</div><div class="bk-v">3:30&ndash;6:30 PM</div></div><div class="bk-kv"><div class="bk-k">Contact</div><div class="bk-v">cn@monsterdaytours.com</div></div><div class="bk-kv"><div class="bk-k">Cancellation</div><div class="bk-v">24h+ for credit, valid 1 year</div></div></div></div></div>
+  <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">HMSNK5BFFX</div><div><div class="bk-name">Airbnb Raglan &mdash; Waterfront Studio</div><div class="bk-sum">Apr 11&ndash;12 &middot; $255.90 NZD due Mar 29</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Confirmation</div><div class="bk-v mono">HMSNK5BFFX</div></div><div class="bk-kv"><div class="bk-k">Address</div><div class="bk-v">10 Pokohui Ave, Raglan 3225</div></div><div class="bk-kv"><div class="bk-k">Check-in</div><div class="bk-v">Apr 11, after 3:00 PM</div></div><div class="bk-kv"><div class="bk-k">Check-out</div><div class="bk-v">Apr 12, by 10:00 AM</div></div><div class="bk-kv"><div class="bk-k">Host &mdash; Sue</div><div class="bk-v">+64 210 659 790</div></div><div class="bk-kv"><div class="bk-k">Balance due</div><div class="bk-v">$255.90 NZD, Visa 6007, Mar 29</div></div></div></div></div>
+</div>
+
+<!-- INSTAGRAM -->
+<div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Instagram</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+<div id="instagram" class="ig-wrap">
+  <div class="ig-suggest">
+    <div class="ig-suggest-title">Accounts worth following before you go</div>
+    <div class="ig-accounts">
+      <div class="ig-ac"><div class="ig-ac-name"><a href="https://www.instagram.com/local.shanghai" target="_blank">@local.shanghai</a></div><div class="ig-ac-desc">Photo journal of the local Shanghai disappearing &mdash; markets, old lanes, street life. The real city.</div></div>
+      <div class="ig-ac"><div class="ig-ac-name"><a href="https://www.instagram.com/meetinshanghai" target="_blank">@meetinshanghai</a></div><div class="ig-ac-desc">Official tourism account. 276K followers, consistently good event and cultural coverage.</div></div>
+      <div class="ig-ac"><div class="ig-ac-name"><a href="https://www.instagram.com/smartshanghai" target="_blank">@smartshanghai</a></div><div class="ig-ac-desc">The English-language city guide. Best source for what&rsquo;s actually on.</div></div>
+      <div class="ig-ac"><div class="ig-ac-name"><a href="https://www.instagram.com/fotografiskashanghai" target="_blank">@fotografiskashanghai</a></div><div class="ig-ac-desc">Good preview of current exhibitions before visiting Tuesday.</div></div>
+      <div class="ig-ac"><div class="ig-ac-name"><a href="https://www.instagram.com/shallwe0317" target="_blank">@shallwe0317</a></div><div class="ig-ac-desc">Drone photography between Shanghai and Hangzhou. The aerial perspective on the city is extraordinary.</div></div>
+      <div class="ig-ac"><div class="ig-ac-name"><a href="https://www.instagram.com/rockbundartmuseum" target="_blank">@rockbundartmuseum</a></div><div class="ig-ac-desc">Check the current show before Friday&rsquo;s visit.</div></div>
+    </div>
+  </div>
+  <div class="ig-saved">
+    <div class="ig-saved-title">Saved URLs</div>
+    <div id="ig-list"><div class="empty">No URLs saved yet &mdash; paste any Instagram post or account URL below.</div></div>
+    <div class="ig-add"><input type="text" id="ig-input" placeholder="Paste an Instagram URL&hellip;"><button onclick="addIg()">Save</button></div>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Notes</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+<div id="notes" class="notes-card">
+  <div id="notes-list"><div class="empty">No notes yet.</div></div>
+  <div class="add-wrap">
+    <div class="nl">Add a note</div>
+    <textarea class="na" id="note-input" placeholder="Recommendations, packing items, questions, things to look up&hellip;"></textarea>
+    <div class="btn-row"><button class="btn" onclick="addNote()">Add</button><button class="btn" onclick="document.getElementById('note-input').value=''">Clear</button></div>
+  </div>
+</div>
+
+<div class="foot-deco">
+  <svg width="200" height="16" viewBox="0 0 200 16" fill="none"><line x1="0" y1="8" x2="80" y2="8" stroke="#8B7355" stroke-width="0.5"/><rect x="86" y="4" width="8" height="8" transform="rotate(45 90 8)" fill="#8B7355"/><rect x="96" y="5" width="6" height="6" transform="rotate(45 99 8)" fill="none" stroke="#8B7355" stroke-width="0.5"/><rect x="104" y="4" width="8" height="8" transform="rotate(45 108 8)" fill="#8B7355"/><line x1="120" y1="8" x2="200" y2="8" stroke="#8B7355" stroke-width="0.5"/></svg>
+</div>
+
+</main>
+
+<script>
+var notes=JSON.parse(localStorage.getItem('sh26fin')||'[]');
+var igUrls=JSON.parse(localStorage.getItem('sh26finig')||'[]');
+
+function toggleDay(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.ch'),open=bd.classList.contains('open');bd.classList.toggle('open',!open);hdr.classList.toggle('open',!open);if(ch)ch.classList.toggle('open',!open)}
+function toggleDet(btn){var det=btn.nextElementSibling;det.classList.toggle('open',!det.classList.contains('open'));btn.classList.toggle('open',!btn.classList.contains('open'))}
+function toggleBk(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.bk-ch');bd.classList.toggle('open',!bd.classList.contains('open'));if(ch)ch.classList.toggle('open',!ch.classList.contains('open'))}
+
+function addNote(){var el=document.getElementById('note-input'),t=el.value.trim();if(!t)return;notes.unshift({t:t,d:new Date().toLocaleDateString('en-NZ',{day:'numeric',month:'short'})});localStorage.setItem('sh26fin',JSON.stringify(notes));el.value='';renderNotes()}
+function delNote(i){notes.splice(i,1);localStorage.setItem('sh26fin',JSON.stringify(notes));renderNotes()}
+function renderNotes(){var el=document.getElementById('notes-list');if(!notes.length){el.innerHTML='<div class="empty">No notes yet.</div>';return}el.innerHTML=notes.map(function(n,i){return'<div class="note-entry"><span class="note-dt">'+n.d+'</span><span class="note-txt">'+n.t.replace(/\n/g,'<br>')+'</span><button class="note-del" onclick="delNote('+i+')">&#x2715;</button></div>'}).join('')}
+
+function addIg(){var el=document.getElementById('ig-input'),t=el.value.trim();if(!t)return;igUrls.unshift(t);localStorage.setItem('sh26finig',JSON.stringify(igUrls));el.value='';renderIg()}
+function delIg(i){igUrls.splice(i,1);localStorage.setItem('sh26finig',JSON.stringify(igUrls));renderIg()}
+function renderIg(){var el=document.getElementById('ig-list');if(!igUrls.length){el.innerHTML='<div class="empty">No URLs saved yet.</div>';return}el.innerHTML=igUrls.map(function(u,i){return'<div class="ig-item"><a href="'+u+'" target="_blank" class="ig-url">'+u+'</a><button class="ig-del" onclick="delIg('+i+')">&#x2715;</button></div>'}).join('')}
+
+function wxCode(c){if(c===0)return['Clear','&#9728;'];if(c<=2)return['Partly cloudy','&#9925;'];if(c===3)return['Overcast','&#9729;'];if(c<=49)return['Foggy','&#127787;'];if(c<=67)return['Rain','&#127783;'];if(c<=77)return['Snow','&#10052;'];if(c<=82)return['Showers','&#127782;'];return['Thunderstorm','&#9928;']}
+var wxDays=[{id:'wx-apr1',lat:-43.489,lon:172.532,date:'2026-04-01',label:'Christchurch'},{id:'wx-apr2',lat:31.230,lon:121.473,date:'2026-04-02',label:'Shanghai'},{id:'wx-apr3',lat:31.230,lon:121.473,date:'2026-04-03',label:'Shanghai'},{id:'wx-apr4',lat:31.230,lon:121.473,date:'2026-04-04',label:'Shanghai'},{id:'wx-apr5',lat:31.230,lon:121.473,date:'2026-04-05',label:'Shanghai'},{id:'wx-apr6',lat:31.230,lon:121.473,date:'2026-04-06',label:'Shanghai'},{id:'wx-apr7',lat:31.230,lon:121.473,date:'2026-04-07',label:'Shanghai'},{id:'wx-apr8',lat:30.000,lon:120.580,date:'2026-04-08',label:'Shaoxing'},{id:'wx-apr9',lat:30.000,lon:120.580,date:'2026-04-09',label:'Shaoxing'},{id:'wx-apr10',lat:30.000,lon:120.580,date:'2026-04-10',label:'Shaoxing'},{id:'wx-apr11',lat:-37.800,lon:174.770,date:'2026-04-11',label:'Auckland'},{id:'wx-apr12',lat:-37.810,lon:174.820,date:'2026-04-12',label:'Raglan'}];
+wxDays.forEach(function(d){fetch('https://api.open-meteo.com/v1/forecast?latitude='+d.lat+'&longitude='+d.lon+'&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=16').then(function(r){return r.json()}).then(function(data){var el=document.getElementById(d.id);if(!el)return;var idx=data.daily.time.indexOf(d.date);if(idx===-1){el.innerHTML='<span class="wx-pending">'+d.label+' &middot; forecast not yet in range</span>';return}var code=data.daily.weathercode[idx],max=Math.round(data.daily.temperature_2m_max[idx]),min=Math.round(data.daily.temperature_2m_min[idx]),rain=Math.round(data.daily.precipitation_probability_max[idx]),info=wxCode(code);el.innerHTML='<span class="wx-icon">'+info[1]+'</span><div><div class="wx-loc">'+d.label+'</div><span class="wx-t">'+max+'&deg;</span><span class="wx-sub">/ '+min+'&deg; &middot; '+info[0]+'</span><div class="wx-rain">Rain '+rain+'%</div></div>'}).catch(function(){})});
+renderNotes();renderIg();
+</script>
+</body>
+</html>
