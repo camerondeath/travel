@@ -192,22 +192,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 
 
+
 /* ── PLAYLIST ── */
 .playlist{margin:0 0 24px;border:1px solid var(--bd);border-radius:var(--rs);overflow:hidden}
-.playlist-hdr{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--bg2);border-bottom:1px solid var(--bd)}
-.playlist-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--t3)}
-.playlist-tracks{display:flex;flex-direction:column}
-.pl-track{display:flex;align-items:flex-start;gap:12px;padding:10px 16px;border-bottom:1px solid var(--bg3);text-decoration:none;transition:background .12s}
-.pl-track:last-child{border-bottom:none}
-.pl-track:hover{background:var(--bg2)}
-.pl-note{font-size:9px;color:var(--t3);display:flex;align-items:center;gap:3px;padding:0 16px 10px;font-style:italic}
-.pl-idx{font-size:11px;color:var(--t3);min-width:14px;padding-top:2px;font-family:var(--mono)}
-.pl-info{flex:1}
-.pl-title{font-size:13px;font-weight:500;color:var(--t);line-height:1.3}
-.pl-artist{font-size:11px;color:var(--t3);margin-top:1px}
-.pl-why{font-size:12px;color:var(--t2);margin-top:4px;line-height:1.5;font-style:italic}
-.pl-play{font-size:18px;opacity:0.5;flex-shrink:0;padding-top:2px}
-.pl-track:hover .pl-play{opacity:1}
+.playlist-hdr{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--bd)}
+.playlist-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--t3);flex:1}
+.pl-hint{font-size:10px;color:var(--t3);font-style:italic}
+.pl-embed{padding:8px 12px 0}
+.pl-embed:last-child{padding-bottom:8px}
+.pl-why{font-size:11px;color:var(--t3);font-style:italic;line-height:1.5;padding:4px 4px 10px;border-bottom:1px solid var(--bg3)}
+.pl-embed:last-child .pl-why{border-bottom:none;padding-bottom:4px}
 
 /* ── DAILY BRIEFINGS ── */
 .briefing-panel{border:1px solid var(--acm);border-radius:var(--r);overflow:hidden;margin-bottom:18px;background:var(--bg)}
@@ -504,25 +498,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div></div>
 
       <div class="playlist">
-        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
-        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=east+is+red+chinese" target="_blank">
-          <span class="pl-idx">1</span>
-          <div class="pl-info">
-            <div class="pl-title">The East Is Red (东方红)</div>
-            <div class="pl-artist">Traditional / arr. Liu Zhi</div>
-            <div class="pl-why">The Customs House clock on the Bund still chimed this during the Cultural Revolution. You'll hear its Westminster bells tonight — this is what replaced them for 30 years.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a><a class="pl-track" href="https://music.apple.com/search?term=night+in+shanghai+john+barry" target="_blank">
-          <span class="pl-idx">2</span>
-          <div class="pl-info">
-            <div class="pl-title">Night in Shanghai</div>
-            <div class="pl-artist">John Barry</div>
-            <div class="pl-why">Barry's 1960s orchestral take on a city that existed mostly in Western imagination. Lush, cinematic, slightly wrong — which is appropriate for a first evening.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a></div>
-        <div class="pl-note">Opens in Apple Music &rarr;</div>
+        <div class="playlist-hdr"><span style="font-size:14px;opacity:0.5">♫</span><span class="playlist-label">Today&rsquo;s playlist</span><span class="pl-hint">30s preview &middot; full track if logged in to Spotify</span></div>
+        <div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/0BT6qhbRveLcDVTGuarH5E?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">夜上海 (Shanghai Night) — Zhou Xuan, 1947. The song most associated with old Shanghai. She's singing about the city you're about to walk through tonight. The Bund at dusk, then this.</div>
+        </div><div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/1kkjKuVL38zOg0oubX3KnL?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">The East Is Red (东方红) — Traditional revolutionary anthem. The Customs House clock on the Bund chimed this melody for 30 years during the Cultural Revolution instead of Westminster. Worth knowing before you hear the bells tonight.</div>
+        </div>
       </div>
       <div class="sec-lbl">Also on today</div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://www.westbundmuseum.com" target="_blank">Fluxus, by Chance &mdash; West Bund Museum</a></div><div class="ev-meta">First major Fluxus retrospective in China &middot; Centre Pompidou collaboration &middot; 200+ works &middot; If you have energy after the Bund &mdash; or save for a rain day. 15 min DiDi.</div></div></div>
@@ -652,25 +635,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div></div>
 
       <div class="playlist">
-        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
-        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=cui+jian+nothing+to+my+name" target="_blank">
-          <span class="pl-idx">1</span>
-          <div class="pl-info">
-            <div class="pl-title">Qingming</div>
-            <div class="pl-artist">Cui Jian</div>
-            <div class="pl-why">Today is Qingming Festival. Cui Jian is China's first rock musician — his 1986 song "Nothing to My Name" soundtracked Tiananmen. Playing him on a public holiday feels right.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a><a class="pl-track" href="https://music.apple.com/search?term=wu+fei+guzheng" target="_blank">
-          <span class="pl-idx">2</span>
-          <div class="pl-info">
-            <div class="pl-title">Market Song</div>
-            <div class="pl-artist">Wu Fei</div>
-            <div class="pl-why">Chinese-born, New York-based guzheng player. This captures the texture of wet market mornings — unhurried, slightly chaotic, genuinely alive.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a></div>
-        <div class="pl-note">Opens in Apple Music &rarr;</div>
+        <div class="playlist-hdr"><span style="font-size:14px;opacity:0.5">♫</span><span class="playlist-label">Today&rsquo;s playlist</span><span class="pl-hint">30s preview &middot; full track if logged in to Spotify</span></div>
+        <div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/1HHeOs6zRdF8Ck58easiAY?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Nothing to My Name (一无所有) — Cui Jian, 1986. China's first rock song, performed live at Tiananmen in 1989. Today is Qingming — ancestor remembrance, public holiday. Cui Jian is the right register.</div>
+        </div><div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/7azylXFRsebfrIoAtwfjaB?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">So What — Miles Davis. For the UnTour breakfast walk through wet market lanes and the French Concession at 8 AM. Unhurried, open, going somewhere without quite knowing where.</div>
+        </div>
       </div>
       <div class="sec-lbl">Also on today</div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Qingming Festival (清明节) &mdash; public holiday</div><div class="ev-meta">Ancestor-honouring festival &middot; Apr 4&ndash;6 &middot; The parks today are full of families, not tourists. Fuxing Park especially. Seasonal qingtuan (green wormwood rice dumplings) available from Shen Dacheng confectionery near the Bund and from street vendors near any wet market. Worth picking up one &mdash; they only exist for about two weeks a year.</div></div></div>
@@ -795,25 +767,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Julio Anaya Cabeza &mdash; first Shanghai solo show</div><div class="ev-meta">Spanish artist known for inserting himself into other people's paintings &middot; 50+ works &middot; If you have a gap after the city walk. Check <a href="https://www.smartshanghai.com/events/exhibitions/" target="_blank">SmartShanghai</a> for venue.</div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Qingming Festival continues (清明节)</div><div class="ev-meta">Last day of the public holiday &middot; The 1933 abattoir you're visiting this afternoon is free to enter on public holidays. More locals than usual in the Hongkou streets.</div></div></div>
       <div class="playlist">
-        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
-        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=vital+information+jazz" target="_blank">
-          <span class="pl-idx">1</span>
-          <div class="pl-info">
-            <div class="pl-title">Hongkou Blues</div>
-            <div class="pl-artist">Vital Information</div>
-            <div class="pl-why">Hongkou is where you're walking this morning — the old Jewish ghetto, the Ohel Moishe synagogue, streets that held 20,000 refugees. Jazz felt right for the district.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a><a class="pl-track" href="https://music.apple.com/search?term=brian+eno+1933+ambient" target="_blank">
-          <span class="pl-idx">2</span>
-          <div class="pl-info">
-            <div class="pl-title">1933</div>
-            <div class="pl-artist">Brian Eno</div>
-            <div class="pl-why">Ambient, circular, unsettling in a productive way. Play this walking through the 1933 slaughterhouse this afternoon — the concrete spiral ramps and the light through the voids.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a></div>
-        <div class="pl-note">Opens in Apple Music &rarr;</div>
+        <div class="playlist-hdr"><span style="font-size:14px;opacity:0.5">♫</span><span class="playlist-label">Today&rsquo;s playlist</span><span class="pl-hint">30s preview &middot; full track if logged in to Spotify</span></div>
+        <div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/2Mb0UmjVuMQ1Pgcyko9dW3?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Almost Blue — Chet Baker. For walking the Hongkou streets this morning — the old Jewish ghetto, the synagogue, the district the refugees made their own. Baker recorded this in 1954, the year Ohel Moishe was still a working congregation.</div>
+        </div><div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/3bCmDqflFBHijgJfvtqev5?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Ambient 1/1 — Brian Eno. Play this inside 1933 this afternoon. The concrete spiral walkways, the light through the voids, the industrial silence. Eno designed this to be as ignorable as it is interesting. The building will do the rest.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -928,25 +889,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">VAS ear &mdash; experimental/electronic</div><div class="ev-meta">Late evening &middot; Only if you have energy after the Night Eats tour ends at 9 PM &middot; <a href="https://www.smartshanghai.com/events/" target="_blank">Check SmartShanghai</a> for doors</div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Fotografiska: three current shows open</div><div class="ev-meta">Cho Gi-Seok, Andrew Grassie, Chai Mi &middot; You're here tomorrow &mdash; but Monday is quieter if you want to preview. Closed Tuesdays, so today or Wednesday.</div></div></div>
       <div class="playlist">
-        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
-        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=frank+ocean+nostalgia+ultra" target="_blank">
-          <span class="pl-idx">1</span>
-          <div class="pl-info">
-            <div class="pl-title">Recovery</div>
-            <div class="pl-artist">Frank Ocean</div>
-            <div class="pl-why">Recovery day. Spa at 2 PM. This is a day for the body to catch up with the week. Frank Ocean's quiet introspection matches the tempo.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a><a class="pl-track" href="https://music.apple.com/search?term=dj+snake+shanghai" target="_blank">
-          <span class="pl-idx">2</span>
-          <div class="pl-info">
-            <div class="pl-title">Late Night Shanghai</div>
-            <div class="pl-artist">DJ Snake</div>
-            <div class="pl-why">Tonight is the Night Eats tour — street food, night markets, the city after dark. Something with a pulse.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a></div>
-        <div class="pl-note">Opens in Apple Music &rarr;</div>
+        <div class="playlist-hdr"><span style="font-size:14px;opacity:0.5">♫</span><span class="playlist-label">Today&rsquo;s playlist</span><span class="pl-hint">30s preview &middot; full track if logged in to Spotify</span></div>
+        <div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/3CgZCQyuyxHRMWB9BTwmni?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Swim Good — Frank Ocean. Recovery day. Spa at 2. The week is past its midpoint. Frank Ocean's quiet intensity is about exactly that — being somewhere between where you started and where you're going.</div>
+        </div><div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/67Hna13dNDkZvBpTXRIaOJ?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Teardrop — Massive Attack. For the Night Eats tour, 6 PM onwards. Bristol trip-hop, cinematic, slightly ominous. The right soundtrack for eating things you can't identify off a cart at night in a city you're still learning.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1059,25 +1009,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
             <div class="sec-lbl">Also on today</div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://ocula.com/cities/china/shanghai-art-galleries/exhibitions/" target="_blank">Louvre: Wonder of Patterns &mdash; Museum of Art Pudong</a></div><div class="ev-meta">Indian, Iranian and Ottoman masterworks from the Louvre &middot; Their first Shanghai exhibition &middot; Pudong, 30 min DiDi across the river &middot; Only if you have an open afternoon &mdash; the French Concession tour ends around 5:30 PM.</div></div></div>
       <div class="playlist">
-        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
-        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=wang+fang+shanghai" target="_blank">
-          <span class="pl-idx">1</span>
-          <div class="pl-info">
-            <div class="pl-title">Wukang Lu</div>
-            <div class="pl-artist">Wang Fang</div>
-            <div class="pl-why">Named for the road you're walking this morning. Wang Fang is a contemporary Shanghai songwriter whose work is rooted in the French Concession neighbourhood.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a><a class="pl-track" href="https://music.apple.com/search?term=gato+barbieri+last+tango+paris" target="_blank">
-          <span class="pl-idx">2</span>
-          <div class="pl-info">
-            <div class="pl-title">Last Tango in Paris</div>
-            <div class="pl-artist">Gato Barbieri</div>
-            <div class="pl-why">Jesse restaurant, Shanghainese food, the French Concession's strange European residue. Barbieri's saxophone sounds like a city that used to be somewhere else.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a></div>
-        <div class="pl-note">Opens in Apple Music &rarr;</div>
+        <div class="playlist-hdr"><span style="font-size:14px;opacity:0.5">♫</span><span class="playlist-label">Today&rsquo;s playlist</span><span class="pl-hint">30s preview &middot; full track if logged in to Spotify</span></div>
+        <div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/2dRjEirtMproK2r4gzda1j?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Last Tango in Paris — Gato Barbieri. The French Concession has always been about colonial displacement — French buildings, Chinese streets, Argentine saxophone somehow the right note. Play it walking to Jesse at 12:30.</div>
+        </div><div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/2Mb0UmjVuMQ1Pgcyko9dW3?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Almost Blue — Chet Baker. For the afternoon after lunch — walking the plane-tree streets, the Monster Day tour behind you, the week almost done. Baker's trumpet sounds like somewhere beautiful that no longer quite exists.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1176,25 +1115,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="tpre">Shaoxing staples: braised pork (梅菜扣肉), fermented stinky tofu, fennel beans, warm Huadiao wine (花雕酒). Older flavours than Shanghai.</div>
       </div></div>
       <div class="playlist">
-        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
-        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=pg+one+chinese+rap" target="_blank">
-          <span class="pl-idx">1</span>
-          <div class="pl-info">
-            <div class="pl-title">高铁 (High Speed Rail)</div>
-            <div class="pl-artist">PG One</div>
-            <div class="pl-why">Chinese rap recorded partly on an HSR train. You'll be on G7461 this morning — 74 minutes to Shaoxing at 250km/h through the Yangtze River Delta.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a><a class="pl-track" href="https://music.apple.com/search?term=yo+yo+ma+silk+road+ensemble" target="_blank">
-          <span class="pl-idx">2</span>
-          <div class="pl-info">
-            <div class="pl-title">Canal Town</div>
-            <div class="pl-artist">Yo-Yo Ma — Silk Road Ensemble</div>
-            <div class="pl-why">Yo-Yo Ma's Silk Road project bridges Chinese and Western classical traditions. Shaoxing is an old silk and rice wine city on ancient trade routes. This is the right arrival music.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a></div>
-        <div class="pl-note">Opens in Apple Music &rarr;</div>
+        <div class="playlist-hdr"><span style="font-size:14px;opacity:0.5">♫</span><span class="playlist-label">Today&rsquo;s playlist</span><span class="pl-hint">30s preview &middot; full track if logged in to Spotify</span></div>
+        <div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/6iJ2DJlsHLKEpxrNfNgyol?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Silk Road Nightwind Chant — Yo-Yo Ma & Silk Road Ensemble. For the train ride. G7461 departs 10:02, 74 minutes to Shaoxing through the Yangtze Delta. The Silk Road ran through here. This sounds like arrival somewhere old.</div>
+        </div><div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/0w6kuQOr4jP1w9Kon0Yv4j?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Mustt Mustt (Massive Attack Remix) — Nusrat Fateh Ali Khan. For the evening walk on Cangqiao Zhijie. Shaoxing was a silk and rice wine city on ancient Central Asian trade routes. Nusrat's Sufi devotional music remixed into something nocturnal — right for a canal town at dusk.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1313,25 +1241,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="th">Early dinner &rarr; pack completely &rarr; settle bill &rarr; confirm 6:00 AM checkout + packed breakfast with front desk</div>
       </div></div>
       <div class="playlist">
-        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
-        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=shaoxing+opera+yueju" target="_blank">
-          <span class="pl-idx">1</span>
-          <div class="pl-info">
-            <div class="pl-title">Kong Yiji</div>
-            <div class="pl-artist">Traditional Shaoxing Opera (越剧)</div>
-            <div class="pl-why">Lu Xun's most famous story — the one set at Xianheng Tavern, where you'll have lunch. Shaoxing opera (Yue opera) is the regional form. Play it walking to the birthplace complex.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a><a class="pl-track" href="https://music.apple.com/search?term=sa+dingding+alive" target="_blank">
-          <span class="pl-idx">2</span>
-          <div class="pl-info">
-            <div class="pl-title">Wine Song (酒歌)</div>
-            <div class="pl-artist">Sa Dingding</div>
-            <div class="pl-why">Sa Dingding is a Mongolian-Chinese singer who works with traditional instruments. The Huadiao rice wine at Xianheng is 2,500 years old as a tradition. This sounds like it.</div>
-          </div>
-          <span class="pl-play">▶</span>
-        </a></div>
-        <div class="pl-note">Opens in Apple Music &rarr;</div>
+        <div class="playlist-hdr"><span style="font-size:14px;opacity:0.5">♫</span><span class="playlist-label">Today&rsquo;s playlist</span><span class="pl-hint">30s preview &middot; full track if logged in to Spotify</span></div>
+        <div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/2nQVgDFSBHQ2rh3daNzP4X?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Alive — Sa Dingding. Morning in the old town, Lu Xun's birthplace, Shen's Garden. Sa Dingding is a Mongolian-Chinese singer drawing on ancient traditions — something timeless for a place that feels 500 years thick.</div>
+        </div><div class="pl-embed">
+          <iframe src="https://open.spotify.com/embed/track/2dRjEirtMproK2r4gzda1j?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowtransparency="true" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <div class="pl-why">Last Tango in Paris — Gato Barbieri. For the canal walk south this afternoon before your last Shaoxing dinner. Barbieri's saxophone sounds like a city that used to be somewhere else, which is exactly what Shaoxing feels like — a place that kept its own time.</div>
+        </div>
       </div>
     </div>
   </div>
