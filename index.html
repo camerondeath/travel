@@ -37,24 +37,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav-tag.nt-text{flex-direction:row;min-width:auto;padding:10px 12px 8px}
 .nav-tag.nt-text .nt-dow{font-size:11px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--t2)}
 
-/* EVENTS BAR */
-.events-bar{background:var(--bg);border-bottom:1px solid var(--bd);padding:0;overflow:hidden;position:relative;height:44px}
-.events-bar-inner{display:flex;align-items:center;height:100%;padding:0 16px;gap:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
-.events-bar-inner::-webkit-scrollbar{display:none}
-.eb-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--t3);white-space:nowrap;padding-right:16px;border-right:1px solid var(--bd);margin-right:16px;flex-shrink:0}
-.eb-track{display:flex;gap:0;align-items:center;flex-shrink:0}
-.eb-item{display:flex;align-items:center;gap:8px;padding:0 14px;border-right:1px solid var(--bd);cursor:pointer;height:44px;position:relative;flex-shrink:0;transition:background .12s}
-.eb-item:hover{background:var(--bg2)}
-.eb-item:last-child{border-right:none}
-.eb-date{font-size:10px;font-weight:600;color:var(--accent);font-family:var(--mono);white-space:nowrap}
-.eb-name{font-size:12px;color:var(--t);white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
-.eb-tooltip{display:none;position:absolute;top:48px;left:0;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--rs);padding:12px 14px;width:260px;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
-.eb-item:hover .eb-tooltip{display:block}
-.eb-tooltip-title{font-size:13px;font-weight:500;color:var(--t);margin-bottom:4px}
-.eb-tooltip-meta{font-size:12px;color:var(--t3);margin-bottom:6px}
-.eb-tooltip-desc{font-size:12px;color:var(--t2);line-height:1.55}
-.eb-tooltip a{font-size:11px;color:var(--accent);text-decoration:none;display:inline-block;margin-top:6px}
-.eb-empty{font-size:12px;color:var(--t3);font-style:italic;padding:0 8px}
 
 .main{max-width:860px;margin:0 auto;padding:40px 24px}
 
@@ -209,9 +191,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .empty{font-size:13px;color:var(--t3);font-style:italic}
 
 
+
+/* ── PLAYLIST ── */
+.playlist{margin:0 0 24px;border:1px solid var(--bd);border-radius:var(--rs);overflow:hidden}
+.playlist-hdr{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--bg2);border-bottom:1px solid var(--bd)}
+.playlist-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--t3)}
+.playlist-tracks{display:flex;flex-direction:column}
+.pl-track{display:flex;align-items:flex-start;gap:12px;padding:10px 16px;border-bottom:1px solid var(--bg3);text-decoration:none;transition:background .12s}
+.pl-track:last-child{border-bottom:none}
+.pl-track:hover{background:var(--bg2)}
+.pl-note{font-size:9px;color:var(--t3);display:flex;align-items:center;gap:3px;padding:0 16px 10px;font-style:italic}
+.pl-idx{font-size:11px;color:var(--t3);min-width:14px;padding-top:2px;font-family:var(--mono)}
+.pl-info{flex:1}
+.pl-title{font-size:13px;font-weight:500;color:var(--t);line-height:1.3}
+.pl-artist{font-size:11px;color:var(--t3);margin-top:1px}
+.pl-why{font-size:12px;color:var(--t2);margin-top:4px;line-height:1.5;font-style:italic}
+.pl-play{font-size:18px;opacity:0.5;flex-shrink:0;padding-top:2px}
+.pl-track:hover .pl-play{opacity:1}
+
 /* ── DAILY BRIEFINGS ── */
 .briefing-panel{border:1px solid var(--acm);border-radius:var(--r);overflow:hidden;margin-bottom:18px;background:var(--bg)}
-.briefing-hdr{padding:16px 22px;cursor:pointer;background:var(--acl);border-bottom:1px solid transparent;transition:background .12s;user-select:none;display:flex;flex-direction:column;gap:3px;position:relative}
+.briefing-hdr{padding:16px 22px 14px;cursor:pointer;background:var(--acl);border-bottom:1px solid transparent;transition:background .12s;user-select:none;display:flex;flex-direction:column;gap:3px;position:relative}
 .briefing-hdr:hover{background:#ede8df}
 .briefing-hdr.open{border-bottom-color:var(--acm)}
 .briefing-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-family:var(--mono)}
@@ -219,6 +219,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .briefing-sub{font-size:12px;color:var(--t2);font-style:italic;font-family:var(--serif)}
 .briefing-ch{font-size:9px;color:var(--t3);transition:transform .2s;position:absolute;right:20px;top:50%;transform:translateY(-50%)}
 .briefing-ch.open{transform:translateY(-50%) rotate(180deg)}
+
+.briefing-cta{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-top:6px;display:flex;align-items:center;gap:5px;opacity:0.75}
+.briefing-cta::before{content:'';display:inline-block;width:14px;height:1px;background:var(--accent)}
+.briefing-hdr.open .briefing-cta{display:none}
 .briefing-body{display:none;padding:28px 28px 32px;background:var(--bg);border-top:1px solid var(--acm)}
 .briefing-body.open{display:block}
 .br-section{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--accent);margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--acm)}
@@ -242,6 +246,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 
 
+
+.tp{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;letter-spacing:0.4px;background:var(--bg2);border:1px solid var(--bd);border-radius:3px;padding:1px 6px;white-space:nowrap;margin-right:3px;color:var(--t2)}
+.tp .tp-icon{font-style:normal}
 .foot-deco{margin-top:60px;padding:24px 0;border-top:1px solid var(--bd);text-align:center;opacity:0.18}
 
 @media(max-width:640px){
@@ -302,15 +309,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <a class="nav-tag nt-text" href="#notes"><span class="nt-dow">Notes</span></a>
 </nav>
 
-<!-- EVENTS BAR -->
-<div class="events-bar">
-  <div class="events-bar-inner">
-    <div class="eb-label" id="eb-label">What&rsquo;s on</div>
-    <div class="eb-track" id="eb-track">
-      <div class="eb-empty">Loading events&hellip;</div>
-    </div>
-  </div>
-</div>
 
 <main class="main">
 
@@ -395,6 +393,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="briefing-label">MORNING BRIEFING</div>
           <div class="briefing-title">The River Before You Know It</div>
           <div class="briefing-sub">Friday 3 April &middot; Day One</div>
+          <div class="briefing-cta">Read before you start</div>
           <div class="briefing-ch">&#9660;</div>
         </div>
         <div class="briefing-body">
@@ -504,9 +503,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="tpre">15 min walk north from the Pullman &middot; Pudong towers light up in sequence from around 5:30 PM &middot; Walk south toward the Waldorf end for the full view</div>
       </div></div>
 
-      <div class="sec-lbl">What&rsquo;s on today</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://www.rockbundartmuseum.org" target="_blank">The Great Camouflage &mdash; Rockbund Art Museum</a></div><div class="ev-meta">Until Apr 26 &middot; You&rsquo;re visiting this morning</div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Friday Muslim Market &mdash; Huxi Mosque, 1328 Changde Lu</div><div class="ev-meta">Today only &middot; After Friday prayers &middot; Xinjiang lamb, flatbread &middot; <a href="https://maps.apple.com/?q=1328+Changde+Road,+Jing%27an,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="playlist">
+        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
+        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=east+is+red+chinese" target="_blank">
+          <span class="pl-idx">1</span>
+          <div class="pl-info">
+            <div class="pl-title">The East Is Red (东方红)</div>
+            <div class="pl-artist">Traditional / arr. Liu Zhi</div>
+            <div class="pl-why">The Customs House clock on the Bund still chimed this during the Cultural Revolution. You'll hear its Westminster bells tonight — this is what replaced them for 30 years.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a><a class="pl-track" href="https://music.apple.com/search?term=night+in+shanghai+john+barry" target="_blank">
+          <span class="pl-idx">2</span>
+          <div class="pl-info">
+            <div class="pl-title">Night in Shanghai</div>
+            <div class="pl-artist">John Barry</div>
+            <div class="pl-why">Barry's 1960s orchestral take on a city that existed mostly in Western imagination. Lush, cinematic, slightly wrong — which is appropriate for a first evening.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a></div>
+        <div class="pl-note">Opens in Apple Music &rarr;</div>
+      </div>
+      <div class="sec-lbl">Also on today</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://www.westbundmuseum.com" target="_blank">Fluxus, by Chance &mdash; West Bund Museum</a></div><div class="ev-meta">First major Fluxus retrospective in China &middot; Centre Pompidou collaboration &middot; 200+ works &middot; If you have energy after the Bund &mdash; or save for a rain day. 15 min DiDi.</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Qingming Festival starts tomorrow (清明节)</div><div class="ev-meta">The ancestor-honouring festival begins Apr 4 &middot; Tonight the parks are already quieter &mdash; families preparing. The seasonal qingtuan (green rice dumplings) will be out at street stalls from tomorrow.</div></div></div>
     </div>
   </div>
 </div>
@@ -527,6 +547,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="briefing-label">MORNING BRIEFING</div>
           <div class="briefing-title">The City at Street Level</div>
           <div class="briefing-sub">Saturday 4 April &middot; Day Two</div>
+          <div class="briefing-cta">Read before you start</div>
           <div class="briefing-ch">&#9660;</div>
         </div>
         <div class="briefing-body">
@@ -630,9 +651,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         </div>
       </div></div>
 
-      <div class="sec-lbl">What&rsquo;s on today</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://www.songkick.com/metro-areas/28033-china-shanghai" target="_blank">Ralston van der Schyff &mdash; Sky Dome Bar</a></div><div class="ev-meta">Sat Apr 4 &middot; South African jazz drummer, consistent live jazz residency</div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Qingming Festival (清明节)</div><div class="ev-meta">Public holiday Apr 4&ndash;6 &middot; Parks more animated than usual &middot; Seasonal qingtuan (green rice dumplings) available from street vendors and Shen Dacheng confectionery</div></div></div>
+      <div class="playlist">
+        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
+        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=cui+jian+nothing+to+my+name" target="_blank">
+          <span class="pl-idx">1</span>
+          <div class="pl-info">
+            <div class="pl-title">Qingming</div>
+            <div class="pl-artist">Cui Jian</div>
+            <div class="pl-why">Today is Qingming Festival. Cui Jian is China's first rock musician — his 1986 song "Nothing to My Name" soundtracked Tiananmen. Playing him on a public holiday feels right.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a><a class="pl-track" href="https://music.apple.com/search?term=wu+fei+guzheng" target="_blank">
+          <span class="pl-idx">2</span>
+          <div class="pl-info">
+            <div class="pl-title">Market Song</div>
+            <div class="pl-artist">Wu Fei</div>
+            <div class="pl-why">Chinese-born, New York-based guzheng player. This captures the texture of wet market mornings — unhurried, slightly chaotic, genuinely alive.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a></div>
+        <div class="pl-note">Opens in Apple Music &rarr;</div>
+      </div>
+      <div class="sec-lbl">Also on today</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Qingming Festival (清明节) &mdash; public holiday</div><div class="ev-meta">Ancestor-honouring festival &middot; Apr 4&ndash;6 &middot; The parks today are full of families, not tourists. Fuxing Park especially. Seasonal qingtuan (green wormwood rice dumplings) available from Shen Dacheng confectionery near the Bund and from street vendors near any wet market. Worth picking up one &mdash; they only exist for about two weeks a year.</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Ralston van der Schyff &mdash; live jazz, Sky Dome Bar</div><div class="ev-meta">South African jazz drummer with a Shanghai residency &middot; One of the more consistent live jazz nights in the city &middot; Evening &middot; If you have energy after the Biennale. <a href="https://www.smartshanghai.com/events/concerts/" target="_blank">Check SmartShanghai for time</a></div></div></div>
     </div>
   </div>
 </div>
@@ -653,6 +695,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="briefing-label">MORNING BRIEFING</div>
           <div class="briefing-title">The Layers Underneath</div>
           <div class="briefing-sub">Sunday 5 April &middot; Day Three</div>
+          <div class="briefing-cta">Read before you start</div>
           <div class="briefing-ch">&#9660;</div>
         </div>
         <div class="briefing-body">
@@ -748,6 +791,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         </div>
 
       </div></div>
+            <div class="sec-lbl">Also on today</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Julio Anaya Cabeza &mdash; first Shanghai solo show</div><div class="ev-meta">Spanish artist known for inserting himself into other people's paintings &middot; 50+ works &middot; If you have a gap after the city walk. Check <a href="https://www.smartshanghai.com/events/exhibitions/" target="_blank">SmartShanghai</a> for venue.</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Qingming Festival continues (清明节)</div><div class="ev-meta">Last day of the public holiday &middot; The 1933 abattoir you're visiting this afternoon is free to enter on public holidays. More locals than usual in the Hongkou streets.</div></div></div>
+      <div class="playlist">
+        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
+        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=vital+information+jazz" target="_blank">
+          <span class="pl-idx">1</span>
+          <div class="pl-info">
+            <div class="pl-title">Hongkou Blues</div>
+            <div class="pl-artist">Vital Information</div>
+            <div class="pl-why">Hongkou is where you're walking this morning — the old Jewish ghetto, the Ohel Moishe synagogue, streets that held 20,000 refugees. Jazz felt right for the district.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a><a class="pl-track" href="https://music.apple.com/search?term=brian+eno+1933+ambient" target="_blank">
+          <span class="pl-idx">2</span>
+          <div class="pl-info">
+            <div class="pl-title">1933</div>
+            <div class="pl-artist">Brian Eno</div>
+            <div class="pl-why">Ambient, circular, unsettling in a productive way. Play this walking through the 1933 slaughterhouse this afternoon — the concrete spiral ramps and the light through the voids.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a></div>
+        <div class="pl-note">Opens in Apple Music &rarr;</div>
+      </div>
     </div>
   </div>
 </div>
@@ -768,6 +835,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="briefing-label">MORNING BRIEFING</div>
           <div class="briefing-title">The City When It Rests</div>
           <div class="briefing-sub">Monday 6 April &middot; Day Four</div>
+          <div class="briefing-cta">Read before you start</div>
           <div class="briefing-ch">&#9660;</div>
         </div>
         <div class="briefing-body">
@@ -856,6 +924,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="xdet"><p>The French Concession after dark. Same neighbourhood as Saturday&rsquo;s breakfast tour, entirely different atmosphere and menu. Guide contact sent evening before &mdash; check spam. <a href="https://www.untourfoodtours.com" target="_blank">untourfoodtours.com</a> &middot; <a href="https://maps.apple.com/?q=Jiangsu+Road+Metro+Station,+Shanghai" target="_blank">Map</a></p></div>
       </div></div>
       <div class="tl-item"><div class="tl-l"><span class="tl-ts">9:00 PM</span></div><div class="tl-g"><div class="dot"></div></div><div class="tl-r"><div class="th">DiDi home</div></div></div>
+            <div class="sec-lbl">Also on today</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">VAS ear &mdash; experimental/electronic</div><div class="ev-meta">Late evening &middot; Only if you have energy after the Night Eats tour ends at 9 PM &middot; <a href="https://www.smartshanghai.com/events/" target="_blank">Check SmartShanghai</a> for doors</div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Fotografiska: three current shows open</div><div class="ev-meta">Cho Gi-Seok, Andrew Grassie, Chai Mi &middot; You're here tomorrow &mdash; but Monday is quieter if you want to preview. Closed Tuesdays, so today or Wednesday.</div></div></div>
+      <div class="playlist">
+        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
+        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=frank+ocean+nostalgia+ultra" target="_blank">
+          <span class="pl-idx">1</span>
+          <div class="pl-info">
+            <div class="pl-title">Recovery</div>
+            <div class="pl-artist">Frank Ocean</div>
+            <div class="pl-why">Recovery day. Spa at 2 PM. This is a day for the body to catch up with the week. Frank Ocean's quiet introspection matches the tempo.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a><a class="pl-track" href="https://music.apple.com/search?term=dj+snake+shanghai" target="_blank">
+          <span class="pl-idx">2</span>
+          <div class="pl-info">
+            <div class="pl-title">Late Night Shanghai</div>
+            <div class="pl-artist">DJ Snake</div>
+            <div class="pl-why">Tonight is the Night Eats tour — street food, night markets, the city after dark. Something with a pulse.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a></div>
+        <div class="pl-note">Opens in Apple Music &rarr;</div>
+      </div>
     </div>
   </div>
 </div>
@@ -876,6 +968,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="briefing-label">MORNING BRIEFING</div>
           <div class="briefing-title">The Last Full Day</div>
           <div class="briefing-sub">Tuesday 7 April &middot; Day Five</div>
+          <div class="briefing-cta">Read before you start</div>
           <div class="briefing-ch">&#9660;</div>
         </div>
         <div class="briefing-body">
@@ -963,6 +1056,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           </div>
         </div>
       </div></div>
+            <div class="sec-lbl">Also on today</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title"><a href="https://ocula.com/cities/china/shanghai-art-galleries/exhibitions/" target="_blank">Louvre: Wonder of Patterns &mdash; Museum of Art Pudong</a></div><div class="ev-meta">Indian, Iranian and Ottoman masterworks from the Louvre &middot; Their first Shanghai exhibition &middot; Pudong, 30 min DiDi across the river &middot; Only if you have an open afternoon &mdash; the French Concession tour ends around 5:30 PM.</div></div></div>
+      <div class="playlist">
+        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
+        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=wang+fang+shanghai" target="_blank">
+          <span class="pl-idx">1</span>
+          <div class="pl-info">
+            <div class="pl-title">Wukang Lu</div>
+            <div class="pl-artist">Wang Fang</div>
+            <div class="pl-why">Named for the road you're walking this morning. Wang Fang is a contemporary Shanghai songwriter whose work is rooted in the French Concession neighbourhood.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a><a class="pl-track" href="https://music.apple.com/search?term=gato+barbieri+last+tango+paris" target="_blank">
+          <span class="pl-idx">2</span>
+          <div class="pl-info">
+            <div class="pl-title">Last Tango in Paris</div>
+            <div class="pl-artist">Gato Barbieri</div>
+            <div class="pl-why">Jesse restaurant, Shanghainese food, the French Concession's strange European residue. Barbieri's saxophone sounds like a city that used to be somewhere else.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a></div>
+        <div class="pl-note">Opens in Apple Music &rarr;</div>
+      </div>
     </div>
   </div>
 </div>
@@ -985,6 +1101,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="briefing-label">MORNING BRIEFING</div>
           <div class="briefing-title">An Hour on a Train, and Then Everything Changes</div>
           <div class="briefing-sub">Wednesday 8 April &middot; Day Six</div>
+          <div class="briefing-cta">Read before you start</div>
           <div class="briefing-ch">&#9660;</div>
         </div>
         <div class="briefing-body">
@@ -1058,6 +1175,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="th">Dinner near the canal</div>
         <div class="tpre">Shaoxing staples: braised pork (梅菜扣肉), fermented stinky tofu, fennel beans, warm Huadiao wine (花雕酒). Older flavours than Shanghai.</div>
       </div></div>
+      <div class="playlist">
+        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
+        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=pg+one+chinese+rap" target="_blank">
+          <span class="pl-idx">1</span>
+          <div class="pl-info">
+            <div class="pl-title">高铁 (High Speed Rail)</div>
+            <div class="pl-artist">PG One</div>
+            <div class="pl-why">Chinese rap recorded partly on an HSR train. You'll be on G7461 this morning — 74 minutes to Shaoxing at 250km/h through the Yangtze River Delta.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a><a class="pl-track" href="https://music.apple.com/search?term=yo+yo+ma+silk+road+ensemble" target="_blank">
+          <span class="pl-idx">2</span>
+          <div class="pl-info">
+            <div class="pl-title">Canal Town</div>
+            <div class="pl-artist">Yo-Yo Ma — Silk Road Ensemble</div>
+            <div class="pl-why">Yo-Yo Ma's Silk Road project bridges Chinese and Western classical traditions. Shaoxing is an old silk and rice wine city on ancient trade routes. This is the right arrival music.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a></div>
+        <div class="pl-note">Opens in Apple Music &rarr;</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1078,6 +1216,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="briefing-label">MORNING BRIEFING</div>
           <div class="briefing-title">The Weight of a Thousand Years</div>
           <div class="briefing-sub">Thursday 9 April &middot; Day Seven</div>
+          <div class="briefing-cta">Read before you start</div>
           <div class="briefing-ch">&#9660;</div>
         </div>
         <div class="briefing-body">
@@ -1173,6 +1312,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="tl-item"><div class="tl-l"><span class="tl-ts">Evening</span></div><div class="tl-g"><div class="dot urg"></div></div><div class="tl-r">
         <div class="th">Early dinner &rarr; pack completely &rarr; settle bill &rarr; confirm 6:00 AM checkout + packed breakfast with front desk</div>
       </div></div>
+      <div class="playlist">
+        <div class="playlist-hdr"><span class="pl-play" style="font-size:14px;opacity:0.4">♫</span><span class="playlist-label">Today&rsquo;s playlist</span></div>
+        <div class="playlist-tracks"><a class="pl-track" href="https://music.apple.com/search?term=shaoxing+opera+yueju" target="_blank">
+          <span class="pl-idx">1</span>
+          <div class="pl-info">
+            <div class="pl-title">Kong Yiji</div>
+            <div class="pl-artist">Traditional Shaoxing Opera (越剧)</div>
+            <div class="pl-why">Lu Xun's most famous story — the one set at Xianheng Tavern, where you'll have lunch. Shaoxing opera (Yue opera) is the regional form. Play it walking to the birthplace complex.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a><a class="pl-track" href="https://music.apple.com/search?term=sa+dingding+alive" target="_blank">
+          <span class="pl-idx">2</span>
+          <div class="pl-info">
+            <div class="pl-title">Wine Song (酒歌)</div>
+            <div class="pl-artist">Sa Dingding</div>
+            <div class="pl-why">Sa Dingding is a Mongolian-Chinese singer who works with traditional instruments. The Huadiao rice wine at Xianheng is 2,500 years old as a tradition. This sounds like it.</div>
+          </div>
+          <span class="pl-play">▶</span>
+        </a></div>
+        <div class="pl-note">Opens in Apple Music &rarr;</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1267,62 +1427,70 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div id="backpocket" class="dc">
   <div class="dh" onclick="toggleDay(this)">
     <div class="dh-date" style="padding-top:4px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#9a9590" stroke-width="1"/><path d="M8 7h6M8 11h4M8 15h5" stroke="#9a9590" stroke-width="1" stroke-linecap="round"/></svg></div>
-    <div><div class="dh-title">Use this when the day opens up</div><div class="dh-tag">Restaurants, places, situations &mdash; a reference for the unplanned hours.</div></div>
+    <div><div class="dh-title">Use this when the day opens up</div><div class="dh-tag">Restaurants, places, situations &mdash; a reference for the unplanned hours. <span style="opacity:0.7">Transport times from each hotel.</span></div></div>
     <div class="ch">&#9660;</div>
   </div>
   <div class="db">
     <div class="dp">
 
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;margin-top:4px">
+        <span style="font-size:10px;color:var(--t3)">Times from hotel &rarr;</span>
+        <span class="tp"><i class="tp-icon">🚗</i> DiDi</span>
+        <span class="tp"><i class="tp-icon">🚇</i> Metro</span>
+        <span style="font-size:10px;color:var(--t3);align-self:center">shown per entry</span>
+      </div>
       <div class="sec-lbl">If it&rsquo;s raining</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shanghai Museum &mdash; 201 Renmin Ave</div><div class="ev-meta">Free, timed tickets via WeChat (open at 12:10 PM sharp, gone in 20 min &mdash; book 12 days out). Bronze vessels, ancient ceramics, calligraphy. The bronzes alone are worth two hours. This is one of the genuinely great collections in Asia. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Shanghai+Museum,+201+Renmin+Avenue,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">West Bund Museum &mdash; Longteng Ave, Xuhui</div><div class="ev-meta">Centre Pompidou collaboration, permanently serious shows. Large building, entirely covered, worth a full afternoon. The West Bund waterfront walk north afterward if rain clears. 15 min DiDi from Pullman. <a href="https://maps.apple.com/?q=West+Bund+Museum,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Hive Center for Contemporary Art &mdash; 270 East Beijing Rd</div><div class="ev-meta">Former bank building with a monumental stained-glass skylight &mdash; the architecture is the reason. Established Chinese contemporary artists. Free. Near the Bund, 18 min DiDi from Pullman. <a href="https://maps.apple.com/?q=270+East+Beijing+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shanghai Museum &mdash; 201 Renmin Ave</div><div class="ev-meta">Free, timed tickets via WeChat (open at 12:10 PM sharp, gone in 20 min &mdash; book 12 days out). Bronze vessels, ancient ceramics, calligraphy. The bronzes alone are worth two hours. This is one of the genuinely great collections in Asia. <span class="tp">🚗 20 min</span> <a href="https://maps.apple.com/?q=Shanghai+Museum,+201+Renmin+Avenue,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">West Bund Museum &mdash; Longteng Ave, Xuhui</div><div class="ev-meta">Centre Pompidou collaboration, permanently serious shows. Large building, entirely covered, worth a full afternoon. The West Bund waterfront walk north afterward if rain clears. <span class="tp">🚗 15 min</span> <a href="https://maps.apple.com/?q=West+Bund+Museum,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Hive Center for Contemporary Art &mdash; 270 East Beijing Rd</div><div class="ev-meta">Former bank building with a monumental stained-glass skylight &mdash; the architecture is the reason. Established Chinese contemporary artists. Free. <span class="tp">🚗 18 min</span> <span class="tp">🚇 L2/10 12 min</span> Near the Bund <a href="https://maps.apple.com/?q=270+East+Beijing+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">French Concession longtangs, Anfu Lu or Yongfu Lu</div><div class="ev-meta">Rain changes this neighbourhood entirely. Fewer people, better light, the plane trees dripping. The lane houses reveal themselves when the weekend crowds are gone. No destination needed &mdash; just walk in from the South Shaanxi Rd metro exit and let the streets decide.</div></div></div>
 
       <div class="sec-lbl">If you want to go deep &mdash; like a local</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Fuxing Park before 9 AM</div><div class="ev-meta">Before the tourists arrive, the park belongs to its neighbourhood. Ballroom dancing to portable speakers in one corner, chess on stone tables in another, tai chi in the rose garden. No English spoken, nobody performing for visitors. Line 1 to South Shaanxi Rd. Free. 15 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Fuxing+Park,+105+Fuxing+Middle+Road,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Huanghe Lu (黄河路) food street, any time</div><div class="ev-meta">Old-school food street near People&rsquo;s Square, recently famous again from the TV drama <em>Blossoms Shanghai</em>. No English menus, no tourist pricing. Point at the steamer. The lion&rsquo;s head meatballs and hong shao rou here are as good as they get. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Huanghe+Lu,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Fuxing Park before 9 AM</div><div class="ev-meta">Before the tourists arrive, the park belongs to its neighbourhood. Ballroom dancing to portable speakers in one corner, chess on stone tables in another, tai chi in the rose garden. No English spoken, nobody performing for visitors. Line 1 to South Shaanxi Rd. Free. <span class="tp">🚗 15 min</span> <a href="https://maps.apple.com/?q=Fuxing+Park,+105+Fuxing+Middle+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Huanghe Lu (黄河路) food street, any time</div><div class="ev-meta">Old-school food street near People&rsquo;s Square, recently famous again from the TV drama <em>Blossoms Shanghai</em>. No English menus, no tourist pricing. Point at the steamer. The lion&rsquo;s head meatballs and hong shao rou here are as good as they get. <span class="tp">🚗 20 min</span> <a href="https://maps.apple.com/?q=Huanghe+Lu,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Jianbing from a street cart, before 10 AM</div><div class="ev-meta">Thin wheat-mung bean crepe cracked with egg on the griddle, smeared with hoisin and chilli paste, folded around a crispy fried wonton skin. Shanghai&rsquo;s proper breakfast. Made in 90 seconds at any residential corner before the cart packs up. ¥8&ndash;12. Order by pointing and holding up fingers for quantity.</div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shaokao (烧烤) street BBQ, after 7 PM</div><div class="ev-meta">Charcoal grills appear on residential pavements from around 7 PM. Cumin lamb skewers, corn, tofu, cold Tsingtao beer. The proprietors are usually from Xinjiang or northeastern China. No map &mdash; follow the smoke into any residential block off the main roads.</div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Yangpu Binjiang waterfront</div><div class="ev-meta">Former industrial wharves on the north bank of the Huangpu, across from Pudong. The renovation projects that have transformed the West Bund haven&rsquo;t reached here yet. Working city at the edge of the river. Almost certainly no other foreigners. 25 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Yangpu+Binjiang,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Yangpu Binjiang waterfront</div><div class="ev-meta">Former industrial wharves on the north bank of the Huangpu, across from Pudong. The renovation projects that have transformed the West Bund haven&rsquo;t reached here yet. Working city at the edge of the river. Almost certainly no other foreigners. <span class="tp">🚗 25 min</span> <a href="https://maps.apple.com/?q=Yangpu+Binjiang,+Shanghai" target="_blank">Map</a></div></div></div>
 
       <div class="sec-lbl">If you want art</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">M50 &mdash; 50 Moganshan Rd (weekday mornings)</div><div class="ev-meta">120+ galleries in converted textile mills on Suzhou Creek. The right time is before 11 AM on a weekday when it&rsquo;s quiet. ShanghART is the anchor gallery and worth an hour alone. Free to enter. 30 min DiDi from Pullman. <a href="https://maps.apple.com/?q=M50+Creative+Park,+50+Moganshan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Propaganda Poster Art Centre &mdash; find it</div><div class="ev-meta">300+ original Chinese political posters from 1950&ndash;79 in a basement apartment on the 7th floor of a residential building at the corner of Huashan Lu and Yongjia Lu. The Google Maps pin is wrong. Ring the buzzer. The collection covers the full arc from optimism to Cultural Revolution brutalism &mdash; propaganda as a complete aesthetic system. Closed Mondays. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Huashan+Road+Yongjia+Road,+Xuhui,+Shanghai" target="_blank">Approximate map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Dongtai Lu antique market</div><div class="ev-meta">Old furniture, alarm clocks, Mao memorabilia, porcelain, revolutionary-era objects. Vendors are negotiators by default. You don&rsquo;t have to buy anything &mdash; it&rsquo;s a good place to handle objects that were someone&rsquo;s ordinary life in a different China. 15 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Dongtai+Road+Antique+Market,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Space 185, Bund Art Center &mdash; 185 Sichuan Middle Rd</div><div class="ev-meta">Renaissance-style 1903 building near the Bund. International and Chinese contemporary art. Free. A good space to sit in for an hour if the Bund is too much. 10 min walk from the Bund. <a href="https://maps.apple.com/?q=185+Sichuan+Middle+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">M50 &mdash; 50 Moganshan Rd (weekday mornings)</div><div class="ev-meta">120+ galleries in converted textile mills on Suzhou Creek. The right time is before 11 AM on a weekday when it&rsquo;s quiet. ShanghART is the anchor gallery and worth an hour alone. Free to enter. <span class="tp">🚗 30 min</span> <a href="https://maps.apple.com/?q=M50+Creative+Park,+50+Moganshan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Propaganda Poster Art Centre &mdash; find it</div><div class="ev-meta">300+ original Chinese political posters from 1950&ndash;79 in a basement apartment on the 7th floor of a residential building at the corner of Huashan Lu and Yongjia Lu. The Google Maps pin is wrong. Ring the buzzer. The collection covers the full arc from optimism to Cultural Revolution brutalism &mdash; propaganda as a complete aesthetic system. Closed Mondays. <span class="tp">🚗 20 min</span> <span class="tp">🚇 L1 15 min</span> <a href="https://maps.apple.com/?q=Huashan+Road+Yongjia+Road,+Xuhui,+Shanghai" target="_blank">Approximate map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Dongtai Lu antique market</div><div class="ev-meta">Old furniture, alarm clocks, Mao memorabilia, porcelain, revolutionary-era objects. Vendors are negotiators by default. You don&rsquo;t have to buy anything &mdash; it&rsquo;s a good place to handle objects that were someone&rsquo;s ordinary life in a different China. <span class="tp">🚗 15 min</span> <span class="tp">🚇 L9 12 min</span> <a href="https://maps.apple.com/?q=Dongtai+Road+Antique+Market,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Space 185, Bund Art Center &mdash; 185 Sichuan Middle Rd</div><div class="ev-meta">Renaissance-style 1903 building near the Bund. International and Chinese contemporary art. Free. A good space to sit in for an hour if the Bund is too much. <span class="tp">🚶 10 min from Bund</span> <a href="https://maps.apple.com/?q=185+Sichuan+Middle+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
 
       <div class="sec-lbl">If you want music</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Jazz Bar, Fairmont Peace Hotel &mdash; 20 East Nanjing Rd</div><div class="ev-meta">The Old Jazz Band has been playing nightly since 1980. Average age of the musicians is over 70. They play Glenn Miller and Benny Goodman arrangements in the original 1929 jazz ballroom. Tourist-facing but genuinely historic. The Bund is outside the window. On the Bund, 20 min walk from Pullman. <a href="https://maps.apple.com/?q=Fairmont+Peace+Hotel,+20+East+Nanjing+Road,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">JZ Club &mdash; Hengshan Rd</div><div class="ev-meta">Shanghai&rsquo;s serious jazz institution. Intimate room, working musicians, real audience. Cover charge at the door (¥50&ndash;80). Starts around 9 PM. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=JZ+Club,+Hengshan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Root Down &mdash; 145 Nanchang Rd</div><div class="ev-meta">Japanese-style listening bar. Absinthe cocktails, DJ sets of old-school funk and soul on a proper sound system. The room is designed for listening, not talking. 25 min DiDi from Pullman. <a href="https://maps.apple.com/?q=145+Nanchang+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Jazz Bar, Fairmont Peace Hotel &mdash; 20 East Nanjing Rd</div><div class="ev-meta">The Old Jazz Band has been playing nightly since 1980. Average age of the musicians is over 70. They play Glenn Miller and Benny Goodman arrangements in the original 1929 jazz ballroom. Tourist-facing but genuinely historic. The Bund is outside the window. On the Bund, <span class="tp">🚶 20 min</span> <a href="https://maps.apple.com/?q=Fairmont+Peace+Hotel,+20+East+Nanjing+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">JZ Club &mdash; Hengshan Rd</div><div class="ev-meta">Shanghai&rsquo;s serious jazz institution. Intimate room, working musicians, real audience. Cover charge at the door (¥50&ndash;80). Starts around 9 PM. <span class="tp">🚗 20 min</span> <span class="tp">🚇 L1 13 min</span> <a href="https://maps.apple.com/?q=JZ+Club,+Hengshan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Root Down &mdash; 145 Nanchang Rd</div><div class="ev-meta">Japanese-style listening bar. Absinthe cocktails, DJ sets of old-school funk and soul on a proper sound system. The room is designed for listening, not talking. <span class="tp">🚗 25 min</span> <a href="https://maps.apple.com/?q=145+Nanchang+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
 
-      <div class="sec-lbl">Restaurants &mdash; Shanghai &middot; all distances from Pullman Shanghai Central</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Di Shui Dong &mdash; Hunan cuisine</div><div class="ev-meta">Martina&rsquo;s pick. Shanghai&rsquo;s best-known Hunanese restaurant &mdash; the food is spicier and more aggressive than the Shanghainese cooking elsewhere on this trip. Smoked pork, dry-fried chicken, cumin-heavy dishes. A useful counterpoint to the week&rsquo;s delicacy. Multiple locations; the Maoming Nan Lu branch is closest. 20 min DiDi. <a href="https://maps.apple.com/?q=56+Maoming+South+Road,+Luwan,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="phase" style="margin:32px 0 0"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Shanghai</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+      <div class="sec-lbl">Restaurants &middot; from Pullman Central</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Di Shui Dong &mdash; Hunan cuisine</div><div class="ev-meta">Martina&rsquo;s pick. Shanghai&rsquo;s best-known Hunanese restaurant &mdash; the food is spicier and more aggressive than the Shanghainese cooking elsewhere on this trip. Smoked pork, dry-fried chicken, cumin-heavy dishes. A useful counterpoint to the week&rsquo;s delicacy. Multiple locations; the Maoming Nan Lu branch is closest. <span class="tp">🚗 20 min</span> <span class="tp">🚇 L1 12 min</span> <a href="https://maps.apple.com/?q=56+Maoming+South+Road,+Luwan,+Shanghai" target="_blank">Map</a></div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Weixiangzhai (味香斋) &mdash; noodles</div><div class="ev-meta">Martina&rsquo;s pick. One of the few remaining old-style Shanghai noodle shops. The signature is cold noodles tossed in toasted sesame paste, or the same sauce in a hot beef broth. Order either &mdash; the paste is the point. Breakfast or lunch only. Closes when the noodles run out. 15 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Weixiangzhai,+Nanchang+Road,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Xibo Grill &mdash; French Concession</div><div class="ev-meta">Martina&rsquo;s pick. Northwestern Chinese cooking &mdash; the food of Xinjiang and Gansu, which means lamb, flatbread, cumin, and dishes built around wheat rather than rice. A useful complement to the Uyghur market food earlier in the week. French Concession. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Xibo,+Kaixuan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Xibo Grill &mdash; French Concession</div><div class="ev-meta">Martina&rsquo;s pick. Northwestern Chinese cooking &mdash; the food of Xinjiang and Gansu, which means lamb, flatbread, cumin, and dishes built around wheat rather than rice. A useful complement to the Uyghur market food earlier in the week. French Concession. <span class="tp">🚗 20 min</span> <span class="tp">🚇 L1 12 min</span> <a href="https://maps.apple.com/?q=Xibo,+Kaixuan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Nono&rsquo;s</div><div class="ev-meta">Martina&rsquo;s pick. A French Concession neighbourhood restaurant that&rsquo;s been quietly excellent for years without becoming a destination. The kind of place the neighbourhood eats at on a Tuesday &mdash; not cheap, not showy, consistently good. Reservation recommended. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Nono%27s+Shanghai,+Xinle+Road" target="_blank">Map</a></div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Yaya&rsquo;s</div><div class="ev-meta">Martina&rsquo;s pick. Casual, neighbourhood-facing, good value. One of those French Concession spots that fills up with people who live nearby rather than people who came looking for it. The menu is approachable and the room is comfortable. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Yaya%27s+Shanghai,+Changle+Road" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Man Man Tang Bao &mdash; 641 West Jianguo Rd</div><div class="ev-meta">NYT pick. Four tables. Father and son, making soup dumplings (xiaolongbao) to a standard that the tourist-facing places can&rsquo;t match. The ratio of soup to pork filling is the thing. No reservation &mdash; show up, wait. 25 min DiDi from Pullman. <a href="https://maps.apple.com/?q=641+West+Jianguo+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Cejerdary &mdash; 59 Guangdong Rd</div><div class="ev-meta">NYT pick. Near the Bund &mdash; a temple-like room specialising in hairy crab when in season, precise Shanghainese cooking otherwise. Austere space with a karst bonsai as the centrepiece. The opposite of showy. 15 min walk from the Bund, 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=59+Guangdong+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Beiye Tofu &mdash; 31 Yongkang Rd</div><div class="ev-meta">NYT pick. Soy-based gelato and cold puddings in a small shopfront on Yongkang Lu &mdash; which you&rsquo;ll already be walking through. The tofu soft-serve is the thing. A 90-second detour. <a href="https://maps.apple.com/?q=31+Yongkang+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Man Man Tang Bao &mdash; 641 West Jianguo Rd</div><div class="ev-meta">NYT pick. Four tables. Father and son, making soup dumplings (xiaolongbao) to a standard that the tourist-facing places can&rsquo;t match. The ratio of soup to pork filling is the thing. No reservation &mdash; show up, wait. <span class="tp">🚗 25 min</span> <span class="tp">🚇 L1 18 min</span> <a href="https://maps.apple.com/?q=641+West+Jianguo+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Cejerdary &mdash; 59 Guangdong Rd</div><div class="ev-meta">NYT pick. Near the Bund &mdash; a temple-like room specialising in hairy crab when in season, precise Shanghainese cooking otherwise. Austere space with a karst bonsai as the centrepiece. The opposite of showy. <span class="tp">🚗 20 min</span> <span class="tp">🚇 L10 12 min</span> Near Bund <a href="https://maps.apple.com/?q=59+Guangdong+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Beiye Tofu &mdash; 31 Yongkang Rd</div><div class="ev-meta">NYT pick. Soy-based gelato and cold puddings in a small shopfront on Yongkang Lu &mdash; which you&rsquo;ll already be walking through. The tofu soft-serve is the thing. A 90-second detour. <span class="tp">🚶 on Yongkang Lu</span> <a href="https://maps.apple.com/?q=31+Yongkang+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
 
-      <div class="sec-lbl">Bars &mdash; Shanghai</div>
+      <div class="sec-lbl">Bars</div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Bar Leone &mdash; 527 Middle Fuxing Rd</div><div class="ev-meta">NYT pick. The Hong Kong aperitivo bar that won Asia&rsquo;s 50 Best now has a Shanghai outpost. Simple, excellent cocktails in a clean room. The spritz is the order. French Concession. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=527+Middle+Fuxing+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Paal &mdash; 94 Nanchang Rd</div><div class="ev-meta">NYT pick. A cocktail bar that feels like a friend&rsquo;s dining room &mdash; communal table, people actually talking to each other, drinks that are interesting without being theatrical. 25 min DiDi from Pullman. <a href="https://maps.apple.com/?q=94+Nanchang+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Long Bar, Waldorf Astoria &mdash; 2 East Zhongshan Rd</div><div class="ev-meta">The original 1920s banking hall of the Shanghai Club, now the Waldorf bar. 110-foot marble bar, strong martinis, the Bund immediately outside. Tourist-adjacent but the room is genuine. A legitimate place to read for two hours. On the Bund, 20 min walk from Pullman. <a href="https://maps.apple.com/?q=Waldorf+Astoria+Shanghai+on+the+Bund" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Paal &mdash; 94 Nanchang Rd</div><div class="ev-meta">NYT pick. A cocktail bar that feels like a friend&rsquo;s dining room &mdash; communal table, people actually talking to each other, drinks that are interesting without being theatrical. <span class="tp">🚗 25 min</span> <span class="tp">🚇 L1 15 min</span> <a href="https://maps.apple.com/?q=94+Nanchang+Road,+Xuhui,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Long Bar, Waldorf Astoria &mdash; 2 East Zhongshan Rd</div><div class="ev-meta">The original 1920s banking hall of the Shanghai Club, now the Waldorf bar. 110-foot marble bar, strong martinis, the Bund immediately outside. Tourist-adjacent but the room is genuine. A legitimate place to read for two hours. On the Bund, <span class="tp">🚶 20 min</span> <a href="https://maps.apple.com/?q=Waldorf+Astoria+Shanghai+on+the+Bund" target="_blank">Map</a></div></div></div>
 
-      <div class="sec-lbl">Restaurants &mdash; Shaoxing &middot; all distances from Yunhe Yebao Hotel</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Xianheng Tavern (咸亨酒店) &mdash; 179 Lu Xun Middle Rd</div><div class="ev-meta">The tavern from Lu Xun&rsquo;s fiction &mdash; specifically from <em>Kong Yiji</em>, written in 1919. The original building is gone, the rebuilt tavern is tourist-facing, but the food is genuinely the right food: fennel beans (茴香豆), Huadiao wine warm in a ceramic cup, braised pork cooked in rice wine. Order these three things and you&rsquo;ve done what the story does. 15 min DiDi from hotel. <a href="https://maps.apple.com/?q=Xianheng+Hotel,+179+Lu+Xun+Middle+Road,+Shaoxing" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shaoxing Meitang Restaurant (沈园附近)</div><div class="ev-meta">Near Shen&rsquo;s Garden &mdash; local Shaoxing cooking without the tourist markup. The braised pork (梅菜扣肉) in Shaoxing is different from Shanghai&rsquo;s version: the rice wine penetrates the fat more completely, the flavour is older and deeper. Order it here. 10 min DiDi from hotel. <a href="https://maps.apple.com/?q=Shen%27s+Garden,+Shaoxing" target="_blank">Map to Shen&rsquo;s Garden area</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Cangqiao Zhijie canal street vendors</div><div class="ev-meta">The stone-paved street along the canal has small family restaurants and street food sellers &mdash; stinky tofu fried to order (the Shaoxing version is darker and more pungent than Shanghai&rsquo;s), sesame cakes, and rice wine by the bowl. Not a restaurant &mdash; point and sit at a plastic table. 15 min DiDi from hotel. <a href="https://maps.apple.com/?q=Cangqiao+Zhijie,+Yuecheng,+Shaoxing" target="_blank">Map</a></div></div></div>
+      <div class="phase" style="margin:32px 0 0"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Shaoxing</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+      <div class="sec-lbl">Restaurants &middot; from Yunhe Yebao</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Xianheng Tavern (咸亨酒店) &mdash; 179 Lu Xun Middle Rd</div><div class="ev-meta">The tavern from Lu Xun&rsquo;s fiction &mdash; specifically from <em>Kong Yiji</em>, written in 1919. The original building is gone, the rebuilt tavern is tourist-facing, but the food is genuinely the right food: fennel beans (茴香豆), Huadiao wine warm in a ceramic cup, braised pork cooked in rice wine. Order these three things and you&rsquo;ve done what the story does. <span class="tp">🚗 15 min</span> <a href="https://maps.apple.com/?q=Xianheng+Hotel,+179+Lu+Xun+Middle+Road,+Shaoxing" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shaoxing Meitang Restaurant (沈园附近)</div><div class="ev-meta">Near Shen&rsquo;s Garden &mdash; local Shaoxing cooking without the tourist markup. The braised pork (梅菜扣肉) in Shaoxing is different from Shanghai&rsquo;s version: the rice wine penetrates the fat more completely, the flavour is older and deeper. Order it here. <span class="tp">🚗 10 min</span> <a href="https://maps.apple.com/?q=Shen%27s+Garden,+Shaoxing" target="_blank">Map to Shen&rsquo;s Garden area</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Cangqiao Zhijie canal street vendors</div><div class="ev-meta">The stone-paved street along the canal has small family restaurants and street food sellers &mdash; stinky tofu fried to order (the Shaoxing version is darker and more pungent than Shanghai&rsquo;s), sesame cakes, and rice wine by the bowl. Not a restaurant &mdash; point and sit at a plastic table. <span class="tp">🚗 15 min</span> <a href="https://maps.apple.com/?q=Cangqiao+Zhijie,+Yuecheng,+Shaoxing" target="_blank">Map</a></div></div></div>
       <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shaoxing Old Town wine shops</div><div class="ev-meta">The cluster of traditional rice wine producers near the old canal district sell Huadiao direct from barrel. Ask your DiDi driver to take you to 黄酒厂 (huangjiu chang) or 绍兴黄酒 in the old town. The amber wine ranges from 3-year to 30-year aged. Tasting is usually possible and costs almost nothing. This is the source of every dish you&rsquo;ve eaten this week that tasted of wine.</div></div></div>
 
-      <div class="sec-lbl">Places worth wandering &mdash; Shanghai</div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Columbia Circle, Xinhua Rd</div><div class="ev-meta">The former French Club &mdash; a 1920s social compound that was the centre of Shanghai&rsquo;s expatriate social life. Now restored as bars, restaurants and small shops in genuine heritage buildings. The Fumin Lu and Anfu Lu lanes nearby are the better streets. 25 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Columbia+Circle,+Xinhua+Road,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shanghai Dream Center, West Bund</div><div class="ev-meta">Martina&rsquo;s pick. A former cement factory on the new West Bund cultural waterfront &mdash; exhibitions, food, river views. Walk north to the Long Museum after. The West Bund is what Pudong was supposed to become: a genuine cultural district rather than a skyline. 20 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Shanghai+Dream+Center,+West+Bund,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Sinan Mansions courtyard</div><div class="ev-meta">A garden courtyard in the French Concession that is inexplicably quiet despite being four blocks from Huaihai Lu. The buildings are original 1920s lane houses. Sit in the courtyard. Free. 15 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Sinan+Mansions,+Sinan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
-      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Zhaozhou Lu (肇周路) after 9 PM</div><div class="ev-meta">Late-night noodle street in the old city south of People&rsquo;s Square. Stalls that open around 7 PM and close when the proprietors feel like it. The neighbourhood is unreconstructed in ways the French Concession isn&rsquo;t. Go and point. 15 min DiDi from Pullman. <a href="https://maps.apple.com/?q=Zhaozhou+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="sec-lbl">Places worth wandering</div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Columbia Circle, Xinhua Rd</div><div class="ev-meta">The former French Club &mdash; a 1920s social compound that was the centre of Shanghai&rsquo;s expatriate social life. Now restored as bars, restaurants and small shops in genuine heritage buildings. The Fumin Lu and Anfu Lu lanes nearby are the better streets. <span class="tp">🚗 25 min</span> <span class="tp">🚇 L10 20 min</span> <a href="https://maps.apple.com/?q=Columbia+Circle,+Xinhua+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Shanghai Dream Center, West Bund</div><div class="ev-meta">Martina&rsquo;s pick. A former cement factory on the new West Bund cultural waterfront &mdash; exhibitions, food, river views. Walk north to the Long Museum after. The West Bund is what Pudong was supposed to become: a genuine cultural district rather than a skyline. <span class="tp">🚗 20 min</span> <a href="https://maps.apple.com/?q=Shanghai+Dream+Center,+West+Bund,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Sinan Mansions courtyard</div><div class="ev-meta">A garden courtyard in the French Concession that is inexplicably quiet despite being four blocks from Huaihai Lu. The buildings are original 1920s lane houses. Sit in the courtyard. Free. <span class="tp">🚗 15 min</span> <span class="tp">🚇 L1 10 min</span> <a href="https://maps.apple.com/?q=Sinan+Mansions,+Sinan+Road,+Shanghai" target="_blank">Map</a></div></div></div>
+      <div class="ev"><div class="ev-bar"></div><div><div class="ev-title">Zhaozhou Lu (肇周路) after 9 PM</div><div class="ev-meta">Late-night noodle street in the old city south of People&rsquo;s Square. Stalls that open around 7 PM and close when the proprietors feel like it. The neighbourhood is unreconstructed in ways the French Concession isn&rsquo;t. Go and point. <span class="tp">🚗 15 min</span> <a href="https://maps.apple.com/?q=Zhaozhou+Road,+Huangpu,+Shanghai" target="_blank">Map</a></div></div></div>
     </div>
   </div>
 </div>
@@ -1428,73 +1596,6 @@ var wxDays=[
 ];
 wxDays.forEach(function(d){fetch('https://api.open-meteo.com/v1/forecast?latitude='+d.lat+'&longitude='+d.lon+'&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=16&temperature_unit=fahrenheit').then(function(r){return r.json()}).then(function(data){var el=document.getElementById(d.id);if(!el)return;var idx=data.daily.time.indexOf(d.date);if(idx===-1){el.innerHTML='<span class="wx-pending">'+d.label+' &middot; forecast not yet in range</span>';return}var code=data.daily.weathercode[idx],max=Math.round(data.daily.temperature_2m_max[idx]),min=Math.round(data.daily.temperature_2m_min[idx]),rain=Math.round(data.daily.precipitation_probability_max[idx]),info=wxCode(code);el.innerHTML='<span style="font-size:18px;opacity:0.7">'+info[1]+'</span><div><div class="wx-loc">'+d.label+'</div><span class="wx-t">'+max+'&deg;F</span><span class="wx-sub">/ '+min+'&deg;F &middot; '+info[0]+'</span><div class="wx-rain">Rain '+rain+'%</div></div>'}).catch(function(){})});
 
-/* EVENTS BAR */
-var today=new Date();
-var tripStart=new Date('2026-04-01');
-var tripPhases=[
-  {start:'2026-04-01',end:'2026-04-07',city:'Shanghai'},
-  {start:'2026-04-08',end:'2026-04-09',city:'Shaoxing'},
-  {start:'2026-04-10',end:'2026-04-10',city:'Shanghai'},
-  {start:'2026-04-11',end:'2026-04-12',city:'New Zealand'}
-];
-
-var allEvents=[
-  {date:'2026-04-03',city:'Shanghai',name:'Rockbund: The Great Camouflage',venue:'Rockbund Art Museum',time:'All day',desc:'Group show co-curated by Zhu Qiaorui and Kandis Williams on contemporary practices shaped by revolutionary movements. Runs until Apr 26.',url:'https://www.rockbundartmuseum.org'},
-  {date:'2026-04-03',city:'Shanghai',name:'Friday Muslim Market',venue:'Outside Huxi Mosque, 1328 Changde Lu',time:'After Friday prayers (~midday)',desc:'Xinjiang lamb kebabs over charcoal, tandoor flatbread. Only happens on Fridays. One of the stranger and better food experiences in the city.',url:'https://maps.apple.com/?q=1328+Changde+Road,+Jing%27an,+Shanghai'},
-  {date:'2026-04-03',city:'Shanghai',name:'Fluxus, by chance &mdash; West Bund Museum',venue:'West Bund Museum',time:'All day',desc:'First major Fluxus retrospective in China, over 200 works. Centre Pompidou collaboration. Worth a separate half-day.',url:'https://www.westbundmuseum.com'},
-  {date:'2026-04-04',city:'Shanghai',name:'Ralston van der Schyff &mdash; Jazz',venue:'Sky Dome Bar',time:'Evening',desc:'South African jazz drummer with a Shanghai residency. One of the more consistent live jazz nights in the city.',url:'https://www.smartshanghai.com/events/concerts/'},
-  {date:'2026-04-04',city:'Shanghai',name:'Qingming Festival (清明节)',venue:'City-wide',time:'Public holiday',desc:'Ancestor-honouring festival. Parks more animated than usual. Seasonal qingtuan (green rice dumplings) available from street vendors and Shen Dacheng confectionery.',url:''},
-  {date:'2026-04-04',city:'Shanghai',name:'15th Shanghai Biennale',venue:'Power Station of Art',time:'Free weekends, closes 5 PM',desc:'"Does the Flower Hear the Bee?" &mdash; 250+ works from 67 international artists. You are visiting the PSA this afternoon.',url:'https://www.powerstationofart.com'},
-  {date:'2026-04-05',city:'Shanghai',name:'Piano & Violin Candlelight Concert',venue:'Bridge 8',time:'Evening',desc:'Game of Thrones, Castle in the Sky. Atmospheric candlelight evening if you want something low-effort after a big day.',url:'https://www.smartshanghai.com/events/concerts/'},
-  {date:'2026-04-05',city:'Shanghai',name:'Julio Anaya Shanghai debut',venue:'Gallery TBC',time:'All day',desc:'Spanish artist known for inserting himself into other paintings. 50+ works in his first Shanghai show.',url:'https://www.smartshanghai.com/events/exhibitions/'},
-  {date:'2026-04-06',city:'Shanghai',name:'VAS ear &mdash; experimental/electronic',venue:'VAS',time:'Late evening',desc:'Worth considering if you have energy after the Night Eats tour.',url:'https://www.smartshanghai.com/events/'},
-  {date:'2026-04-07',city:'Shanghai',name:'Fotografiska: three current shows',venue:'Fotografiska Shanghai',time:'All day',desc:'The Coexistence of Imperfection (Cho Gi-Seok); Something or Nothing (Andrew Grassie); A\'s Fables (Chai Mi). You are visiting this morning.',url:'https://www.fotografiska.com/shanghai'},
-  {date:'2026-04-07',city:'Shanghai',name:'Louvre: Wonder of Patterns at MAP Pudong',venue:'Museum of Art Pudong',time:'All day',desc:'Indian, Iranian and Ottoman masterworks from the Louvre &mdash; their first Shanghai exhibition. Across the river in Pudong, ~30 min DiDi.',url:'https://ocula.com/cities/china/shanghai-art-galleries/exhibitions/'},
-  {date:'2026-04-08',city:'Shaoxing',name:'Cangqiao Zhijie canal walk',venue:'Historic Shaoxing old town',time:'Best at dusk',desc:'The spine of historic Shaoxing &mdash; stone-paved canal street, Qing-dynasty houses. Walk its full length tonight.',url:'https://maps.apple.com/?q=Cangqiao+Zhijie,+Yuecheng,+Shaoxing'},
-  {date:'2026-04-09',city:'Shaoxing',name:'Shen\'s Garden &mdash; morning',venue:'Shen\'s Garden (沈园)',time:'Best before 9:30 AM',desc:'Song Dynasty garden. Go early, before tour groups arrive.',url:'https://maps.apple.com/?q=Shen%27s+Garden,+Shaoxing'},
-  {date:'2026-04-09',city:'Shaoxing',name:'Lu Xun\'s Birthplace Complex',venue:'鲁迅故里',time:'Morning',desc:'Childhood home, Three Flavors Study, surrounding neighbourhood. Context for the Xianheng lunch.',url:'https://maps.apple.com/?q=Lu+Xun+Birthplace,+Shaoxing'}
-];
-
-function formatDate(ds){var d=new Date(ds+'T12:00:00');return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})}
-function getCurrentPhaseCity(){var now=new Date();for(var i=0;i<tripPhases.length;i++){var s=new Date(tripPhases[i].start+'T00:00:00'),e=new Date(tripPhases[i].end+'T23:59:59');if(now>=s&&now<=e)return tripPhases[i].city}return null}
-
-function buildEventsBar(){
-  var track=document.getElementById('eb-track');
-  var label=document.getElementById('eb-label');
-  var now=new Date();
-  var isTripTime=(now>=new Date('2026-04-01T00:00:00')&&now<=new Date('2026-04-12T23:59:59'));
-  var relevantCity=getCurrentPhaseCity();
-
-  var d1=new Date(now);d1.setHours(0,0,0,0);
-  var d2=new Date(d1);d2.setDate(d2.getDate()+1);
-  var d3=new Date(d1);d3.setDate(d3.getDate()+2);
-  var targetDates=[d1,d2,d3].map(function(d){return d.toISOString().slice(0,10)});
-
-  var filtered=allEvents.filter(function(e){
-    if(isTripTime){
-      return targetDates.indexOf(e.date)>-1&&(relevantCity===null||e.city===relevantCity);
-    } else {
-      return e.city==='Shanghai';
-    }
-  });
-
-  if(isTripTime){
-    label.textContent='Next 48h';
-  } else {
-    label.textContent='What\u2019s on in Shanghai';
-  }
-
-  if(!filtered.length){
-    track.innerHTML='<div class="eb-empty">Check back when you arrive &mdash; events will appear here</div>';
-    return;
-  }
-
-  track.innerHTML=filtered.map(function(e){
-    var tip='<div class="eb-tooltip"><div class="eb-tooltip-title">'+e.name+'</div><div class="eb-tooltip-meta">'+e.venue+(e.time?' &middot; '+e.time:'')+'</div><div class="eb-tooltip-desc">'+e.desc+'</div>'+(e.url?'<a href="'+e.url+'" target="_blank">More &rarr;</a>':'')+'</div>';
-    return '<div class="eb-item" onclick="window.open(\''+e.url+'\',\'_blank\')">'+'<span class="eb-date">'+formatDate(e.date)+'</span><span class="eb-name">'+e.name+'</span>'+tip+'</div>';
-  }).join('');
-}
-buildEventsBar();
 renderNotes();
 renderIg();
 </script>
