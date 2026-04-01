@@ -76,14 +76,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .wx-sub{font-size:12px;color:var(--t2);margin-left:4px}
 .wx-rain{font-size:11px;color:var(--t3);margin-top:1px}
 .briefing-wrap{border-bottom:1px solid var(--bd);background:var(--bg)}
-.briefing-hdr{padding:13px 24px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .12s;user-select:none}
-.briefing-hdr:hover{background:var(--bg2)}
-.briefing-icon{font-size:13px;opacity:0.6}
-.briefing-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent)}
-.briefing-sub{font-size:11px;color:var(--t3);margin-left:auto;font-style:italic}
-.briefing-ch{font-size:9px;color:var(--t3);transition:transform .2s;margin-left:6px}
+.briefing-hdr{padding:16px 24px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .12s;user-select:none;background:var(--acl);border-top:2px solid var(--accent)}
+.briefing-hdr:hover{background:#ede8df}
+.briefing-icon{font-size:18px;opacity:0.8;flex-shrink:0}
+.briefing-label{font-size:13px;font-weight:600;color:var(--t);letter-spacing:0}
+.briefing-sub{font-size:12px;color:var(--t2);margin-left:auto;font-style:italic}
+.briefing-ch{font-size:11px;color:var(--accent);transition:transform .2s;margin-left:8px;flex-shrink:0}
 .briefing-ch.open{transform:rotate(180deg)}
-.briefing-body{display:none;padding:28px 30px 32px;border-top:1px solid var(--bg3)}
+.briefing-body{display:none;padding:28px 30px 32px;border-top:1px solid var(--bd)}
 .briefing-body.open{display:block}
 .briefing-body p{font-size:14px;color:var(--t2);line-height:1.85;margin-bottom:18px}
 .briefing-body p:last-child{margin-bottom:0}
@@ -328,9 +328,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="wx-apr3" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
         <div class="briefing-wrap">
       <div class="briefing-hdr" onclick="toggleBriefing(this)">
-        <span class="briefing-icon">&#9788;</span><span class="briefing-label">Daily Briefing</span>
-        <span class="briefing-sub">Context &amp; orientation for the day ahead</span>
-        <span class="briefing-ch">&#9660;</span>
+        <span class="briefing-icon">📖</span><span class="briefing-label">Read today's briefing</span>
+        <span class="briefing-sub">History, context &amp; what to notice today</span>
+        <span class="briefing-ch">▼ Open</span>
       </div>
       <div class="briefing-body">
 
@@ -372,7 +372,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
         <div class="briefing-box"><strong>Practical note for today:</strong> Confirm with the concierge that Jesse is booked for Tuesday 12:30 PM &mdash; if this hasn&rsquo;t happened, follow up today. Jesse needs lead time and Tuesday is the most important meal of the Shanghai leg. Also: the Bund at dusk is worth returning to this evening. The 15-minute walk from the Pullman is the same whether you go at 10 AM or 8 PM. Both are correct. The dusk version is different.</div>
 
-        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX5g856nXZrd0?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX5g856nXZrd0?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
       </div>
     </div>
     <div class="dp">
@@ -430,9 +430,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="wx-apr4" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
         <div class="briefing-wrap">
       <div class="briefing-hdr" onclick="toggleBriefing(this)">
-        <span class="briefing-icon">&#9788;</span><span class="briefing-label">Daily Briefing</span>
-        <span class="briefing-sub">Context &amp; orientation for the day ahead</span>
-        <span class="briefing-ch">&#9660;</span>
+        <span class="briefing-icon">📖</span><span class="briefing-label">Read today's briefing</span>
+        <span class="briefing-sub">History, context &amp; what to notice today</span>
+        <span class="briefing-ch">▼ Open</span>
       </div>
       <div class="briefing-body">
 
@@ -472,7 +472,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
         <div class="briefing-box"><strong>Practical note:</strong> You have been eating since 8 AM. After the food tour, coffee rather than lunch &mdash; Yongkang Lu has good outdoor options. La Cava De Laoma is the afternoon pause before the Power Station. From the PSA you have three ways home, all valid (see the fork below). The Long Bar at the Waldorf Astoria is fifteen minutes north along the riverfront path and is open from around 5 PM &mdash; a genuine 1920s banking hall with strong martinis and the Bund outside the window. A legitimate place to decompress after a full day.</div>
 
-        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX2SK4ytI2KAZ?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX2SK4ytI2KAZ?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
       </div>
     </div>
     <div class="dp">
@@ -533,9 +533,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="wx-apr5" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
         <div class="briefing-wrap">
       <div class="briefing-hdr" onclick="toggleBriefing(this)">
-        <span class="briefing-icon">&#9788;</span><span class="briefing-label">Daily Briefing</span>
-        <span class="briefing-sub">Context &amp; orientation for the day ahead</span>
-        <span class="briefing-ch">&#9660;</span>
+        <span class="briefing-icon">📖</span><span class="briefing-label">Read today's briefing</span>
+        <span class="briefing-sub">History, context &amp; what to notice today</span>
+        <span class="briefing-ch">▼ Open</span>
       </div>
       <div class="briefing-body">
 
@@ -569,7 +569,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
         <p>From a New Zealand perspective: China&rsquo;s trajectory over the next two decades will shape the market conditions for everything Farmlands&rsquo; shareholders produce. The question is not whether to engage with China but how &mdash; at what distance, on what terms, with what understanding of the risks. You are here partly to see the place behind the abstraction. The Pudong skyline is the most visible version of the argument China is making about itself. Worth spending time with, and worth being honest about your own response to it.</p>
 
-        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX9XIFQuFvzM4?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX9XIFQuFvzM4?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
       </div>
     </div>
     <div class="dp">
@@ -624,9 +624,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="wx-apr6" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
         <div class="briefing-wrap">
       <div class="briefing-hdr" onclick="toggleBriefing(this)">
-        <span class="briefing-icon">&#9788;</span><span class="briefing-label">Daily Briefing</span>
-        <span class="briefing-sub">Context &amp; orientation for the day ahead</span>
-        <span class="briefing-ch">&#9660;</span>
+        <span class="briefing-icon">📖</span><span class="briefing-label">Read today's briefing</span>
+        <span class="briefing-sub">History, context &amp; what to notice today</span>
+        <span class="briefing-ch">▼ Open</span>
       </div>
       <div class="briefing-body">
 
@@ -664,7 +664,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
         <div class="briefing-box"><strong>After the Night Eats tour (9 PM):</strong> You will be full, and possibly also ready to be done. DiDi home is fifteen minutes. Alternatively: the Yongkang Lu bar strip is directly on the Night Eats route and the guide will be finishing in that vicinity. One drink after the tour ends is a reasonable coda. Bar Leone (527 Middle Fuxing Rd) is a fifteen-minute walk and serves excellent simple cocktails &mdash; it&rsquo;s the Hong Kong bar that moved to Shanghai, aperitivo style, negroni or whisky sour quality. Tomorrow is Tuesday and the French Concession: Fotografiska, Jesse, and the Monster Day Tours walk. It is the richest day of the week. Be rested for it.</div>
 
-        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
       </div>
     </div>
     <div class="dp">
@@ -720,9 +720,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="wx-apr7" class="wx"><span class="wx-pending">Shanghai &middot; forecast available closer to the date</span></div>
         <div class="briefing-wrap">
       <div class="briefing-hdr" onclick="toggleBriefing(this)">
-        <span class="briefing-icon">&#9788;</span><span class="briefing-label">Daily Briefing</span>
-        <span class="briefing-sub">Context &amp; orientation for the day ahead</span>
-        <span class="briefing-ch">&#9660;</span>
+        <span class="briefing-icon">📖</span><span class="briefing-label">Read today's briefing</span>
+        <span class="briefing-sub">History, context &amp; what to notice today</span>
+        <span class="briefing-ch">▼ Open</span>
       </div>
       <div class="briefing-body">
 
@@ -768,7 +768,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
         <p>The French Concession after the tour, in late afternoon light through the plane trees, with nowhere specific to be: this is exactly what the week has been building toward. Walk down Anfu Lu slowly. Wuyuan Lu, if you have not been. Yongkang Lu when the light goes. One drink in a bar with outdoor seating. The city will be doing what it does &mdash; residents walking dogs, delivery riders, the outdoor tables filling up as the light softens. You have been here five days and you are still not quite sure what it is. That is the correct response to Shanghai. It does not resolve on a first visit. It just becomes more specific.</p>
 
-        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0SM0LYsmbMT?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0SM0LYsmbMT?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
       </div>
     </div>
     <div class="dp">
@@ -821,9 +821,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="wx-apr8" class="wx"><span class="wx-pending">Shaoxing &middot; forecast available closer to the date</span></div>
         <div class="briefing-wrap">
       <div class="briefing-hdr" onclick="toggleBriefing(this)">
-        <span class="briefing-icon">&#9788;</span><span class="briefing-label">Daily Briefing</span>
-        <span class="briefing-sub">Context &amp; orientation for the day ahead</span>
-        <span class="briefing-ch">&#9660;</span>
+        <span class="briefing-icon">📖</span><span class="briefing-label">Read today's briefing</span>
+        <span class="briefing-sub">History, context &amp; what to notice today</span>
+        <span class="briefing-ch">▼ Open</span>
       </div>
       <div class="briefing-body">
 
@@ -855,7 +855,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
         <p>There is a Ballard note worth ending on. In one of his late essays, he described Shanghai as &ldquo;the city that dreams itself.&rdquo; By which he meant: it has always been more than what it actually is; it generates its own mythology faster than any external observer can process it. Leaving it today, even temporarily, gives you the distance to see what you have been inside. The train journey is forty minutes of flat Yangtze Delta landscape &mdash; rice fields, canal networks, low housing. This is the country that feeds Shanghai. Worth watching out the window rather than at a screen. You are moving through the agricultural heartland of China&rsquo;s most productive province. It looks, from the train window, unremarkable. It is not.</p>
 
-        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
       </div>
     </div>
     <div class="dp">
@@ -902,9 +902,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div id="wx-apr9" class="wx"><span class="wx-pending">Shaoxing &middot; forecast available closer to the date</span></div>
         <div class="briefing-wrap">
       <div class="briefing-hdr" onclick="toggleBriefing(this)">
-        <span class="briefing-icon">&#9788;</span><span class="briefing-label">Daily Briefing</span>
-        <span class="briefing-sub">Context &amp; orientation for the day ahead</span>
-        <span class="briefing-ch">&#9660;</span>
+        <span class="briefing-icon">📖</span><span class="briefing-label">Read today's briefing</span>
+        <span class="briefing-sub">History, context &amp; what to notice today</span>
+        <span class="briefing-ch">▼ Open</span>
       </div>
       <div class="briefing-body">
 
@@ -950,7 +950,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
         <p>Everything that makes this work must happen tonight: pack completely, settle the hotel bill, arrange the taxi via WeChat with the driver, and request a packed breakfast from the hotel. If any of this is left for the morning, you will be managing logistics under pressure with no margin for anything going slightly wrong. Early dinner, all of the above sorted, in bed by 9:30 PM. The alarm at 5:00 AM is not negotiable.</p>
 
-        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWXRqgorJj26U?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+        <div class="spotify-wrap"><iframe style="border-radius:8px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWXRqgorJj26U?utm_source=generator&theme=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
       </div>
     </div>
     <div class="dp">
@@ -1204,7 +1204,7 @@ var igUrls=JSON.parse(localStorage.getItem('sh26gig')||'[]');
 function toggleDay(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.ch'),open=bd.classList.contains('open');bd.classList.toggle('open',!open);hdr.classList.toggle('open',!open);if(ch)ch.classList.toggle('open',!open)}
 function toggleDet(btn){var det=btn.nextElementSibling;det.classList.toggle('open',!det.classList.contains('open'));btn.classList.toggle('open',!btn.classList.contains('open'))}
 function toggleBk(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.bk-ch');bd.classList.toggle('open',!bd.classList.contains('open'));if(ch)ch.classList.toggle('open',!ch.classList.contains('open'))}
-function toggleBriefing(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.briefing-ch'),open=bd.classList.contains('open');bd.classList.toggle('open',!open);if(ch)ch.classList.toggle('open',!open)}
+function toggleBriefing(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.briefing-ch'),open=bd.classList.contains('open');bd.classList.toggle('open',!open);if(ch){ch.classList.toggle('open',!open);ch.textContent=open?'▼ Open':'▲ Close'}}
 
 function addNote(){var el=document.getElementById('note-input'),t=el.value.trim();if(!t)return;notes.unshift({t:t,d:new Date().toLocaleDateString('en-NZ',{day:'numeric',month:'short'})});localStorage.setItem('sh26g',JSON.stringify(notes));el.value='';renderNotes()}
 function delNote(i){notes.splice(i,1);localStorage.setItem('sh26g',JSON.stringify(notes));renderNotes()}
