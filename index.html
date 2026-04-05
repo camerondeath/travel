@@ -260,6 +260,9 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 .ig-add button{padding:7px 14px;border-radius:var(--rs);border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-size:12px;color:var(--t)}
 .ig-add button:hover{background:var(--acl);border-color:var(--accent)}
 .notes-card{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:18px}
+#ai-btn:disabled{opacity:0.5;cursor:default}
+.ai-thinking{display:inline-block;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 .note-entry{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bg3)}
 .note-entry:last-child{border-bottom:none}
 .note-dt{font-size:11px;color:var(--t3);min-width:48px;padding-top:2px}
@@ -342,7 +345,7 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
   <a class="nav-tag nt-text" href="#backpocket"><span class="nt-dow">Back pocket</span></a>
   <a class="nav-tag nt-text" href="#instagram"><span class="nt-dow">Instagram</span></a>
   <a class="nav-tag nt-text" href="#bookings"><span class="nt-dow">Bookings</span></a>
-  <a class="nav-tag nt-text" href="#notes"><span class="nt-dow">Notes</span></a>
+  <a class="nav-tag nt-text" href="#notes"><span class="nt-dow">Field Notes</span></a>
 </nav>
 
 <!-- EVENTS BAR -->
@@ -1406,7 +1409,7 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 <div id="backpocket" class="dc">
   <div class="dh" onclick="toggleDay(this)">
     <div class="dh-date" style="padding-top:4px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#9a9590" stroke-width="1"/><path d="M8 7h6M8 11h4M8 15h5" stroke="#9a9590" stroke-width="1" stroke-linecap="round"/></svg></div>
-    <div><div class="dh-title">No booking required. No fixed time.</div><div class="dh-tag">Turn up when it feels right &mdash; a reference for the improvised hours.</div></div>
+    <div><div class="dh-title">Improvised hours</div><div class="dh-tag">No booking, no fixed time &mdash; reference for when the day opens up.</div></div>
     <div class="ch">&#9660;</div>
   </div>
   <div class="db">
@@ -1475,6 +1478,21 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 </div>
 
 <!-- BOOKINGS -->
+
+<div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Field notes</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+<div id="notes" class="notes-card">
+  <div id="notes-ai-result" style="display:none;margin-bottom:16px;padding:16px 18px;background:var(--acl);border:1px solid var(--acm);border-radius:var(--rs);font-size:13px;line-height:1.8;color:var(--t)"></div>
+  <div id="notes-list"><div class="empty">Nothing noted yet.</div></div>
+  <div class="add-wrap">
+    <div class="nl">Add a note</div>
+    <textarea class="na" id="note-input" placeholder="Restaurant name, something noticed, a recommendation&hellip;"></textarea>
+    <div class="btn-row">
+      <button class="btn" onclick="addNote()">Save</button>
+      <button class="btn" onclick="document.getElementById('note-input').value=''">Clear</button>
+      <button class="btn" id="ai-btn" onclick="synthesiseNotes()" style="margin-left:auto;border-color:var(--acm);color:var(--accent)">Ask Claude &rsaquo;</button>
+    </div>
+  </div>
+</div>
 <div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Confirmed bookings</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
 <div id="bookings">
   <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">1486586039148450</div><div><div class="bk-name">Pullman Shanghai Central</div><div class="bk-sum">Apr 2&ndash;8 &middot; 6 nights &middot; Breakfast included</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Booking ref</div><div class="bk-v mono">1486586039148450</div></div><div class="bk-kv"><div class="bk-k">PIN</div><div class="bk-v mono">9801</div></div><div class="bk-kv"><div class="bk-k">Room</div><div class="bk-v">Superior Queen, king bed, non-smoking</div></div><div class="bk-kv"><div class="bk-k">Floors</div><div class="bk-v">6&ndash;10, city view</div></div><div class="bk-kv"><div class="bk-k">Check-in</div><div class="bk-v">Apr 2, after 14:00</div></div><div class="bk-kv"><div class="bk-k">Check-out</div><div class="bk-v">Apr 8 &mdash; request 12:30 on arrival</div></div><div class="bk-kv"><div class="bk-k">Deposit</div><div class="bk-v">CNY 1,500 at check-in</div></div><div class="bk-kv"><div class="bk-k">Meals</div><div class="bk-v">Breakfast for 1, Apr 3&ndash;8</div></div></div></div></div>
@@ -1488,15 +1506,7 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 </div>
 
 <!-- NOTES -->
-<div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Notes</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
-<div id="notes" class="notes-card">
-  <div id="notes-list"><div class="empty">No notes yet.</div></div>
-  <div class="add-wrap">
-    <div class="nl">Add a note</div>
-    <textarea class="na" id="note-input" placeholder="Recommendations, packing items, things to look up&hellip;"></textarea>
-    <div class="btn-row"><button class="btn" onclick="addNote()">Add</button><button class="btn" onclick="document.getElementById('note-input').value=''">Clear</button></div>
-  </div>
-</div>
+
 
 </div><!-- /days-main -->
 
@@ -1525,7 +1535,33 @@ function toggleBk(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.bk-c
 
 function addNote(){var el=document.getElementById('note-input'),t=el.value.trim();if(!t)return;notes.unshift({t:t,d:new Date().toLocaleDateString('en-NZ',{day:'numeric',month:'short'})});localStorage.setItem('sh26g',JSON.stringify(notes));el.value='';renderNotes()}
 function delNote(i){notes.splice(i,1);localStorage.setItem('sh26g',JSON.stringify(notes));renderNotes()}
-function renderNotes(){var el=document.getElementById('notes-list');if(!notes.length){el.innerHTML='<div class="empty">No notes yet.</div>';return}el.innerHTML=notes.map(function(n,i){return'<div class="note-entry"><span class="note-dt">'+n.d+'</span><span class="note-txt">'+n.t.replace(/\n/g,'<br>')+'</span><button class="note-del" onclick="delNote('+i+')">&#x2715;</button></div>'}).join('')}
+function renderNotes(){var el=document.getElementById('notes-list');if(!notes.length){el.innerHTML='<div class="empty">Nothing noted yet.</div>';return}el.innerHTML=notes.map(function(n,i){return'<div class="note-entry"><span class="note-dt">'+n.d+'</span><span class="note-txt">'+n.t.replace(/\n/g,'<br>')+'</span><button class="note-del" onclick="delNote('+i+')">&#x2715;</button></div>'}).join('')}
+function synthesiseNotes(){
+  if(!notes.length){alert('Add some notes first.');return;}
+  var btn=document.getElementById('ai-btn');
+  var result=document.getElementById('notes-ai-result');
+  btn.disabled=true;
+  btn.innerHTML='<span class="ai-thinking">Thinking&hellip;</span>';
+  result.style.display='none';
+  var noteText=notes.map(function(n,i){return(i+1)+'. ['+n.d+'] '+n.t}).join('\n');
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:600,
+      system:'You are a concise travel assistant. The user is on a trip in Shanghai and Shaoxing, China. They have saved freeform field notes — restaurant names, things noticed, recommendations heard. Give a brief, direct synthesis: what to follow up on, what looks interesting, any connections worth making. 3-5 sentences max. Plain prose, no bullet points, no preamble.',
+      messages:[{role:'user',content:'My field notes from the trip so far:\n\n'+noteText+'\n\nWhat should I pay attention to or follow up on?'}]
+    })
+  }).then(function(r){return r.json()}).then(function(d){
+    result.style.display='block';
+    result.innerHTML='<strong style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);display:block;margin-bottom:8px">Claude on your notes</strong>'+(d.content&&d.content[0]?d.content[0].text.replace(/\n/g,'<br>'):'Could not generate response.');
+    btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';
+  }).catch(function(){
+    result.style.display='block';result.innerHTML='Could not reach Claude. Try again.';
+    btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';
+  });
+}
 
 function addIg(){var el=document.getElementById('ig-input'),t=el.value.trim();if(!t)return;igUrls.unshift(t);localStorage.setItem('sh26gig',JSON.stringify(igUrls));el.value='';renderIg()}
 function delIg(i){igUrls.splice(i,1);localStorage.setItem('sh26gig',JSON.stringify(igUrls));renderIg()}
