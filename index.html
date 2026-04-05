@@ -1687,14 +1687,13 @@ reorganisePastDays();
     apr7:'2026-04-07',apr8:'2026-04-08',apr9:'2026-04-09',
     apr10:'2026-04-10',apr11:'2026-04-11',apr12:'2026-04-12'
   };
-  var today=new Date();today.setHours(0,0,0,0);
-  var todayStr=today.toISOString().slice(0,10);
+  var now=new Date();
+  var todayStr=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
   document.querySelectorAll('.nav-wrap a.nav-tag[href]').forEach(function(a){
     var id=a.getAttribute('href').replace('#','');
     var dateStr=dayDates[id];
     if(!dateStr)return;
-    var d=new Date(dateStr+'T00:00:00');
-    if(d<today){
+    if(dateStr<todayStr){
       a.classList.add('nt-past');
     } else if(dateStr===todayStr){
       a.classList.add('nt-today');
