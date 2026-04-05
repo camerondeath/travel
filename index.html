@@ -75,10 +75,10 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 .main{max-width:860px;margin:0 auto;padding:36px 20px}
 
 /* ── PHASE DIVIDERS ──────────────────────────────────────────────── */
-.phase{display:flex;align-items:center;gap:12px;margin:36px 0 16px}
+.phase{display:flex;align-items:center;gap:12px;margin:44px 0 20px}
 .phase-line{flex:1;height:1px;background:var(--bd)}
-.phase-text{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent);white-space:nowrap}
-.phase-diamond{width:4px;height:4px;background:var(--accent);transform:rotate(45deg);opacity:0.4;flex-shrink:0}
+.phase-text{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);white-space:nowrap;background:var(--bg2);padding:4px 14px;border-radius:20px;border:1px solid var(--bd)}
+.phase-diamond{width:5px;height:5px;background:var(--accent);transform:rotate(45deg);opacity:0.5;flex-shrink:0}
 
 /* ── DAY CARD ────────────────────────────────────────────────────── */
 .dc{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
@@ -313,17 +313,40 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
       <h1>Shanghai &amp; Shaoxing</h1>
       <div class="sub">April 2 &ndash; 12, 2026</div>
     </div>
-    <div class="hdr-motif">
-      <svg width="110" height="44" viewBox="0 0 110 44" fill="none">
-        <rect x="2" y="26" width="7" height="18" fill="#8B7355"/><rect x="3.5" y="17" width="4" height="11" fill="#8B7355"/><rect x="4.5" y="11" width="2" height="8" fill="#8B7355"/>
-        <rect x="13" y="19" width="11" height="25" fill="#8B7355"/><rect x="15.5" y="10" width="6" height="11" fill="#8B7355"/><rect x="17.5" y="4" width="2" height="8" fill="#8B7355"/>
-        <rect x="28" y="22" width="9" height="22" fill="#8B7355"/><rect x="30" y="13" width="5" height="11" fill="#8B7355"/>
-        <rect x="42" y="15" width="13" height="29" fill="#8B7355"/><rect x="46" y="5" width="5" height="12" fill="#8B7355"/><rect x="48" y="2" width="2" height="5" fill="#8B7355"/>
-        <rect x="60" y="20" width="9" height="24" fill="#8B7355"/><rect x="62" y="13" width="5" height="9" fill="#8B7355"/>
-        <rect x="73" y="17" width="11" height="27" fill="#8B7355"/><rect x="76" y="7" width="5" height="12" fill="#8B7355"/><rect x="78" y="2" width="2" height="7" fill="#8B7355"/>
-        <rect x="88" y="24" width="7" height="20" fill="#8B7355"/><rect x="89.5" y="16" width="4" height="10" fill="#8B7355"/>
-        <rect x="99" y="28" width="9" height="16" fill="#8B7355"/><rect x="101" y="20" width="5" height="10" fill="#8B7355"/>
-        <rect x="0" y="43" width="110" height="1" fill="#8B7355"/>
+    <div class="hdr-motif" style="opacity:1">
+      <svg width="110" height="56" viewBox="0 0 110 56" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+        <style>
+          .ln1{transform-origin:20px 2px;animation:lnsway 3s ease-in-out infinite}
+          .ln2{transform-origin:55px 2px;animation:lnsway 3s ease-in-out infinite;animation-delay:-1s}
+          .ln3{transform-origin:90px 2px;animation:lnsway 3s ease-in-out infinite;animation-delay:-2s}
+          @keyframes lnsway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+        </style>
+        <!-- Lantern 1 -->
+        <g class="ln1">
+          <line x1="20" y1="2" x2="20" y2="8" stroke="#8B7355" stroke-width="1"/>
+          <rect x="13" y="8" width="14" height="20" rx="7" fill="#c1392b" opacity="0.85"/>
+          <rect x="15" y="10" width="10" height="16" rx="5" fill="#e74c3c" opacity="0.4"/>
+          <line x1="20" y1="28" x2="20" y2="34" stroke="#8B7355" stroke-width="1"/>
+          <line x1="17" y1="34" x2="23" y2="34" stroke="#8B7355" stroke-width="1"/>
+        </g>
+        <!-- Lantern 2 (center, slightly larger) -->
+        <g class="ln2">
+          <line x1="55" y1="2" x2="55" y2="8" stroke="#8B7355" stroke-width="1"/>
+          <rect x="47" y="8" width="16" height="24" rx="8" fill="#c1392b" opacity="0.9"/>
+          <rect x="50" y="11" width="10" height="18" rx="5" fill="#e74c3c" opacity="0.4"/>
+          <line x1="55" y1="32" x2="55" y2="40" stroke="#8B7355" stroke-width="1"/>
+          <line x1="51" y1="40" x2="59" y2="40" stroke="#8B7355" stroke-width="1"/>
+        </g>
+        <!-- Lantern 3 -->
+        <g class="ln3">
+          <line x1="90" y1="2" x2="90" y2="8" stroke="#8B7355" stroke-width="1"/>
+          <rect x="83" y="8" width="14" height="20" rx="7" fill="#c1392b" opacity="0.85"/>
+          <rect x="85" y="10" width="10" height="16" rx="5" fill="#e74c3c" opacity="0.4"/>
+          <line x1="90" y1="28" x2="90" y2="34" stroke="#8B7355" stroke-width="1"/>
+          <line x1="87" y1="34" x2="93" y2="34" stroke="#8B7355" stroke-width="1"/>
+        </g>
+        <!-- Hanging wire -->
+        <line x1="0" y1="2" x2="110" y2="2" stroke="#8B7355" stroke-width="0.75" opacity="0.4"/>
       </svg>
     </div>
   </div>
@@ -1412,6 +1435,14 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 </div>
 
 <!-- BACK POCKET -->
+<div id="past-days-wrap" class="past-days-wrap">
+  <div class="past-days-toggle" onclick="togglePastDays(this)">
+    <span>Past days &mdash; <span id="past-days-count"></span></span>
+    <span class="pdt-arrow">&#9660;</span>
+  </div>
+  <div id="past-days-inner" class="past-days-inner"></div>
+
+
 <div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Back pocket</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
 <div id="backpocket" class="dc">
   <div class="dh" onclick="toggleDay(this)">
@@ -1516,12 +1547,6 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 
 </div><!-- /days-main -->
 
-<div id="past-days-wrap" class="past-days-wrap">
-  <div class="past-days-toggle" onclick="togglePastDays(this)">
-    <span>Past days &mdash; <span id="past-days-count"></span></span>
-    <span class="pdt-arrow">&#9660;</span>
-  </div>
-  <div id="past-days-inner" class="past-days-inner"></div>
 </div>
 
 <div class="foot-deco">
@@ -1578,10 +1603,30 @@ function synthesiseNotes(){
   var result=document.getElementById('notes-ai-result');
   btn.disabled=true;btn.innerHTML='<span class="ai-thinking">Thinking&hellip;</span>';
   result.style.display='none';
-  var noteText=notes.map(function(n,i){return(i+1)+'. ['+n.d+'] '+n.t}).join('\n');
-  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:'You are a concise travel assistant. The user is in Shanghai and Shaoxing, China. They have saved freeform field notes. Give a brief direct synthesis: what to follow up on, what looks interesting, any connections worth making. 3-5 sentences, plain prose only.',messages:[{role:'user',content:'My field notes:\n\n'+noteText+'\n\nWhat should I pay attention to or follow up on?'}]})}).then(function(r){return r.json()}).then(function(d){result.style.display='block';result.innerHTML='<strong style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);display:block;margin-bottom:8px">Claude on your notes</strong>'+(d.content&&d.content[0]?d.content[0].text:'No response.');btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';}).catch(function(){result.style.display='block';result.innerHTML='Could not reach Claude.';btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';});
+  var latest=notes[0];
+  var noteText=latest.t;
+  // Step 1: ask clarifying questions
+  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,system:'You are a travel assistant. The user is in Shanghai/Shaoxing, China. They just saved a field note. Ask them 1-2 short, specific clarifying questions to help you write a more useful version of the note. Questions only -- no preamble, no explanation. Format: just the questions, one per line.',messages:[{role:'user',content:'My note: '+noteText}]})}).then(function(r){return r.json()}).then(function(d){
+    var questions=d.content&&d.content[0]?d.content[0].text:'';
+    result.style.display='block';
+    result.innerHTML='<strong style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);display:block;margin-bottom:10px">A couple of quick questions</strong><div style="font-size:13px;color:var(--t);line-height:1.8;margin-bottom:12px">'+questions.replace(/\n/g,'<br>')+'</div><textarea id="ai-answers" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-size:13px;resize:vertical;min-height:60px;background:var(--bg);color:var(--t)" placeholder="Your answers..."></textarea><div style="margin-top:8px"><button class="btn" onclick="enrichNote(''+encodeURIComponent(noteText)+'')" style="border-color:var(--acm);color:var(--accent)">Write it up &rsaquo;</button></div>';
+    btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';
+  }).catch(function(){result.style.display='block';result.innerHTML='Could not reach Claude.';btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';});
 }
-
+function enrichNote(encodedNote){
+  var noteText=decodeURIComponent(encodedNote);
+  var answers=document.getElementById('ai-answers')?document.getElementById('ai-answers').value:'';
+  var result=document.getElementById('notes-ai-result');
+  result.innerHTML='<span class="ai-thinking">Writing it up&hellip;</span>';
+  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:'You are a travel assistant. The user is in Shanghai/Shaoxing, China. They saved a rough field note and answered your clarifying questions. Write an enriched, useful version of the note -- something they will actually want to reference later. 2-4 sentences, plain prose, specific and concrete. No preamble.',messages:[{role:'user',content:'Original note: '+noteText+'\n\nMy answers to your questions: '+answers+'\n\nWrite the enriched note.'}]})}).then(function(r){return r.json()}).then(function(d){
+    var enriched=d.content&&d.content[0]?d.content[0].text:'';
+    // Replace note in storage with enriched version
+    notes[0].t=enriched;notes[0].enriched=true;
+    localStorage.setItem('sh26g',JSON.stringify(notes));
+    renderNotes();
+    result.innerHTML='<strong style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);display:block;margin-bottom:8px">Note updated</strong><div style="font-size:13px;color:var(--t);line-height:1.8">'+enriched+'</div>';
+  }).catch(function(){result.innerHTML='Could not reach Claude.';});
+}
 function addIg(){var el=document.getElementById('ig-input'),t=el.value.trim();if(!t)return;igUrls.unshift(t);localStorage.setItem('sh26gig',JSON.stringify(igUrls));el.value='';renderIg()}
 function delIg(i){igUrls.splice(i,1);localStorage.setItem('sh26gig',JSON.stringify(igUrls));renderIg()}
 function renderIg(){var el=document.getElementById('ig-list');if(!igUrls.length){el.innerHTML='<div class="empty">No URLs saved yet.</div>';return}el.innerHTML=igUrls.map(function(u,i){return'<div class="ig-item"><a href="'+u+'" target="_blank" class="ig-url">'+u+'</a><button class="ig-del" onclick="delIg('+i+')">&#x2715;</button></div>'}).join('')}
