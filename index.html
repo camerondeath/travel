@@ -44,7 +44,8 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 .nav-tag:hover{background:var(--bg2);border-bottom-color:var(--acm)}
 .nav-tag.nt-past{opacity:0.35}
 .nav-tag.nt-today{border-bottom-color:var(--accent)}
-.nt-lantern{position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:10px;line-height:1;pointer-events:none}
+.nt-lantern{position:absolute;top:-2px;left:50%;transform:translateX(-50%);font-size:13px;line-height:1;pointer-events:none;transform-origin:top center;animation:sway 2s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:translateX(-50%) rotate(-12deg)}50%{transform:translateX(-50%) rotate(12deg)}}
 .nt-dow{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--t3);line-height:1}
 .nt-iata{font-size:11px;font-weight:600;color:var(--t);letter-spacing:0.5px;margin-top:2px;font-family:var(--mono)}
 .nt-label{font-size:9px;color:var(--t3);margin-top:1px;white-space:nowrap}
@@ -329,18 +330,18 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 </div>
 
 <nav class="nav-wrap">
-  <a class="nav-tag" href="#apr1"><span class="nt-dow">Wed</span><span class="nt-iata">CHC</span><span class="nt-label">Apr 1</span></a>
-  <a class="nav-tag" href="#apr2"><span class="nt-dow">Thu</span><span class="nt-iata">AKL</span><span class="nt-label">Apr 2</span></a>
-  <a class="nav-tag" href="#apr3"><span class="nt-dow">Fri</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 3</span></a>
-  <a class="nav-tag" href="#apr4"><span class="nt-dow">Sat</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 4</span></a>
-  <a class="nav-tag" href="#apr5"><span class="nt-dow">Sun</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 5</span></a>
-  <a class="nav-tag" href="#apr6"><span class="nt-dow">Mon</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 6</span></a>
-  <a class="nav-tag" href="#apr7"><span class="nt-dow">Tue</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 7</span></a>
-  <a class="nav-tag" href="#apr8"><span class="nt-dow">Wed</span><span class="nt-iata">SHA</span><span class="nt-label">Apr 8</span></a>
-  <a class="nav-tag" href="#apr9"><span class="nt-dow">Thu</span><span class="nt-iata">SHX</span><span class="nt-label">Apr 9</span></a>
-  <a class="nav-tag" href="#apr10"><span class="nt-dow">Fri</span><span class="nt-iata">AKL</span><span class="nt-label">Apr 10</span></a>
-  <a class="nav-tag" href="#apr11"><span class="nt-dow">Sat</span><span class="nt-iata">RAG</span><span class="nt-label">Apr 11</span></a>
-  <a class="nav-tag" href="#apr12"><span class="nt-dow">Sun</span><span class="nt-iata">CHC</span><span class="nt-label">Apr 12</span></a>
+  <a class="nav-tag" href="#apr1" onclick="openDay('apr1');event.preventDefault()"><span class="nt-dow">Wed</span><span class="nt-iata">CHC</span><span class="nt-label">Apr 1</span></a>
+  <a class="nav-tag" href="#apr2" onclick="openDay('apr2');event.preventDefault()"><span class="nt-dow">Thu</span><span class="nt-iata">AKL</span><span class="nt-label">Apr 2</span></a>
+  <a class="nav-tag" href="#apr3" onclick="openDay('apr3');event.preventDefault()"><span class="nt-dow">Fri</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 3</span></a>
+  <a class="nav-tag" href="#apr4" onclick="openDay('apr4');event.preventDefault()"><span class="nt-dow">Sat</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 4</span></a>
+  <a class="nav-tag" href="#apr5" onclick="openDay('apr5');event.preventDefault()"><span class="nt-dow">Sun</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 5</span></a>
+  <a class="nav-tag" href="#apr6" onclick="openDay('apr6');event.preventDefault()"><span class="nt-dow">Mon</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 6</span></a>
+  <a class="nav-tag" href="#apr7" onclick="openDay('apr7');event.preventDefault()"><span class="nt-dow">Tue</span><span class="nt-iata">PVG</span><span class="nt-label">Apr 7</span></a>
+  <a class="nav-tag" href="#apr8" onclick="openDay('apr8');event.preventDefault()"><span class="nt-dow">Wed</span><span class="nt-iata">SHA</span><span class="nt-label">Apr 8</span></a>
+  <a class="nav-tag" href="#apr9" onclick="openDay('apr9');event.preventDefault()"><span class="nt-dow">Thu</span><span class="nt-iata">SHX</span><span class="nt-label">Apr 9</span></a>
+  <a class="nav-tag" href="#apr10" onclick="openDay('apr10');event.preventDefault()"><span class="nt-dow">Fri</span><span class="nt-iata">AKL</span><span class="nt-label">Apr 10</span></a>
+  <a class="nav-tag" href="#apr11" onclick="openDay('apr11');event.preventDefault()"><span class="nt-dow">Sat</span><span class="nt-iata">RAG</span><span class="nt-label">Apr 11</span></a>
+  <a class="nav-tag" href="#apr12" onclick="openDay('apr12');event.preventDefault()"><span class="nt-dow">Sun</span><span class="nt-iata">CHC</span><span class="nt-label">Apr 12</span></a>
   <a class="nav-tag nt-text" href="#backpocket"><span class="nt-dow">Back pocket</span></a>
   <a class="nav-tag nt-text" href="#instagram"><span class="nt-dow">Instagram</span></a>
   <a class="nav-tag nt-text" href="#bookings"><span class="nt-dow">Bookings</span></a>
@@ -360,7 +361,7 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 <main class="main">
 <div id="days-main">
 
-<div class="phase"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Departure</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+<div class="phase"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">What's ahead</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
 
 <!-- APR 1 -->
 <div id="apr1" class="dc">
@@ -1296,7 +1297,7 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
 </div>
 
 <!-- BACK POCKET -->
-<div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">The city in your back pocket</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+<div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Back pocket</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
 <div id="backpocket" class="dc">
   <div class="dh" onclick="toggleDay(this)">
     <div class="dh-date" style="padding-top:4px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#9a9590" stroke-width="1"/><path d="M8 7h6M8 11h4M8 15h5" stroke="#9a9590" stroke-width="1" stroke-linecap="round"/></svg></div>
@@ -1383,8 +1384,8 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
     </div>
   </div>
 </div>
-<div class="phase" style="margin-top:48px"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Confirmed bookings</div><div class="phase-diamond"></div><div class="phase-line"></div></div>
-<div id="bookings">
+<div class="phase" style="margin-top:48px;cursor:pointer;user-select:none" onclick="toggleBookings(this)" id="bookings-toggle"><div class="phase-line"></div><div class="phase-diamond"></div><div class="phase-text">Confirmed bookings <span id="bk-arrow" style="font-size:9px;opacity:0.5">&#9660;</span></div><div class="phase-diamond"></div><div class="phase-line"></div></div>
+<div id="bookings" style="display:none">
   <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">1486586039148450</div><div><div class="bk-name">Pullman Shanghai Central</div><div class="bk-sum">Apr 2&ndash;8 &middot; 6 nights &middot; Breakfast included</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Booking ref</div><div class="bk-v mono">1486586039148450</div></div><div class="bk-kv"><div class="bk-k">PIN</div><div class="bk-v mono">9801</div></div><div class="bk-kv"><div class="bk-k">Room</div><div class="bk-v">Superior Queen, king bed, non-smoking</div></div><div class="bk-kv"><div class="bk-k">Floors</div><div class="bk-v">6&ndash;10, city view</div></div><div class="bk-kv"><div class="bk-k">Check-in</div><div class="bk-v">Apr 2, after 14:00</div></div><div class="bk-kv"><div class="bk-k">Check-out</div><div class="bk-v">Apr 8 &mdash; request 12:30 on arrival</div></div><div class="bk-kv"><div class="bk-k">Deposit</div><div class="bk-v">CNY 1,500 at check-in</div></div><div class="bk-kv"><div class="bk-k">Meals</div><div class="bk-v">Breakfast for 1, Apr 3&ndash;8</div></div></div></div></div>
   <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">334657709</div><div><div class="bk-name">UnTour Street Eats Breakfast</div><div class="bk-sum">Sat Apr 4 &middot; 8:00&ndash;11:00 AM &middot; Xiangyang Park</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Booking ref</div><div class="bk-v mono">334657709</div></div><div class="bk-kv"><div class="bk-k">Order</div><div class="bk-v mono">FHYGEA</div></div><div class="bk-kv"><div class="bk-k">Meeting point</div><div class="bk-v">Xiangyang Park entrance, 1008 Huaihai Middle Rd</div></div><div class="bk-kv"><div class="bk-k">Show DiDi</div><div class="bk-v">襄阳公园-南门</div></div><div class="bk-kv"><div class="bk-k">Cancellation</div><div class="bk-v">24h+ for full refund</div></div></div></div></div>
   <div class="bk-section"><div class="bk-hdr" onclick="toggleBk(this)"><div class="bk-hdr-l"><div class="bk-ref">335979986</div><div><div class="bk-name">UnTour Night Eats Tour</div><div class="bk-sum">Mon Apr 6 &middot; 6:00&ndash;9:00 PM &middot; Jiangsu Rd station Exit 1</div></div></div><div class="bk-ch">&#9660;</div></div><div class="bk-body"><div class="bk-grid"><div class="bk-kv"><div class="bk-k">Booking ref</div><div class="bk-v mono">335979986</div></div><div class="bk-kv"><div class="bk-k">Meeting point</div><div class="bk-v">Jiangsu Rd station Exit 1</div></div><div class="bk-kv"><div class="bk-k">Show DiDi</div><div class="bk-v">江苏路地铁站-1口</div></div><div class="bk-kv"><div class="bk-k">Cancellation</div><div class="bk-v">24h+ for full refund</div></div></div></div></div>
@@ -1422,6 +1423,36 @@ function toggleBriefing(hdr){var body=hdr.nextElementSibling;body.classList.togg
 function toggleDay(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.ch'),open=bd.classList.contains('open');bd.classList.toggle('open',!open);hdr.classList.toggle('open',!open);if(ch)ch.classList.toggle('open',!open)}
 function toggleDet(btn){var det=btn.nextElementSibling;det.classList.toggle('open',!det.classList.contains('open'));btn.classList.toggle('open',!btn.classList.contains('open'))}
 function toggleBk(hdr){var bd=hdr.nextElementSibling,ch=hdr.querySelector('.bk-ch');bd.classList.toggle('open',!bd.classList.contains('open'));if(ch)ch.classList.toggle('open',!ch.classList.contains('open'))}
+function toggleBookings(el){
+  var panel=document.getElementById('bookings');
+  var arrow=document.getElementById('bk-arrow');
+  var hidden=panel.style.display==='none';
+  panel.style.display=hidden?'block':'none';
+  if(arrow)arrow.innerHTML=hidden?'&#9650;':'&#9660;';
+}
+function openDay(id){
+  // If in past-days section, reveal it first
+  var pastInner=document.getElementById('past-days-inner');
+  if(pastInner){
+    var inPast=pastInner.querySelector('#'+id);
+    if(inPast){
+      pastInner.classList.add('open');
+      var toggle=document.querySelector('.past-days-toggle');
+      if(toggle)toggle.classList.add('open');
+    }
+  }
+  var dc=document.getElementById(id);
+  if(!dc)return;
+  var dh=dc.querySelector('.dh');
+  var db=dc.querySelector('.db');
+  var ch=dc.querySelector('.ch');
+  if(db&&!db.classList.contains('open')){
+    db.classList.add('open');
+    if(dh)dh.classList.add('open');
+    if(ch)ch.classList.add('open');
+  }
+  setTimeout(function(){dc.scrollIntoView({behavior:'smooth',block:'start'})},50);
+}
 
 function addNote(){var el=document.getElementById('note-input'),t=el.value.trim();if(!t)return;notes.unshift({t:t,d:new Date().toLocaleDateString('en-NZ',{day:'numeric',month:'short'})});localStorage.setItem('sh26g',JSON.stringify(notes));el.value='';renderNotes()}
 function delNote(i){notes.splice(i,1);localStorage.setItem('sh26g',JSON.stringify(notes));renderNotes()}
