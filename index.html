@@ -1602,30 +1602,56 @@ function synthesiseNotes(){
   if(!notes.length){alert('Add some notes first.');return;}
   var btn=document.getElementById('ai-btn');
   var result=document.getElementById('notes-ai-result');
-  btn.disabled=true;btn.innerHTML='<span class="ai-thinking">Thinking&hellip;</span>';
+  btn.disabled=true;
+  btn.innerHTML='<span class="ai-thinking">Thinking...</span>';
   result.style.display='none';
   var latest=notes[0];
   var noteText=latest.t;
-  // Step 1: ask clarifying questions
-  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,system:'You are a travel assistant. The user is in Shanghai/Shaoxing, China. They just saved a field note. Ask them 1-2 short, specific clarifying questions to help you write a more useful version of the note. Questions only -- no preamble, no explanation. Format: just the questions, one per line.',messages:[{role:'user',content:'My note: '+noteText}]})}).then(function(r){return r.json()}).then(function(d){
-    var questions=d.content&&d.content[0]?d.content[0].text:'';
+  var prompt='My note: '+noteText;
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:200,
+      system:'You are a travel assistant. The user is in Shanghai or Shaoxing, China. They saved a rough field note. Ask them 1-2 short specific clarifying questions to help write a more useful version. Questions only, no preamble.',
+      messages:[{role:'user',content:prompt}]
+    })
+  }).then(function(r){return r.json();}).then(function(d){
+    var q=d.content&&d.content[0]?d.content[0].text:'';
     result.style.display='block';
-    result.innerHTML='<strong style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);display:block;margin-bottom:10px">A couple of quick questions</strong><div style="font-size:13px;color:var(--t);line-height:1.8;margin-bottom:12px">'+questions.replace(/\n/g,'<br>')+'</div><textarea id="ai-answers" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-size:13px;resize:vertical;min-height:60px;background:var(--bg);color:var(--t)" placeholder="Your answers..."></textarea><div style="margin-top:8px"><button class="btn" onclick="enrichNote(''+encodeURIComponent(noteText)+'')" style="border-color:var(--acm);color:var(--accent)">Write it up &rsaquo;</button></div>';
+    result.innerHTML='<strong style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);display:block;margin-bottom:10px">A couple of quick questions</strong>'
+      +'<div style="font-size:13px;color:var(--t);line-height:1.8;margin-bottom:12px">'+q.replace(/\n/g,'<br>')+'</div>'
+      +'<textarea id="ai-answers" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:var(--rs);font-size:13px;resize:vertical;min-height:60px;background:var(--bg);color:var(--t)" placeholder="Your answers..."></textarea>'
+      +'<div style="margin-top:8px"><button class="btn" onclick="enrichNote()" style="border-color:var(--acm);color:var(--accent)">Write it up &rsaquo;</button></div>';
+    window._pendingNote=noteText;
     btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';
-  }).catch(function(){result.style.display='block';result.innerHTML='Could not reach Claude.';btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';});
+  }).catch(function(){
+    result.style.display='block';result.innerHTML='Could not reach Claude.';
+    btn.disabled=false;btn.innerHTML='Ask Claude &rsaquo;';
+  });
 }
-function enrichNote(encodedNote){
-  var noteText=decodeURIComponent(encodedNote);
+function enrichNote(){
+  var noteText=window._pendingNote||'';
   var answers=document.getElementById('ai-answers')?document.getElementById('ai-answers').value:'';
   var result=document.getElementById('notes-ai-result');
-  result.innerHTML='<span class="ai-thinking">Writing it up&hellip;</span>';
-  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:'You are a travel assistant. The user is in Shanghai/Shaoxing, China. They saved a rough field note and answered your clarifying questions. Write an enriched, useful version of the note -- something they will actually want to reference later. 2-4 sentences, plain prose, specific and concrete. No preamble.',messages:[{role:'user',content:'Original note: '+noteText+'\n\nMy answers to your questions: '+answers+'\n\nWrite the enriched note.'}]})}).then(function(r){return r.json()}).then(function(d){
+  result.innerHTML='<span class="ai-thinking">Writing it up...</span>';
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:300,
+      system:'You are a travel assistant. The user is in Shanghai or Shaoxing, China. They saved a rough field note and answered clarifying questions. Write an enriched, useful 2-4 sentence version they will want to reference later. Plain prose, specific and concrete, no preamble.',
+      messages:[{role:'user',content:'Original note: '+noteText+' Answers: '+answers}]
+    })
+  }).then(function(r){return r.json();}).then(function(d){
     var enriched=d.content&&d.content[0]?d.content[0].text:'';
-    // Replace note in storage with enriched version
     notes[0].t=enriched;notes[0].enriched=true;
     localStorage.setItem('sh26g',JSON.stringify(notes));
     renderNotes();
-    result.innerHTML='<strong style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);display:block;margin-bottom:8px">Note updated</strong><div style="font-size:13px;color:var(--t);line-height:1.8">'+enriched+'</div>';
+    result.innerHTML='<strong style="font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);display:block;margin-bottom:8px">Note updated</strong>'
+      +'<div style="font-size:13px;color:var(--t);line-height:1.8">'+enriched+'</div>';
   }).catch(function(){result.innerHTML='Could not reach Claude.';});
 }
 function addIg(){var el=document.getElementById('ig-input'),t=el.value.trim();if(!t)return;igUrls.unshift(t);localStorage.setItem('sh26gig',JSON.stringify(igUrls));el.value='';renderIg()}
