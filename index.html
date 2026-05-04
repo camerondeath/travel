@@ -1821,6 +1821,26 @@ reorganisePastDays();
     }
   });
 })();
+
 </script>
+<script>
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    var main=document.getElementById('days-main');
+    var pastWrap=document.querySelector('.past-days-wrap');
+    if(pastWrap){
+      var inner=pastWrap.querySelector('.past-days-inner');
+      if(inner){
+        while(inner.firstChild){main.appendChild(inner.firstChild);}
+      }
+      pastWrap.remove();
+    }
+    document.querySelectorAll('.dc.past').forEach(function(d){d.classList.remove('past');});
+    document.querySelectorAll('.nav-tag.nt-past').forEach(function(n){n.classList.remove('nt-past');});
+    document.querySelectorAll('.nav-tag.nt-today').forEach(function(n){n.classList.remove('nt-today');});
+  },100);
+});
+</script>
+
 </body>
 </html>
