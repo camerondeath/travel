@@ -1822,7 +1822,6 @@ reorganisePastDays();
   });
 })();
 
-</script>
 <script>
 window.addEventListener('load',function(){
   setTimeout(function(){
@@ -1838,9 +1837,12 @@ window.addEventListener('load',function(){
     document.querySelectorAll('.dc.past').forEach(function(d){d.classList.remove('past');});
     document.querySelectorAll('.nav-tag.nt-past').forEach(function(n){n.classList.remove('nt-past');});
     document.querySelectorAll('.nav-tag.nt-today').forEach(function(n){n.classList.remove('nt-today');});
+    var apr5=document.getElementById('apr5');
+    if(apr5)apr5.remove();
+    var apr5nav=document.querySelector('.nav-tag[href="#apr5"]');
+    if(apr5nav)apr5nav.remove();
   },100);
 });
 </script>
-
 </body>
 </html>
