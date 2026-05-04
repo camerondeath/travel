@@ -1844,5 +1844,58 @@ window.addEventListener('load',function(){
   },500);
 });
 </script>
+
+
+
+  <script>
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    // Move past days back into main flow
+    var main=document.getElementById('days-main');
+    var pastWrap=document.querySelector('.past-days-wrap');
+    if(pastWrap && main){
+      var inner=pastWrap.querySelector('.past-days-inner');
+      if(inner){
+        while(inner.firstChild){main.appendChild(inner.firstChild);}
+      }
+      pastWrap.remove();
+    }
+    // Strip styling classes
+    document.querySelectorAll('.dc.past').forEach(function(d){d.classList.remove('past');});
+    document.querySelectorAll('.nav-tag.nt-past').forEach(function(n){n.classList.remove('nt-past');});
+    document.querySelectorAll('.nav-tag.nt-today').forEach(function(n){n.classList.remove('nt-today');});
+    // Remove the original Apr 5
+    var apr5=document.getElementById('apr5');
+    if(apr5)apr5.remove();
+    var apr5nav=document.querySelector('.nav-tag[href="#apr5"]');
+    if(apr5nav)apr5nav.remove();
+    // Override toggle with a simple working version, in case the original is broken
+    window.toggleDay=function(hdr){
+      var dc=hdr.closest('.dc');
+      if(!dc)return;
+      var db=dc.querySelector('.db');
+      var ch=hdr.querySelector('.ch');
+      if(db){
+        db.classList.toggle('open');
+        hdr.classList.toggle('open');
+        if(ch)ch.classList.toggle('open');
+      }
+    };
+    window.openDay=function(id){
+      var dc=document.getElementById(id);
+      if(!dc)return;
+      var hdr=dc.querySelector('.dh');
+      var db=dc.querySelector('.db');
+      var ch=hdr?hdr.querySelector('.ch'):null;
+      if(db && !db.classList.contains('open')){
+        db.classList.add('open');
+        if(hdr)hdr.classList.add('open');
+        if(ch)ch.classList.add('open');
+      }
+      dc.scrollIntoView({behavior:'smooth',block:'start'});
+    };
+  },300);
+});
+</script>
 </body>
 </html>
