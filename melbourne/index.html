@@ -9,25 +9,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --night:   #14161d;
-  --night-2: #1b1e27;
-  --night-3: #21252f;
-  --paper:   #efe9dd;
-  --paper-dim: #cbc6bb;
-  --brass:   #cf9a52;
-  --brass-dim: #9a7740;
-  --mist:    #8b919e;
-  --line:    #2b2f3b;
-  --line-2:  #363b48;
-  --good:    #7faf7a;
-  --pend:    #cf9a52;
-  --open:    #7d93c4;
-  --serif: 'Newsreader', Georgia, serif;
-  --display: 'Fraunces', Georgia, serif;
-  --sans: 'Inter', -apple-system, system-ui, sans-serif;
+  --night:    #14161d;
+  --night-2:  #1b1e27;
+  --night-3:  #21252f;
+  --paper:    #efe9dd;
+  --paper-dim:#cbc6bb;
+  --brass:    #cf9a52;
+  --brass-dim:#9a7740;
+  --mist:     #8b919e;
+  --line:     #2b2f3b;
+  --line-2:   #363b48;
+  --good:     #7faf7a;
+  --pend:     #cf9a52;
+  --open:     #7d93c4;
+  --serif:    'Newsreader', Georgia, serif;
+  --display:  'Fraunces', Georgia, serif;
+  --sans:     'Inter', -apple-system, system-ui, sans-serif;
   --max: 760px;
-  --fs-xs: 0.7rem; --fs-sm: 0.82rem; --fs-md: 1.05rem;
-  --fs-lg: 1.3rem; --fs-2xl: clamp(2.6rem, 7vw, 4.4rem);
+  --fs-xs: 0.7rem; --fs-sm: 0.82rem; --fs-md: 1.05rem; --fs-lg: 1.3rem;
+  --fs-2xl: clamp(2.6rem, 7vw, 4.4rem);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -44,33 +44,20 @@ body { background: var(--night); color: var(--paper); font-family: var(--serif);
 .masthead h1 em { font-style: italic; font-weight: 300; color: var(--brass); }
 .masthead .meta { font-family: var(--sans); font-size: var(--fs-sm); color: var(--mist); margin-top: 1.6rem; border-top: 1px solid var(--line); padding-top: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 1.5rem; }
 @media (max-width: 480px) { .masthead .meta { grid-template-columns: 1fr; } }
-.masthead .meta .row { display: flex; gap: 0.5rem; }
+.masthead .meta .row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .masthead .meta .lbl { color: var(--mist); flex-shrink: 0; }
-.masthead .meta a { color: var(--paper-dim); text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px; }
+.masthead .meta a { color: var(--paper-dim); text-decoration: none; border-bottom: 1px solid var(--line-2); }
 .masthead .meta a:hover { color: var(--brass); }
 .masthead .meta .flight { font-size: var(--fs-xs); color: var(--paper-dim); }
 
-/* ESSAYS */
+/* HERO ESSAY */
 .hero-essay { padding: 1.5rem 0 3.5rem; border-bottom: 1px solid var(--line); }
 .hero-essay .kicker { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-dim); margin-bottom: 1rem; }
-.hero-essay h2 { font-family: var(--display); font-size: clamp(1.8rem, 4.5vw, 2.7rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; color: var(--paper); margin-bottom: 1rem; font-optical-sizing: auto; }
+.hero-essay h2 { font-family: var(--display); font-size: clamp(1.8rem, 4.5vw, 2.7rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin-bottom: 1rem; font-optical-sizing: auto; }
 .hero-essay .standfirst { font-family: var(--serif); font-size: var(--fs-lg); font-weight: 300; font-style: italic; color: var(--brass); line-height: 1.4; margin-bottom: 2rem; max-width: 34ch; }
 .prose p { margin-bottom: 1.3em; color: var(--paper-dim); }
 .prose p:last-child { margin-bottom: 0; }
 .hero-essay .prose > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 4.2em; line-height: 0.74; font-weight: 400; padding: 0.05em 0.1em 0 0; color: var(--brass); }
-
-/* CARTIER DEEP READ */
-.cartier-section { border-bottom: 1px solid var(--line); }
-.cartier-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; background: none; border: none; border-top: 1px solid var(--line); padding: 1.4rem 0; cursor: pointer; text-align: left; color: var(--paper); }
-.cartier-toggle .left { display: flex; flex-direction: column; gap: 0.2rem; }
-.cartier-toggle .kicker { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-dim); }
-.cartier-toggle .label { font-family: var(--display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 400; letter-spacing: -0.01em; line-height: 1; font-optical-sizing: auto; }
-.cartier-toggle .chev { font-family: var(--sans); font-size: 1.2rem; color: var(--brass-dim); transition: transform 0.22s; flex-shrink: 0; margin-left: 1rem; }
-.cartier-toggle.on .chev { transform: rotate(90deg); }
-.cartier-body { display: none; padding-bottom: 3rem; }
-.cartier-body.on { display: block; }
-.cartier-body .standfirst { font-family: var(--serif); font-size: var(--fs-lg); font-weight: 300; font-style: italic; color: var(--brass); line-height: 1.4; margin-bottom: 2rem; max-width: 38ch; padding-top: 0.5rem; }
-.cartier-body .prose > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 3.6em; line-height: 0.76; font-weight: 400; padding: 0.06em 0.1em 0 0; color: var(--brass-dim); }
 
 /* DAY CHAPTERS */
 .chapter { padding: 3.5rem 0; border-bottom: 1px solid var(--line); }
@@ -87,33 +74,46 @@ body { background: var(--night); color: var(--paper); font-family: var(--serif);
 /* SPINE */
 .spine { position: relative; padding-left: 2.5rem; }
 .spine::before { content: ''; position: absolute; left: 5px; top: 0.5rem; bottom: 0.5rem; width: 1px; background: linear-gradient(var(--brass-dim), var(--line) 90%); }
-.stop { position: relative; margin-bottom: 1.9rem; }
+.stop { position: relative; margin-bottom: 2rem; }
 .stop:last-child { margin-bottom: 0; }
 .stop::before { content: ''; position: absolute; left: calc(-2.5rem + 1px); top: 0.45rem; width: 11px; height: 11px; border-radius: 50%; background: var(--night); border: 1.5px solid var(--brass-dim); }
 .stop[data-kind="food"]::before { border-color: var(--brass); }
 .stop[data-kind="culture"]::before { background: var(--brass); border-color: var(--brass); }
 .stop[data-kind="rest"]::before { border-style: dotted; }
 .stop-time { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.08em; color: var(--brass); text-transform: uppercase; }
-.stop-title { font-family: var(--display); font-size: 1.18rem; font-weight: 500; color: var(--paper); margin: 0.1rem 0 0.3rem; line-height: 1.25; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.stop-title { font-family: var(--display); font-size: 1.18rem; font-weight: 500; color: var(--paper); margin: 0.1rem 0 0.25rem; line-height: 1.25; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .stop-note { font-family: var(--sans); font-size: var(--fs-sm); color: var(--mist); line-height: 1.6; }
-.stop-links { margin-top: 0.5rem; display: flex; gap: 1.1rem; }
-.stop-links a { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brass-dim); text-decoration: none; transition: color 0.15s; }
+.stop-links { margin-top: 0.45rem; display: flex; gap: 1.1rem; }
+.stop-links a { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brass-dim); text-decoration: none; }
 .stop-links a:hover { color: var(--brass); }
+
+/* TAGS */
 .tag { font-family: var(--sans); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.18em 0.6em; border-radius: 2px; white-space: nowrap; }
 .tag.confirmed { color: var(--good); border: 1px solid color-mix(in srgb, var(--good) 40%, transparent); }
 .tag.pending { color: var(--pend); border: 1px solid color-mix(in srgb, var(--pend) 40%, transparent); }
 .tag.open { color: var(--open); border: 1px solid color-mix(in srgb, var(--open) 40%, transparent); }
 
-/* FORK */
-.fork { margin-top: 1rem; padding: 0.9rem 1rem; background: var(--night-2); border: 1px solid var(--line); border-radius: 4px; }
-.fork-q { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); margin-bottom: 0.7rem; }
-.fork-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-@media (max-width: 480px) { .fork-opts { grid-template-columns: 1fr; } }
-.fork-opt { text-align: left; background: var(--night-3); border: 1px solid var(--line-2); border-radius: 3px; padding: 0.65rem 0.75rem; cursor: pointer; transition: border-color 0.15s, background 0.15s; color: var(--paper); font-family: inherit; }
-.fork-opt:hover { border-color: var(--brass-dim); }
-.fork-opt.on { border-color: var(--brass); background: color-mix(in srgb, var(--brass) 8%, var(--night-3)); }
-.fork-opt .n { font-family: var(--sans); font-size: var(--fs-sm); font-weight: 600; display: block; margin-bottom: 0.2rem; }
-.fork-opt .d { font-family: var(--sans); font-size: var(--fs-xs); color: var(--mist); line-height: 1.5; }
+/* CONTEXT EXPAND — the key new element */
+.ctx { margin-top: 0.75rem; }
+.ctx-toggle {
+  display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;
+  background: none; border: none; padding: 0;
+  font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass-dim);
+  transition: color 0.15s;
+}
+.ctx-toggle:hover { color: var(--brass); }
+.ctx-toggle .arr { font-size: 0.75rem; transition: transform 0.2s; display: inline-block; }
+.ctx-toggle.on .arr { transform: rotate(90deg); }
+.ctx-body {
+  display: none; margin-top: 1rem;
+  padding: 1.1rem 1.25rem; background: var(--night-2);
+  border-left: 2px solid var(--brass-dim); border-radius: 0 4px 4px 0;
+}
+.ctx-body.on { display: block; }
+.ctx-body .prose p { font-size: var(--fs-sm); color: var(--paper-dim); margin-bottom: 1em; }
+.ctx-body .prose p:last-child { margin-bottom: 0; }
+.ctx-body .prose > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 2.8em; line-height: 0.76; font-weight: 400; padding: 0.06em 0.08em 0 0; color: var(--brass-dim); }
 
 /* LEDGER */
 .ledger { padding: 3.5rem 0; border-bottom: 1px solid var(--line); }
@@ -121,10 +121,10 @@ body { background: var(--night); color: var(--paper); font-family: var(--serif);
 .ledger-list { display: flex; flex-direction: column; }
 .ledger-row { display: flex; align-items: baseline; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
 .ledger-row:first-child { border-top: 1px solid var(--line); }
-.ledger-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; align-self: center; }
-.ledger-dot.confirmed { background: var(--good); }
-.ledger-dot.pending { background: var(--pend); }
-.ledger-dot.open { background: var(--open); }
+.ldot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; align-self: center; }
+.ldot.confirmed { background: var(--good); }
+.ldot.pending { background: var(--pend); }
+.ldot.open { background: var(--open); }
 .ledger-main { flex: 1; min-width: 0; }
 .ledger-label { font-family: var(--display); font-size: 1.05rem; font-weight: 500; }
 .ledger-sub { font-family: var(--sans); font-size: var(--fs-xs); color: var(--mist); margin-top: 0.1rem; }
@@ -177,20 +177,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
 
 <section class="hero-essay" id="hero"></section>
 
-<section class="cartier-section">
-  <button class="cartier-toggle" id="cartier-toggle" aria-expanded="false">
-    <div class="left">
-      <span class="kicker">Exhibition guide</span>
-      <span class="label" id="cartier-title"></span>
-    </div>
-    <span class="chev" aria-hidden="true">›</span>
-  </button>
-  <div class="cartier-body" id="cartier-body">
-    <p class="standfirst" id="cartier-standfirst"></p>
-    <div class="prose" id="cartier-prose"></div>
-  </div>
-</section>
-
 <main id="chapters"></main>
 
 <section class="ledger"><div class="section-label">The bookings</div><div class="ledger-list" id="ledger-list"></div></section>
@@ -228,31 +214,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     }
   },
 
-  cartier: {
-    title: "Cartier at the NGV",
-    standfirst: "Nearly 400 jewels, tiaras, timepieces and objects: the most extensive Cartier exhibition ever mounted in Australia, direct from the V&A.",
-    body: `<p>The exhibition begins, chronologically, with the moment the company stopped being a competent Parisian jeweller and became something else entirely. In 1900, Louis, Pierre and Jacques Cartier inherited their grandfather's firm and opened branches in London and New York within a decade. They also started collecting clients: the Maharaja of Patiala, King Edward VII, the Duchess of Manchester, Dame Nellie Melba. The Maharaja commissioned a necklace requiring 2,930 diamonds anchored by a 234-carat yellow diamond; it was lost after Indian independence, rediscovered in 1998 stripped of its stones, and Cartier replaced them with replicas. Both versions are here.</p>
-
-<p>The exhibition is organised thematically rather than strictly by date, which means you move through ideas rather than decades. A bold yellow room traces the brothers' world of inspiration across India, Egypt, Iran, China and Japan. The Tutti Frutti collection occupies its own space: carved rubies, emeralds and sapphires stacked into bracelets and clips, the stones cut to echo Indian jewellery traditions, the settings unmistakably 1920s French. These are the pieces that showed up at Nancy Cunard's wrist in photographs and have been copied ever since without ever being equalled.</p>
-
-<p>Jeanne Toussaint is the figure who earns her own gallery. Creative director from 1933 to 1970, she elevated the panther from a repeating motif into an emblem, a metaphor for a certain kind of woman at a moment when French women had not yet earned the right to vote. The Duchess of Windsor's panther clip -- a platinum and diamond cat crouching on a 152-carat cabochon sapphire -- is here, along with the story of Wallis Simpson's relationship with the house and what that patronage meant to both parties.</p>
-
-<p>The watches room sits midway through as a palate cleanser, cool grey against the colour elsewhere. The 1914 Model A mystery clock -- diamond-encrusted hands that appear to float with no visible mechanism -- is the piece the Cartier Collection director named as the one she would save in an emergency. The film and celebrity room that follows it contains Elizabeth Taylor's Burmese ruby necklace from her third husband Mike Todd and pieces commissioned by Maria Felix: articulated snake and crocodile necklaces in diamonds and emeralds that move when worn, designed for a woman who kept real animals.</p>
-
-<p>The final gallery is entirely tiaras, twenty-four of them, including the Scroll Tiara of 1902 worn by Lady Clementine Churchill at the Queen's coronation and later photographed on Rihanna's head for W Magazine in 2016. The connection between those two images -- the weight of a specific object moving through time, accumulating associations -- is something you can only understand standing in front of the thing.</p>
-
-<p>The exhibition design is by Studio Sabine Marcelis and CLOUD from Rotterdam: coloured rooms that read as settings for the stones rather than neutral backgrounds. An original score by Japanese electronic composer Ai Yamamoto and Finnish composer Erkki Veltheim runs throughout. The V&A's Helen Molesworth narrates the audio guide if you want more -- $7, worth it, download before you go.</p>
-
-<p>Allow at least two hours. The free guided tour at 2:30pm covers the panther brooch, the mystery clock, the Tank watch and the key themes in around 45 minutes. It is a good frame for the rooms that follow.</p>`
-  },
-
   bookings: [
     { id: "bk3", label: "Hamlet, Fairfax Studio", sub: "Thu 9 Jul · 7:00pm · F15 Stalls Premium", state: "confirmed", ref: "#10678334" },
     { id: "bk4", label: "Cartier, NGV International", sub: "Fri 10 Jul · 2:00pm entry", state: "confirmed", ref: "#5704410" },
     { id: "bk5", label: "Bar Lourinhã", sub: "Wed 8 Jul · 7:30pm · bar seat", state: "confirmed", url: "https://barlourinha.com.au" },
     { id: "bk7", label: "Saadi", sub: "Fri 10 Jul · 6:30pm · downstairs", state: "confirmed", ref: "7V9NFNX4NPW7", url: "https://saadi.com.au" },
-    { id: "bk6", label: "Tipo 00", sub: "Thu 9 Jul · pre-theatre · on waitlist", state: "pending", url: "https://www.tipo00.com.au" },
     { id: "bk8", label: "Lee Ho Fook", sub: "Sat 11 Jul · 6:30pm · chef's counter", state: "confirmed", ref: "#11936" },
+    { id: "bk6", label: "Tipo 00", sub: "Thu 9 Jul · pre-theatre · on waitlist", state: "pending", url: "https://www.tipo00.com.au" },
     { id: "bk9", label: "Airport Uber", sub: "Sun 12 Jul · 6:30am · schedule Sat night", state: "open" },
     { id: "bk1", label: "Flights, Qantas", sub: "QF170 / QF167 · E8GW8J", state: "confirmed" },
     { id: "bk2", label: "Apartment, Little Collins", sub: "8–12 Jul · check-in 3pm", state: "confirmed" },
@@ -263,72 +231,163 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
       id: "wed", dow: "Wednesday", date: "8 July", chapter: "I",
       title: "Landing Into the Dark",
       essay: `<p>You land at twenty to six into a dark that arrived hours early. By the time the Uber comes down the Tullamarine freeway -- about 35 minutes from the terminal -- the city has switched fully into its winter evening self, and the drop into the grid feels less like arrival than absorption. Drop the bag, find the bin room, do not unpack. The night already has a shape.</p>
-<p>That shape is Bar Lourinhã, three minutes on foot from your door, where a seat at the bar has your name on it. Matt McConnell and his partner Jo Gamvros opened this room twenty years ago and it has been an institution ever since, one of the venues that anchored what the CBD's laneway dining culture later became. The room is covered floor to ceiling in bric-a-brac -- a rifle that turns out to be a Russian vodka bottle, religious iconography, op-shop art, the accumulated curiosity of two decades of passionate collecting. It suits the food, which is Iberian and Mediterranean and deeply interested in good ingredients: the spiced chickpeas and spinach that reviewers have mentioned for fifteen years without it getting old; croquettes of corn and smoked chilli; pipis steamed with fino sherry; the kingfish pancetta tostada, which Gourmet Traveller once called a signature not just for this room but for the state. Order across the whole evening. This is the right first meal in Melbourne because it asks nothing of you but appetite.</p>`,
+<p>That shape is Bar Lourinhã, three minutes on foot from your door, where a seat at the bar has your name on it. It is the right first meal in Melbourne: unpretentious, confident, deeply good.</p>`,
       events: [
         { time: "3:45pm", title: "QF170 departs Christchurch", kind: "travel", note: "Boeing 737. Check-in closes 2:45pm CHC." },
-        { time: "5:35pm", title: "Land at Tullamarine", kind: "travel", note: "Terminal 2. Gold status means priority bags. Uber rank is signposted from the arrivals hall -- around 35 minutes to the CBD.", map: "https://maps.google.com/?q=Melbourne+Airport+Tullamarine" },
-        { time: "~6:15pm", title: "192 Little Collins Street, Unit 1", kind: "base", note: "Access instructions arrive 48 hours before. The bin room is the second black door in the laneway beside the building, code 1634.", map: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
-        { time: "7:30pm", title: "Bar Lourinhã", kind: "food", state: "confirmed", note: "3-minute walk east to 37 Little Collins Street. Bar seat confirmed. Chef Matt McConnell's Iberian room, open 20 years, still one of the best in the CBD. Order 4-5 things across the evening, not a main-plus-sides meal. Ask what the kitchen is proud of tonight.", map: "https://maps.google.com/?q=37+Little+Collins+Street+Melbourne", book: "https://barlourinha.com.au" },
+        { time: "5:35pm", title: "Land at Tullamarine", kind: "travel", note: "Terminal 2. Gold status means priority bags. Uber rank signposted from arrivals -- about 35 minutes to the CBD.", map: "https://maps.google.com/?q=Melbourne+Airport+Tullamarine" },
+        { time: "~6:15pm", title: "192 Little Collins Street, Unit 1", kind: "base", note: "Access instructions arrive 48 hours before. Bin room is the second black door in the laneway beside the building.", map: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
+        { time: "7:30pm", title: "Bar Lourinhã", kind: "food", state: "confirmed",
+          note: "37 Little Collins Street, 3-minute walk. Bar seat confirmed. Order 4-5 things across the evening.",
+          map: "https://maps.google.com/?q=37+Little+Collins+Street+Melbourne",
+          expand: {
+            label: "About Bar Lourinhã",
+            body: `<p>Matt McConnell and his partner Jo Gamvros opened this room in 2006, and it has been part of the city's dining furniture ever since -- one of the venues that anchored what the CBD laneway culture later became. Twenty years on, the room still does what it was always designed to do: feed people well at the bar, without ceremony.</p>
+<p>The decor resists description and rewards inspection. A Russian vodka bottle shaped like a rifle. Religious iconography from several traditions, none of them serious. Op-shop paintings massed floor to ceiling. The accumulated curiosity of two decades of passionate collecting by people who have eaten their way around the Iberian Peninsula many times. It is someone's living room if that someone happened to also be an acclaimed chef.</p>
+<p>The food is Iberian and Mediterranean, and it is deeply interested in good ingredients: pipis steamed with fino sherry; spiced chickpeas and spinach that reviewers have mentioned for fifteen years without it getting old; grilled chorizo and pork liver pintxos; the kingfish pancetta tostada that Gourmet Traveller once called a signature not just for this room but for Victoria. The blackboard wine list leans Spanish without being didactic. Ask the kitchen what is good tonight and order accordingly. This is not a place for main-and-sides thinking; three or four plates across the evening is the method.</p>`
+          }
+        },
       ]
     },
 
     {
       id: "thu", dow: "Thursday", date: "9 July", chapter: "II",
       title: "Work, Then the North, Then a Dane",
-      essay: `<p>The morning belongs to the desk. Six hours of work from the apartment, which is no hardship in a flat with good light and a city waiting outside. If you need to break the mid-morning spell, Pellegrini's is around the corner on Bourke Street -- unchanged since 1954, a formica bar where the coffee is cheap and the welcome has not been refreshed by a brand consultant in seventy years. It is the antidote to everything curated.</p>
-<p>At two the city opens up. Take the 86 tram from the Bourke Street stop and ride it north for fifteen minutes into Fitzroy, Melbourne's first suburb and still its most stubbornly itself. Get off at the Smith Street corner and walk west along Gertrude Street, the denser and more interesting of the neighbourhood's two arteries. Gertrude runs only six blocks, but it concentrates more of what makes this city interesting per square metre than almost anywhere. On your left as you walk west: Gertrude Contemporary, an artist-run space that has been showing emerging and mid-career work for thirty years, free, always worth fifteen minutes. Marion, Andrew McConnell's wine bar at number 53, doing 25-plus wines by the glass and plates of mussels and nduja. Cutler and Co further along, McConnell's fine-dining flagship in a former metalworks factory, white tablecloths and serious cooking for a different occasion. The Australian Print Workshop on the corner. Archie's All Day at 189 for coffee if you need one. The Everleigh upstairs at around 150 -- a pre-Prohibition cocktail bar in a 1920s parlour atmosphere, open Thursday to Saturday from 5pm -- if you are still there at that hour. Brunswick Street is longer and louder and you can give it whatever time remains. The neighbourhood rewards a slow pace; locals tend to stay for hours without particularly trying to.</p>
-<p>Then the evening sharpens to a point. Dinner at the Tipo 00 counter -- fast, precise, pasta only, a glass of lambrusco standing in for ceremony -- because tonight ceremony is happening four minutes' walk south. Eddie Izzard, alone on the Fairfax Studio stage, performing the whole of Hamlet. One body, every part, the most famous play in the language compressed into a single nervous system. You are in seat F15, close enough to watch it cost something.</p>`,
+      essay: `<p>The morning belongs to the desk. Six hours of work from the apartment, which is no hardship in a flat with good light and a city waiting outside. If you need to break the mid-morning spell, Pellegrini's is around the corner on Bourke Street -- unchanged since 1954, a formica bar where the coffee is cheap and the welcome has not been refreshed by a brand consultant in seventy years.</p>
+<p>At two the city opens up. Take the 86 tram from the Bourke Street stop and ride it north for fifteen minutes into Fitzroy, Melbourne's first suburb and still its most stubbornly itself. Get off at the Smith Street corner and walk west along Gertrude Street. Then the evening sharpens to a point: dinner at the Tipo 00 counter, and at seven, Eddie Izzard alone on the Fairfax Studio stage performing the whole of Hamlet.</p>`,
       events: [
         { time: "8:00am", title: "Work block", kind: "work", note: "From the apartment. Clear by 2pm." },
-        { time: "~9:30am", title: "Pellegrini's", kind: "food", note: "66 Bourke Street, 5-minute walk. 1954 and proud of it. A coffee and a stool.", map: "https://maps.google.com/?q=66+Bourke+Street+Melbourne" },
-        { time: "2:00pm", title: "Tram 86 north", kind: "travel", note: "From the Bourke Street stop, 15 minutes to Fitzroy. Get off at Smith and Gertrude Street corner.", map: "https://maps.google.com/?q=Gertrude+Street+Fitzroy+Melbourne" },
-        { time: "2:15–5:00pm", title: "Gertrude Street drift", kind: "explore", note: "Walk west from Smith Street. Gertrude Contemporary (free, no.21 High St end) first. Then Marion wine bar (53 Gertrude) if you want a drink. Polyester Books on Brunswick Street. The Everleigh upstairs (~150 Gertrude) opens Thu from 5pm -- a 1920s cocktail parlour worth knowing about. Wrap by half four or five at the latest.", map: "https://maps.google.com/?q=Gertrude+Street+Fitzroy+Melbourne",
-          fork: { q: "One street or both", a: { name: "Gertrude only", desc: "Six focused blocks, a coffee, a gallery, maybe a glass of wine. Back in the CBD by 4:30pm." }, b: { name: "Gertrude then Brunswick", desc: "Cross to Brunswick for the bookshops and record stores. Polyester Records, Brunswick Street Bookstore. Leave Fitzroy by 4:45pm -- dinner has a deadline." } } },
-        { time: "5:30pm", title: "Tipo 00", kind: "food", state: "pending", note: "Counter, pasta only. 361 Little Bourke Street, 4-minute walk from Fairfax Studio. On the waitlist -- confirm before you rely on it, check by 5 July. Fallbacks: Cumulus Inc (45 Flinders Lane, counter, walk-in) or Chin Chin (125 Flinders Lane, no bookings, loud, always has room). Done by quarter past six.", map: "https://maps.google.com/?q=361+Little+Bourke+Street+Melbourne", book: "https://www.tipo00.com.au" },
-        { time: "7:00pm", title: "Eddie Izzard, Hamlet", kind: "culture", state: "confirmed", note: "Fairfax Studio, Arts Centre Melbourne, St Kilda Road. Seat F15, Stalls Premium, Door 1. Mobile ticket -- have it open before you arrive. Order #10678334.", map: "https://maps.google.com/?q=Arts+Centre+Melbourne+St+Kilda+Road" },
+        { time: "~9:30am", title: "Pellegrini's", kind: "food", note: "66 Bourke Street, 5-minute walk. 1954 and proud of it.", map: "https://maps.google.com/?q=66+Bourke+Street+Melbourne" },
+        { time: "2:00pm", title: "Tram 86 north to Fitzroy", kind: "travel", note: "From the Bourke Street stop, 15 minutes. Off at Smith and Gertrude Street corner.", map: "https://maps.google.com/?q=Gertrude+Street+Fitzroy+Melbourne" },
+        { time: "2:15–5:00pm", title: "Gertrude Street", kind: "explore",
+          note: "Walk west from Smith Street. Wrap up by half four or five.",
+          map: "https://maps.google.com/?q=Gertrude+Street+Fitzroy+Melbourne",
+          expand: {
+            label: "What to do on Gertrude Street",
+            body: `<p>Gertrude Street runs only six blocks from Smith to Nicholson, but it concentrates more of what makes Melbourne interesting per metre than almost anywhere in the city. Time Out ranked it the second coolest street in the world in 2022, which is both accurate and beside the point -- the locals who eat and drink here have not noticed the accolade and do not behave accordingly.</p>
+<p>Walk west from the Smith Street corner. On your left almost immediately: Gertrude Contemporary at 21-31 High Street (the Gertrude Street end), an artist-run space that has been showing emerging and mid-career work since 1985. Free entry, always worth fifteen minutes if there is an exhibition on. Further along: Marion at number 53, Andrew McConnell's wine bar, which does 25-plus wines by the glass and plates of mussels on fried bread and nduja. It is one of the better places to sit alone in Melbourne with a glass of something and no agenda. Cutler and Co a little further, McConnell's fine-dining flagship in a converted metalworks factory -- a different occasion, but worth knowing it exists. The Australian Print Workshop. Archie's All Day at 189 for coffee. The Everleigh upstairs at around 150 -- a pre-Prohibition cocktail parlour in a 1920s room, open Thursday to Saturday from 5pm -- if you find yourself still there at that hour, which is not impossible.</p>
+<p>Brunswick Street is longer, louder and more tourist-aware. It has good bookshops (Brunswick Street Bookstore, Polyester Records for vinyl), and is worth the overflow if Gertrude has not taken all your time. But Gertrude is the one to prioritise. The neighbourhood rewards a slow pace and punishes a checklist mentality. Leave Fitzroy by half four or five at the latest -- dinner has a deadline tonight.</p>`
+          }
+        },
+        { time: "5:30pm", title: "Tipo 00", kind: "food", state: "pending",
+          note: "361 Little Bourke Street, 4-minute walk from Fairfax Studio. On waitlist -- confirm before you rely on it. Done by quarter past six. Fallback: Cumulus Inc (45 Flinders Lane, walk-in) or Chin Chin (125 Flinders Lane, no bookings, spicy, always has room).",
+          map: "https://maps.google.com/?q=361+Little+Bourke+Street+Melbourne",
+          book: "https://www.tipo00.com.au",
+          expand: {
+            label: "About Tipo 00",
+            body: `<p>Andreas Papadakis spent four years at Vue de Monde before opening this room in 2014, and his fine-dining instincts are what make it different from every other pasta bar in the city. The name refers to the finest grade of Italian flour -- tipo 00 -- and the menu is built around fresh pasta made daily in a kitchen visible from the counter. In 2022 it was named one of the best Italian restaurants in the world. That is not the kind of claim this place makes about itself; it just keeps being excellent and the recognition arrives.</p>
+<p>The menu is short by design: a handful of starters, five or six pastas, a couple of mains for anyone who has found themselves in an Italian restaurant and does not want pasta. The right answer is pasta. Specifically the tagliolini al nero -- squid ink, seafood broth, a dish that reviewers keep returning to as the single thing you must order. The gnocchi with braised duck and porcini runs it close in winter. The Tipomisu is the dessert, a riff on tiramisu that is both better than it sounds and easier to eat than the original. The counter seats eight or ten and faces the open kitchen; for one diner it is the only seat worth having.</p>
+<p>This is not a relaxed long dinner -- it moves efficiently, which is the point tonight. Arrive at 5:30, order quickly, eat well, be walking south toward the Fairfax Studio by 6:15.</p>`
+          }
+        },
+        { time: "7:00pm", title: "Eddie Izzard, Hamlet", kind: "culture", state: "confirmed",
+          note: "Fairfax Studio, Arts Centre Melbourne. Seat F15, Stalls Premium, Door 1. Mobile ticket open before arrival. Order #10678334. Around 2 hours 20 minutes with interval.",
+          map: "https://maps.google.com/?q=Arts+Centre+Melbourne+St+Kilda+Road",
+          expand: {
+            label: "About the show",
+            body: `<p>Suzy Izzard performs all 23 characters of Shakespeare's Hamlet alone on a bare stage with no set, no props, no costume changes. The adaptation is by her brother Mark Izzard and the direction by Selina Cadell, who came from the RSC; the production itself came from triple-extended runs in New York, Chicago and London, where it was nominated for the Drama League's Distinguished Performance Award. Judi Dench called it spectacular. The Chicago Tribune said Izzard "smashes all three of the great soliloquies." Melbourne has the longest run on the Australian tour -- three weeks, closing 12 July, so you are there two days before the end.</p>
+<p>The Limelight review from the Sydney season is worth reading before you go. The critic found it better than anticipated but honest about the trade-offs: 23 characters voiced by one person means narrative clarity sometimes suffers, particularly the supernatural elements and the final sword fight, which is reduced to what the reviewer called "a comical pantomime." What it gains in return is the text at its purest -- no set to look at, no other actors to watch, just Shakespeare's language and one performer's complete attention to it. Izzard, 64, trained for years as a street performer and stand-up before turning to theatre, and the soliloquies in particular -- "To be or not to be," "What a piece of work is a man," the graveyard scene -- are delivered with what reviewers describe as genuine force.</p>
+<p>F15 is front stalls, close enough to see her face. That is the right ticket for a show built on one person's expression.</p>`
+          }
+        },
       ]
     },
 
     {
       id: "fri", dow: "Friday", date: "10 July", chapter: "III",
       title: "The City's Interior",
-      essay: `<p>Today you go inward, in every sense. No trams out of town, no excursions. The whole day lives inside the few hundred metres around your door.</p>
-<p>Start in the Nicholas Building on Swanston Street, about a five-minute walk. Ride the old lift to any floor and push open the doors that are unlocked -- behind them are artists' studios, a letterpress workshop, vintage dealers, small galleries, milliners, a perfumer or two. Most work with doors open on weekday mornings. It is the actual working interior of creative Melbourne rather than its shopfront, free, unhurried, and rewarding of the kind of curiosity the rest of this trip is built on. Allow an hour. From there, thread south through the grid by laneway alone -- Tattersalls, which has rotating small galleries and is almost empty on a weekday; Caledonian off Little Bourke, paste-ups and stencils connecting through to Chinatown's back entrance; Duckboard Place off Flinders Lane, where tonight's dinner hides behind an unmarked door. Come out onto Flinders Lane around midday, which is the plan.</p>
-<p>Lunch is the counter at Cumulus Inc at number 45 -- the room that wrote the playbook every other Melbourne kitchen has since copied. Andrew McConnell opened it here in 2008 and the long marble counter, walk-in welcome, all-day format became the template. Order what is seasonal. No rush. Leave by half one for the 15-minute walk south along St Kilda Road to the NGV.</p>
-<p>Then Cartier, which has a section of its own below. The free guided tour runs at 2:30pm and covers the key works in 45 minutes; it is worth arriving a few minutes early to register. Allow at least two hours for the exhibition itself. Then the evening softens: Saadi on Punch Lane at half six, downstairs, reservation 7V9NFNX4NPW7. Saavni Krishnan and Sriram Aditya are two of the most interesting chefs working in the CBD right now. Arrive on time.</p>`,
+      essay: `<p>Today you go inward, in every sense. No trams out of town. The whole day lives inside the few hundred metres around your door, which turns out to be enough for a city built in layers.</p>
+<p>Start in the Nicholas Building on Swanston Street. Thread south by laneway -- Tattersalls, Caledonian, Duckboard Place -- until you come out on Flinders Lane for lunch at Cumulus Inc. Then south along St Kilda Road to the NGV for Cartier. Then Saadi on Punch Lane at half six. The day is a straight line from north to south, with the best things waiting at the far end of each stretch.</p>`,
       events: [
-        { time: "9:30am", title: "Nicholas Building, Swanston Street", kind: "explore", note: "37 Swanston Street, 5-minute walk. Take the lift, walk the floors, push on the open doors. Studios, galleries, a letterpress. Free, around an hour.", map: "https://maps.google.com/?q=37+Swanston+Street+Melbourne" },
-        { time: "10:30am", title: "Laneways south", kind: "explore", note: "Tattersalls Lane (small rotating galleries, quiet on weekdays). Caledonian Lane off Little Bourke. Duckboard Place -- a look at tonight's dinner location in daylight. Come out on Flinders Lane.", map: "https://maps.google.com/?q=Flinders+Lane+Melbourne" },
-        { time: "12:30pm", title: "Cumulus Inc", kind: "food", note: "45 Flinders Lane. Counter, walk-in welcome at lunch. The original laneway room. All-day, no rush. Leave by 1:30pm for the 15-minute walk to NGV.", map: "https://maps.google.com/?q=45+Flinders+Lane+Melbourne" },
-        { time: "2:00pm", title: "Cartier, NGV International", kind: "culture", state: "confirmed", note: "180 St Kilda Road, 15-minute walk south from Flinders Lane. 2pm timed entry. Free guided tour at 2:30pm -- register at the info desk on arrival. Helen Molesworth audio guide $7, worth downloading beforehand. Allow 2 hours minimum.", map: "https://maps.google.com/?q=NGV+International+180+St+Kilda+Road+Melbourne", book: "https://www.ngv.vic.gov.au" },
-        { time: "6:30pm", title: "Saadi", kind: "food", state: "confirmed", note: "18 Punch Lane, downstairs. Reservation 7V9NFNX4NPW7. Saavni Krishnan (ex-Manzé) and Sriram Aditya (ex-Gemini Coburg) run a pan-Indian kitchen using family recipes and local farms. Friday is the $85 four-course set menu. No waiting area -- arrive at 6:30 exactly. $50/head cancellation fee within 24 hours.", map: "https://maps.google.com/?q=18+Punch+Lane+Melbourne", book: "https://saadi.com.au" },
+        { time: "9:30am", title: "Nicholas Building, Swanston Street", kind: "explore",
+          note: "37 Swanston Street, 5-minute walk. Take the lift, walk the floors. Free, around an hour.",
+          map: "https://maps.google.com/?q=37+Swanston+Street+Melbourne",
+          expand: {
+            label: "About the Nicholas Building",
+            body: `<p>Built in 1926, the Nicholas Building is a heritage office tower on the corner of Swanston and Flinders Lane that most people walk past every day without entering. The ground floor is retail. Everything above it is studios, workshops, and small galleries rented by the kinds of creative people who need a physical space but not a shopfront.</p>
+<p>Take the original lift to any floor and push on the doors that are unlocked. Behind them on a Friday morning you might find: a letterpress studio with a Heidelberg press still in daily use; a vintage clothing dealer with stock that has been accumulating since the 1970s; a milliner; a small gallery changing shows every month or two; a perfumer making fragrance to commission; a printmaker. Nobody is performing for visitors. The doors are open because it is a working building and there is no reason to close them. That is the texture of what you find.</p>
+<p>The Cathedral Arcade on the ground floor, accessible from Swanston Street, has been there since 1927 and has the same quality: independent, idiosyncratic, genuinely old rather than vintage-branded. Allow an hour in the building and do not try to see everything. Follow what interests you.</p>`
+          }
+        },
+        { time: "10:30am", title: "Laneways south", kind: "explore",
+          note: "Tattersalls Lane (small rotating galleries, quiet on weekdays). Caledonian Lane off Little Bourke. Duckboard Place -- Saturday's dinner in daylight. Come out on Flinders Lane.",
+          map: "https://maps.google.com/?q=Flinders+Lane+Melbourne"
+        },
+        { time: "12:30pm", title: "Cumulus Inc", kind: "food",
+          note: "45 Flinders Lane. Counter, walk-in welcome at lunch. All-day, no rush. Leave by 1:30pm for the 15-minute walk to NGV.",
+          map: "https://maps.google.com/?q=45+Flinders+Lane+Melbourne",
+          expand: {
+            label: "About Cumulus Inc",
+            body: `<p>Andrew McConnell opened this room in 2008 and it changed how Melbourne understood lunch. The long marble counter facing the open kitchen -- walk-in welcome, no reservations during the day, wine by the glass from early -- became the template that every subsequent laneway room has tried to copy. The fact that most of them have succeeded is a tribute to how right the format was; the fact that Cumulus still draws a full counter on a Friday is a tribute to how well it executes.</p>
+<p>McConnell is the most influential figure in Melbourne dining of the last twenty years, responsible for Cutler and Co, Marion, Gimlet and others. Cumulus is not his most ambitious room; it is his most loved. The menu rotates seasonally and does not try to surprise you -- it tries to be impeccably cooked food that you want to eat. The taramasalata with grilled flatbread has been on the menu in various forms since the beginning. The kingfish and whatever accompanies it changes, but is always worth ordering. The wine list is long and intelligent and the staff actually know it.</p>
+<p>It is on the back-pocket list for a reason: it is reliable in a way that more ambitious rooms are not. Using it as the Friday lunch anchor is not a compromise; it is the right call for a midday meal before two hours of Cartier.</p>`
+          }
+        },
+        { time: "2:00pm", title: "Cartier, NGV International", kind: "culture", state: "confirmed",
+          note: "180 St Kilda Road, 15-minute walk south. 2pm timed entry. Free guided tour at 2:30pm -- register at the info desk on arrival. Helen Molesworth audio guide $7, worth downloading beforehand. Allow 2 hours minimum.",
+          map: "https://maps.google.com/?q=NGV+International+180+St+Kilda+Road+Melbourne",
+          expand: {
+            label: "About the exhibition",
+            body: `<p>The exhibition begins chronologically with the moment the company stopped being a competent Parisian jeweller and became something else entirely. In 1900, Louis, Pierre and Jacques Cartier inherited their grandfather's firm and opened branches in London and New York within a decade. They also started collecting clients: the Maharaja of Patiala, King Edward VII, the Duchess of Manchester, Dame Nellie Melba. The Maharaja commissioned a necklace requiring 2,930 diamonds anchored by a 234-carat yellow diamond; it was lost after Indian independence, rediscovered in 1998 stripped of its stones, and Cartier replaced them with replicas. Both versions are here.</p>
+<p>The exhibition is organised thematically. A bold yellow room traces the brothers' world of inspiration across India, Egypt, Iran, China and Japan -- the Tutti Frutti collection has its own space: carved rubies, emeralds and sapphires stacked into bracelets and clips, the stones cut to echo Indian jewellery traditions, the settings unmistakably 1920s French. Jeanne Toussaint gets her own gallery. Creative director from 1933 to 1970, she elevated the panther from a repeating motif into an emblem -- the Duchess of Windsor's panther clip, a platinum cat crouching on a 152-carat cabochon sapphire, is here. The watches room sits midway as a palate cleanser: the 1914 Model A mystery clock, diamond-encrusted hands appearing to float with no visible mechanism, is the piece the Cartier Collection director said she would save in an emergency. The final gallery is entirely tiaras, twenty-four of them, including the Scroll Tiara of 1902 worn by Clementine Churchill at the coronation and later photographed on Rihanna for W Magazine.</p>
+<p>The exhibition design is by Studio Sabine Marcelis and CLOUD from Rotterdam: coloured rooms that read as settings for the stones. An original score by Ai Yamamoto and Erkki Veltheim runs throughout. The guided tour at 2:30pm covers the key objects in 45 minutes; register at the desk on arrival. Allow two hours minimum for the full exhibition.</p>`
+          }
+        },
+        { time: "6:30pm", title: "Saadi", kind: "food", state: "confirmed",
+          note: "18 Punch Lane, downstairs. Reservation 7V9NFNX4NPW7. Arrive on time, no waiting area. $50/head cancellation within 24 hours. Friday is the $85 four-course set menu.",
+          map: "https://maps.google.com/?q=18+Punch+Lane+Melbourne",
+          expand: {
+            label: "About Saadi",
+            body: `<p>Saavni Krishnan and Sriram Aditya spent three years running Saadi as a pop-up around Melbourne -- one night at Etta, a residency at Public Wine Shop, a run at Manzé -- before Adipoetra Halim, who also owns the Hotel Windsor and Aru, offered them the former Sunda space on Punch Lane. They took a month-long residency in May 2025, extended it through July, and then made it permanent. It opened as a restaurant in September 2025.</p>
+<p>Krishnan was raised in Mumbai to Punjabi and Tamilian parents, worked at Fred's in Sydney and then as sous-chef at Manzé in Melbourne. Aditya is Tamilian, his father's postings with the Indian Navy exposing him to food cultures across the subcontinent; he was most recently head chef at Gemini in Coburg. Their menu is pan-Indian rather than regionally specific, and it is explicitly not curry -- "Indian food that is unique to us, mostly gluten-free, can be made vegan, and is not curry" is how they put it on the website. What it is instead: family recipes from both sides, reworked with the technique of twelve years in serious Australian kitchens. A celeriac achar based on Krishnan's grandmother's recipe. Pulikachal -- a simmered tamarind sauce from Aditya's mother -- served with Corner Inlet flathead or lamb brisket. Idli topped with spiced Dutch carrots. The menu changes quarterly with the produce.</p>
+<p>Friday is the $85 four-course set menu. Broadsheet put it on their Hot List within weeks of opening. It is the most genuinely new thing you will eat on this trip.</p>`
+          }
+        },
       ]
     },
 
     {
       id: "sat", dow: "Saturday", date: "11 July", chapter: "IV",
       title: "Market, Gardens, a Laneway Kitchen",
-      essay: `<p>No alarm. One long coffee somewhere near home before the day has any demands. When you are ready, walk fifteen minutes north to the Queen Victoria Market. Go for the covered deli hall and the produce sheds rather than to shop -- the atmosphere is the point, the accumulated smell of a market that has operated on this site since 1878, the stall holders who have been here for three generations, the food that is genuinely better than what you find in supermarkets. The fresh food halls wind down around midday; arrive between ten and eleven for the full range. It is also Wednesday night's Night Market location -- 5pm to 10pm, every Wednesday through winter, street food and fire pits and live music, if you find yourself in need of a Wednesday evening.</p>
-<p>From the market, walk or tram twenty minutes northeast to Carlton, Melbourne's Italian quarter. Lygon Street itself has gone somewhat touristic, but the neighbourhood behind it has not, and the Carlton Gardens deserve an afternoon. The Royal Exhibition Building stands in the centre, a World Heritage hall built for the 1880 Melbourne International Exhibition that predates the Federation of Australia, still absurdly grand, worth a slow circle from outside. If the cold wins, the Ian Potter Centre at Federation Square -- a 25-minute walk south or a short tram -- is free and full of Australian and Indigenous art. It is the domestic counterweight to Friday's European opulence.</p>
-<p>Dinner is five minutes from home: Lee Ho Fook on Duckboard Place, down a laneway you now recognise from Friday morning. Victor Liong arrived in Australia from Brunei at six, trained at Marque in Sydney under Mark Best and then at Mr Wong, and opened this room in 2013 in Collingwood before moving it to the CBD two years later. He named it after the Warren Zevon lyric in Werewolves of London and runs a kitchen that uses Chinese tradition as a starting point rather than a constraint. The maltose-glazed Peking duck is the dish everyone mentions first; the crispy eggplant with spiced vinegar and the cumin lamb shoulder are the ones you want alongside it. The chef's counter is booked -- for one diner it is always the better seat, close to the heat and the action, and the service around it tends to be more engaged.</p>`,
+      essay: `<p>No alarm. One long coffee somewhere near home before the day has any demands. When you are ready, walk fifteen minutes north to the Queen Victoria Market. Go for the deli hall and the produce sheds rather than to shop -- the atmosphere is the point. The fresh food halls wind down around midday, so arrive between ten and eleven for the full range.</p>
+<p>From there, walk or tram twenty minutes northeast to Carlton. Lygon Street has gone somewhat touristic, but the Carlton Gardens behind it have not, and they deserve an afternoon. Dinner is five minutes from home: Lee Ho Fook on Duckboard Place, the most interesting Chinese cooking in the city.</p>`,
       events: [
-        { time: "Slow", title: "No alarm", kind: "rest", note: "A long coffee. The morning is yours." },
-        { time: "~10:00am", title: "Queen Victoria Market", kind: "explore", note: "15-minute walk north. Deli hall and produce sheds -- go for the atmosphere. Fresh food winds down around midday. Also the location of the Wednesday Winter Night Market (5-10pm every Wednesday through August, worth knowing about).", map: "https://maps.google.com/?q=Queen+Victoria+Market+Melbourne" },
-        { time: "~12:30pm", title: "Carlton and the Gardens", kind: "explore", note: "20-minute walk northeast, or tram. The neighbourhood behind Lygon Street is more interesting than the strip itself. Carlton Gardens and the Royal Exhibition Building -- World Heritage, 1880, worth a slow circuit.", map: "https://maps.google.com/?q=Carlton+Gardens+Melbourne",
-          fork: { q: "If the cold wins", a: { name: "Stay outdoors", desc: "Lygon Street, the gardens, the Exhibition Building. Back to the city by 4pm." }, b: { name: "Add Ian Potter Centre", desc: "Tram or 25-minute walk to Federation Square. NGV Australia, free, no booking. Australian and Indigenous art. 90 minutes, done by 5:30pm." } } },
-        { time: "6:30pm", title: "Lee Ho Fook", kind: "food", state: "confirmed", note: "11-15 Duckboard Place, off Flinders Lane -- 5-minute walk from home. Chef's counter, confirmation #11936. Victor Liong's modern Chinese: Peking duck, crispy eggplant, cumin lamb. Smart business casual, no shorts or sandals. 15-minute grace period. $88/head cancellation within 24 hours.", map: "https://maps.google.com/?q=11+Duckboard+Place+Melbourne" },
+        { time: "Slow", title: "No alarm", kind: "rest", note: "A long coffee. The morning owes you nothing." },
+        { time: "~10:00am", title: "Queen Victoria Market", kind: "explore",
+          note: "15-minute walk north. Deli hall and produce sheds. Fresh food winds down around midday. Also the Wednesday Winter Night Market location (5-10pm every Wednesday through August, free).",
+          map: "https://maps.google.com/?q=Queen+Victoria+Market+Melbourne"
+        },
+        { time: "~12:30pm", title: "Carlton and the Gardens", kind: "explore",
+          note: "20-minute walk northeast or tram. Carlton Gardens and the Royal Exhibition Building. Back to the city by late afternoon.",
+          map: "https://maps.google.com/?q=Carlton+Gardens+Melbourne",
+          expand: {
+            label: "Carlton and the Royal Exhibition Building",
+            body: `<p>Lygon Street is Melbourne's Italian quarter and it is worth understanding what that means in practice before you walk down it. The south end near Grattan Street still has places where the chef has been making the same lasagne since 1982, but the north end has absorbed a lot of tourist traffic and adjusted its prices accordingly. The neighbourhood behind it -- Rathdowne Street, the back streets of Carlton -- is quieter and more genuine.</p>
+<p>The Carlton Gardens are the destination. The Royal Exhibition Building stands in the centre, a World Heritage listed hall built for the 1880 Melbourne International Exhibition -- predating Federation by twenty years -- that hosted the first sitting of the Australian Parliament in 1901. It is still absurdly grand from the outside: a central dome flanked by pavilions, the whole thing built in thirteen months by a city that needed to impress the world and had the money to do it. The gardens themselves were designed by William Sangster in the 1870s and have the slightly formal quality of Victorian municipal ambition -- axial paths, a fountain, mature elms. In July they are bare and cold and completely without tourists, which makes them ideal.</p>
+<p>If the afternoon has more hours than the gardens can fill, the Ian Potter Centre at Federation Square is a 25-minute walk south or a short tram -- free, no booking, Australian and Indigenous art, the counterweight to Friday's European jewels. Otherwise: walk back through the CBD grid at your own pace and be home in time to change before dinner.</p>`
+          }
+        },
+        { time: "6:30pm", title: "Lee Ho Fook", kind: "food", state: "confirmed",
+          note: "11-15 Duckboard Place, off Flinders Lane. 5-minute walk from home. Chef's counter, confirmation #11936. Smart business casual, no shorts or sandals. 15-minute grace period. $88/head cancellation within 24 hours.",
+          map: "https://maps.google.com/?q=11+Duckboard+Place+Melbourne",
+          expand: {
+            label: "About Lee Ho Fook",
+            body: `<p>Victor Liong arrived in Australia from Brunei at six, grew up in Sydney, trained at Marque under Mark Best and then at Mr Wong, and moved to Melbourne in 2013 to open this room. He named it after the Warren Zevon lyric in Werewolves of London -- "I saw Lee Ho Fook's, getting in a little face" -- which tells you something about the register: serious cooking, not taking itself seriously. The original Collingwood location outgrew itself and moved to Duckboard Place in 2015, where the laneway entrance and moody interior have become part of the identity.</p>
+<p>The kitchen uses Chinese tradition as a starting point rather than a constraint -- "explode the atlas and just make sure it's delicious" was how one early reviewer put it. The tasting menu traces Liong's own eating history: mud crab in turmeric sauce references a dish he ate as a student at Flower Drum, Melbourne's other defining Chinese restaurant; braised brisket with elastic noodles recalls childhood trips to Sydney's Chinatown. What the 50 Best Discovery listing called "an emotional odyssey informed by his own experiences of being Malaysian and growing up in Australia."</p>
+<p>The maltose-glazed Peking duck is the dish everyone mentions first, and it takes time to prepare -- order it when you sit down. The crispy eggplant with spiced red vinegar is lighter and sharper and worth ordering alongside. The cumin lamb shoulder is the one the kitchen is proudest of. The wine list runs to around 120 bins and includes a page of wines from China, which is unusual and worth exploring. The chef's counter is the right seat for one person: close to the pass, good service, the theatre of the kitchen visible throughout.</p>`
+          }
+        },
       ]
     },
 
     {
       id: "sun", dow: "Sunday", date: "12 July", chapter: "V",
       title: "The Early Door",
-      essay: `<p>An early flight. Out the door by half six into a Sunday city that has not woken up, the Uber booked the night before so there are no surprises at that hour. The drive to Tullamarine takes around 35 minutes with no traffic. International check-in closes at 8:15am; aim to be at the Qantas counter by 7:30am. QF167 lifts at 9:15 and has you home by mid-afternoon.</p>`,
+      essay: `<p>An early flight. Out the door by half six into a Sunday city that has not woken up, the Uber booked the night before so there are no surprises at that hour. About 35 minutes to Tullamarine with no traffic. International check-in closes at 8:15am; aim to be at the Qantas counter by 7:30. QF167 lifts at 9:15 and has you home by mid-afternoon.</p>`,
       events: [
         { time: "5:45am", title: "Up", kind: "travel", note: "Check out before you leave -- key return per the host instructions in the 48-hour email." },
-        { time: "6:30am", title: "Uber to Tullamarine", kind: "travel", note: "Booked Saturday night. About 35 minutes at this hour. Terminal 2." },
-        { time: "8:15am", title: "Check-in closes", kind: "travel", note: "International cut-off. Aim to be at the counter by 7:30am." },
-        { time: "9:15am", title: "QF167 home", kind: "travel", note: "Non-stop to Christchurch. Arrives 2:45pm.", map: "https://maps.google.com/?q=Christchurch+Airport" },
+        { time: "6:30am", title: "Uber to Tullamarine", kind: "travel", note: "Booked Saturday night. About 35 minutes. Terminal 2." },
+        { time: "8:15am", title: "Check-in closes", kind: "travel", note: "International cut-off. Aim to be at the Qantas counter by 7:30am." },
+        { time: "9:15am", title: "QF167 home", kind: "travel", note: "Non-stop to Christchurch, in at 2:45pm.", map: "https://maps.google.com/?q=Christchurch+Airport" },
       ]
     }
   ],
@@ -336,28 +395,28 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
   pocket: [
     { group: "If a plan falls through", items: [
       ["Cumulus Inc", "45 Flinders Lane. Counter, walk-in at lunch. The reliable fallback for anything."],
-      ["Chin Chin", "125 Flinders Lane. No bookings, always has room, loud and spicy Thai. Goes until late."],
+      ["Chin Chin", "125 Flinders Lane. No bookings, always has room, loud and spicy Thai."],
       ["Supernormal", "180 Flinders Lane. Modern Asian, lunch specials, dependable."],
-      ["MoVida", "1 Hosier Lane. Spanish tapas, the guidebook pick. In reserve for a reason."],
+      ["MoVida", "1 Hosier Lane. Spanish tapas. Guidebook pick, held in reserve for a reason."],
     ]},
     { group: "Also on right now", items: [
-      ["QV Winter Night Market", "Queen Victoria Market, every Wednesday 5–10pm through 26 August. Global street food, fire pits, live music. Your Wednesday is the arrival but Thursday is an option if the evening is free. Free entry."],
-      ["NGV Friday Nights: Cartier", "NGV International, Friday evenings through the exhibition run. Live music, food and drinks in the galleries. Worth checking the programme if you want to go back."],
-      ["Ragnar Kjartansson: Mercy", "NGV International, running concurrently with Cartier. Icelandic artist, large-scale video installation. $10 add-on with a Cartier ticket. Contemplative and worth the detour if you have time after the main exhibition."],
-      ["Royal Exhibition Building tours", "Carlton Gardens. The building opens for guided access to spaces normally closed -- a rare look at the interior. Check the schedule at museumsvictoria.com.au."],
-      ["Gertrude Street Projection Festival", "Annual laneway light and projection art event, typically runs mid-July in Fitzroy. Check dates -- may overlap with Thursday afternoon. Free, outdoors, a Fitzroy institution."],
+      ["QV Winter Night Market", "Every Wednesday 5-10pm through 26 August, Queen Victoria Market. Street food, fire pits, live music. Free entry."],
+      ["NGV Friday Nights: Cartier", "NGV International, Friday evenings. Live music and drinks in the galleries during the exhibition run."],
+      ["Ragnar Kjartansson: Mercy", "NGV International, running concurrently. Icelandic video installation. $10 add-on with a Cartier ticket."],
+      ["Gertrude Street Projection Festival", "Annual light and projection art event in Fitzroy, typically mid-July. Free, outdoors. Check dates -- may overlap with Thursday afternoon."],
+      ["Royal Exhibition Building interior tours", "Rarely-opened spaces in the 1880 hall. Check museumsvictoria.com.au for the July schedule."],
     ]},
     { group: "Free and worth it", items: [
-      ["Ian Potter Centre, NGV Australia", "Federation Square. Australian and Indigenous art, no booking. The counterweight to Friday's European jewels."],
+      ["Ian Potter Centre, NGV Australia", "Federation Square. Australian and Indigenous art, no booking. The counterweight to Friday's Cartier."],
       ["Block Arcade", "Collins to Elizabeth. 1891, modelled on Milan's Galleria. The mosaic floor and the ceiling are the point."],
-      ["Royal Arcade", "Bourke to Little Collins. Melbourne's oldest arcade, 1870. Gog and Magog on the clock above the Little Collins entrance."],
+      ["Royal Arcade", "Bourke to Little Collins. Melbourne's oldest, 1870. Gog and Magog on the clock above the Little Collins entrance."],
       ["Chinese Museum", "Cohen Place, Chinatown. Five floors of Chinese-Australian history from the gold rush. Daily to 4pm."],
     ]},
     { group: "Getting around", items: [
-      ["Trams in the CBD", "Free inside the city zone. The boundary is roughly Spencer, Flinders, Spring and La Trobe Streets."],
+      ["Trams in the CBD", "Free inside the city zone. Roughly Spencer, Flinders, Spring and La Trobe Streets."],
       ["Tram 86", "Bourke Street stop straight north to Fitzroy and Gertrude Street. 15 minutes."],
-      ["Myki card", "Buy and load at any 7-Eleven. Twenty dollars covers the whole trip comfortably."],
-      ["Weather", "7 to 14 degrees. Rain likely. Layers and a compact umbrella. Wear something you can add or remove."],
+      ["Myki card", "Buy and load at any 7-Eleven. Twenty dollars covers the trip."],
+      ["Weather", "7 to 14 degrees. Rain likely. Layers and a compact umbrella."],
       ["Qantas Gold", "Priority check-in at Tullamarine. 46kg baggage allowance on the international leg."],
     ]},
   ]
@@ -369,12 +428,11 @@ function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.
 function renderMasthead() {
   document.getElementById('m-season').textContent = TRIP.meta.season;
   document.getElementById('m-title').innerHTML = TRIP.meta.city + ' <em>in July</em>';
-  const m = document.getElementById('m-meta');
-  m.innerHTML = `
-    <div class="row"><span class="lbl">When</span> ${TRIP.meta.dates}</div>
-    <div class="row"><span class="lbl">Base</span> <a href="${TRIP.meta.base.url}" target="_blank" rel="noopener">${TRIP.meta.base.name}</a></div>
-    <div class="row flight"><span class="lbl">Out</span> ${TRIP.meta.flights.out}</div>
-    <div class="row flight"><span class="lbl">Home</span> ${TRIP.meta.flights.ret}</div>`;
+  document.getElementById('m-meta').innerHTML = `
+    <div class="row"><span class="lbl">When</span>${TRIP.meta.dates}</div>
+    <div class="row"><span class="lbl">Base</span><a href="${TRIP.meta.base.url}" target="_blank" rel="noopener">${TRIP.meta.base.name}</a></div>
+    <div class="row flight"><span class="lbl">Out</span>${TRIP.meta.flights.out}</div>
+    <div class="row flight"><span class="lbl">Home</span>${TRIP.meta.flights.ret}</div>`;
 }
 
 function renderHero() {
@@ -382,49 +440,48 @@ function renderHero() {
   document.getElementById('hero').innerHTML = `<div class="kicker">${h.kicker}</div><h2>${h.title}</h2><p class="standfirst">${h.standfirst}</p><div class="prose">${h.body}</div>`;
 }
 
-function renderCartier() {
-  const c = TRIP.cartier;
-  document.getElementById('cartier-title').textContent = c.title;
-  document.getElementById('cartier-standfirst').textContent = c.standfirst;
-  document.getElementById('cartier-prose').innerHTML = c.body;
-  document.getElementById('cartier-toggle').addEventListener('click', function() {
-    const body = document.getElementById('cartier-body');
-    const on = body.classList.toggle('on');
-    this.classList.toggle('on', on);
-    this.setAttribute('aria-expanded', on);
-  });
+let ctxId = 0;
+function makeCtx(expand) {
+  const id = 'ctx-' + (ctxId++);
+  const wrap = el('div', 'ctx');
+  const btn = el('button', 'ctx-toggle', `<span class="arr">›</span> ${expand.label}`);
+  const body = el('div', 'ctx-body', `<div class="prose">${expand.body}</div>`);
+  body.id = id;
+  btn.addEventListener('click', () => { btn.classList.toggle('on'); body.classList.toggle('on'); });
+  wrap.appendChild(btn); wrap.appendChild(body);
+  return wrap;
 }
 
 function renderChapters() {
   const wrap = document.getElementById('chapters');
   TRIP.days.forEach(day => {
     const ch = el('section', 'chapter'); ch.id = day.id;
-    ch.appendChild(el('div', 'chapter-head', `<div class="chapter-numeral">${day.chapter}</div><div class="meta"><div class="chapter-dow">${day.dow} · <span class="date">${day.date}</span></div><div class="chapter-title">${day.title}</div></div>`));
+    ch.appendChild(el('div', 'chapter-head', `
+      <div class="chapter-numeral">${day.chapter}</div>
+      <div class="meta">
+        <div class="chapter-dow">${day.dow} · <span class="date">${day.date}</span></div>
+        <div class="chapter-title">${day.title}</div>
+      </div>`));
     ch.appendChild(el('div', 'chapter-essay', `<div class="prose">${day.essay}</div>`));
     const spine = el('div', 'spine');
-    day.events.forEach((ev, i) => {
+    day.events.forEach(ev => {
       const stop = el('div', 'stop'); stop.dataset.kind = ev.kind;
-      let tag = ev.state === 'confirmed' ? '<span class="tag confirmed">Booked</span>' : ev.state === 'pending' ? '<span class="tag pending">Waitlist</span>' : ev.state === 'open' ? '<span class="tag open">To book</span>' : '';
+      const tag = ev.state === 'confirmed' ? '<span class="tag confirmed">Booked</span>'
+                : ev.state === 'pending'   ? '<span class="tag pending">Waitlist</span>'
+                : ev.state === 'open'      ? '<span class="tag open">To book</span>' : '';
       let links = '';
-      if (ev.map) links += `<a href="${ev.map}" target="_blank" rel="noopener">Map</a>`;
+      if (ev.map)  links += `<a href="${ev.map}"  target="_blank" rel="noopener">Map</a>`;
       if (ev.book) links += `<a href="${ev.book}" target="_blank" rel="noopener">Book</a>`;
-      stop.innerHTML = `<div class="stop-time">${ev.time}</div><div class="stop-title">${ev.title}${tag}</div><div class="stop-note">${ev.note}</div>${links ? '<div class="stop-links">' + links + '</div>' : ''}`;
-      if (ev.fork) {
-        const f = el('div', 'fork', `<div class="fork-q">${ev.fork.q}</div>`);
-        const opts = el('div', 'fork-opts');
-        const key = 'mel_fork_' + day.id + '_' + i;
-        ['a','b'].forEach(k => {
-          const o = ev.fork[k];
-          const btn = el('button', 'fork-opt', `<span class="n">${o.name}</span><span class="d">${o.desc}</span>`);
-          btn.addEventListener('click', () => { opts.querySelectorAll('.fork-opt').forEach(b => b.classList.remove('on')); btn.classList.add('on'); localStorage.setItem(key, k); });
-          if (localStorage.getItem(key) === k) btn.classList.add('on');
-          opts.appendChild(btn);
-        });
-        f.appendChild(opts); stop.appendChild(f);
-      }
+      stop.innerHTML = `
+        <div class="stop-time">${ev.time}</div>
+        <div class="stop-title">${ev.title}${tag}</div>
+        <div class="stop-note">${ev.note}</div>
+        ${links ? '<div class="stop-links">' + links + '</div>' : ''}`;
+      if (ev.expand) stop.appendChild(makeCtx(ev.expand));
       spine.appendChild(stop);
     });
-    ch.appendChild(spine); wrap.appendChild(ch);
+    ch.appendChild(spine);
+    wrap.appendChild(ch);
   });
 }
 
@@ -434,14 +491,20 @@ function renderLedger() {
   const label = { confirmed: 'Booked', pending: 'Waitlist', open: 'To book' };
   TRIP.bookings.slice().sort((a,b) => order[a.state] - order[b.state]).forEach(b => {
     const row = el('div', 'ledger-row');
-    row.innerHTML = `<span class="ledger-dot ${b.state}"></span><div class="ledger-main"><div class="ledger-label">${b.label}</div><div class="ledger-sub">${b.sub}${b.ref ? ' · ' + b.ref : ''}</div></div><span class="ledger-state ${b.state}">${label[b.state]}</span>${b.url ? '<a class="go" href="' + b.url + '" target="_blank" rel="noopener">↗</a>' : ''}`;
+    row.innerHTML = `<span class="ldot ${b.state}"></span>
+      <div class="ledger-main">
+        <div class="ledger-label">${b.label}</div>
+        <div class="ledger-sub">${b.sub}${b.ref ? ' · ' + b.ref : ''}</div>
+      </div>
+      <span class="ledger-state ${b.state}">${label[b.state]}</span>
+      ${b.url ? '<a class="go" href="' + b.url + '" target="_blank" rel="noopener">↗</a>' : ''}`;
     list.appendChild(row);
   });
 }
 
 function renderPocket() {
   const wrap = document.getElementById('pocket-wrap');
-  TRIP.pocket.forEach((g, gi) => {
+  TRIP.pocket.forEach(g => {
     const grp = el('div', 'pocket-group');
     const btn = el('button', 'pocket-toggle', `${g.group}<span class="chev">›</span>`);
     const body = el('div', 'pocket-body');
@@ -452,14 +515,25 @@ function renderPocket() {
 }
 
 function initNotes() {
-  const fab = document.getElementById('fab'), panel = document.getElementById('notepanel'), ta = document.getElementById('note-ta'), list = document.getElementById('notelist');
-  const draw = () => { const n = JSON.parse(localStorage.getItem('mel_notes') || '[]'); list.innerHTML = n.length ? n.map(x => `<div class="noteitem">${x}</div>`).join('') : '<div class="empty">No notes yet.</div>'; };
+  const fab = document.getElementById('fab'), panel = document.getElementById('notepanel');
+  const ta = document.getElementById('note-ta'), list = document.getElementById('notelist');
+  const draw = () => {
+    const n = JSON.parse(localStorage.getItem('mel_notes') || '[]');
+    list.innerHTML = n.length ? n.map(x => `<div class="noteitem">${x}</div>`).join('') : '<div class="empty">No notes yet.</div>';
+  };
   fab.addEventListener('click', () => panel.classList.toggle('on'));
-  document.getElementById('note-save').addEventListener('click', () => { const v = ta.value.trim(); if (!v) return; const n = JSON.parse(localStorage.getItem('mel_notes') || '[]'); n.unshift(v); localStorage.setItem('mel_notes', JSON.stringify(n)); ta.value = ''; draw(); });
+  document.getElementById('note-save').addEventListener('click', () => {
+    const v = ta.value.trim(); if (!v) return;
+    const n = JSON.parse(localStorage.getItem('mel_notes') || '[]');
+    n.unshift(v); localStorage.setItem('mel_notes', JSON.stringify(n));
+    ta.value = ''; draw();
+  });
   draw();
 }
 
-document.addEventListener('DOMContentLoaded', () => { renderMasthead(); renderHero(); renderCartier(); renderChapters(); renderLedger(); renderPocket(); initNotes(); });
+document.addEventListener('DOMContentLoaded', () => {
+  renderMasthead(); renderHero(); renderChapters(); renderLedger(); renderPocket(); initNotes();
+});
 </script>
 </body>
 </html>
