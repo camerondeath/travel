@@ -50,17 +50,27 @@ body { background: var(--night); color: var(--paper); font-family: var(--serif);
 .masthead .meta a:hover { color: var(--brass); }
 .masthead .meta .flight { font-size: var(--fs-xs); color: var(--paper-dim); }
 
-/* HERO ESSAY */
-.hero-essay { padding: 1.5rem 0 3.5rem; border-bottom: 1px solid var(--line); }
-.hero-essay .kicker { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-dim); margin-bottom: 1rem; }
-.hero-essay h2 { font-family: var(--display); font-size: clamp(1.8rem, 4.5vw, 2.7rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin-bottom: 1rem; font-optical-sizing: auto; }
-.hero-essay .standfirst { font-family: var(--serif); font-size: var(--fs-lg); font-weight: 300; font-style: italic; color: var(--brass); line-height: 1.4; margin-bottom: 2rem; max-width: 34ch; }
+/* WEATHER WIDGET */
+.weather-widget { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; font-family: var(--sans); font-size: var(--fs-xs); color: var(--mist); }
+.weather-icon { font-size: 1.1rem; line-height: 1; }
+.weather-temp { color: var(--paper-dim); font-weight: 500; }
+.weather-desc { color: var(--mist); }
+
+/* PLANE PIECE */
+.plane-piece { padding: 1.5rem 0 3.5rem; border-bottom: 1px solid var(--line); }
+.plane-piece .kicker { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-dim); margin-bottom: 1rem; }
+.plane-piece h2 { font-family: var(--display); font-size: clamp(1.8rem, 4.5vw, 2.7rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin-bottom: 1rem; font-optical-sizing: auto; }
+.plane-piece .standfirst { font-family: var(--serif); font-size: var(--fs-lg); font-weight: 300; font-style: italic; color: var(--brass); line-height: 1.4; margin-bottom: 2rem; max-width: 34ch; }
 .prose p { margin-bottom: 1.3em; color: var(--paper-dim); }
 .prose p:last-child { margin-bottom: 0; }
-.hero-essay .prose > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 4.2em; line-height: 0.74; font-weight: 400; padding: 0.05em 0.1em 0 0; color: var(--brass); }
+.plane-piece .prose-preview > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 4.2em; line-height: 0.74; font-weight: 400; padding: 0.05em 0.1em 0 0; color: var(--brass); }
+.plane-piece .prose-full > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 4.2em; line-height: 0.74; font-weight: 400; padding: 0.05em 0.1em 0 0; color: var(--brass); }
 
 /* DAY CHAPTERS */
 .chapter { padding: 3.5rem 0; border-bottom: 1px solid var(--line); }
+.chapter.is-past { opacity: 0.55; }
+.chapter.is-today { border-left: 2px solid var(--brass-dim); padding-left: 1.25rem; margin-left: -1.25rem; }
+.chapter-status { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); margin-bottom: 0.5rem; }
 .chapter-head { margin-bottom: 2rem; display: flex; gap: 1.25rem; align-items: baseline; }
 .chapter-numeral { font-family: var(--display); font-size: 2.4rem; font-weight: 300; font-style: italic; color: var(--brass-dim); line-height: 1; flex-shrink: 0; width: 1.6em; text-align: center; }
 .chapter-head .meta { flex: 1; }
@@ -93,7 +103,7 @@ body { background: var(--night); color: var(--paper); font-family: var(--serif);
 .tag.pending { color: var(--pend); border: 1px solid color-mix(in srgb, var(--pend) 40%, transparent); }
 .tag.open { color: var(--open); border: 1px solid color-mix(in srgb, var(--open) 40%, transparent); }
 
-/* CONTEXT EXPAND — the key new element */
+/* CONTEXT EXPAND */
 .ctx { margin-top: 0.75rem; }
 .ctx-toggle {
   display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;
@@ -173,9 +183,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
   <div class="eyebrow" id="m-season"></div>
   <h1 id="m-title"></h1>
   <div class="meta" id="m-meta"></div>
+  <div id="m-weather"></div>
 </header>
 
-<section class="hero-essay" id="hero"></section>
+<section class="plane-piece" id="plane"></section>
 
 <main id="chapters"></main>
 
@@ -200,17 +211,42 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     dates: "8–12 July 2026",
     flights: { out: "QF170 CHC 3:45pm → MEL 5:35pm · E8GW8J", ret: "QF167 MEL 9:15am → CHC 2:45pm · E8GW8J · check-in closes 8:15am" },
     base: { name: "192 Little Collins Street", url: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
-    hero: {
-      kicker: "The read",
-      title: "A City With Its Collar Up",
-      standfirst: "Melbourne in July does not perform for you. That is exactly the point.",
-      body: `<p>There is no single thing you have flown across the Tasman to see. No harbour bridge, no opera house, no postcard that organises the rest of the trip around it. Sydney has all that and wears it on the outside. Melbourne keeps its treasures one block back, one floor up, behind a door with no sign, and it will not tell you they are there. The city assumes you are the kind of person who turns down the laneway anyway. Over four nights you are going to prove it right.</p>
+    plane: {
+      kicker: "Read on the plane",
+      title: "You Will Be Let In",
+      standfirst: "Melbourne has no view. That is not a flaw in the city. It is the whole argument.",
+      preview: `<p>At the entrance to the National Gallery of Victoria, on St Kilda Road, there is a wall of water. It runs down a pane of glass two storeys high, even and unhurried, lit from somewhere you cannot quite locate, and you walk in beside it. Almost everyone touches it. Children press their whole hands flat to the glass and the water parts around their fingers and closes again the instant they pull away. Adults do it too, quickly, and then pretend they had not. Nobody photographs it, or nobody who tries comes away with anything. It is a thing you have to be standing in front of, with your hand out, to understand at all. And that is the first instruction Melbourne gives you, before you have seen a single painting: the reward here is on the inside, and the way to it runs through a surface.</p>`,
+      full: `<p>At the entrance to the National Gallery of Victoria, on St Kilda Road, there is a wall of water. It runs down a pane of glass two storeys high, even and unhurried, lit from somewhere you cannot quite locate, and you walk in beside it. Almost everyone touches it. Children press their whole hands flat to the glass and the water parts around their fingers and closes again the instant they pull away. Adults do it too, quickly, and then pretend they had not. Nobody photographs it, or nobody who tries comes away with anything. It is a thing you have to be standing in front of, with your hand out, to understand at all. And that is the first instruction Melbourne gives you, before you have seen a single painting: the reward here is on the inside, and the way to it runs through a surface.</p>
 
-<p>You have arrived in the only season that shows you the real place. Summer Melbourne belongs to the tourism board, all rooftop bars and cricket and harsh northern light. Winter Melbourne belongs to the people who live here. The Paris End of Collins Street goes the colour of a bruise around four in the afternoon. The trams throw their light across wet bluestone. Everyone is dressed in black and moving with purpose toward something warm, and the coffee, which is a genuine civic religion here, tastes better for the cold. This is a city that eats late, takes its theatre seriously, and treats a good dinner as a reason to leave the house rather than an interruption to the evening.</p>
+<p>Consider what that building declines to do. It does not face the river. It does not climb a hill to hand you a panorama. It sits flat on a wide grey boulevard behind a moat of its own water, a bluestone keep by the architect Roy Grounds, and it keeps its best things indoors, where neither the weather nor the street can reach them -- the Tiepolo of Cleopatra at her banquet, the Leonard French ceiling of coloured glass that you have to lie on the floor of the Great Hall to see properly, on your back, like everyone else who has worked out that this is the only correct posture for it. Melbourne is a city organised around that instinct. And the instinct exists because Melbourne, almost uniquely among the cities people fly a long way to see, has no view.</p>
 
-<p>Your apartment sits on Little Collins between Swanston and Russell, which is not an accident of booking but the most useful position in the city. Chinatown is three minutes east, the oldest continuous Chinese settlement in the western world, still serving at two in the morning. Flinders Lane, the spine of the laneway dining culture, is four minutes south. The Nicholas Building on Swanston Street -- a heritage tower full of printmakers, perfumers and vintage dealers working with their studio doors open -- is a five-minute walk and one of the great free pleasures of the CBD. You are staying inside the machine, not beside it.</p>
+<p>Most great cities are conducting a love affair with their own geography, and the affair is the first thing you are shown. You are over the water and then the bridge is there, and the white sails, and you have seen the famous thing before the wheels are down. Sydney does this to you. Sydney has the harbour, which is not a body of water so much as a permanent argument in the city's favour, settled in advance of any conversation. You can photograph Sydney before you have landed in it. Melbourne offers the descending passenger almost nothing. A flat brown plain. A river the colour of weak tea that appears, from above, to be running the wrong way. Weather that will change its mind four times before you reach the carousel. There is no single image of the place, because the place was not built to be looked at from outside. It was built to be entered.</p>
 
-<p>The temptation with a city like this is to schedule it tightly, to treat the laneways as a checklist and the days as a route to be optimised. Resist that completely. The trip is built around a handful of fixed points that genuinely matter: Eddie Izzard performing Hamlet alone in a studio theatre; Cartier's jewelled century spread across the lower galleries of the NGV; a heritage Indian kitchen on Punch Lane doing something nobody else in the city is doing. Around those anchors there is deliberate slack, and the slack is where Melbourne actually happens. A morning with no alarm. An afternoon that drifts from one end of Gertrude Street to the other. The decision, made at five in the cold, about whether to keep walking or duck into the nearest warm room. Leave room to be diverted. That is the whole method.</p>`
+<p>The two cities have spent the better part of two centuries in a rivalry so old that Australians have stopped noticing it is strange. Sydney came first, in 1788, as a prison -- a beautiful one, but a prison, founded by people who had not chosen to be there. Melbourne was settled free, in 1835, by men who came overland and by sea for grass and stayed for something far better than grass. The competition between the two for primacy was real, and it was so genuinely unresolvable that when the colonies federated in 1901 the new country could not bring itself to name either as its capital. The compromise was to invent a third city, from nothing, in a sheep paddock at a careful distance from both, and to call it Canberra. In the meantime Melbourne kept the federal parliament as a lodger for twenty-six years, in a borrowed chamber on Spring Street, and then stood on the platform and watched the Commonwealth pack up and leave for the paddock it had commissioned. This is worth holding onto. Melbourne was, for a quarter of a century, the centre of the country. And then it was not. It has never entirely stopped being the kind of place that knows, in its bones, what it is to be the one passed over.</p>
+
+<p>The money for all of it -- the boulevards, the gallery, the swagger that made the rivalry worth having -- came straight up out of the ground. Gold was found in the colony of Victoria in 1851, at Ballarat and then Bendigo, in fields so rich they had no rival anywhere on earth. The effect on Melbourne was not growth so much as detonation. The population multiplied in a decade. The harbour filled with ships that simply stopped, because the crews had walked off them and up to the diggings, and for a while the bay was a forest of abandoned masts. By the 1880s the city was, per head, among the wealthiest on the planet, and it built exactly the way a place builds when it has more money than memory. A visiting English journalist, George Augustus Sala, supplied the slogan in 1885 -- Marvellous Melbourne -- and the marvel was largely architectural. The cathedral-scaled banks on Collins Street. The glass-roofed arcades, the Block and the Royal, dropped into the middle of the grid like jewel cases. The cast-iron terraces marching out through Carlton and Fitzroy and East Melbourne, lace verandahs on every one. The Royal Exhibition Building, thrown up in Carlton Gardens in 1880 for an international fair, a dome on a hill, grand out of all proportion to anything the young colony actually needed it to do.</p>
+
+<p>The gold did more than fill the banks. It brought a particular kind of person and bred a particular kind of temper. The people who poured into Victoria in the 1850s had, almost all of them, chosen to come, which set them apart from the reluctant founders of the colony to the north. They had crossed the world on a rumour and then stood knee-deep in the same freezing mud as the man beside them, gentleman and labourer levelled by the same creek, and the experience left a mark on the place that has never quite worn off. In 1854 a few hundred of them, sick of licence fees and high-handed troopers, threw up a rough timber stockade at Ballarat called Eureka and were shot down inside it before dawn, and the colony has been telling itself the story ever since as a sort of founding myth -- self-made men declining, fatally, to be told what to do by their betters. Some of that is sentiment. The residue, though, is real, and you can still feel it: a city congenitally suspicious of inherited authority, faintly allergic to being instructed in what it ought to admire. A place put together like that was never going to fall for an obvious view.</p>
+
+<p>And then, in the early 1890s, it stopped. The land boom that had inflated the whole spectacle collapsed inside about two years. Banks shut their doors. The speculative fortune that had paid for Marvellous Melbourne turned out to have been mostly paper, and the paper burned. Here is the part the boosters leave out, and the part that explains more about the city you are about to walk through than any amount of talk about coffee. The crash is the reason the architecture survived. Confident cities knock their grandeur down -- they demolish one era's masterpieces to make room for the next era's, because each new wave of money wants its own monument. Melbourne's confidence broke early and stayed broken long enough that the boom city had no chance to be replaced. It fossilised. The Melbourne you move through is the preserved exuberance of a single hysterical generation, kept intact by the poverty that came after it. Marvellous Melbourne is, in the most literal sense, a city that could not afford to stop looking like itself.</p>
+
+<p>Now look down, away from the grand fronts, into the spaces between them. The plan of the central city was pegged out in 1837 by a surveyor named Robert Hoddle, and it is the reason the place reads, on a map, like graph paper. Wide main streets, each a chain across. Between them, the so-called little streets -- Little Collins, Little Bourke, Little Lonsdale -- and behind and between those, narrower still, the service lanes. This is the crucial fact, and it is the opposite of romantic: the lanes were never meant to be seen. They were the working underside of a Victorian city. Deliveries came through them. Stables opened onto them. Nightcarts ran along them in the dark, and the rear doors of every shop and chophouse faced into them. For most of a century the lanes of Melbourne were precisely the parts of the city you were not supposed to look at, the back-of-house of the whole grand performance happening one street over.</p>
+
+<p>The transformation came late, and it came partly by policy. In the 1990s the city council, alarmed at a hollow centre that emptied at six o'clock, set out deliberately to put residents back into the grid. At around the same time the liquor laws changed, and it became possible to open a small bar without first proving you would also run a restaurant. Those two dry administrative facts did more for the texture of Melbourne than any amount of civic poetry. Coffee moved into the lanes first, then bars, then galleries up unmarked stairs, then the rest. And so the city took the part of itself it had been built to conceal and made it the part it is now known for, which is the whole Melbourne manoeuvre in miniature. The good room is up a stair behind a kitchen, with no sign. You will not find it by looking. You have to be told. The reward, once again, is conditional, and interior, and given only to the person who already knows to go down the lane that looks like it leads nowhere.</p>
+
+<p>What grew up in those lanes rewards the specific over the general, which is the only honest way to speak about them at all. Hosier Lane, off Flinders Street, where the walls are repainted by strangers faster than anyone can keep up. Centre Place and Degraves Street, each barely wide enough for two people and a chalkboard, lined the whole length with the small tables of rooms that seat eleven. Hardware Lane at lunch, loud with cutlery. The unmarked door on Meyers Place, where the small-bar movement is usually said to have begun, opening onto a stair, and at the top of the stair a low room of forty people who all somehow knew. None of it announces itself. A first-time visitor walks straight past the best of it, every time, and is meant to. The pleasure is built to be earned, and the earning turns out to be half the pleasure.</p>
+
+<p>There is one stretch of the grid that did not wait for the 1990s to learn how to be itself. Chinese arrivals came to Victoria for the same gold as everyone else, from the 1850s, in numbers that frightened the colony into some of its uglier laws, and they settled along Little Bourke Street. That settlement has been continuously inhabited ever since. It is the oldest continuous Chinese settlement in the western world, and the load-bearing word is continuous -- not the biggest, not the most photographed, but the longest unbroken. While the wider city boomed and crashed and re-skinned its surface every generation or two, these few blocks simply went on being what they were. The herbalists and the family associations. The banquet rooms up the narrow stairs, the ones with the lazy Susans and the fluorescent light and the food that has nothing to apologise for. A lunar new year that has run, with pauses only for plague and war, for the better part of a hundred and seventy years. It is the deepest version of the Melbourne instinct there is: a whole culture that has survived by happening indoors, in rooms you have to know how to enter, handed down without interruption while everything around it was knocked over and built again.</p>
+
+<p>Even the gallery's greatness arrived in this manner -- quietly, from inside, as a gift. The National Gallery of Victoria was founded in 1861, which made it older than most institutions in the country and considerably older than the country itself, an early and faintly outrageous bet that a raw gold town at the bottom of the world ought to own art on the scale of an old European capital. The bet was paid off by a man almost nobody had heard of. Alfred Felton was a reclusive bachelor chemist who lived out his last years in a boarding house in St Kilda, and when he died in 1904 he left half of a very large fortune in trust, to be spent buying pictures for the gallery, in perpetuity. That single bequest is the reason a provincial city at the edge of everything owns a Rembrandt and a Poussin and the Tiepolo, why the collection punches so far above the town's size that first-time visitors assume some administrative error has occurred. The ambition was always there, plain and a little absurd. What made it real was a fortune handed over in private by a man who wanted his name on nothing he would ever be in the room to see.</p>
+
+<p>Put it together and a single shape emerges. A city with nothing to show from the outside. A city that expected to be the centre of its country and then watched the centre move elsewhere. A city sitting on the frozen wealth of one delirious decade, unable to tear it down. A place that took all of this and decided, more or less consciously, to make the interior the entire point -- the bar behind the kitchen, the gallery behind the water, the banquet room at the top of the stairs, the studio up in the old building where the printmaker and the perfumer keep their doors open. From outside, from the window seat, from Sydney, all of this can read as coldness, or worse, as a kind of snobbery -- the persistent sense that Melbourne is holding something back from you, that you are being kept just outside the door. And it is true that you are, at first. The city does not rush to be liked.</p>
+
+<p>But the inwardness is not a refusal, and to read it as one is to miss the city entirely. It is the exact opposite of a refusal. It is what a place does when it has decided that, having nothing to display on the outside, it will put everything it has behind doors, up stairs, down lanes, on the far side of a wall of falling water, and give it -- generously, completely, without stinting -- to anyone who comes close enough to reach in. The selectiveness is the delivery mechanism, not the point. The point is what is on the other side, and there is a great deal on the other side.</p>
+
+<p>Which is why the right season to arrive is the one most people are warned off. In July the boulevards are wet by four o'clock and dark not long after, the river goes from weak tea to ink, and the whole flat city stops pretending it has a single thing worth seeing out of doors -- because it never did, out there, and now it has the honesty not to bother. Everything that matters moves inside. Into the banquet rooms and the small bars and the gallery with the moat around it, into the warm and the low-ceilinged and the lit. The performance the city has been keeping back all summer, behind all those discreet fronts, is finally the only show in town. You came across the water from one island and you will land on the edge of another country with nothing to look at, and that is correct, and it is not a disappointment. You will not see Melbourne from the plane. There is nothing to see. You will be let into it instead, one room at a time, over four short nights, until the last of them, when you find you would rather not leave -- which is the one thing no view has ever managed to do for anyone.</p>
+
+<p>Put your hand out. The water parts. That is how you go in.</p>`
     }
   },
 
@@ -220,7 +256,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     { id: "bk5", label: "Bar Lourinhã", sub: "Wed 8 Jul · 7:30pm · bar seat", state: "confirmed", url: "https://barlourinha.com.au" },
     { id: "bk7", label: "Saadi", sub: "Fri 10 Jul · 6:30pm · downstairs", state: "confirmed", ref: "7V9NFNX4NPW7", url: "https://saadi.com.au" },
     { id: "bk8", label: "Lee Ho Fook", sub: "Sat 11 Jul · 6:30pm · chef's counter", state: "confirmed", ref: "#11936" },
-    { id: "bk6", label: "Tipo 00", sub: "Thu 9 Jul · pre-theatre · on waitlist", state: "pending", url: "https://www.tipo00.com.au" },
+    { id: "bk6", label: "Tipo 00", sub: "Thu 9 Jul · 5:15pm · bar seat", state: "confirmed", url: "https://www.tipo00.com.au" },
     { id: "bk9", label: "Airport Uber", sub: "Sun 12 Jul · 6:30am · schedule Sat night", state: "open" },
     { id: "bk1", label: "Flights, Qantas", sub: "QF170 / QF167 · E8GW8J", state: "confirmed" },
     { id: "bk2", label: "Apartment, Little Collins", sub: "8–12 Jul · check-in 3pm", state: "confirmed" },
@@ -230,8 +266,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     {
       id: "wed", dow: "Wednesday", date: "8 July", chapter: "I",
       title: "Landing Into the Dark",
-      essay: `<p>You land at twenty to six into a dark that arrived hours early. By the time the Uber comes down the Tullamarine freeway -- about 35 minutes from the terminal -- the city has switched fully into its winter evening self, and the drop into the grid feels less like arrival than absorption. Drop the bag, find the bin room, do not unpack. The night already has a shape.</p>
-<p>That shape is Bar Lourinhã, three minutes on foot from your door, where a seat at the bar has your name on it. It is the right first meal in Melbourne: unpretentious, confident, deeply good.</p>`,
+      essay: `<p>Descent into a winter city comes in two parts. First the lights -- the orange grid of the outer suburbs, the strung filaments of the freeways, the wet black shine of everything in the gaps between -- and then, without ceremony, the ground, and the particular cold that meets a body on the airbridge of a southern city in July. A cold with the sea somewhere in it. You crossed the water from one island and put down on the lip of a whole continent, and for the first hour none of it belongs to you. The taxi rank. The motorway. The green signs with names on them that mean nothing yet. This is the most foreign the place will ever feel, and the good news is that it lasts about forty minutes.</p>
+<p>Then a door, and a set of stairs, and a flat above a street in the dead centre of the grid, with the bags finally down and the long sigh of having arrived somewhere. There is a version of this evening that ends here, with toast and an early collapse, and it is a mistake. Arrival is not a place you reach by landing. It is a thing that happens later, somewhere warm, the moment you sit down at a counter you did not have to find and order the first thing without thinking too hard about it.</p>
+<p>So you go back out into the cold, which is shorter than you feared, the length of a narrow street, and into a long lit room that was full before you got there and will be full after you leave. Sherry, and small salted things, and the particular heat that comes off other people who are already mid-evening and have no idea you have just crossed a sea. A room that has held this same corner for twenty years and intends to hold it for twenty more. You are nobody here, which is the whole relief of it. The displacement of the airport drains out somewhere around the second glass, and the city, which showed you nothing on the way down, quietly opens its first door.</p>`,
       events: [
         { time: "3:45pm", title: "QF170 departs Christchurch", kind: "travel", note: "Boeing 737. Check-in closes 2:45pm CHC." },
         { time: "5:35pm", title: "Land at Tullamarine", kind: "travel", note: "Terminal 2. Gold status means priority bags. Uber rank signposted from arrivals -- about 35 minutes to the CBD.", map: "https://maps.google.com/?q=Melbourne+Airport+Tullamarine" },
@@ -252,8 +289,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     {
       id: "thu", dow: "Thursday", date: "9 July", chapter: "II",
       title: "Work, Then the North, Then a Dane",
-      essay: `<p>The morning belongs to the desk. Six hours of work from the apartment, which is no hardship in a flat with good light and a city waiting outside. If you need to break the mid-morning spell, Pellegrini's is around the corner on Bourke Street -- unchanged since 1954, a formica bar where the coffee is cheap and the welcome has not been refreshed by a brand consultant in seventy years.</p>
-<p>At two the city opens up. Take the 86 tram from the Bourke Street stop and ride it north for fifteen minutes into Fitzroy, Melbourne's first suburb and still its most stubbornly itself. Get off at the Smith Street corner and walk west along Gertrude Street. Then the evening sharpens to a point: dinner at the Tipo 00 counter, and at seven, Eddie Izzard alone on the Fairfax Studio stage performing the whole of Hamlet.</p>`,
+      essay: `<p>Few discomforts are as exquisite as having a city laid out below the window and choosing, for a morning, not to have it. Light comes up grey and then gold over the grid. Trams start their grinding down on the wide street. And you sit with a laptop and a coffee gone cold, doing the work that paid for the trip, while the most interesting place you have been in months waits on the other side of the glass with its hands in its pockets. There is a discipline to it, and a strange pleasure, the pleasure of deferral. The day is a held breath. You know exactly when it will be let out.</p>
+<p>Two o'clock is the exhale. North on a rattling tram, out of the formality of the centre and across an invisible line into older, looser country -- nineteenth-century terraces with their iron lace, shopfronts that have been forty different things, a street that wears every decade it has lived through at once and apologises for none of them. The pace drops. The buildings come down to two storeys and human scale. You drift west on foot with no particular errand, past the galleries and the op shops and the front bars filling early, and the afternoon does the thing afternoons in this part of town are good at, which is to dissolve.</p>
+<p>And then the day gathers itself for something it has been pointing at all along. A small room, a bare stage, the house lights down. One person, alone, with no set and no help, standing in for an entire poisoned court -- the prince and the ghost and the drowned girl and the clown with the skull, all of it passing through a single body in a single voice that keeps changing hands. There is nowhere to hide up there and nothing to hide behind, which is the entire point of attempting it this way. A whole kingdom of grief and delay and bad decisions, held for two hours inside one figure on an empty floor. You walk back out into the cold afterwards turning it over, the way the best evenings make you, slightly altered, not quite ready to talk.</p>`,
       events: [
         { time: "8:00am", title: "Work block", kind: "work", note: "From the apartment. Clear by 2pm." },
         { time: "~9:30am", title: "Pellegrini's", kind: "food", note: "66 Bourke Street, 5-minute walk. 1954 and proud of it.", map: "https://maps.google.com/?q=66+Bourke+Street+Melbourne" },
@@ -268,15 +306,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
 <p>Brunswick Street is longer, louder and more tourist-aware. It has good bookshops (Brunswick Street Bookstore, Polyester Records for vinyl), and is worth the overflow if Gertrude has not taken all your time. But Gertrude is the one to prioritise. The neighbourhood rewards a slow pace and punishes a checklist mentality. Leave Fitzroy by half four or five at the latest -- dinner has a deadline tonight.</p>`
           }
         },
-        { time: "5:30pm", title: "Tipo 00", kind: "food", state: "pending",
-          note: "361 Little Bourke Street, 4-minute walk from Fairfax Studio. On waitlist -- confirm before you rely on it. Done by quarter past six. Fallback: Cumulus Inc (45 Flinders Lane, walk-in) or Chin Chin (125 Flinders Lane, no bookings, spicy, always has room).",
+        { time: "5:15pm", title: "Tipo 00", kind: "food", state: "confirmed",
+          note: "361 Little Bourke Street, 4-minute walk from Fairfax Studio. Bar seat confirmed. Depart by 6:30pm -- it is a 12-minute walk to the Fairfax Studio. Order quickly and let the kitchen move.",
           map: "https://maps.google.com/?q=361+Little+Bourke+Street+Melbourne",
           book: "https://www.tipo00.com.au",
           expand: {
             label: "About Tipo 00",
             body: `<p>Andreas Papadakis spent four years at Vue de Monde before opening this room in 2014, and his fine-dining instincts are what make it different from every other pasta bar in the city. The name refers to the finest grade of Italian flour -- tipo 00 -- and the menu is built around fresh pasta made daily in a kitchen visible from the counter. In 2022 it was named one of the best Italian restaurants in the world. That is not the kind of claim this place makes about itself; it just keeps being excellent and the recognition arrives.</p>
 <p>The menu is short by design: a handful of starters, five or six pastas, a couple of mains for anyone who has found themselves in an Italian restaurant and does not want pasta. The right answer is pasta. Specifically the tagliolini al nero -- squid ink, seafood broth, a dish that reviewers keep returning to as the single thing you must order. The gnocchi with braised duck and porcini runs it close in winter. The Tipomisu is the dessert, a riff on tiramisu that is both better than it sounds and easier to eat than the original. The counter seats eight or ten and faces the open kitchen; for one diner it is the only seat worth having.</p>
-<p>This is not a relaxed long dinner -- it moves efficiently, which is the point tonight. Arrive at 5:30, order quickly, eat well, be walking south toward the Fairfax Studio by 6:15.</p>`
+<p>This is not a relaxed long dinner -- it moves efficiently, which is the point tonight. Arrive at 5:15, order quickly, eat well, be walking south toward the Fairfax Studio by 6:30.</p>`
           }
         },
         { time: "7:00pm", title: "Eddie Izzard, Hamlet", kind: "culture", state: "confirmed",
@@ -295,8 +333,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     {
       id: "fri", dow: "Friday", date: "10 July", chapter: "III",
       title: "The City's Interior",
-      essay: `<p>Today you go inward, in every sense. No trams out of town. The whole day lives inside the few hundred metres around your door, which turns out to be enough for a city built in layers.</p>
-<p>Start in the Nicholas Building on Swanston Street. Thread south by laneway -- Tattersalls, Caledonian, Duckboard Place -- until you come out on Flinders Lane for lunch at Cumulus Inc. Then south along St Kilda Road to the NGV for Cartier. Then Saadi on Punch Lane at half six. The day is a straight line from north to south, with the best things waiting at the far end of each stretch.</p>`,
+      essay: `<p>Some buildings cannot be read from the street at all. You can stand across the road and take in the 1920s stonework, the worn brass of the lobby, the lift with the folding gate, and understand almost nothing, because the building's entire life is happening on the upper floors, behind doors, in rooms the size of a generous cupboard. Go up. On the right day the doors stand open and the landings give off a confusion of smells -- cut paper and printing ink, hot wax, the strange dry sweetness of perfume oils being blended by hand. A milliner here. A bookbinder there. A painter who has held the same north light for thirty years. A working hive of people making small things slowly, stacked floor on floor in the middle of a city that mostly forgets they are up there.</p>
+<p>Down at street level the lanes do the same trick in reverse, threading between the grand fronts, the city's working underside turned into its quiet pleasure. You move through them with no map worth the name, taking the turn that looks like it leads to a loading dock and finding it leads somewhere better. It is a morning spent going inward and upward, into the parts of the place that keep themselves just out of sight, and it tunes the eye for what the afternoon has in store.</p>
+<p>Because the afternoon offers the opposite kind of interior. A gallery gone deliberately dark, and inside it, in case after lit case, a century of stones cut to do one thing only, which is to throw light back at you harder than it fell. Necklaces built like architecture. A tiara that outlived the head it was made for. The whole glittering logic of a house that decided rarity should be worn, and engineered, and kept. After a morning of ink and felt and patient hands, here is concentration of a different order -- value pressed down into the smallest possible space and made to shine in the dark. Two ways of keeping the best things inside, an afternoon apart, and the city fluent in both.</p>`,
       events: [
         { time: "9:30am", title: "Nicholas Building, Swanston Street", kind: "explore",
           note: "37 Swanston Street, 5-minute walk. Take the lift, walk the floors. Free, around an hour.",
@@ -312,15 +351,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
           note: "Tattersalls Lane (small rotating galleries, quiet on weekdays). Caledonian Lane off Little Bourke. Duckboard Place -- Saturday's dinner in daylight. Come out on Flinders Lane.",
           map: "https://maps.google.com/?q=Flinders+Lane+Melbourne"
         },
-        { time: "12:30pm", title: "Cumulus Inc", kind: "food",
-          note: "45 Flinders Lane. Counter, walk-in welcome at lunch. All-day, no rush. Leave by 1:30pm for the 15-minute walk to NGV.",
-          map: "https://maps.google.com/?q=45+Flinders+Lane+Melbourne",
-          expand: {
-            label: "About Cumulus Inc",
-            body: `<p>Andrew McConnell opened this room in 2008 and it changed how Melbourne understood lunch. The long marble counter facing the open kitchen -- walk-in welcome, no reservations during the day, wine by the glass from early -- became the template that every subsequent laneway room has tried to copy. The fact that most of them have succeeded is a tribute to how right the format was; the fact that Cumulus still draws a full counter on a Friday is a tribute to how well it executes.</p>
-<p>McConnell is the most influential figure in Melbourne dining of the last twenty years, responsible for Cutler and Co, Marion, Gimlet and others. Cumulus is not his most ambitious room; it is his most loved. The menu rotates seasonally and does not try to surprise you -- it tries to be impeccably cooked food that you want to eat. The taramasalata with grilled flatbread has been on the menu in various forms since the beginning. The kingfish and whatever accompanies it changes, but is always worth ordering. The wine list is long and intelligent and the staff actually know it.</p>
-<p>It is on the back-pocket list for a reason: it is reliable in a way that more ambitious rooms are not. Using it as the Friday lunch anchor is not a compromise; it is the right call for a midday meal before two hours of Cartier.</p>`
-          }
+        { time: "12:30pm", title: "Lunch on Flinders Lane", kind: "food",
+          note: "Flinders Lane has a full run of options at this hour. Cumulus Inc at number 45 is the reliable anchor -- marble counter, walk-in welcome, all-day. Or keep walking and see what pulls you in.",
+          map: "https://maps.google.com/?q=45+Flinders+Lane+Melbourne"
         },
         { time: "2:00pm", title: "Cartier, NGV International", kind: "culture", state: "confirmed",
           note: "180 St Kilda Road, 15-minute walk south. 2pm timed entry. Free guided tour at 2:30pm -- register at the info desk on arrival. Helen Molesworth audio guide $7, worth downloading beforehand. Allow 2 hours minimum.",
@@ -331,6 +364,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
 <p>The exhibition is organised thematically. A bold yellow room traces the brothers' world of inspiration across India, Egypt, Iran, China and Japan -- the Tutti Frutti collection has its own space: carved rubies, emeralds and sapphires stacked into bracelets and clips, the stones cut to echo Indian jewellery traditions, the settings unmistakably 1920s French. Jeanne Toussaint gets her own gallery. Creative director from 1933 to 1970, she elevated the panther from a repeating motif into an emblem -- the Duchess of Windsor's panther clip, a platinum cat crouching on a 152-carat cabochon sapphire, is here. The watches room sits midway as a palate cleanser: the 1914 Model A mystery clock, diamond-encrusted hands appearing to float with no visible mechanism, is the piece the Cartier Collection director said she would save in an emergency. The final gallery is entirely tiaras, twenty-four of them, including the Scroll Tiara of 1902 worn by Clementine Churchill at the coronation and later photographed on Rihanna for W Magazine.</p>
 <p>The exhibition design is by Studio Sabine Marcelis and CLOUD from Rotterdam: coloured rooms that read as settings for the stones. An original score by Ai Yamamoto and Erkki Veltheim runs throughout. The guided tour at 2:30pm covers the key objects in 45 minutes; register at the desk on arrival. Allow two hours minimum for the full exhibition.</p>`
           }
+        },
+        { time: "~4:15pm", title: "NGV garden and the Domain", kind: "explore",
+          note: "Exit the NGV into the water wall garden on St Kilda Road -- worth five minutes in the cold. Then the Domain stretches south: elm-lined paths, the Shrine of Remembrance lit in late afternoon. Walk north back toward the city when you are ready. Punch Lane is 20 minutes on foot from here.",
+          map: "https://maps.google.com/?q=Domain+Parklands+Melbourne"
         },
         { time: "6:30pm", title: "Saadi", kind: "food", state: "confirmed",
           note: "18 Punch Lane, downstairs. Reservation 7V9NFNX4NPW7. Arrive on time, no waiting area. $50/head cancellation within 24 hours. Friday is the $85 four-course set menu.",
@@ -348,12 +385,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     {
       id: "sat", dow: "Saturday", date: "11 July", chapter: "IV",
       title: "Market, Gardens, a Laneway Kitchen",
-      essay: `<p>No alarm. One long coffee somewhere near home before the day has any demands. When you are ready, walk fifteen minutes north to the Queen Victoria Market. Go for the deli hall and the produce sheds rather than to shop -- the atmosphere is the point. The fresh food halls wind down around midday, so arrive between ten and eleven for the full range.</p>
-<p>From there, walk or tram twenty minutes northeast to Carlton. Lygon Street has gone somewhat touristic, but the Carlton Gardens behind it have not, and they deserve an afternoon. Dinner is five minutes from home: Lee Ho Fook on Duckboard Place, the most interesting Chinese cooking in the city.</p>`,
+      essay: `<p>No alarm. That alone changes the shape of the air in a room. Light arrives and is allowed to, and the first hour belongs to nobody and nothing, which after three scheduled days feels close to extravagant. A day with no time pinned to its front end tends to find its own pace, and its own pace, here, leads to a market.</p>
+<p>Under the long sheds the cold is part of the point. Breath shows. Hands stay in pockets between stalls. The deli hall runs warm and dense with the smell of hung meat and cut cheese and coffee held in paper cups for the heat as much as the drink, and the produce rows out the back glisten with the particular self-respect of winter vegetables -- the brassicas, the bitter leaves, the muddy roots that actually want this weather. It is loud and social and faintly competitive, a few thousand people moving through the same cold space on the same loose errand, and it is at its best in the last hour before noon, when it begins, almost imperceptibly, to wind itself down.</p>
+<p>From there the day opens out into green. Formal paths, bare plane trees, and rising out of the middle of it a great glass-and-brick hall with a dome, built for a fair a hundred and forty years ago and grand far beyond any use it has now -- a building that once held the opening of a nation's first parliament and these days mostly holds joggers, pigeons, and the long afternoon light. You walk it slowly. There is nowhere you have to be for hours.</p>
+<p>And then, as the light goes, the day folds back in on itself. Off a lane, behind a plain door, a counter and a stool and a long sequence of small precise plates arriving one at a time from a kitchen close enough to watch -- one cook's whole argument about where his food comes from and where it has got to, made in courses. The most public day of the trip resolves, at its very end, into its most private hour. The city does this. It opens you all the way out, and then it brings you quietly back in.</p>`,
       events: [
         { time: "Slow", title: "No alarm", kind: "rest", note: "A long coffee. The morning owes you nothing." },
         { time: "~10:00am", title: "Queen Victoria Market", kind: "explore",
-          note: "15-minute walk north. Deli hall and produce sheds. Fresh food winds down around midday. Also the Wednesday Winter Night Market location (5-10pm every Wednesday through August, free).",
+          note: "15-minute walk north. Deli hall and produce sheds. Fresh food winds down around midday.",
           map: "https://maps.google.com/?q=Queen+Victoria+Market+Melbourne"
         },
         { time: "~12:30pm", title: "Carlton and the Gardens", kind: "explore",
@@ -382,7 +421,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     {
       id: "sun", dow: "Sunday", date: "12 July", chapter: "V",
       title: "The Early Door",
-      essay: `<p>An early flight. Out the door by half six into a Sunday city that has not woken up, the Uber booked the night before so there are no surprises at that hour. About 35 minutes to Tullamarine with no traffic. International check-in closes at 8:15am; aim to be at the Qantas counter by 7:30. QF167 lifts at 9:15 and has you home by mid-afternoon.</p>`,
+      essay: `<p>Waking in the dark to leave a place has its own particular flavour, half theft and half farewell. An alarm in the black hours. A flat you have only just learned the sounds of, quiet now in a way it has not been before. Bags by the door where you set them the night before, already half a stranger to the rooms behind you. There is no time for sentiment and that is a mercy, because the clock is the only thing in charge, and the clock says go.</p>
+<p>Down on the street the city does, at last, the one thing it has refused to do all week. It shows you its outside. Nothing is open, so there is no inside to be let into -- only the wide wet road under the sodium lights, the shut grand fronts, the lanes black and giving nothing, the whole grid emptied of everyone and, for these few minutes, entirely yours. It is the most of Melbourne you have seen at once, and it is beautiful, and it is closed. You came in through a wall of water four nights ago. You go out through this, the cold and the dark and the empty.</p>
+<p>The cab runs the motorway the other way, the green signs unspooling in reverse, the names that meant nothing on the first night meaning a little something now. A bright cold terminal. The long bones of a 737. And then the lift, and the brown plain dropping away below with its river the colour of ink, showing you, even at the end, nothing to photograph. That was always the deal. The city kept everything indoors and gave it to you a room at a time, and now you are taking the warm of it home in place of a view.</p>`,
       events: [
         { time: "5:45am", title: "Up", kind: "travel", note: "Check out before you leave -- key return per the host instructions in the 48-hour email." },
         { time: "6:30am", title: "Uber to Tullamarine", kind: "travel", note: "Booked Saturday night. About 35 minutes. Terminal 2." },
@@ -415,8 +456,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
     { group: "Getting around", items: [
       ["Trams in the CBD", "Free inside the city zone. Roughly Spencer, Flinders, Spring and La Trobe Streets."],
       ["Tram 86", "Bourke Street stop straight north to Fitzroy and Gertrude Street. 15 minutes."],
-      ["Myki card", "Buy and load at any 7-Eleven. Twenty dollars covers the trip."],
-      ["Weather", "7 to 14 degrees. Rain likely. Layers and a compact umbrella."],
+      ["Myki card", "Buy and load at any 7-Eleven. Only needed for tram 86 to Fitzroy -- the CBD zone is free. Twenty dollars covers the trip."],
       ["Qantas Gold", "Priority check-in at Tullamarine. 46kg baggage allowance on the international leg."],
     ]},
   ]
@@ -435,9 +475,26 @@ function renderMasthead() {
     <div class="row flight"><span class="lbl">Home</span>${TRIP.meta.flights.ret}</div>`;
 }
 
-function renderHero() {
-  const h = TRIP.meta.hero;
-  document.getElementById('hero').innerHTML = `<div class="kicker">${h.kicker}</div><h2>${h.title}</h2><p class="standfirst">${h.standfirst}</p><div class="prose">${h.body}</div>`;
+function renderPlanePiece() {
+  const p = TRIP.meta.plane;
+  const sec = document.getElementById('plane');
+  let ctxId = 'plane-full';
+  sec.innerHTML = `
+    <div class="kicker">${p.kicker}</div>
+    <h2>${p.title}</h2>
+    <p class="standfirst">${p.standfirst}</p>
+    <div class="prose prose-preview">${p.preview}</div>
+    <div class="ctx" style="margin-top:1.5rem;">
+      <button class="ctx-toggle" id="plane-toggle" aria-expanded="false"><span class="arr">›</span> Continue reading</button>
+      <div class="ctx-body" id="${ctxId}"><div class="prose prose-full">${p.full}</div></div>
+    </div>`;
+  document.getElementById('plane-toggle').addEventListener('click', function() {
+    this.classList.toggle('on');
+    const body = document.getElementById(ctxId);
+    body.classList.toggle('on');
+    this.setAttribute('aria-expanded', body.classList.contains('on'));
+    this.querySelector('.arr').parentNode.childNodes[1].textContent = body.classList.contains('on') ? ' Collapse' : ' Continue reading';
+  });
 }
 
 let ctxId = 0;
@@ -454,15 +511,46 @@ function makeCtx(expand) {
 
 function renderChapters() {
   const wrap = document.getElementById('chapters');
+  const DAY_DATES = { wed: '2026-07-08', thu: '2026-07-09', fri: '2026-07-10', sat: '2026-07-11', sun: '2026-07-12' };
+
+  function getMelbourneDate() {
+    return new Date().toLocaleString('en-CA', { timeZone: 'Australia/Melbourne' }).slice(0, 10);
+  }
+
+  const todayStr = getMelbourneDate();
+  const tripActive = todayStr >= '2026-07-08' && todayStr <= '2026-07-12';
+
+  const chapters = [];
   TRIP.days.forEach(day => {
     const ch = el('section', 'chapter'); ch.id = day.id;
+    const dayDate = DAY_DATES[day.id];
+    let statusLabel = '';
+
+    if (tripActive) {
+      if (dayDate < todayStr)        { ch.classList.add('is-past'); statusLabel = 'Yesterday'; }
+      else if (dayDate === todayStr) { ch.classList.add('is-today'); statusLabel = 'Today'; }
+    }
+
+    if (statusLabel) ch.appendChild(el('div', 'chapter-status', statusLabel));
+
     ch.appendChild(el('div', 'chapter-head', `
       <div class="chapter-numeral">${day.chapter}</div>
       <div class="meta">
         <div class="chapter-dow">${day.dow} · <span class="date">${day.date}</span></div>
         <div class="chapter-title">${day.title}</div>
       </div>`));
-    ch.appendChild(el('div', 'chapter-essay', `<div class="prose">${day.essay}</div>`));
+
+    // Day essay behind expand toggle
+    const essayCtxId = 'essay-' + day.id;
+    const essayWrap = el('div', 'chapter-essay');
+    const essayBtn = el('button', 'ctx-toggle', `<span class="arr">›</span> Read the day`);
+    const essayBody = el('div', 'ctx-body', `<div class="prose">${day.essay}</div>`);
+    essayBody.id = essayCtxId;
+    essayBtn.addEventListener('click', () => { essayBtn.classList.toggle('on'); essayBody.classList.toggle('on'); });
+    essayWrap.appendChild(essayBtn);
+    essayWrap.appendChild(essayBody);
+    ch.appendChild(essayWrap);
+
     const spine = el('div', 'spine');
     day.events.forEach(ev => {
       const stop = el('div', 'stop'); stop.dataset.kind = ev.kind;
@@ -481,8 +569,22 @@ function renderChapters() {
       spine.appendChild(stop);
     });
     ch.appendChild(spine);
-    wrap.appendChild(ch);
+    chapters.push({ el: ch, date: dayDate });
   });
+
+  if (tripActive) {
+    chapters.sort((a, b) => {
+      const aToday = a.date === todayStr, bToday = b.date === todayStr;
+      const aPast  = a.date < todayStr,   bPast  = b.date < todayStr;
+      if (aToday && !bToday) return -1;
+      if (bToday && !aToday) return 1;
+      if (!aPast && bPast)   return -1;
+      if (aPast && !bPast)   return 1;
+      return a.date < b.date ? -1 : 1;
+    });
+  }
+
+  chapters.forEach(c => wrap.appendChild(c.el));
 }
 
 function renderLedger() {
@@ -531,8 +633,35 @@ function initNotes() {
   draw();
 }
 
+async function fetchWeather() {
+  const widget = document.getElementById('m-weather');
+  if (!widget) return;
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=-37.8136&longitude=144.9631&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=Australia%2FMelbourne';
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const data = await res.json();
+    const temp = Math.round(data.current.temperature_2m);
+    const code = data.current.weather_code;
+    const conditions = (c) => {
+      if (c === 0)   return ['☀', 'Clear'];
+      if (c <= 2)    return ['⛅', 'Partly cloudy'];
+      if (c === 3)   return ['☁', 'Overcast'];
+      if (c <= 49)   return ['🌫', 'Fog'];
+      if (c <= 59)   return ['🌦', 'Drizzle'];
+      if (c <= 69)   return ['🌧', 'Rain'];
+      if (c <= 79)   return ['❄', 'Snow'];
+      if (c <= 82)   return ['🌦', 'Showers'];
+      if (c <= 99)   return ['⛈', 'Thunderstorm'];
+      return ['—', ''];
+    };
+    const [icon] = conditions(code);
+    widget.innerHTML = `<div class="weather-widget"><span class="weather-icon">${icon}</span><span class="weather-temp">${temp}°</span><span class="weather-desc">Melbourne now</span></div>`;
+  } catch(e) { /* silent fail */ }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  renderMasthead(); renderHero(); renderChapters(); renderLedger(); renderPocket(); initNotes();
+  renderMasthead(); renderPlanePiece(); renderChapters(); renderLedger(); renderPocket(); initNotes(); fetchWeather();
 });
 </script>
 </body>
