@@ -3,214 +3,230 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Melbourne · Winter 2026</title>
+<title>Melbourne · July 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --night:    #14161d;
-  --night-2:  #1b1e27;
-  --night-3:  #21252f;
-  --paper:    #efe9dd;
-  --paper-dim:#cbc6bb;
-  --brass:    #cf9a52;
-  --brass-dim:#9a7740;
-  --mist:     #8b919e;
-  --line:     #2b2f3b;
-  --line-2:   #363b48;
-  --good:     #7faf7a;
-  --pend:     #cf9a52;
-  --open:     #7d93c4;
+  --ink:      #0f1117;
+  --ink-2:    #181b23;
+  --ink-3:    #1f2330;
+  --paper:    #e8e2d6;
+  --paper-2:  #c4bfb5;
+  --gold:     #c8914a;
+  --gold-2:   #8a6230;
+  --steel:    #7a8390;
+  --rule:     #252932;
+  --rule-2:   #2e3340;
+  --good:     #6a9e65;
+  --open:     #5e7da8;
   --serif:    'Newsreader', Georgia, serif;
   --display:  'Fraunces', Georgia, serif;
-  --sans:     'Inter', -apple-system, system-ui, sans-serif;
-  --max: 760px;
-  --fs-xs: 0.7rem; --fs-sm: 0.82rem; --fs-md: 1.05rem; --fs-lg: 1.3rem;
-  --fs-2xl: clamp(2.6rem, 7vw, 4.4rem);
+  --mono:     'Inter', -apple-system, system-ui, sans-serif;
+  --col: 680px;
+  --pad: 1.5rem;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { background: var(--night); color: var(--paper); font-family: var(--serif); font-size: var(--fs-md); line-height: 1.75; }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
-.wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
-.skyglow { position: fixed; top: 0; left: 0; right: 0; height: 60vh; background: radial-gradient(120% 80% at 70% -10%, rgba(207,154,82,0.10), transparent 60%); pointer-events: none; z-index: 0; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; font-size: 17px; }
+body { background: var(--ink); color: var(--paper); font-family: var(--serif); line-height: 1.72; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+.wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--pad); }
+
+/* ── AMBIENT GLOW ─────────────────────────────────────────── */
+.glow { position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 80% 50% at 65% -5%, rgba(200,145,74,0.07) 0%, transparent 65%); }
 .content { position: relative; z-index: 1; }
 
-/* MASTHEAD */
-.masthead { padding: 4.5rem 0 2.5rem; }
-.masthead .eyebrow { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 500; letter-spacing: 0.32em; text-transform: uppercase; color: var(--brass); margin-bottom: 1.4rem; }
-.masthead h1 { font-family: var(--display); font-size: var(--fs-2xl); font-weight: 400; line-height: 0.92; letter-spacing: -0.02em; font-optical-sizing: auto; }
-.masthead h1 em { font-style: italic; font-weight: 300; color: var(--brass); }
-.masthead .meta { font-family: var(--sans); font-size: var(--fs-sm); color: var(--mist); margin-top: 1.6rem; border-top: 1px solid var(--line); padding-top: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem 1.5rem; }
-@media (max-width: 480px) { .masthead .meta { grid-template-columns: 1fr; } }
-.masthead .meta .row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.masthead .meta .lbl { color: var(--mist); flex-shrink: 0; }
-.masthead .meta a { color: var(--paper-dim); text-decoration: none; border-bottom: 1px solid var(--line-2); }
-.masthead .meta a:hover { color: var(--brass); }
-.masthead .meta .flight { font-size: var(--fs-xs); color: var(--paper-dim); }
+/* ── MASTHEAD ─────────────────────────────────────────────── */
+.masthead { padding: 3.5rem 0 2rem; }
+.mast-city { font-family: var(--display); font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 300; line-height: 0.88; letter-spacing: -0.025em; font-optical-sizing: auto; }
+.mast-city em { font-style: italic; color: var(--gold); }
+.mast-bar { display: flex; align-items: baseline; gap: 1.5rem; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--rule); flex-wrap: wrap; }
+.mast-dates { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); }
+.mast-base { font-family: var(--mono); font-size: 0.72rem; color: var(--paper-2); }
+.mast-base a { color: var(--paper-2); text-decoration: none; border-bottom: 1px solid var(--rule-2); }
+.mast-base a:hover { color: var(--gold); border-color: var(--gold-2); }
+.mast-flights { font-family: var(--mono); font-size: 0.65rem; color: var(--steel); margin-top: 0.3rem; line-height: 1.7; }
+.weather { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.72rem; color: var(--steel); margin-left: auto; }
+.weather-temp { color: var(--paper-2); font-weight: 500; }
 
-/* WEATHER WIDGET */
-.weather-widget { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; font-family: var(--sans); font-size: var(--fs-xs); color: var(--mist); }
-.weather-icon { font-size: 1.1rem; line-height: 1; }
-.weather-temp { color: var(--paper-dim); font-weight: 500; }
-.weather-desc { color: var(--mist); }
+/* ── PLANE PIECE ──────────────────────────────────────────── */
+.plane-piece { padding: 2.5rem 0 3rem; border-bottom: 1px solid var(--rule); }
+.kicker { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-2); margin-bottom: 0.9rem; }
+.plane-piece h2 { font-family: var(--display); font-size: clamp(1.9rem, 5vw, 3rem); font-weight: 300; line-height: 1.02; letter-spacing: -0.02em; font-optical-sizing: auto; margin-bottom: 0.8rem; }
+.standfirst { font-family: var(--serif); font-size: 1.18rem; font-weight: 300; font-style: italic; color: var(--gold); line-height: 1.45; margin-bottom: 2rem; max-width: 32ch; }
 
-/* PLANE PIECE */
-.plane-piece { padding: 1.5rem 0 3.5rem; border-bottom: 1px solid var(--line); }
-.plane-piece .kicker { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-dim); margin-bottom: 1rem; }
-.plane-piece h2 { font-family: var(--display); font-size: clamp(1.8rem, 4.5vw, 2.7rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.015em; margin-bottom: 1rem; font-optical-sizing: auto; }
-.plane-piece .standfirst { font-family: var(--serif); font-size: var(--fs-lg); font-weight: 300; font-style: italic; color: var(--brass); line-height: 1.4; margin-bottom: 2rem; max-width: 34ch; }
-.prose p { margin-bottom: 1.3em; color: var(--paper-dim); }
+/* ── PROSE ────────────────────────────────────────────────── */
+.prose p { margin-bottom: 1.25em; color: var(--paper-2); font-size: 1rem; }
 .prose p:last-child { margin-bottom: 0; }
-.plane-piece .prose-preview > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 4.2em; line-height: 0.74; font-weight: 400; padding: 0.05em 0.1em 0 0; color: var(--brass); }
-.plane-piece .prose-full > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 4.2em; line-height: 0.74; font-weight: 400; padding: 0.05em 0.1em 0 0; color: var(--brass); }
+.prose-drop > p:first-of-type::first-letter {
+  font-family: var(--display); float: left; font-size: 4em; line-height: 0.76;
+  font-weight: 300; padding: 0.04em 0.1em 0 0; color: var(--gold); font-optical-sizing: auto; }
 
-/* DAY CHAPTERS */
-.chapter { padding: 3.5rem 0; border-bottom: 1px solid var(--line); }
-.chapter.is-past { opacity: 0.55; }
-.chapter.is-today { border-left: 2px solid var(--brass-dim); padding-left: 1.25rem; margin-left: -1.25rem; }
-.chapter-status { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); margin-bottom: 0.5rem; }
-.chapter-head { margin-bottom: 2rem; display: flex; gap: 1.25rem; align-items: baseline; }
-.chapter-numeral { font-family: var(--display); font-size: 2.4rem; font-weight: 300; font-style: italic; color: var(--brass-dim); line-height: 1; flex-shrink: 0; width: 1.6em; text-align: center; }
-.chapter-head .meta { flex: 1; }
-.chapter-dow { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); margin-bottom: 0.4rem; }
-.chapter-dow .date { color: var(--brass); }
-.chapter-title { font-family: var(--display); font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.01em; font-optical-sizing: auto; }
-.chapter-essay { margin-bottom: 2.5rem; }
-.chapter-essay .prose { font-size: 1.02rem; }
-.chapter-essay .prose > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 3.2em; line-height: 0.76; font-weight: 400; padding: 0.06em 0.09em 0 0; color: var(--brass-dim); }
-
-/* SPINE */
-.spine { position: relative; padding-left: 2.5rem; }
-.spine::before { content: ''; position: absolute; left: 5px; top: 0.5rem; bottom: 0.5rem; width: 1px; background: linear-gradient(var(--brass-dim), var(--line) 90%); }
-.stop { position: relative; margin-bottom: 2rem; }
-.stop:last-child { margin-bottom: 0; }
-.stop::before { content: ''; position: absolute; left: calc(-2.5rem + 1px); top: 0.45rem; width: 11px; height: 11px; border-radius: 50%; background: var(--night); border: 1.5px solid var(--brass-dim); }
-.stop[data-kind="food"]::before { border-color: var(--brass); }
-.stop[data-kind="culture"]::before { background: var(--brass); border-color: var(--brass); }
-.stop[data-kind="rest"]::before { border-style: dotted; }
-.stop-time { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.08em; color: var(--brass); text-transform: uppercase; }
-.stop-title { font-family: var(--display); font-size: 1.18rem; font-weight: 500; color: var(--paper); margin: 0.1rem 0 0.25rem; line-height: 1.25; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
-.stop-note { font-family: var(--sans); font-size: var(--fs-sm); color: var(--mist); line-height: 1.6; }
-.stop-links { margin-top: 0.45rem; display: flex; gap: 1.1rem; }
-.stop-links a { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--brass-dim); text-decoration: none; }
-.stop-links a:hover { color: var(--brass); }
-
-/* TAGS */
-.tag { font-family: var(--sans); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.18em 0.6em; border-radius: 2px; white-space: nowrap; }
-.tag.confirmed { color: var(--good); border: 1px solid color-mix(in srgb, var(--good) 40%, transparent); }
-.tag.pending { color: var(--pend); border: 1px solid color-mix(in srgb, var(--pend) 40%, transparent); }
-.tag.open { color: var(--open); border: 1px solid color-mix(in srgb, var(--open) 40%, transparent); }
-
-/* CONTEXT EXPAND */
-.ctx { margin-top: 0.75rem; }
-.ctx-toggle {
-  display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;
-  background: none; border: none; padding: 0;
-  font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass-dim);
-  transition: color 0.15s;
+/* ── EXPAND TOGGLE ────────────────────────────────────────── */
+.expand { margin-top: 0.8rem; }
+.expand-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+  background: none; border: none; padding: 0.2rem 0;
+  font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-2);
+  transition: color 0.12s;
 }
-.ctx-toggle:hover { color: var(--brass); }
-.ctx-toggle .arr { font-size: 0.75rem; transition: transform 0.2s; display: inline-block; }
-.ctx-toggle.on .arr { transform: rotate(90deg); }
-.ctx-body {
+.expand-btn:hover { color: var(--gold); }
+.expand-btn .chevron { display: inline-block; transition: transform 0.18s; font-style: normal; }
+.expand-btn.open .chevron { transform: rotate(90deg); }
+.expand-body {
   display: none; margin-top: 1rem;
-  padding: 1.1rem 1.25rem; background: var(--night-2);
-  border-left: 2px solid var(--brass-dim); border-radius: 0 4px 4px 0;
+  padding: 1.2rem 1.4rem;
+  background: var(--ink-2);
+  border-left: 1px solid var(--gold-2);
 }
-.ctx-body.on { display: block; }
-.ctx-body .prose p { font-size: var(--fs-sm); color: var(--paper-dim); margin-bottom: 1em; }
-.ctx-body .prose p:last-child { margin-bottom: 0; }
-.ctx-body .prose > p:first-of-type::first-letter { font-family: var(--display); float: left; font-size: 2.8em; line-height: 0.76; font-weight: 400; padding: 0.06em 0.08em 0 0; color: var(--brass-dim); }
+.expand-body.open { display: block; }
+.expand-body .prose p { font-size: 0.92rem; }
+.expand-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--gold-2); }
 
-/* LEDGER */
-.ledger { padding: 3.5rem 0; border-bottom: 1px solid var(--line); }
-.section-label { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-dim); margin-bottom: 1.5rem; }
-.ledger-list { display: flex; flex-direction: column; }
-.ledger-row { display: flex; align-items: baseline; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
-.ledger-row:first-child { border-top: 1px solid var(--line); }
-.ldot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; align-self: center; }
+/* ── CHAPTERS ─────────────────────────────────────────────── */
+.chapter { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+.chapter.is-past { opacity: 0.5; }
+.chapter.is-today { border-left: 1px solid var(--gold-2); padding-left: 1.5rem; margin-left: -1.5rem; }
+.chapter-label { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+.chapter-head { margin-bottom: 1.8rem; }
+.chapter-meta { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--steel); margin-bottom: 0.5rem; }
+.chapter-meta .date-accent { color: var(--gold-2); }
+.chapter-title { font-family: var(--display); font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 300; line-height: 1.04; letter-spacing: -0.015em; font-optical-sizing: auto; }
+
+/* ── SPINE ────────────────────────────────────────────────── */
+.spine { position: relative; padding-left: 2rem; margin-top: 1.5rem; }
+.spine::before { content: ''; position: absolute; left: 0; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--rule-2); }
+.stop { position: relative; margin-bottom: 1.8rem; }
+.stop:last-child { margin-bottom: 0; }
+.stop::before {
+  content: ''; position: absolute; left: -2rem; top: 0.52rem;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--ink); border: 1px solid var(--rule-2);
+}
+.stop[data-kind="food"]::before { border-color: var(--gold); background: var(--ink-2); }
+.stop[data-kind="culture"]::before { background: var(--gold); border-color: var(--gold); }
+.stop-time { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.15rem; }
+.stop-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+.stop-title { font-family: var(--display); font-size: 1.1rem; font-weight: 400; color: var(--paper); line-height: 1.2; font-optical-sizing: auto; }
+.stop-title a { color: var(--paper); text-decoration: none; border-bottom: 1px solid var(--rule-2); }
+.stop-title a:hover { color: var(--gold); border-color: var(--gold-2); }
+.stop-tag { font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15em 0.55em; border-radius: 1px; flex-shrink: 0; }
+.stop-tag.confirmed { color: var(--good); border: 1px solid color-mix(in srgb, var(--good) 35%, transparent); }
+.stop-tag.open { color: var(--open); border: 1px solid color-mix(in srgb, var(--open) 35%, transparent); }
+.stop-note { font-family: var(--serif); font-size: 0.88rem; color: var(--steel); line-height: 1.65; }
+.stop-ref { font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); margin-top: 0.3rem; letter-spacing: 0.04em; }
+.stop-ref span { color: var(--steel); }
+.stop-map { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-2); text-decoration: none; margin-top: 0.35rem; display: inline-block; }
+.stop-map:hover { color: var(--gold); }
+
+/* ── BOOKINGS LEDGER ──────────────────────────────────────── */
+.bookings-section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+.ledger { margin-top: 1.2rem; }
+.ledger-row { display: flex; align-items: baseline; gap: 0.9rem; padding: 0.65rem 0; border-bottom: 1px solid var(--rule); }
+.ledger-row:first-child { border-top: 1px solid var(--rule); }
+.ldot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; align-self: center; }
 .ldot.confirmed { background: var(--good); }
-.ldot.pending { background: var(--pend); }
 .ldot.open { background: var(--open); }
-.ledger-main { flex: 1; min-width: 0; }
-.ledger-label { font-family: var(--display); font-size: 1.05rem; font-weight: 500; }
-.ledger-sub { font-family: var(--sans); font-size: var(--fs-xs); color: var(--mist); margin-top: 0.1rem; }
-.ledger-state { font-family: var(--sans); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
+.ledger-body { flex: 1; min-width: 0; }
+.ledger-label { font-family: var(--display); font-size: 0.98rem; font-weight: 400; color: var(--paper); font-optical-sizing: auto; }
+.ledger-sub { font-family: var(--mono); font-size: 0.62rem; color: var(--steel); margin-top: 0.1rem; letter-spacing: 0.02em; }
+.ledger-ref { font-family: var(--mono); font-size: 0.6rem; color: var(--rule-2); margin-top: 0.15rem; }
+.ledger-ref span { color: var(--gold-2); }
+.ledger-state { font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
 .ledger-state.confirmed { color: var(--good); }
-.ledger-state.pending { color: var(--pend); }
 .ledger-state.open { color: var(--open); }
-.ledger-row a.go { font-family: var(--sans); font-size: var(--fs-xs); color: var(--brass-dim); text-decoration: none; flex-shrink: 0; }
-.ledger-row a.go:hover { color: var(--brass); }
+.ledger-link { font-family: var(--mono); font-size: 0.62rem; color: var(--gold-2); text-decoration: none; flex-shrink: 0; }
+.ledger-link:hover { color: var(--gold); }
 
-/* POCKET */
-.pocket { padding: 3.5rem 0; }
-.pocket-group { margin-bottom: 0.5rem; }
-.pocket-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; background: none; border: none; border-bottom: 1px solid var(--line); padding: 0.9rem 0; cursor: pointer; color: var(--paper); font-family: var(--display); font-size: 1.15rem; font-weight: 500; text-align: left; }
-.pocket-toggle .chev { font-family: var(--sans); color: var(--brass-dim); font-size: 0.9rem; transition: transform 0.2s; }
-.pocket-toggle.on .chev { transform: rotate(90deg); }
-.pocket-body { display: none; padding: 0.5rem 0 1rem; }
-.pocket-body.on { display: block; }
-.pocket-item { padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+/* ── BACK POCKET ──────────────────────────────────────────── */
+.pocket { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+.pocket-group { margin-bottom: 0.25rem; }
+.pocket-btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  background: none; border: none; border-bottom: 1px solid var(--rule);
+  padding: 0.85rem 0; cursor: pointer; color: var(--paper);
+  font-family: var(--serif); font-size: 1rem; font-weight: 400; text-align: left;
+}
+.pocket-btn .chev { font-family: var(--mono); color: var(--gold-2); font-size: 0.8rem; transition: transform 0.18s; }
+.pocket-btn.open .chev { transform: rotate(90deg); }
+.pocket-body { display: none; padding: 0.4rem 0 0.9rem; }
+.pocket-body.open { display: block; }
+.pocket-item { padding: 0.5rem 0; border-bottom: 1px solid var(--rule); }
 .pocket-item:last-child { border-bottom: none; }
-.pocket-item .n { font-family: var(--display); font-size: 1rem; font-weight: 500; color: var(--paper-dim); }
-.pocket-item .d { font-family: var(--sans); font-size: var(--fs-sm); color: var(--mist); line-height: 1.5; margin-top: 0.1rem; }
+.pocket-item .n { font-family: var(--serif); font-size: 0.95rem; color: var(--paper-2); }
+.pocket-item .d { font-family: var(--mono); font-size: 0.65rem; color: var(--steel); line-height: 1.55; margin-top: 0.1rem; letter-spacing: 0.01em; }
 
-footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--sans); font-size: var(--fs-xs); color: var(--line-2); letter-spacing: 0.1em; }
+/* ── SECTION LABEL ────────────────────────────────────────── */
+.section-label { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-2); margin-bottom: 0; }
 
-/* FAB */
-.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 50px; height: 50px; border-radius: 50%; background: var(--brass); color: var(--night); border: none; cursor: pointer; font-family: var(--display); font-size: 1.3rem; box-shadow: 0 6px 20px rgba(0,0,0,0.4); transition: transform 0.15s; }
+/* ── FAB / NOTES ──────────────────────────────────────────── */
+footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
+.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; border-radius: 50%; background: var(--gold); color: var(--ink); border: none; cursor: pointer; font-family: var(--display); font-size: 1.2rem; box-shadow: 0 4px 18px rgba(0,0,0,0.45); transition: transform 0.12s; }
 .fab:hover { transform: scale(1.06); }
-.notepanel { position: fixed; bottom: 5.2rem; right: 1.4rem; z-index: 50; width: min(310px, calc(100vw - 2.8rem)); background: var(--night-2); border: 1px solid var(--line-2); border-radius: 8px; padding: 1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.5); display: none; }
-.notepanel.on { display: block; }
-.notepanel textarea { width: 100%; height: 80px; resize: none; background: var(--night); color: var(--paper); border: 1px solid var(--line-2); border-radius: 4px; padding: 0.6rem; font-family: var(--sans); font-size: var(--fs-sm); }
-.notepanel textarea:focus { outline: 1px solid var(--brass-dim); }
-.notepanel .save { margin-top: 0.5rem; width: 100%; padding: 0.5rem; background: var(--brass); color: var(--night); border: none; border-radius: 4px; font-family: var(--sans); font-weight: 600; font-size: var(--fs-sm); cursor: pointer; }
-.notelist { margin-top: 0.6rem; max-height: 130px; overflow-y: auto; }
-.noteitem { font-family: var(--sans); font-size: var(--fs-xs); color: var(--paper-dim); padding: 0.4rem 0; border-bottom: 1px solid var(--line); line-height: 1.4; }
+.notepanel { position: fixed; bottom: 5rem; right: 1.4rem; z-index: 50; width: min(300px, calc(100vw - 2.8rem)); background: var(--ink-2); border: 1px solid var(--rule-2); border-radius: 4px; padding: 1rem; box-shadow: 0 8px 32px rgba(0,0,0,0.5); display: none; }
+.notepanel.open { display: block; }
+.notepanel textarea { width: 100%; height: 76px; resize: none; background: var(--ink); color: var(--paper); border: 1px solid var(--rule-2); border-radius: 2px; padding: 0.55rem; font-family: var(--mono); font-size: 0.78rem; }
+.notepanel textarea:focus { outline: 1px solid var(--gold-2); }
+.notepanel .save { margin-top: 0.45rem; width: 100%; padding: 0.45rem; background: var(--gold); color: var(--ink); border: none; border-radius: 2px; font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em; cursor: pointer; text-transform: uppercase; }
+.notelist { margin-top: 0.5rem; max-height: 120px; overflow-y: auto; }
+.noteitem { font-family: var(--mono); font-size: 0.65rem; color: var(--paper-2); padding: 0.35rem 0; border-bottom: 1px solid var(--rule); line-height: 1.4; }
 .noteitem:last-child { border-bottom: none; }
-.notelist .empty { font-family: var(--sans); font-size: var(--fs-xs); color: var(--mist); }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.notelist .empty { font-family: var(--mono); font-size: 0.65rem; color: var(--steel); }
+a:focus-visible, button:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
 </style>
 </head>
 <body>
-<div class="skyglow"></div>
+<div class="glow"></div>
 <div class="content"><div class="wrap">
 
 <header class="masthead">
-  <div class="eyebrow" id="m-season"></div>
-  <h1 id="m-title"></h1>
-  <div class="meta" id="m-meta"></div>
-  <div id="m-weather"></div>
+  <div class="mast-city" id="m-title"></div>
+  <div class="mast-bar">
+    <span class="mast-dates" id="m-dates"></span>
+    <span class="mast-base" id="m-base"></span>
+    <span class="weather" id="m-weather"></span>
+  </div>
+  <div class="mast-flights" id="m-flights"></div>
 </header>
 
 <section class="plane-piece" id="plane"></section>
 
 <main id="chapters"></main>
 
-<section class="ledger"><div class="section-label">The bookings</div><div class="ledger-list" id="ledger-list"></div></section>
+<section class="pocket" id="pocket-section">
+  <div class="section-label">Back pocket</div>
+  <div id="pocket-wrap"></div>
+</section>
 
-<section class="pocket"><div class="section-label">Back pocket</div><div id="pocket-wrap"></div></section>
+<section class="bookings-section" id="bookings-section">
+  <div class="expand">
+    <button class="expand-btn" id="bookings-toggle"><em class="chevron">›</em>&nbsp;The bookings</button>
+    <div class="expand-body" id="bookings-body">
+      <div class="ledger" id="ledger-list"></div>
+    </div>
+  </div>
+</section>
 
-<footer>MELBOURNE · JULY 2026</footer>
+<footer>Melbourne · July 2026</footer>
 </div></div>
 
-<button class="fab" id="fab" aria-label="Add a note">✎</button>
+<button class="fab" id="fab" aria-label="Notes">✎</button>
 <div class="notepanel" id="notepanel">
-  <textarea id="note-ta" placeholder="A thought, an address, a reminder…"></textarea>
-  <button class="save" id="note-save">Keep note</button>
+  <textarea id="note-ta" placeholder="A thought, a name, an address…"></textarea>
+  <button class="save" id="note-save">Keep</button>
   <div class="notelist" id="notelist"></div>
 </div>
 
-<script>const TRIP = {
+<script>
+const TRIP = {
   meta: {
     city: "Melbourne",
-    season: "Four nights, deep winter",
     dates: "8–12 July 2026",
-    flights: { out: "QF170 CHC 3:45pm → MEL 5:35pm · E8GW8J", ret: "QF167 MEL 9:15am → CHC 2:45pm · E8GW8J · check-in closes 8:15am" },
-    base: { name: "192 Little Collins Street", url: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
+    flights: { out: "QF170 · CHC 3:45pm → MEL 5:35pm", ret: "QF167 · MEL 9:15am → CHC 2:45pm · check-in closes 8:15am", ref: "E8GW8J" },
+    base: { name: "192 Little Collins Street", airbnb: "https://www.airbnb.co.nz/rooms/1832876", map: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
     plane: {
       kicker: "Read on the plane",
       title: "You Will Be Let In",
@@ -251,15 +267,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
   },
 
   bookings: [
-    { id: "bk3", label: "Hamlet, Fairfax Studio", sub: "Thu 9 Jul · 7:00pm · F15 Stalls Premium", state: "confirmed", ref: "#10678334" },
-    { id: "bk4", label: "Cartier, NGV International", sub: "Fri 10 Jul · 2:00pm entry", state: "confirmed", ref: "#5704410" },
-    { id: "bk5", label: "Bar Lourinhã", sub: "Wed 8 Jul · 7:30pm · bar seat", state: "confirmed", url: "https://barlourinha.com.au" },
-    { id: "bk7", label: "Saadi", sub: "Fri 10 Jul · 6:30pm · downstairs", state: "confirmed", ref: "7V9NFNX4NPW7", url: "https://saadi.com.au" },
-    { id: "bk8", label: "Lee Ho Fook", sub: "Sat 11 Jul · 6:30pm · chef's counter", state: "confirmed", ref: "#11936" },
-    { id: "bk6", label: "Tipo 00", sub: "Thu 9 Jul · 5:15pm · bar seat", state: "confirmed", url: "https://www.tipo00.com.au" },
-    { id: "bk9", label: "Airport Uber", sub: "Sun 12 Jul · 6:30am · schedule Sat night", state: "open" },
-    { id: "bk1", label: "Flights, Qantas", sub: "QF170 / QF167 · E8GW8J", state: "confirmed" },
-    { id: "bk2", label: "Apartment, Little Collins", sub: "8–12 Jul · check-in 3pm", state: "confirmed" },
+    { label: "Hamlet, Fairfax Studio", sub: "Thu 9 Jul · 7:00pm · F15 Stalls Premium", state: "confirmed", ref: "#10678334" },
+    { label: "Cartier, NGV International", sub: "Fri 10 Jul · 2:00pm entry", state: "confirmed", ref: "#5704410" },
+    { label: "Bar Lourinhã", sub: "Wed 8 Jul · 7:30pm · bar seat", state: "confirmed", url: "https://barlourinha.com.au" },
+    { label: "Saadi", sub: "Fri 10 Jul · 6:30pm · downstairs", state: "confirmed", ref: "Ref 7V9NFNX4NPW7 · $50/head within 24hrs", url: "https://saadi.com.au" },
+    { label: "Lee Ho Fook", sub: "Sat 11 Jul · 6:30pm · chef's counter", state: "confirmed", ref: "#11936 · $88/head within 24hrs" },
+    { label: "Tipo 00", sub: "Thu 9 Jul · 5:15pm · bar seat", state: "confirmed", url: "https://www.tipo00.com.au" },
+    { label: "Airport Uber", sub: "Sun 12 Jul · 6:30am · book Sat night", state: "open" },
+    { label: "Flights, Qantas", sub: "QF170 / QF167 · E8GW8J", state: "confirmed" },
+    { label: "Apartment, Little Collins", sub: "8–12 Jul · check-in 3pm", state: "confirmed", url: "https://www.airbnb.co.nz/rooms/1832876" },
   ],
 
   days: [
@@ -271,16 +287,17 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
 <p>So you go back out into the cold, which is shorter than you feared, the length of a narrow street, and into a long lit room that was full before you got there and will be full after you leave. Sherry, and small salted things, and the particular heat that comes off other people who are already mid-evening and have no idea you have just crossed a sea. A room that has held this same corner for twenty years and intends to hold it for twenty more. You are nobody here, which is the whole relief of it. The displacement of the airport drains out somewhere around the second glass, and the city, which showed you nothing on the way down, quietly opens its first door.</p>`,
       events: [
         { time: "3:45pm", title: "QF170 departs Christchurch", kind: "travel", note: "Boeing 737. Check-in closes 2:45pm CHC." },
-        { time: "5:35pm", title: "Land at Tullamarine", kind: "travel", note: "Terminal 2. Gold status means priority bags. Uber rank signposted from arrivals -- about 35 minutes to the CBD.", map: "https://maps.google.com/?q=Melbourne+Airport+Tullamarine" },
-        { time: "~6:15pm", title: "192 Little Collins Street, Unit 1", kind: "base", note: "Access instructions arrive 48 hours before. Bin room is the second black door in the laneway beside the building.", map: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
+        { time: "5:35pm", title: "Land at Tullamarine", kind: "travel", note: "Terminal 2. Gold status, priority bags. Uber rank from arrivals -- about 35 minutes to the CBD.", map: "https://maps.google.com/?q=Melbourne+Airport+Tullamarine" },
+        { time: "~6:15pm", title: "192 Little Collins Street", kind: "base", note: "Access instructions arrive 48 hours before.", url: "https://www.airbnb.co.nz/rooms/1832876", map: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
         { time: "7:30pm", title: "Bar Lourinhã", kind: "food", state: "confirmed",
-          note: "37 Little Collins Street, 3-minute walk. Bar seat confirmed. Order 4-5 things across the evening.",
+          url: "https://barlourinha.com.au",
+          note: "37 Little Collins Street, 3-minute walk. Bar seat. Order 4-5 things across the evening.",
           map: "https://maps.google.com/?q=37+Little+Collins+Street+Melbourne",
           expand: {
             label: "About Bar Lourinhã",
             body: `<p>Matt McConnell and his partner Jo Gamvros opened this room in 2006, and it has been part of the city's dining furniture ever since -- one of the venues that anchored what the CBD laneway culture later became. Twenty years on, the room still does what it was always designed to do: feed people well at the bar, without ceremony.</p>
 <p>The decor resists description and rewards inspection. A Russian vodka bottle shaped like a rifle. Religious iconography from several traditions, none of them serious. Op-shop paintings massed floor to ceiling. The accumulated curiosity of two decades of passionate collecting by people who have eaten their way around the Iberian Peninsula many times. It is someone's living room if that someone happened to also be an acclaimed chef.</p>
-<p>The food is Iberian and Mediterranean, and it is deeply interested in good ingredients: pipis steamed with fino sherry; spiced chickpeas and spinach that reviewers have mentioned for fifteen years without it getting old; grilled chorizo and pork liver pintxos; the kingfish pancetta tostada that Gourmet Traveller once called a signature not just for this room but for Victoria. The blackboard wine list leans Spanish without being didactic. Ask the kitchen what is good tonight and order accordingly. This is not a place for main-and-sides thinking; three or four plates across the evening is the method.</p>`
+<p>The food is Iberian and Mediterranean, and it is deeply interested in good ingredients: pipis steamed with fino sherry; spiced chickpeas and spinach that reviewers have mentioned for fifteen years without it getting old; grilled chorizo and pork liver pintxos; the kingfish pancetta tostada that Gourmet Traveller once called a signature not just for this room but for Victoria. The blackboard wine list leans Spanish without being didactic. Ask the kitchen what is good tonight and order accordingly. Three or four plates across the evening is the method.</p>`
           }
         },
       ]
@@ -297,34 +314,33 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
         { time: "~9:30am", title: "Pellegrini's", kind: "food", note: "66 Bourke Street, 5-minute walk. 1954 and proud of it.", map: "https://maps.google.com/?q=66+Bourke+Street+Melbourne" },
         { time: "2:00pm", title: "Tram 86 north to Fitzroy", kind: "travel", note: "From the Bourke Street stop, 15 minutes. Off at Smith and Gertrude Street corner.", map: "https://maps.google.com/?q=Gertrude+Street+Fitzroy+Melbourne" },
         { time: "2:15–5:00pm", title: "Gertrude Street", kind: "explore",
-          note: "Walk west from Smith Street. Wrap up by half four or five.",
+          note: "Walk west from Smith Street. Leave by half four -- dinner has a hard deadline.",
           map: "https://maps.google.com/?q=Gertrude+Street+Fitzroy+Melbourne",
           expand: {
-            label: "What to do on Gertrude Street",
+            label: "Gertrude Street guide",
             body: `<p>Gertrude Street runs only six blocks from Smith to Nicholson, but it concentrates more of what makes Melbourne interesting per metre than almost anywhere in the city. Time Out ranked it the second coolest street in the world in 2022, which is both accurate and beside the point -- the locals who eat and drink here have not noticed the accolade and do not behave accordingly.</p>
-<p>Walk west from the Smith Street corner. On your left almost immediately: Gertrude Contemporary at 21-31 High Street (the Gertrude Street end), an artist-run space that has been showing emerging and mid-career work since 1985. Free entry, always worth fifteen minutes if there is an exhibition on. Further along: Marion at number 53, Andrew McConnell's wine bar, which does 25-plus wines by the glass and plates of mussels on fried bread and nduja. It is one of the better places to sit alone in Melbourne with a glass of something and no agenda. Cutler and Co a little further, McConnell's fine-dining flagship in a converted metalworks factory -- a different occasion, but worth knowing it exists. The Australian Print Workshop. Archie's All Day at 189 for coffee. The Everleigh upstairs at around 150 -- a pre-Prohibition cocktail parlour in a 1920s room, open Thursday to Saturday from 5pm -- if you find yourself still there at that hour, which is not impossible.</p>
-<p>Brunswick Street is longer, louder and more tourist-aware. It has good bookshops (Brunswick Street Bookstore, Polyester Records for vinyl), and is worth the overflow if Gertrude has not taken all your time. But Gertrude is the one to prioritise. The neighbourhood rewards a slow pace and punishes a checklist mentality. Leave Fitzroy by half four or five at the latest -- dinner has a deadline tonight.</p>`
+<p>Walk west from the Smith Street corner. Gertrude Contemporary at 21-31 High Street: artist-run space showing emerging and mid-career work since 1985, free entry. Marion at number 53: Andrew McConnell's wine bar, 25-plus wines by the glass, mussels on fried bread. The Everleigh upstairs at around 150 -- a pre-Prohibition cocktail parlour in a 1920s room, open from 5pm Thursday to Saturday. Brunswick Street is longer and louder; worth the overflow if time allows, good bookshops.</p>`
           }
         },
         { time: "5:15pm", title: "Tipo 00", kind: "food", state: "confirmed",
-          note: "361 Little Bourke Street, 4-minute walk from Fairfax Studio. Bar seat confirmed. Depart by 6:30pm -- it is a 12-minute walk to the Fairfax Studio. Order quickly and let the kitchen move.",
+          url: "https://www.tipo00.com.au",
+          note: "361 Little Bourke Street. Bar seat confirmed. Depart by 6:30 -- 12-minute walk to Fairfax Studio.",
           map: "https://maps.google.com/?q=361+Little+Bourke+Street+Melbourne",
-          book: "https://www.tipo00.com.au",
           expand: {
             label: "About Tipo 00",
-            body: `<p>Andreas Papadakis spent four years at Vue de Monde before opening this room in 2014, and his fine-dining instincts are what make it different from every other pasta bar in the city. The name refers to the finest grade of Italian flour -- tipo 00 -- and the menu is built around fresh pasta made daily in a kitchen visible from the counter. In 2022 it was named one of the best Italian restaurants in the world. That is not the kind of claim this place makes about itself; it just keeps being excellent and the recognition arrives.</p>
-<p>The menu is short by design: a handful of starters, five or six pastas, a couple of mains for anyone who has found themselves in an Italian restaurant and does not want pasta. The right answer is pasta. Specifically the tagliolini al nero -- squid ink, seafood broth, a dish that reviewers keep returning to as the single thing you must order. The gnocchi with braised duck and porcini runs it close in winter. The Tipomisu is the dessert, a riff on tiramisu that is both better than it sounds and easier to eat than the original. The counter seats eight or ten and faces the open kitchen; for one diner it is the only seat worth having.</p>
-<p>This is not a relaxed long dinner -- it moves efficiently, which is the point tonight. Arrive at 5:15, order quickly, eat well, be walking south toward the Fairfax Studio by 6:30.</p>`
+            body: `<p>Andreas Papadakis spent four years at Vue de Monde before opening this room in 2014, and his fine-dining instincts are what make it different from every other pasta bar in the city. The name refers to the finest grade of Italian flour, and the menu is built around fresh pasta made daily in a kitchen visible from the counter. Named one of the best Italian restaurants in the world in 2022 -- not the kind of claim this place makes about itself; it just keeps being excellent.</p>
+<p>Order the tagliolini al nero -- squid ink, seafood broth, the dish reviewers keep returning to. The gnocchi with braised duck and porcini in winter. The Tipomisu for dessert. The counter seats eight or ten and faces the open kitchen; for one diner it is the only seat worth having. This is not a relaxed long dinner -- it moves efficiently, which is the point tonight. Arrive at 5:15, order quickly, eat well, be walking south by 6:30.</p>`
           }
         },
-        { time: "7:00pm", title: "Eddie Izzard, Hamlet", kind: "culture", state: "confirmed",
-          note: "Fairfax Studio, Arts Centre Melbourne. Seat F15, Stalls Premium, Door 1. Mobile ticket open before arrival. Order #10678334. Around 2 hours 20 minutes with interval.",
+        { time: "7:00pm", title: "Suzy Izzard, Hamlet", kind: "culture", state: "confirmed",
+          url: "https://www.artscentremelbourne.com.au",
+          note: "Fairfax Studio, Arts Centre Melbourne. Seat F15, Stalls Premium, Door 1. Mobile ticket open before arrival. About 2 hours 20 minutes with interval.",
+          ref: "#10678334",
           map: "https://maps.google.com/?q=Arts+Centre+Melbourne+St+Kilda+Road",
           expand: {
             label: "About the show",
-            body: `<p>Suzy Izzard performs all 23 characters of Shakespeare's Hamlet alone on a bare stage with no set, no props, no costume changes. The adaptation is by her brother Mark Izzard and the direction by Selina Cadell, who came from the RSC; the production itself came from triple-extended runs in New York, Chicago and London, where it was nominated for the Drama League's Distinguished Performance Award. Judi Dench called it spectacular. The Chicago Tribune said Izzard "smashes all three of the great soliloquies." Melbourne has the longest run on the Australian tour -- three weeks, closing 12 July, so you are there two days before the end.</p>
-<p>The Limelight review from the Sydney season is worth reading before you go. The critic found it better than anticipated but honest about the trade-offs: 23 characters voiced by one person means narrative clarity sometimes suffers, particularly the supernatural elements and the final sword fight, which is reduced to what the reviewer called "a comical pantomime." What it gains in return is the text at its purest -- no set to look at, no other actors to watch, just Shakespeare's language and one performer's complete attention to it. Izzard, 64, trained for years as a street performer and stand-up before turning to theatre, and the soliloquies in particular -- "To be or not to be," "What a piece of work is a man," the graveyard scene -- are delivered with what reviewers describe as genuine force.</p>
-<p>F15 is front stalls, close enough to see her face. That is the right ticket for a show built on one person's expression.</p>`
+            body: `<p>Suzy Izzard performs all 23 characters of Shakespeare's Hamlet alone on a bare stage with no set, no props, no costume changes. The adaptation is by her brother Mark Izzard, direction by Selina Cadell from the RSC; the production ran triple-extended seasons in New York, Chicago and London, nominated for the Drama League's Distinguished Performance Award. Melbourne is the longest run on the Australian tour -- closing 12 July, two days after this performance.</p>
+<p>The soliloquies -- "To be or not to be," "What a piece of work is a man," the graveyard scene -- are where reviewers consistently found the most force. F15 is front stalls, close enough to see her face. That is the right ticket for a show built entirely on one person's expression.</p>`
           }
         },
       ]
@@ -337,46 +353,46 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
 <p>Down at street level the lanes do the same trick in reverse, threading between the grand fronts, the city's working underside turned into its quiet pleasure. You move through them with no map worth the name, taking the turn that looks like it leads to a loading dock and finding it leads somewhere better. It is a morning spent going inward and upward, into the parts of the place that keep themselves just out of sight, and it tunes the eye for what the afternoon has in store.</p>
 <p>Because the afternoon offers the opposite kind of interior. A gallery gone deliberately dark, and inside it, in case after lit case, a century of stones cut to do one thing only, which is to throw light back at you harder than it fell. Necklaces built like architecture. A tiara that outlived the head it was made for. The whole glittering logic of a house that decided rarity should be worn, and engineered, and kept. After a morning of ink and felt and patient hands, here is concentration of a different order -- value pressed down into the smallest possible space and made to shine in the dark. Two ways of keeping the best things inside, an afternoon apart, and the city fluent in both.</p>`,
       events: [
-        { time: "9:30am", title: "Nicholas Building, Swanston Street", kind: "explore",
-          note: "37 Swanston Street, 5-minute walk. Take the lift, walk the floors. Free, around an hour.",
+        { time: "9:30am", title: "Nicholas Building", kind: "explore",
+          note: "37 Swanston Street, 5-minute walk. Take the original lift, push on unlocked doors. Studios, printmakers, galleries, a perfumer. Around an hour.",
           map: "https://maps.google.com/?q=37+Swanston+Street+Melbourne",
           expand: {
             label: "About the Nicholas Building",
-            body: `<p>Built in 1926, the Nicholas Building is a heritage office tower on the corner of Swanston and Flinders Lane that most people walk past every day without entering. The ground floor is retail. Everything above it is studios, workshops, and small galleries rented by the kinds of creative people who need a physical space but not a shopfront.</p>
-<p>Take the original lift to any floor and push on the doors that are unlocked. Behind them on a Friday morning you might find: a letterpress studio with a Heidelberg press still in daily use; a vintage clothing dealer with stock that has been accumulating since the 1970s; a milliner; a small gallery changing shows every month or two; a perfumer making fragrance to commission; a printmaker. Nobody is performing for visitors. The doors are open because it is a working building and there is no reason to close them. That is the texture of what you find.</p>
-<p>The Cathedral Arcade on the ground floor, accessible from Swanston Street, has been there since 1927 and has the same quality: independent, idiosyncratic, genuinely old rather than vintage-branded. Allow an hour in the building and do not try to see everything. Follow what interests you.</p>`
+            body: `<p>Built in 1926, a heritage tower on the corner of Swanston and Flinders Lane that most people walk past without entering. Above the retail ground floor: studios and workshops rented by people who need a physical space but not a shopfront. Take the original lift to any floor and push on the unlocked doors. A letterpress studio with a Heidelberg press in daily use. A vintage clothing dealer whose stock has been accumulating since the 1970s. A milliner. A perfumer making fragrance to commission. A printmaker. Nobody is performing for visitors -- the doors are open because it is a working building. The Cathedral Arcade on the ground floor has been there since 1927. Allow an hour, follow what interests you.</p>`
           }
         },
         { time: "10:30am", title: "Laneways south", kind: "explore",
-          note: "Tattersalls Lane (small rotating galleries, quiet on weekdays). Caledonian Lane off Little Bourke. Duckboard Place -- Saturday's dinner in daylight. Come out on Flinders Lane.",
+          note: "Tattersalls Lane, Caledonian Lane, Duckboard Place in daylight. Come out on Flinders Lane.",
           map: "https://maps.google.com/?q=Flinders+Lane+Melbourne"
         },
-        { time: "12:30pm", title: "Lunch on Flinders Lane", kind: "food",
-          note: "Flinders Lane has a full run of options at this hour. Cumulus Inc at number 45 is the reliable anchor -- marble counter, walk-in welcome, all-day. Or keep walking and see what pulls you in.",
+        { time: "12:30pm", title: "Lunch, Flinders Lane", kind: "food",
+          note: "Cumulus Inc at number 45 is the reliable anchor -- marble counter, walk-in welcome, wine by the glass from early. Or drift and see what takes you.",
           map: "https://maps.google.com/?q=45+Flinders+Lane+Melbourne"
         },
         { time: "2:00pm", title: "Cartier, NGV International", kind: "culture", state: "confirmed",
-          note: "180 St Kilda Road, 15-minute walk south. 2pm timed entry. Free guided tour at 2:30pm -- register at the info desk on arrival. Helen Molesworth audio guide $7, worth downloading beforehand. Allow 2 hours minimum.",
+          url: "https://www.ngv.vic.gov.au",
+          note: "180 St Kilda Road, 15-minute walk south. Free guided tour at 2:30pm -- register at the info desk on arrival. Allow 2 hours minimum.",
+          ref: "#5704410",
           map: "https://maps.google.com/?q=NGV+International+180+St+Kilda+Road+Melbourne",
           expand: {
             label: "About the exhibition",
-            body: `<p>The exhibition begins chronologically with the moment the company stopped being a competent Parisian jeweller and became something else entirely. In 1900, Louis, Pierre and Jacques Cartier inherited their grandfather's firm and opened branches in London and New York within a decade. They also started collecting clients: the Maharaja of Patiala, King Edward VII, the Duchess of Manchester, Dame Nellie Melba. The Maharaja commissioned a necklace requiring 2,930 diamonds anchored by a 234-carat yellow diamond; it was lost after Indian independence, rediscovered in 1998 stripped of its stones, and Cartier replaced them with replicas. Both versions are here.</p>
-<p>The exhibition is organised thematically. A bold yellow room traces the brothers' world of inspiration across India, Egypt, Iran, China and Japan -- the Tutti Frutti collection has its own space: carved rubies, emeralds and sapphires stacked into bracelets and clips, the stones cut to echo Indian jewellery traditions, the settings unmistakably 1920s French. Jeanne Toussaint gets her own gallery. Creative director from 1933 to 1970, she elevated the panther from a repeating motif into an emblem -- the Duchess of Windsor's panther clip, a platinum cat crouching on a 152-carat cabochon sapphire, is here. The watches room sits midway as a palate cleanser: the 1914 Model A mystery clock, diamond-encrusted hands appearing to float with no visible mechanism, is the piece the Cartier Collection director said she would save in an emergency. The final gallery is entirely tiaras, twenty-four of them, including the Scroll Tiara of 1902 worn by Clementine Churchill at the coronation and later photographed on Rihanna for W Magazine.</p>
-<p>The exhibition design is by Studio Sabine Marcelis and CLOUD from Rotterdam: coloured rooms that read as settings for the stones. An original score by Ai Yamamoto and Erkki Veltheim runs throughout. The guided tour at 2:30pm covers the key objects in 45 minutes; register at the desk on arrival. Allow two hours minimum for the full exhibition.</p>`
+            body: `<p>The exhibition begins with the moment Cartier stopped being a competent Parisian jeweller and became something else. In 1900 Louis, Pierre and Jacques inherited the firm; within a decade they had opened in London and New York and started collecting clients -- the Maharaja of Patiala, King Edward VII, Dame Nellie Melba. The Maharaja commissioned a necklace anchored by a 234-carat yellow diamond; lost after Indian independence, recovered in 1998 stripped of stones, Cartier replaced them with replicas. Both versions are here.</p>
+<p>The exhibition is organised thematically. A yellow room covers the Tutti Frutti collection: carved rubies, emeralds and sapphires stacked into bracelets and clips. Jeanne Toussaint's gallery -- creative director 1933 to 1970, who made the panther an emblem. The Duchess of Windsor's panther clip, a platinum cat on a 152-carat cabochon sapphire. The 1914 mystery clock with hands appearing to float. The final gallery: twenty-four tiaras, including the Scroll Tiara worn by Clementine Churchill at the coronation. Exhibition design by Studio Sabine Marcelis; original score by Ai Yamamoto and Erkki Veltheim.</p>`
           }
         },
-        { time: "~4:15pm", title: "NGV garden and the Domain", kind: "explore",
-          note: "Exit the NGV into the water wall garden on St Kilda Road -- worth five minutes in the cold. Then the Domain stretches south: elm-lined paths, the Shrine of Remembrance lit in late afternoon. Walk north back toward the city when you are ready. Punch Lane is 20 minutes on foot from here.",
+        { time: "~4:15pm", title: "The Domain", kind: "explore",
+          note: "Exit the NGV into the water wall garden. The Domain stretches south: elm paths, the Shrine of Remembrance in late afternoon light. Walk back toward the city when ready. Punch Lane is 20 minutes on foot.",
           map: "https://maps.google.com/?q=Domain+Parklands+Melbourne"
         },
         { time: "6:30pm", title: "Saadi", kind: "food", state: "confirmed",
-          note: "18 Punch Lane, downstairs. Reservation 7V9NFNX4NPW7. Arrive on time, no waiting area. $50/head cancellation within 24 hours. Friday is the $85 four-course set menu.",
+          url: "https://saadi.com.au",
+          note: "18 Punch Lane, downstairs. Arrive on time, no waiting area. $85 four-course set menu on Friday.",
+          ref: "7V9NFNX4NPW7 · $50/head cancellation within 24hrs",
           map: "https://maps.google.com/?q=18+Punch+Lane+Melbourne",
           expand: {
             label: "About Saadi",
-            body: `<p>Saavni Krishnan and Sriram Aditya spent three years running Saadi as a pop-up around Melbourne -- one night at Etta, a residency at Public Wine Shop, a run at Manzé -- before Adipoetra Halim, who also owns the Hotel Windsor and Aru, offered them the former Sunda space on Punch Lane. They took a month-long residency in May 2025, extended it through July, and then made it permanent. It opened as a restaurant in September 2025.</p>
-<p>Krishnan was raised in Mumbai to Punjabi and Tamilian parents, worked at Fred's in Sydney and then as sous-chef at Manzé in Melbourne. Aditya is Tamilian, his father's postings with the Indian Navy exposing him to food cultures across the subcontinent; he was most recently head chef at Gemini in Coburg. Their menu is pan-Indian rather than regionally specific, and it is explicitly not curry -- "Indian food that is unique to us, mostly gluten-free, can be made vegan, and is not curry" is how they put it on the website. What it is instead: family recipes from both sides, reworked with the technique of twelve years in serious Australian kitchens. A celeriac achar based on Krishnan's grandmother's recipe. Pulikachal -- a simmered tamarind sauce from Aditya's mother -- served with Corner Inlet flathead or lamb brisket. Idli topped with spiced Dutch carrots. The menu changes quarterly with the produce.</p>
-<p>Friday is the $85 four-course set menu. Broadsheet put it on their Hot List within weeks of opening. It is the most genuinely new thing you will eat on this trip.</p>`
+            body: `<p>Saavni Krishnan and Sriram Aditya spent three years running Saadi as a pop-up -- at Etta, Public Wine Shop, Manzé -- before taking the former Sunda space on Punch Lane permanently in September 2025. Krishnan grew up in Mumbai to Punjabi and Tamilian parents, trained at Fred's Sydney and sous-chef at Manzé. Aditya is Tamilian, shaped by his father's Navy postings across the subcontinent, most recently head chef at Gemini in Coburg.</p>
+<p>The menu is pan-Indian, explicitly not curry. Family recipes reworked with twelve years of serious Australian kitchen technique: celeriac achar from Krishnan's grandmother, pulikachal -- a tamarind sauce from Aditya's mother -- with Corner Inlet flathead or lamb brisket. Idli with spiced Dutch carrots. The menu changes quarterly. Friday is the $85 four-course set. Broadsheet Hot List within weeks of opening. It is the most genuinely new thing you will eat on this trip.</p>`
           }
         },
       ]
@@ -392,27 +408,34 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
       events: [
         { time: "Slow", title: "No alarm", kind: "rest", note: "A long coffee. The morning owes you nothing." },
         { time: "~10:00am", title: "Queen Victoria Market", kind: "explore",
-          note: "15-minute walk north. Deli hall and produce sheds. Fresh food winds down around midday.",
-          map: "https://maps.google.com/?q=Queen+Victoria+Market+Melbourne"
+          url: "https://www.qvm.com.au",
+          note: "15-minute walk north. Arrive between 10 and 11 for the full range -- fresh food winds down by midday.",
+          map: "https://maps.google.com/?q=Queen+Victoria+Market+Melbourne",
+          expand: {
+            label: "About the market",
+            body: `<p>Queen Victoria Market is the largest open-air market in the southern hemisphere and has operated on this site since 1878 -- the same era as the gold-rush architecture, the same unbroken continuity. It covers two city blocks. The upper market (Elizabeth Street side) is the tourist end: clothes, souvenirs, honey. Go instead to the deli hall on the north side, a long covered shed of European-style providores that has been feeding Melbourne since the 1920s. Polish smallgoods, Italian cheeses, Spanish olives, half a dozen Continental delis in a row. Take your time.</p>
+<p>Behind the deli hall, the open sheds: fruit, vegetables, fish, meat. In July the produce is at its best -- root vegetables, brassicas, citrus, the dark leafy things that want cold soil. The fishmongers have the best of the Southern Ocean catch. The meat hall toward the Peel Street end is old-school butcher territory. Go for the atmosphere as much as anything else: this is Melbourne doing a thing it has been doing for a hundred and fifty years, without irony, without branding.</p>
+<p>The market winds down around noon. There is a Wednesday Winter Night Market (5-10pm through August, free) if you find yourself passing midweek.</p>`
+          }
         },
-        { time: "~12:30pm", title: "Carlton and the Gardens", kind: "explore",
-          note: "20-minute walk northeast or tram. Carlton Gardens and the Royal Exhibition Building. Back to the city by late afternoon.",
+        { time: "~12:30pm", title: "Carlton Gardens", kind: "explore",
+          note: "20-minute walk northeast or tram. The Royal Exhibition Building and the gardens. Back to the city by late afternoon.",
           map: "https://maps.google.com/?q=Carlton+Gardens+Melbourne",
           expand: {
             label: "Carlton and the Royal Exhibition Building",
-            body: `<p>Lygon Street is Melbourne's Italian quarter and it is worth understanding what that means in practice before you walk down it. The south end near Grattan Street still has places where the chef has been making the same lasagne since 1982, but the north end has absorbed a lot of tourist traffic and adjusted its prices accordingly. The neighbourhood behind it -- Rathdowne Street, the back streets of Carlton -- is quieter and more genuine.</p>
-<p>The Carlton Gardens are the destination. The Royal Exhibition Building stands in the centre, a World Heritage listed hall built for the 1880 Melbourne International Exhibition -- predating Federation by twenty years -- that hosted the first sitting of the Australian Parliament in 1901. It is still absurdly grand from the outside: a central dome flanked by pavilions, the whole thing built in thirteen months by a city that needed to impress the world and had the money to do it. The gardens themselves were designed by William Sangster in the 1870s and have the slightly formal quality of Victorian municipal ambition -- axial paths, a fountain, mature elms. In July they are bare and cold and completely without tourists, which makes them ideal.</p>
-<p>If the afternoon has more hours than the gardens can fill, the Ian Potter Centre at Federation Square is a 25-minute walk south or a short tram -- free, no booking, Australian and Indigenous art, the counterweight to Friday's European jewels. Otherwise: walk back through the CBD grid at your own pace and be home in time to change before dinner.</p>`
+            body: `<p>The Royal Exhibition Building stands at the centre of the Carlton Gardens -- a World Heritage listed hall built for the 1880 Melbourne International Exhibition, predating Federation by twenty years, that hosted the first sitting of the Australian Parliament in 1901. Grand out of all proportion to any current use: a central dome flanked by pavilions, the whole thing raised in thirteen months by a city that needed to impress the world and had the money to do it. The gardens were designed by William Sangster in the 1870s -- axial paths, a fountain, mature elms. In July they are bare and cold and without tourists, which makes them ideal.</p>
+<p>Lygon Street on the way back is worth knowing about: the south end near Grattan Street still has places where the chef has been making the same lasagne since 1982. The north end has gone touristic; the neighbourhood behind it -- Rathdowne Street, the back streets of Carlton -- is quieter. If the afternoon has more hours than the gardens can fill, the Ian Potter Centre at Federation Square is a 25-minute walk south: free, Australian and Indigenous art, no booking needed.</p>`
           }
         },
         { time: "6:30pm", title: "Lee Ho Fook", kind: "food", state: "confirmed",
-          note: "11-15 Duckboard Place, off Flinders Lane. 5-minute walk from home. Chef's counter, confirmation #11936. Smart business casual, no shorts or sandals. 15-minute grace period. $88/head cancellation within 24 hours.",
+          url: "https://www.leehofook.com.au",
+          note: "11-15 Duckboard Place, off Flinders Lane. 5-minute walk. Smart business casual. 15-minute grace period.",
+          ref: "#11936 · $88/head cancellation within 24hrs",
           map: "https://maps.google.com/?q=11+Duckboard+Place+Melbourne",
           expand: {
             label: "About Lee Ho Fook",
-            body: `<p>Victor Liong arrived in Australia from Brunei at six, grew up in Sydney, trained at Marque under Mark Best and then at Mr Wong, and moved to Melbourne in 2013 to open this room. He named it after the Warren Zevon lyric in Werewolves of London -- "I saw Lee Ho Fook's, getting in a little face" -- which tells you something about the register: serious cooking, not taking itself seriously. The original Collingwood location outgrew itself and moved to Duckboard Place in 2015, where the laneway entrance and moody interior have become part of the identity.</p>
-<p>The kitchen uses Chinese tradition as a starting point rather than a constraint -- "explode the atlas and just make sure it's delicious" was how one early reviewer put it. The tasting menu traces Liong's own eating history: mud crab in turmeric sauce references a dish he ate as a student at Flower Drum, Melbourne's other defining Chinese restaurant; braised brisket with elastic noodles recalls childhood trips to Sydney's Chinatown. What the 50 Best Discovery listing called "an emotional odyssey informed by his own experiences of being Malaysian and growing up in Australia."</p>
-<p>The maltose-glazed Peking duck is the dish everyone mentions first, and it takes time to prepare -- order it when you sit down. The crispy eggplant with spiced red vinegar is lighter and sharper and worth ordering alongside. The cumin lamb shoulder is the one the kitchen is proudest of. The wine list runs to around 120 bins and includes a page of wines from China, which is unusual and worth exploring. The chef's counter is the right seat for one person: close to the pass, good service, the theatre of the kitchen visible throughout.</p>`
+            body: `<p>Victor Liong arrived from Brunei at six, grew up in Sydney, trained at Marque under Mark Best and then at Mr Wong, and moved to Melbourne in 2013. He named the restaurant after the Warren Zevon lyric in Werewolves of London -- which tells you something about the register: serious cooking, not taking itself seriously. Moved from Collingwood to Duckboard Place in 2015.</p>
+<p>Chinese tradition as starting point rather than constraint. The tasting menu traces Liong's eating history: mud crab in turmeric sauce referencing a dish from Flower Drum; braised brisket with elastic noodles recalling Sydney's Chinatown. Order the maltose-glazed Peking duck when you sit down -- it takes time to prepare. The crispy eggplant with spiced red vinegar alongside. The wine list includes a page of wines from China, unusual and worth exploring. The chef's counter is the right seat for one person: close to the pass, the kitchen visible throughout.</p>`
           }
         },
       ]
@@ -425,181 +448,180 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline
 <p>Down on the street the city does, at last, the one thing it has refused to do all week. It shows you its outside. Nothing is open, so there is no inside to be let into -- only the wide wet road under the sodium lights, the shut grand fronts, the lanes black and giving nothing, the whole grid emptied of everyone and, for these few minutes, entirely yours. It is the most of Melbourne you have seen at once, and it is beautiful, and it is closed. You came in through a wall of water four nights ago. You go out through this, the cold and the dark and the empty.</p>
 <p>The cab runs the motorway the other way, the green signs unspooling in reverse, the names that meant nothing on the first night meaning a little something now. A bright cold terminal. The long bones of a 737. And then the lift, and the brown plain dropping away below with its river the colour of ink, showing you, even at the end, nothing to photograph. That was always the deal. The city kept everything indoors and gave it to you a room at a time, and now you are taking the warm of it home in place of a view.</p>`,
       events: [
-        { time: "5:45am", title: "Up", kind: "travel", note: "Check out before you leave -- key return per the host instructions in the 48-hour email." },
+        { time: "5:45am", title: "Up", kind: "travel", note: "Key return per the 48-hour host instructions." },
         { time: "6:30am", title: "Uber to Tullamarine", kind: "travel", note: "Booked Saturday night. About 35 minutes. Terminal 2." },
-        { time: "8:15am", title: "Check-in closes", kind: "travel", note: "International cut-off. Aim to be at the Qantas counter by 7:30am." },
-        { time: "9:15am", title: "QF167 home", kind: "travel", note: "Non-stop to Christchurch, in at 2:45pm.", map: "https://maps.google.com/?q=Christchurch+Airport" },
+        { time: "8:15am", title: "Check-in closes", kind: "travel", note: "International cut-off. Aim for the Qantas counter by 7:30am." },
+        { time: "9:15am", title: "QF167 home", kind: "travel", note: "Non-stop to Christchurch, 2:45pm." },
       ]
     }
   ],
 
   pocket: [
     { group: "If a plan falls through", items: [
-      ["Cumulus Inc", "45 Flinders Lane. Counter, walk-in at lunch. The reliable fallback for anything."],
-      ["Chin Chin", "125 Flinders Lane. No bookings, always has room, loud and spicy Thai."],
-      ["Supernormal", "180 Flinders Lane. Modern Asian, lunch specials, dependable."],
-      ["MoVida", "1 Hosier Lane. Spanish tapas. Guidebook pick, held in reserve for a reason."],
+      ["Cumulus Inc", "45 Flinders Lane. Counter, walk-in at lunch. The reliable fallback."],
+      ["Chin Chin", "125 Flinders Lane. No bookings, loud, spicy Thai, always has room."],
+      ["Supernormal", "180 Flinders Lane. Modern Asian, lunch specials."],
+      ["MoVida", "1 Hosier Lane. Spanish tapas. Held in reserve for a reason."],
     ]},
     { group: "Also on right now", items: [
-      ["QV Winter Night Market", "Every Wednesday 5-10pm through 26 August, Queen Victoria Market. Street food, fire pits, live music. Free entry."],
-      ["NGV Friday Nights: Cartier", "NGV International, Friday evenings. Live music and drinks in the galleries during the exhibition run."],
-      ["Ragnar Kjartansson: Mercy", "NGV International, running concurrently. Icelandic video installation. $10 add-on with a Cartier ticket."],
-      ["Gertrude Street Projection Festival", "Annual light and projection art event in Fitzroy, typically mid-July. Free, outdoors. Check dates -- may overlap with Thursday afternoon."],
-      ["Royal Exhibition Building interior tours", "Rarely-opened spaces in the 1880 hall. Check museumsvictoria.com.au for the July schedule."],
+      ["QV Winter Night Market", "Every Wednesday 5-10pm through 26 August. Street food, fire pits, free entry."],
+      ["NGV Friday Nights: Cartier", "Friday evenings at NGV International during the exhibition run. Live music and drinks in the galleries."],
+      ["Ragnar Kjartansson: Mercy", "NGV International, concurrent with Cartier. Icelandic video installation. $10 add-on."],
+      ["Gertrude Street Projection Festival", "Annual light art event in Fitzroy, mid-July. Free, outdoors."],
+      ["Royal Exhibition Building tours", "Rarely-opened interior spaces. Check museumsvictoria.com.au for July schedule."],
     ]},
     { group: "Free and worth it", items: [
-      ["Ian Potter Centre, NGV Australia", "Federation Square. Australian and Indigenous art, no booking. The counterweight to Friday's Cartier."],
-      ["Block Arcade", "Collins to Elizabeth. 1891, modelled on Milan's Galleria. The mosaic floor and the ceiling are the point."],
-      ["Royal Arcade", "Bourke to Little Collins. Melbourne's oldest, 1870. Gog and Magog on the clock above the Little Collins entrance."],
+      ["Ian Potter Centre, NGV Australia", "Federation Square. Australian and Indigenous art, no booking needed."],
+      ["Block Arcade", "Collins to Elizabeth Street. 1891, modelled on Milan's Galleria. The mosaic floor is the point."],
+      ["Royal Arcade", "Melbourne's oldest, 1870. Gog and Magog on the clock above the Little Collins entrance."],
       ["Chinese Museum", "Cohen Place, Chinatown. Five floors of Chinese-Australian history from the gold rush. Daily to 4pm."],
     ]},
     { group: "Getting around", items: [
-      ["Trams in the CBD", "Free inside the city zone. Roughly Spencer, Flinders, Spring and La Trobe Streets."],
-      ["Tram 86", "Bourke Street stop straight north to Fitzroy and Gertrude Street. 15 minutes."],
-      ["Myki card", "Buy and load at any 7-Eleven. Only needed for tram 86 to Fitzroy -- the CBD zone is free. Twenty dollars covers the trip."],
-      ["Qantas Gold", "Priority check-in at Tullamarine. 46kg baggage allowance on the international leg."],
+      ["Trams in the CBD", "Free inside the city zone: Spencer, Flinders, Spring, La Trobe."],
+      ["Tram 86", "Bourke Street stop north to Fitzroy and Gertrude Street. 15 minutes."],
+      ["Myki card", "Buy at any 7-Eleven. Only needed for tram 86 -- the CBD is free. $20 covers the trip."],
+      ["Qantas Gold", "Priority check-in at Tullamarine. 46kg allowance on the international leg."],
     ]},
   ]
 };
 </script>
 <script>
-function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+function el(tag, cls, html) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html != null) e.innerHTML = html;
+  return e;
+}
+
+function makeExpand(label, bodyHtml, dropCap) {
+  const wrap = el('div', 'expand');
+  const btn = el('button', 'expand-btn', `<em class="chevron">›</em>&nbsp;${label}`);
+  const body = el('div', 'expand-body');
+  body.innerHTML = `<div class="prose${dropCap ? ' prose-drop' : ''}">${bodyHtml}</div>`;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+  });
+  wrap.appendChild(btn);
+  wrap.appendChild(body);
+  return wrap;
+}
 
 function renderMasthead() {
-  document.getElementById('m-season').textContent = TRIP.meta.season;
-  document.getElementById('m-title').innerHTML = TRIP.meta.city + ' <em>in July</em>';
-  document.getElementById('m-meta').innerHTML = `
-    <div class="row"><span class="lbl">When</span>${TRIP.meta.dates}</div>
-    <div class="row"><span class="lbl">Base</span><a href="${TRIP.meta.base.url}" target="_blank" rel="noopener">${TRIP.meta.base.name}</a></div>
-    <div class="row flight"><span class="lbl">Out</span>${TRIP.meta.flights.out}</div>
-    <div class="row flight"><span class="lbl">Home</span>${TRIP.meta.flights.ret}</div>`;
+  const m = TRIP.meta;
+  document.getElementById('m-title').innerHTML = m.city + ' <em>in July</em>';
+  document.getElementById('m-dates').textContent = m.dates;
+  document.getElementById('m-base').innerHTML = `<a href="${m.base.airbnb}" target="_blank" rel="noopener">${m.base.name}</a>`;
+  document.getElementById('m-flights').innerHTML =
+    `${m.flights.out} &nbsp;·&nbsp; ${m.flights.ret} &nbsp;·&nbsp; ${m.flights.ref}`;
 }
 
 function renderPlanePiece() {
   const p = TRIP.meta.plane;
   const sec = document.getElementById('plane');
-  let ctxId = 'plane-full';
-  sec.innerHTML = `
-    <div class="kicker">${p.kicker}</div>
-    <h2>${p.title}</h2>
-    <p class="standfirst">${p.standfirst}</p>
-    <div class="prose prose-preview">${p.preview}</div>
-    <div class="ctx" style="margin-top:1.5rem;">
-      <button class="ctx-toggle" id="plane-toggle" aria-expanded="false"><span class="arr">›</span> Continue reading</button>
-      <div class="ctx-body" id="${ctxId}"><div class="prose prose-full">${p.full}</div></div>
-    </div>`;
-  document.getElementById('plane-toggle').addEventListener('click', function() {
-    this.classList.toggle('on');
-    const body = document.getElementById(ctxId);
-    body.classList.toggle('on');
-    this.setAttribute('aria-expanded', body.classList.contains('on'));
-    this.querySelector('.arr').parentNode.childNodes[1].textContent = body.classList.contains('on') ? ' Collapse' : ' Continue reading';
-  });
-}
-
-let ctxId = 0;
-function makeCtx(expand) {
-  const id = 'ctx-' + (ctxId++);
-  const wrap = el('div', 'ctx');
-  const btn = el('button', 'ctx-toggle', `<span class="arr">›</span> ${expand.label}`);
-  const body = el('div', 'ctx-body', `<div class="prose">${expand.body}</div>`);
-  body.id = id;
-  btn.addEventListener('click', () => { btn.classList.toggle('on'); body.classList.toggle('on'); });
-  wrap.appendChild(btn); wrap.appendChild(body);
-  return wrap;
+  const previewDiv = el('div', 'prose prose-drop', p.preview);
+  sec.appendChild(el('div', 'kicker', p.kicker));
+  sec.appendChild(el('h2', null, p.title));
+  const sf = el('p', 'standfirst', p.standfirst);
+  sec.appendChild(sf);
+  sec.appendChild(previewDiv);
+  sec.appendChild(makeExpand('Continue reading', p.full, false));
 }
 
 function renderChapters() {
   const wrap = document.getElementById('chapters');
   const DAY_DATES = { wed: '2026-07-08', thu: '2026-07-09', fri: '2026-07-10', sat: '2026-07-11', sun: '2026-07-12' };
 
-  function getMelbourneDate() {
+  function getMelbDate() {
     return new Date().toLocaleString('en-CA', { timeZone: 'Australia/Melbourne' }).slice(0, 10);
   }
 
-  const todayStr = getMelbourneDate();
+  const todayStr = getMelbDate();
   const tripActive = todayStr >= '2026-07-08' && todayStr <= '2026-07-12';
-
   const chapters = [];
+
   TRIP.days.forEach(day => {
-    const ch = el('section', 'chapter'); ch.id = day.id;
+    const ch = el('section', 'chapter');
+    ch.id = day.id;
     const dayDate = DAY_DATES[day.id];
-    let statusLabel = '';
 
     if (tripActive) {
-      if (dayDate < todayStr)        { ch.classList.add('is-past'); statusLabel = 'Yesterday'; }
-      else if (dayDate === todayStr) { ch.classList.add('is-today'); statusLabel = 'Today'; }
+      if (dayDate < todayStr) ch.classList.add('is-past');
+      else if (dayDate === todayStr) {
+        ch.classList.add('is-today');
+        ch.appendChild(el('div', 'chapter-label', 'Today'));
+      }
     }
 
-    if (statusLabel) ch.appendChild(el('div', 'chapter-status', statusLabel));
+    const head = el('div', 'chapter-head');
+    head.innerHTML = `<div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div><div class="chapter-title">${day.title}</div>`;
+    ch.appendChild(head);
 
-    ch.appendChild(el('div', 'chapter-head', `
-      <div class="chapter-numeral">${day.chapter}</div>
-      <div class="meta">
-        <div class="chapter-dow">${day.dow} · <span class="date">${day.date}</span></div>
-        <div class="chapter-title">${day.title}</div>
-      </div>`));
+    // Essay behind expand
+    ch.appendChild(makeExpand('Read the day', day.essay, true));
 
-    // Day essay behind expand toggle
-    const essayCtxId = 'essay-' + day.id;
-    const essayWrap = el('div', 'chapter-essay');
-    const essayBtn = el('button', 'ctx-toggle', `<span class="arr">›</span> Read the day`);
-    const essayBody = el('div', 'ctx-body', `<div class="prose">${day.essay}</div>`);
-    essayBody.id = essayCtxId;
-    essayBtn.addEventListener('click', () => { essayBtn.classList.toggle('on'); essayBody.classList.toggle('on'); });
-    essayWrap.appendChild(essayBtn);
-    essayWrap.appendChild(essayBody);
-    ch.appendChild(essayWrap);
-
+    // Spine
     const spine = el('div', 'spine');
     day.events.forEach(ev => {
-      const stop = el('div', 'stop'); stop.dataset.kind = ev.kind;
-      const tag = ev.state === 'confirmed' ? '<span class="tag confirmed">Booked</span>'
-                : ev.state === 'pending'   ? '<span class="tag pending">Waitlist</span>'
-                : ev.state === 'open'      ? '<span class="tag open">To book</span>' : '';
-      let links = '';
-      if (ev.map)  links += `<a href="${ev.map}"  target="_blank" rel="noopener">Map</a>`;
-      if (ev.book) links += `<a href="${ev.book}" target="_blank" rel="noopener">Book</a>`;
-      stop.innerHTML = `
-        <div class="stop-time">${ev.time}</div>
-        <div class="stop-title">${ev.title}${tag}</div>
-        <div class="stop-note">${ev.note}</div>
-        ${links ? '<div class="stop-links">' + links + '</div>' : ''}`;
-      if (ev.expand) stop.appendChild(makeCtx(ev.expand));
+      const stop = el('div', 'stop');
+      stop.dataset.kind = ev.kind;
+
+      const tag = ev.state === 'confirmed' ? '<span class="stop-tag confirmed">Booked</span>'
+                : ev.state === 'open'      ? '<span class="stop-tag open">To book</span>' : '';
+
+      // Title -- link if url provided
+      const titleHtml = ev.url
+        ? `<a href="${ev.url}" target="_blank" rel="noopener">${ev.title}</a>`
+        : ev.title;
+
+      stop.appendChild(el('div', 'stop-time', ev.time));
+      stop.appendChild(el('div', 'stop-head', `<span class="stop-title">${titleHtml}</span>${tag}`));
+      if (ev.note) stop.appendChild(el('div', 'stop-note', ev.note));
+      if (ev.ref)  stop.appendChild(el('div', 'stop-ref', `<span>${ev.ref}</span>`));
+      if (ev.map)  {
+        const ml = el('a', 'stop-map', '↗ Map');
+        ml.href = ev.map; ml.target = '_blank'; ml.rel = 'noopener';
+        stop.appendChild(ml);
+      }
+      if (ev.expand) stop.appendChild(makeExpand(ev.expand.label, ev.expand.body, false));
       spine.appendChild(stop);
     });
+
     ch.appendChild(spine);
     chapters.push({ el: ch, date: dayDate });
   });
 
   if (tripActive) {
     chapters.sort((a, b) => {
-      const aToday = a.date === todayStr, bToday = b.date === todayStr;
-      const aPast  = a.date < todayStr,   bPast  = b.date < todayStr;
-      if (aToday && !bToday) return -1;
-      if (bToday && !aToday) return 1;
-      if (!aPast && bPast)   return -1;
-      if (aPast && !bPast)   return 1;
+      const aT = a.date === todayStr, bT = b.date === todayStr;
+      const aP = a.date < todayStr,   bP = b.date < todayStr;
+      if (aT && !bT) return -1; if (bT && !aT) return 1;
+      if (!aP && bP) return -1; if (aP && !bP) return 1;
       return a.date < b.date ? -1 : 1;
     });
   }
-
   chapters.forEach(c => wrap.appendChild(c.el));
 }
 
-function renderLedger() {
+function renderBookings() {
+  const toggle = document.getElementById('bookings-toggle');
+  const body = document.getElementById('bookings-body');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    body.classList.toggle('open');
+  });
+
   const list = document.getElementById('ledger-list');
-  const order = { open: 0, pending: 1, confirmed: 2 };
-  const label = { confirmed: 'Booked', pending: 'Waitlist', open: 'To book' };
-  TRIP.bookings.slice().sort((a,b) => order[a.state] - order[b.state]).forEach(b => {
+  TRIP.bookings.forEach(b => {
     const row = el('div', 'ledger-row');
     row.innerHTML = `<span class="ldot ${b.state}"></span>
-      <div class="ledger-main">
+      <div class="ledger-body">
         <div class="ledger-label">${b.label}</div>
-        <div class="ledger-sub">${b.sub}${b.ref ? ' · ' + b.ref : ''}</div>
+        <div class="ledger-sub">${b.sub}</div>
+        ${b.ref ? `<div class="ledger-ref"><span>${b.ref}</span></div>` : ''}
       </div>
-      <span class="ledger-state ${b.state}">${label[b.state]}</span>
-      ${b.url ? '<a class="go" href="' + b.url + '" target="_blank" rel="noopener">↗</a>' : ''}`;
+      <span class="ledger-state ${b.state}">${b.state === 'confirmed' ? 'Booked' : 'To book'}</span>
+      ${b.url ? `<a class="ledger-link" href="${b.url}" target="_blank" rel="noopener">↗</a>` : ''}`;
     list.appendChild(row);
   });
 }
@@ -608,22 +630,28 @@ function renderPocket() {
   const wrap = document.getElementById('pocket-wrap');
   TRIP.pocket.forEach(g => {
     const grp = el('div', 'pocket-group');
-    const btn = el('button', 'pocket-toggle', `${g.group}<span class="chev">›</span>`);
+    const btn = el('button', 'pocket-btn', `${g.group}<span class="chev">›</span>`);
     const body = el('div', 'pocket-body');
-    g.items.forEach(([n,d]) => body.appendChild(el('div', 'pocket-item', `<div class="n">${n}</div><div class="d">${d}</div>`)));
-    btn.addEventListener('click', () => { btn.classList.toggle('on'); body.classList.toggle('on'); });
+    g.items.forEach(([n, d]) => {
+      body.appendChild(el('div', 'pocket-item', `<div class="n">${n}</div><div class="d">${d}</div>`));
+    });
+    btn.addEventListener('click', () => { btn.classList.toggle('open'); body.classList.toggle('open'); });
     grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
   });
 }
 
 function initNotes() {
-  const fab = document.getElementById('fab'), panel = document.getElementById('notepanel');
-  const ta = document.getElementById('note-ta'), list = document.getElementById('notelist');
+  const fab = document.getElementById('fab');
+  const panel = document.getElementById('notepanel');
+  const ta = document.getElementById('note-ta');
+  const list = document.getElementById('notelist');
   const draw = () => {
     const n = JSON.parse(localStorage.getItem('mel_notes') || '[]');
-    list.innerHTML = n.length ? n.map(x => `<div class="noteitem">${x}</div>`).join('') : '<div class="empty">No notes yet.</div>';
+    list.innerHTML = n.length
+      ? n.map(x => `<div class="noteitem">${x}</div>`).join('')
+      : '<div class="empty">No notes yet.</div>';
   };
-  fab.addEventListener('click', () => panel.classList.toggle('on'));
+  fab.addEventListener('click', () => panel.classList.toggle('open'));
   document.getElementById('note-save').addEventListener('click', () => {
     const v = ta.value.trim(); if (!v) return;
     const n = JSON.parse(localStorage.getItem('mel_notes') || '[]');
@@ -634,34 +662,25 @@ function initNotes() {
 }
 
 async function fetchWeather() {
-  const widget = document.getElementById('m-weather');
-  if (!widget) return;
   try {
-    const url = 'https://api.open-meteo.com/v1/forecast?latitude=-37.8136&longitude=144.9631&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=Australia%2FMelbourne';
-    const res = await fetch(url);
-    if (!res.ok) return;
-    const data = await res.json();
-    const temp = Math.round(data.current.temperature_2m);
-    const code = data.current.weather_code;
-    const conditions = (c) => {
-      if (c === 0)   return ['☀', 'Clear'];
-      if (c <= 2)    return ['⛅', 'Partly cloudy'];
-      if (c === 3)   return ['☁', 'Overcast'];
-      if (c <= 49)   return ['🌫', 'Fog'];
-      if (c <= 59)   return ['🌦', 'Drizzle'];
-      if (c <= 69)   return ['🌧', 'Rain'];
-      if (c <= 79)   return ['❄', 'Snow'];
-      if (c <= 82)   return ['🌦', 'Showers'];
-      if (c <= 99)   return ['⛈', 'Thunderstorm'];
-      return ['—', ''];
-    };
-    const [icon] = conditions(code);
-    widget.innerHTML = `<div class="weather-widget"><span class="weather-icon">${icon}</span><span class="weather-temp">${temp}°</span><span class="weather-desc">Melbourne now</span></div>`;
-  } catch(e) { /* silent fail */ }
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-37.8136&longitude=144.9631&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=Australia%2FMelbourne');
+    if (!r.ok) return;
+    const d = await r.json();
+    const temp = Math.round(d.current.temperature_2m);
+    const c = d.current.weather_code;
+    const icon = c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
+    document.getElementById('m-weather').innerHTML = `${icon} <span class="weather-temp">${temp}°</span>`;
+  } catch(e) {}
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderMasthead(); renderPlanePiece(); renderChapters(); renderLedger(); renderPocket(); initNotes(); fetchWeather();
+  renderMasthead();
+  renderPlanePiece();
+  renderChapters();
+  renderBookings();
+  renderPocket();
+  initNotes();
+  fetchWeather();
 });
 </script>
 </body>
