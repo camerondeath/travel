@@ -82,7 +82,15 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .expand-body .prose p { font-size: 0.92rem; color: var(--ink-2); }
 .expand-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--accent); }
 
-/* ── CHAPTERS ─────────────────────────────────────────────── */
+/* ── ESSAY TEASER ─────────────────────────────────────────── */
+.essay-teaser { margin-bottom: 0.5rem; }
+.essay-teaser p { font-family: var(--serif); font-size: 1rem; color: var(--ink-3); line-height: 1.7; margin: 0; display: inline; }
+.essay-continue { display: inline; font-family: var(--serif); font-size: 1rem; color: var(--ink-3); }
+.essay-continue::before { content: '\2026\00a0'; color: var(--rule-2); }
+.essay-continue a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; vertical-align: baseline; }
+.essay-continue a:hover { color: var(--accent-2); border-color: var(--accent); }
+
+
 .chapter { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
 .chapter.is-past { opacity: 0.45; }
 .chapter.is-today { border-left: 2px solid var(--accent); padding-left: 1.5rem; margin-left: -1.5rem; }
@@ -283,7 +291,7 @@ const TRIP = {
 <p>Then a door, and a set of stairs, and a flat above a street in the dead centre of the grid, with the bags finally down and the long sigh of having arrived somewhere. There is a version of this evening that ends here, with toast and an early collapse, and it is a mistake. Arrival is not a place you reach by landing. It is a thing that happens later, somewhere warm, the moment you sit down at a counter you did not have to find and order the first thing without thinking too hard about it.</p>
 <p>So you go back out into the cold, which is shorter than you feared, the length of a narrow street, and into a long lit room that was full before you got there and will be full after you leave. Sherry, and small salted things, and the particular heat that comes off other people who are already mid-evening and have no idea you have just crossed a sea. A room that has held this same corner for twenty years and intends to hold it for twenty more. You are nobody here, which is the whole relief of it. The displacement of the airport drains out somewhere around the second glass, and the city, which showed you nothing on the way down, quietly opens its first door.</p>`,
       events: [
-        { time: "3:45pm", title: "QF170 departs Christchurch", kind: "travel", note: "Boeing 737. Check-in closes 2:45pm CHC." },
+        { time: "3:45pm", title: "QF170 departs Christchurch", kind: "travel", note: "Boeing 737. Check-in closes 2:45pm CHC. Gold lounge access: Qantas CHC lounge, international terminal." },
         { time: "5:35pm", title: "Land at Tullamarine", kind: "travel", note: "Terminal 2. Gold status, priority bags. Uber rank from arrivals -- about 35 minutes to the CBD.", map: "https://maps.google.com/?q=Melbourne+Airport+Tullamarine" },
         { time: "~6:15pm", title: "192 Little Collins Street", kind: "base", note: "Access instructions arrive 48 hours before.", url: "https://www.airbnb.co.nz/rooms/1832876", map: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
         { time: "7:30pm", title: "Bar Lourinhã", kind: "food", state: "confirmed",
@@ -447,7 +455,7 @@ const TRIP = {
       events: [
         { time: "5:45am", title: "Up", kind: "travel", note: "Key return per the 48-hour host instructions." },
         { time: "6:30am", title: "Uber to Tullamarine", kind: "travel", note: "Booked Saturday night. About 35 minutes. Terminal 2." },
-        { time: "8:15am", title: "Check-in closes", kind: "travel", note: "International cut-off. Aim for the Qantas counter by 7:30am." },
+        { time: "8:15am", title: "Check-in closes", kind: "travel", note: "International cut-off. Aim for the Qantas counter by 7:30am. Gold access: Qantas International Business Lounge, Terminal 2, airside after security." },
         { time: "9:15am", title: "QF167 home", kind: "travel", note: "Non-stop to Christchurch, 2:45pm." },
       ]
     }
@@ -477,7 +485,7 @@ const TRIP = {
       ["Trams in the CBD", "Free inside the city zone: Spencer, Flinders, Spring, La Trobe."],
       ["Tram 86", "Bourke Street stop north to Fitzroy and Gertrude Street. 15 minutes."],
       ["Myki card", "Buy at any 7-Eleven. Only needed for tram 86 -- the CBD is free. $20 covers the trip."],
-      ["Qantas Gold", "Priority check-in at Tullamarine. 46kg allowance on the international leg."],
+      ["Qantas Gold", "Priority check-in at Tullamarine. 46kg allowance on the international leg. Lounge access: Qantas International Business Lounge, Terminal 2, airside after security -- both directions."],
     ]},
   ]
 };
@@ -551,8 +559,46 @@ function renderChapters() {
     head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div><div class="chapter-title">${day.title}</div></div><div class="day-weather" id="wx-${day.id}"></div></div>`;
     ch.appendChild(head);
 
-    // Essay behind expand
-    ch.appendChild(makeExpand('Read the day', day.essay, true));
+    // Essay teaser: first sentence visible, rest behind toggle
+    const essayWrap = el('div', null);
+    // Extract first sentence from first <p>
+    const firstPMatch = day.essay.match(/<p>([\s\S]*?)<\/p>/);
+    let teaser = '', rest = day.essay;
+    if (firstPMatch) {
+      const firstP = firstPMatch[1];
+      // Split on first sentence boundary (. followed by space or end)
+      const sentMatch = firstP.match(/^(.*?(?:\.|!|\?)(?:\s|$))([\s\S]*)$/);
+      if (sentMatch && sentMatch[1].length > 40) {
+        teaser = sentMatch[1].trim();
+        const remainder = sentMatch[2].trim();
+        rest = remainder
+          ? `<p>${remainder}</p>` + day.essay.replace(firstPMatch[0], '').trim()
+          : day.essay.replace(firstPMatch[0], '').trim();
+      } else {
+        teaser = firstP;
+        rest = day.essay.replace(firstPMatch[0], '').trim();
+      }
+    }
+    const teaserDiv = el('div', 'essay-teaser');
+    teaserDiv.innerHTML = `<p>${teaser}</p>`;
+    essayWrap.appendChild(teaserDiv);
+    if (rest) {
+      const continueSpan = el('span', 'essay-continue');
+      const expandId = 'essay-' + day.id;
+      continueSpan.innerHTML = `<a href="#" id="btn-${expandId}">Continue reading</a>`;
+      teaserDiv.appendChild(continueSpan);
+      const fullBody = el('div', null);
+      fullBody.id = expandId;
+      fullBody.style.display = 'none';
+      fullBody.innerHTML = `<div class="prose prose-drop" style="margin-top:0.9rem;">${rest}</div>`;
+      essayWrap.appendChild(fullBody);
+      continueSpan.querySelector('a').addEventListener('click', e => {
+        e.preventDefault();
+        fullBody.style.display = 'block';
+        continueSpan.style.display = 'none';
+      });
+    }
+    ch.appendChild(essayWrap);
 
     // Spine
     const spine = el('div', 'spine');
