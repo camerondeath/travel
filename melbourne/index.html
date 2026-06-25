@@ -42,14 +42,10 @@ body { background: var(--ink); color: var(--paper); font-family: var(--serif); l
 .masthead { padding: 3.5rem 0 2rem; }
 .mast-city { font-family: var(--display); font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 300; line-height: 0.88; letter-spacing: -0.025em; font-optical-sizing: auto; }
 .mast-city em { font-style: italic; color: var(--gold); }
-.mast-bar { display: flex; align-items: baseline; gap: 1.5rem; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--rule); flex-wrap: wrap; }
-.mast-dates { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); }
-.mast-base { font-family: var(--mono); font-size: 0.72rem; color: var(--paper-2); }
-.mast-base a { color: var(--paper-2); text-decoration: none; border-bottom: 1px solid var(--rule-2); }
-.mast-base a:hover { color: var(--gold); border-color: var(--gold-2); }
-.mast-flights { font-family: var(--mono); font-size: 0.65rem; color: var(--steel); margin-top: 0.3rem; line-height: 1.7; }
-.weather { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.72rem; color: var(--steel); margin-left: auto; }
-.weather-temp { color: var(--paper-2); font-weight: 500; }
+.mast-bar { display: flex; align-items: center; gap: 1.2rem; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.mast-dates { font-family: var(--mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); }
+.mast-weather { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.7rem; color: var(--steel); margin-left: auto; }
+.mast-weather-temp { color: var(--paper-2); font-weight: 500; }
 
 /* ── PLANE PIECE ──────────────────────────────────────────── */
 .plane-piece { padding: 2.5rem 0 3rem; border-bottom: 1px solid var(--rule); }
@@ -92,9 +88,14 @@ body { background: var(--ink); color: var(--paper); font-family: var(--serif); l
 .chapter.is-today { border-left: 1px solid var(--gold-2); padding-left: 1.5rem; margin-left: -1.5rem; }
 .chapter-label { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
 .chapter-head { margin-bottom: 1.8rem; }
+.chapter-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
 .chapter-meta { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--steel); margin-bottom: 0.5rem; }
 .chapter-meta .date-accent { color: var(--gold-2); }
 .chapter-title { font-family: var(--display); font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 300; line-height: 1.04; letter-spacing: -0.015em; font-optical-sizing: auto; }
+.day-weather { display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; flex-shrink: 0; padding-top: 0.1rem; }
+.day-weather-icon { font-size: 1.3rem; line-height: 1; }
+.day-weather-temps { font-family: var(--mono); font-size: 0.62rem; color: var(--steel); white-space: nowrap; }
+.day-weather-temps .hi { color: var(--paper-2); }
 
 /* ── SPINE ────────────────────────────────────────────────── */
 .spine { position: relative; padding-left: 2rem; margin-top: 1.5rem; }
@@ -186,10 +187,8 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--gold); outline-
   <div class="mast-city" id="m-title"></div>
   <div class="mast-bar">
     <span class="mast-dates" id="m-dates"></span>
-    <span class="mast-base" id="m-base"></span>
-    <span class="weather" id="m-weather"></span>
+    <span class="mast-weather" id="m-weather"></span>
   </div>
-  <div class="mast-flights" id="m-flights"></div>
 </header>
 
 <section class="plane-piece" id="plane"></section>
@@ -232,9 +231,7 @@ const TRIP = {
       title: "You Will Be Let In",
       standfirst: "Melbourne has no view. That is not a flaw in the city. It is the whole argument.",
       preview: `<p>At the entrance to the National Gallery of Victoria, on St Kilda Road, there is a wall of water. It runs down a pane of glass two storeys high, even and unhurried, lit from somewhere you cannot quite locate, and you walk in beside it. Almost everyone touches it. Children press their whole hands flat to the glass and the water parts around their fingers and closes again the instant they pull away. Adults do it too, quickly, and then pretend they had not. Nobody photographs it, or nobody who tries comes away with anything. It is a thing you have to be standing in front of, with your hand out, to understand at all. And that is the first instruction Melbourne gives you, before you have seen a single painting: the reward here is on the inside, and the way to it runs through a surface.</p>`,
-      full: `<p>At the entrance to the National Gallery of Victoria, on St Kilda Road, there is a wall of water. It runs down a pane of glass two storeys high, even and unhurried, lit from somewhere you cannot quite locate, and you walk in beside it. Almost everyone touches it. Children press their whole hands flat to the glass and the water parts around their fingers and closes again the instant they pull away. Adults do it too, quickly, and then pretend they had not. Nobody photographs it, or nobody who tries comes away with anything. It is a thing you have to be standing in front of, with your hand out, to understand at all. And that is the first instruction Melbourne gives you, before you have seen a single painting: the reward here is on the inside, and the way to it runs through a surface.</p>
-
-<p>Consider what that building declines to do. It does not face the river. It does not climb a hill to hand you a panorama. It sits flat on a wide grey boulevard behind a moat of its own water, a bluestone keep by the architect Roy Grounds, and it keeps its best things indoors, where neither the weather nor the street can reach them -- the Tiepolo of Cleopatra at her banquet, the Leonard French ceiling of coloured glass that you have to lie on the floor of the Great Hall to see properly, on your back, like everyone else who has worked out that this is the only correct posture for it. Melbourne is a city organised around that instinct. And the instinct exists because Melbourne, almost uniquely among the cities people fly a long way to see, has no view.</p>
+      full: `<p>Consider what that building declines to do. It does not face the river. It does not climb a hill to hand you a panorama. It sits flat on a wide grey boulevard behind a moat of its own water, a bluestone keep by the architect Roy Grounds, and it keeps its best things indoors, where neither the weather nor the street can reach them -- the Tiepolo of Cleopatra at her banquet, the Leonard French ceiling of coloured glass that you have to lie on the floor of the Great Hall to see properly, on your back, like everyone else who has worked out that this is the only correct posture for it. Melbourne is a city organised around that instinct. And the instinct exists because Melbourne, almost uniquely among the cities people fly a long way to see, has no view.</p>
 
 <p>Most great cities are conducting a love affair with their own geography, and the affair is the first thing you are shown. You are over the water and then the bridge is there, and the white sails, and you have seen the famous thing before the wheels are down. Sydney does this to you. Sydney has the harbour, which is not a body of water so much as a permanent argument in the city's favour, settled in advance of any conversation. You can photograph Sydney before you have landed in it. Melbourne offers the descending passenger almost nothing. A flat brown plain. A river the colour of weak tea that appears, from above, to be running the wrong way. Weather that will change its mind four times before you reach the carousel. There is no single image of the place, because the place was not built to be looked at from outside. It was built to be entered.</p>
 
@@ -511,9 +508,6 @@ function renderMasthead() {
   const m = TRIP.meta;
   document.getElementById('m-title').innerHTML = m.city + ' <em>in July</em>';
   document.getElementById('m-dates').textContent = m.dates;
-  document.getElementById('m-base').innerHTML = `<a href="${m.base.airbnb}" target="_blank" rel="noopener">${m.base.name}</a>`;
-  document.getElementById('m-flights').innerHTML =
-    `${m.flights.out} &nbsp;·&nbsp; ${m.flights.ret} &nbsp;·&nbsp; ${m.flights.ref}`;
 }
 
 function renderPlanePiece() {
@@ -554,7 +548,7 @@ function renderChapters() {
     }
 
     const head = el('div', 'chapter-head');
-    head.innerHTML = `<div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div><div class="chapter-title">${day.title}</div>`;
+    head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div><div class="chapter-title">${day.title}</div></div><div class="day-weather" id="wx-${day.id}"></div></div>`;
     ch.appendChild(head);
 
     // Essay behind expand
@@ -663,13 +657,38 @@ function initNotes() {
 
 async function fetchWeather() {
   try {
-    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-37.8136&longitude=144.9631&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=Australia%2FMelbourne');
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=-37.8136&longitude=144.9631' +
+      '&current=temperature_2m,weather_code' +
+      '&daily=weather_code,temperature_2m_max,temperature_2m_min' +
+      '&temperature_unit=celsius&timezone=Australia%2FMelbourne' +
+      '&start_date=2026-07-08&end_date=2026-07-12';
+    const r = await fetch(url);
     if (!r.ok) return;
     const d = await r.json();
-    const temp = Math.round(d.current.temperature_2m);
-    const c = d.current.weather_code;
-    const icon = c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
-    document.getElementById('m-weather').innerHTML = `${icon} <span class="weather-temp">${temp}°</span>`;
+
+    const wmoIcon = c => c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
+
+    // Masthead: current temp
+    const cur = Math.round(d.current.temperature_2m);
+    const curIcon = wmoIcon(d.current.weather_code);
+    document.getElementById('m-weather').innerHTML =
+      `${curIcon} <span class="mast-weather-temp">${cur}°</span>`;
+
+    // Per-day: map date string to day id
+    const dateToId = {
+      '2026-07-08': 'wed', '2026-07-09': 'thu', '2026-07-10': 'fri',
+      '2026-07-11': 'sat', '2026-07-12': 'sun'
+    };
+    d.daily.time.forEach((date, i) => {
+      const id = dateToId[date];
+      if (!id) return;
+      const slot = document.getElementById('wx-' + id);
+      if (!slot) return;
+      const icon = wmoIcon(d.daily.weather_code[i]);
+      const hi = Math.round(d.daily.temperature_2m_max[i]);
+      const lo = Math.round(d.daily.temperature_2m_min[i]);
+      slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${hi}°</span> / ${lo}°</span>`;
+    });
   } catch(e) {}
 }
 
