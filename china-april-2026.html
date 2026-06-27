@@ -4,37 +4,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
 <title>Shanghai & Shaoxing · April 2026</title>
 <style>
 /* ── RESET & TOKENS ─────────────────────────────────────────────── */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#ffffff;
-  --bg2:#f7f5f0;
-  --bg3:#efece4;
-  --t:#1c1c1a;
-  --t2:#5a5752;
-  --t3:#9a9590;
-  --bd:#e0dcd4;
-  --bd2:#cdc8be;
-  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --serif:Georgia,'Times New Roman',serif;
-  --mono:'SF Mono','Courier New',monospace;
-  --r:10px;
-  --rs:6px;
-  --ok-bg:#eef7f2;--ok-t:#1a5c35;--ok-bd:#b8ddc8;
+  /* Melbourne palette */
+  --bg:#f7f6f3;
+  --bg2:#eeecea;
+  --bg3:#e4e2de;
+  --t:#1a1916;
+  --t2:#3a3834;
+  --t3:#6b6860;
+  --bd:#dddbd7;
+  --bd2:#ccc9c4;
+  --sans:'Inter',-apple-system,system-ui,sans-serif;
+  --serif:'Newsreader',Georgia,serif;
+  --mono:'Inter',-apple-system,system-ui,sans-serif;
+  --r:4px;
+  --rs:2px;
+  --ok-bg:#e8f0eb;--ok-t:#2d5a3d;--ok-bd:#b8d4c2;
   --bk-bg:#fef9ee;--bk-t:#7a4800;--bk-bd:#e8c870;
   --urg-bg:#fef2f2;--urg-t:#7a1818;--urg-bd:#e8b0b0;
-  --accent:#8B7355;--acl:#f5f0e8;--acm:#c4a882}
+  --accent:#2d5a3d;--acl:#e8f0eb;--acm:#8ab89a}
 
 /* ── BASE ────────────────────────────────────────────────────────── */
-body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px;line-height:1.65;min-height:100vh}
+body{font-family:var(--serif);background:var(--bg);color:var(--t);font-size:15px;line-height:1.72;min-height:100vh}
 
 /* ── SITE HEADER ─────────────────────────────────────────────────── */
 .site-hdr{background:var(--bg);border-bottom:1px solid var(--bd);overflow:hidden}
-.hdr-deco{height:3px;background:linear-gradient(90deg,#6b5840,#b5956a 40%,#8B7355 60%,#6b5840)}
+.hdr-deco{height:3px;background:linear-gradient(90deg,#1e3d29,#4a8c5c 40%,#2d5a3d 60%,#1e3d29)}
 .hdr-inner{padding:24px 32px 20px;display:flex;align-items:flex-end;justify-content:space-between}
-.hdr-text h1{font-family:var(--serif);font-size:24px;font-weight:400;letter-spacing:-0.3px;color:var(--t)}
+.hdr-text h1{font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:400;letter-spacing:-0.02em;color:var(--t);font-optical-sizing:auto}
 .hdr-text .sub{font-size:11px;color:var(--t3);margin-top:5px;letter-spacing:1.4px;text-transform:uppercase}
 .hdr-motif{opacity:0.12}
 
@@ -303,6 +308,33 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
   .briefing-body{padding:20px 16px 28px}
   .briefing-pull{font-size:16px}
 }
+
+/* ── MELBOURNE STYLE OVERRIDES ──────────────────────────────────── */
+.dh-num{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto}
+.dh-title{font-family:'Newsreader',Georgia,serif;font-size:16px;font-weight:400}
+.th{font-family:'Newsreader',Georgia,serif;font-size:15px;font-weight:400}
+.briefing-pull{font-family:'Newsreader',Georgia,serif;font-size:17px;border-left:2px solid var(--acm)}
+.briefing-body p{font-family:'Newsreader',Georgia,serif;font-size:15px;line-height:1.85}
+.briefing-body h3{font-family:'Inter',-apple-system,sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--accent)}
+.briefing-body h3::before{background:var(--acm)}
+.phase-text{font-family:'Inter',-apple-system,sans-serif;font-size:10px;letter-spacing:0.18em;border-radius:2px}
+.day-intro{font-family:'Newsreader',Georgia,serif;font-size:15px;line-height:1.82}
+.tpre{font-family:'Inter',-apple-system,sans-serif;font-size:12.5px;color:var(--t3)}
+.xbtn{font-family:'Inter',-apple-system,sans-serif;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent)}
+.bk-name{font-family:'Newsreader',Georgia,serif;font-size:14px;font-weight:400}
+.nav-wrap{background:var(--bg);border-bottom:1px solid var(--bd)}
+.nav-tag:hover{background:var(--bg2);border-bottom-color:var(--acm)}
+.nav-tag.nt-today{border-bottom-color:var(--accent)}
+.dc{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r)}
+.dh:hover{background:var(--bg2)}
+.briefing-hdr{border-left:2px solid var(--accent)}
+.briefing-hdr:hover,.briefing-hdr.open{background:var(--acl)}
+.hdr-inner{background:var(--bg)}
+.site-hdr{background:var(--bg)}
+/* Back to index link */
+.back-link{display:inline-flex;align-items:center;gap:0.4rem;font-family:'Inter',-apple-system,sans-serif;font-size:0.65rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);text-decoration:none;padding:0.6rem 0}
+.back-link:hover{color:var(--t)}
+
 </style>
 </head>
 <body>
@@ -321,7 +353,34 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
           .ln2{transform-origin:55px 2px;animation:lnsway 3s ease-in-out infinite;animation-delay:-1s}
           .ln3{transform-origin:90px 2px;animation:lnsway 3s ease-in-out infinite;animation-delay:-2s}
           @keyframes lnsway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
-        </style>
+        
+/* ── MELBOURNE STYLE OVERRIDES ──────────────────────────────────── */
+.dh-num{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto}
+.dh-title{font-family:'Newsreader',Georgia,serif;font-size:16px;font-weight:400}
+.th{font-family:'Newsreader',Georgia,serif;font-size:15px;font-weight:400}
+.briefing-pull{font-family:'Newsreader',Georgia,serif;font-size:17px;border-left:2px solid var(--acm)}
+.briefing-body p{font-family:'Newsreader',Georgia,serif;font-size:15px;line-height:1.85}
+.briefing-body h3{font-family:'Inter',-apple-system,sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.16em;color:var(--accent)}
+.briefing-body h3::before{background:var(--acm)}
+.phase-text{font-family:'Inter',-apple-system,sans-serif;font-size:10px;letter-spacing:0.18em;border-radius:2px}
+.day-intro{font-family:'Newsreader',Georgia,serif;font-size:15px;line-height:1.82}
+.tpre{font-family:'Inter',-apple-system,sans-serif;font-size:12.5px;color:var(--t3)}
+.xbtn{font-family:'Inter',-apple-system,sans-serif;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent)}
+.bk-name{font-family:'Newsreader',Georgia,serif;font-size:14px;font-weight:400}
+.nav-wrap{background:var(--bg);border-bottom:1px solid var(--bd)}
+.nav-tag:hover{background:var(--bg2);border-bottom-color:var(--acm)}
+.nav-tag.nt-today{border-bottom-color:var(--accent)}
+.dc{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r)}
+.dh:hover{background:var(--bg2)}
+.briefing-hdr{border-left:2px solid var(--accent)}
+.briefing-hdr:hover,.briefing-hdr.open{background:var(--acl)}
+.hdr-inner{background:var(--bg)}
+.site-hdr{background:var(--bg)}
+/* Back to index link */
+.back-link{display:inline-flex;align-items:center;gap:0.4rem;font-family:'Inter',-apple-system,sans-serif;font-size:0.65rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);text-decoration:none;padding:0.6rem 0}
+.back-link:hover{color:var(--t)}
+
+</style>
         <!-- Lantern 1 -->
         <g class="ln1">
           <line x1="20" y1="2" x2="20" y2="8" stroke="#8B7355" stroke-width="1"/>
@@ -351,6 +410,7 @@ body{font-family:var(--sans);background:var(--bg2);color:var(--t);font-size:14px
       </svg>
     </div>
   </div>
+  <a class="back-link" href="../">← All trips</a>
 </div>
 
 <nav class="nav-wrap">
