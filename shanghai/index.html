@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shanghai · October 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ground:   #f7f6f3;
+  --ground-2: #eeecea;
+  --ground-3: #e4e2de;
+  --ink:      #1a1916;
+  --ink-2:    #3a3834;
+  --ink-3:    #6b6860;
+  --accent:   #2d5a3d;
+  --accent-2: #1e3d29;
+  --accent-lt: #e8f0eb;
+  --rule:     #dddbd7;
+  --rule-2:   #ccc9c4;
+  --good:     #2d5a3d;
+  --open:     #4a6fa5;
+  --serif:    'Newsreader', Georgia, serif;
+  --display:  'Fraunces', Georgia, serif;
+  --mono:     'Inter', -apple-system, system-ui, sans-serif;
+  --col: 680px;
+  --pad: 1.5rem;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; font-size: 17px; }
+body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+.wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--pad); }
+
+/* ── NO GLOW ON LIGHT ─────────────────────────────────────── */
+.glow { display: none; }
+.content { position: relative; }
+
+/* ── MASTHEAD ─────────────────────────────────────────────── */
+.masthead { padding: 3.5rem 0 2rem; }
+.mast-city { font-family: var(--display); font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 400; line-height: 0.88; letter-spacing: -0.03em; font-optical-sizing: auto; color: var(--ink); }
+.mast-city em { font-style: italic; color: var(--accent); font-weight: 300; }
+.mast-bar { display: flex; align-items: center; gap: 1.2rem; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.mast-dates { font-family: var(--mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.mast-weather { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.7rem; color: var(--ink-3); margin-left: auto; }
+.mast-weather-temp { color: var(--ink-2); font-weight: 500; }
+
+/* ── PLANE PIECE ──────────────────────────────────────────── */
+.plane-piece { padding: 2.5rem 0 3rem; border-bottom: 1px solid var(--rule); }
+.kicker { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.9rem; }
+.plane-piece h2 { font-family: var(--display); font-size: clamp(1.9rem, 5vw, 3rem); font-weight: 400; line-height: 1.02; letter-spacing: -0.02em; font-optical-sizing: auto; margin-bottom: 0.8rem; color: var(--ink); }
+.standfirst { font-family: var(--serif); font-size: 1.18rem; font-weight: 300; font-style: italic; color: var(--accent); line-height: 1.45; margin-bottom: 2rem; max-width: 32ch; }
+
+/* ── PROSE ────────────────────────────────────────────────── */
+.prose p { margin-bottom: 1.25em; color: var(--ink-2); font-size: 1rem; }
+.prose p:last-child { margin-bottom: 0; }
+.prose-drop > p:first-of-type::first-letter {
+  font-family: var(--display); float: left; font-size: 4em; line-height: 0.76;
+  font-weight: 400; padding: 0.04em 0.1em 0 0; color: var(--accent); font-optical-sizing: auto; }
+
+/* ── EXPAND TOGGLE ────────────────────────────────────────── */
+.expand { margin-top: 0.8rem; }
+.expand-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
+  background: none; border: none; padding: 0.2rem 0;
+  font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+  transition: color 0.12s;
+}
+.expand-btn:hover { color: var(--accent-2); }
+.expand-btn .chevron { display: inline-block; transition: transform 0.18s; font-style: normal; }
+.expand-btn.open .chevron { transform: rotate(90deg); }
+.expand-body {
+  display: none; margin-top: 1rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--ground-2);
+  border-left: 2px solid var(--accent);
+}
+.expand-body.open { display: block; }
+.expand-body .prose p { font-size: 0.92rem; color: var(--ink-2); }
+.expand-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--accent); }
+
+/* ── ESSAY TEASER ─────────────────────────────────────────── */
+.essay-teaser { margin-bottom: 0.5rem; }
+.essay-teaser p { font-family: var(--serif); font-size: 1rem; color: var(--ink-3); line-height: 1.7; margin: 0; display: inline; }
+.essay-continue { display: inline; font-family: var(--serif); font-size: 1rem; color: var(--ink-3); }
+.essay-continue::before { content: '\2026\00a0'; color: var(--rule-2); }
+.essay-continue a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; vertical-align: baseline; }
+.essay-continue a:hover { color: var(--accent-2); border-color: var(--accent); }
+
+
+.chapter { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+.chapter.is-past { opacity: 0.45; }
+.chapter.is-today { border-left: 2px solid var(--accent); padding-left: 1.5rem; margin-left: -1.5rem; }
+.chapter-label { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
+.chapter-head { margin-bottom: 1.8rem; }
+.chapter-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
+.chapter-meta { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
+.chapter-meta .date-accent { color: var(--accent); }
+.chapter-title { font-family: var(--display); font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 400; line-height: 1.04; letter-spacing: -0.02em; font-optical-sizing: auto; color: var(--ink); }
+.day-weather { display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; flex-shrink: 0; padding-top: 0.1rem; }
+.day-weather-icon { font-size: 1.3rem; line-height: 1; }
+.day-weather-temps { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; }
+.day-weather-temps .hi { color: var(--ink-2); }
+
+/* ── SPINE ────────────────────────────────────────────────── */
+.spine { position: relative; padding-left: 2rem; margin-top: 1.5rem; }
+.spine::before { content: ''; position: absolute; left: 0; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--rule); }
+.stop { position: relative; margin-bottom: 1.8rem; }
+.stop:last-child { margin-bottom: 0; }
+.stop::before {
+  content: ''; position: absolute; left: -2rem; top: 0.52rem;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--ground); border: 1px solid var(--rule-2);
+}
+.stop[data-kind="food"]::before { border-color: var(--accent); background: var(--ground); }
+.stop[data-kind="culture"]::before { background: var(--accent); border-color: var(--accent); }
+.stop-time { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.15rem; }
+.stop-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+.stop-title { font-family: var(--display); font-size: 1.1rem; font-weight: 400; color: var(--ink); line-height: 1.2; font-optical-sizing: auto; }
+.stop-title a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule-2); }
+.stop-title a:hover { color: var(--accent); border-color: var(--accent); }
+.stop-tag { font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15em 0.55em; border-radius: 1px; flex-shrink: 0; }
+.stop-tag.confirmed { color: var(--good); border: 1px solid color-mix(in srgb, var(--good) 40%, transparent); background: var(--accent-lt); }
+.stop-tag.open { color: var(--open); border: 1px solid color-mix(in srgb, var(--open) 35%, transparent); }
+.stop-note { font-family: var(--serif); font-size: 0.88rem; color: var(--ink-3); line-height: 1.65; }
+.stop-ref { font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); margin-top: 0.3rem; letter-spacing: 0.04em; }
+.stop-ref span { color: var(--ink-3); }
+.stop-map { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); text-decoration: none; margin-top: 0.35rem; display: inline-block; }
+.stop-map:hover { color: var(--accent-2); }
+
+/* ── BOOKINGS LEDGER ──────────────────────────────────────── */
+.bookings-section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+.ledger { margin-top: 1.2rem; }
+.ledger-row { display: flex; align-items: baseline; gap: 0.9rem; padding: 0.65rem 0; border-bottom: 1px solid var(--rule); }
+.ledger-row:first-child { border-top: 1px solid var(--rule); }
+.ldot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; align-self: center; }
+.ldot.confirmed { background: var(--good); }
+.ldot.open { background: var(--open); }
+.ledger-body { flex: 1; min-width: 0; }
+.ledger-label { font-family: var(--display); font-size: 0.98rem; font-weight: 400; color: var(--ink); font-optical-sizing: auto; }
+.ledger-sub { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); margin-top: 0.1rem; letter-spacing: 0.02em; }
+.ledger-ref { font-family: var(--mono); font-size: 0.6rem; color: var(--rule-2); margin-top: 0.15rem; }
+.ledger-ref span { color: var(--accent); }
+.ledger-state { font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
+.ledger-state.confirmed { color: var(--good); }
+.ledger-state.open { color: var(--open); }
+.ledger-link { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); text-decoration: none; flex-shrink: 0; }
+.ledger-link:hover { color: var(--accent-2); }
+
+/* ── BACK POCKET ──────────────────────────────────────────── */
+.pocket { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+.pocket-group { margin-bottom: 0.25rem; }
+.pocket-btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  background: none; border: none; border-bottom: 1px solid var(--rule);
+  padding: 0.85rem 0; cursor: pointer; color: var(--ink);
+  font-family: var(--serif); font-size: 1rem; font-weight: 400; text-align: left;
+}
+.pocket-btn .chev { font-family: var(--mono); color: var(--ink-3); font-size: 0.8rem; transition: transform 0.18s; }
+.pocket-btn.open .chev { transform: rotate(90deg); }
+.pocket-body { display: none; padding: 0.4rem 0 0.9rem; }
+.pocket-body.open { display: block; }
+.pocket-item { padding: 0.5rem 0; border-bottom: 1px solid var(--rule); }
+.pocket-item:last-child { border-bottom: none; }
+.pocket-item .n { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-2); }
+.pocket-item .d { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.1rem; letter-spacing: 0.01em; }
+
+/* ── SECTION LABEL ────────────────────────────────────────── */
+.section-label { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0; }
+
+/* ── FAB / NOTES ──────────────────────────────────────────── */
+footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
+.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: var(--ground); border: none; cursor: pointer; font-family: var(--display); font-size: 1.2rem; box-shadow: 0 2px 12px rgba(45,90,61,0.25); transition: transform 0.12s; }
+.fab:hover { transform: scale(1.06); }
+.notepanel { position: fixed; bottom: 5rem; right: 1.4rem; z-index: 50; width: min(300px, calc(100vw - 2.8rem)); background: var(--ground); border: 1px solid var(--rule); border-radius: 4px; padding: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,0.12); display: none; }
+.notepanel.open { display: block; }
+.notepanel textarea { width: 100%; height: 76px; resize: none; background: var(--ground-2); color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; padding: 0.55rem; font-family: var(--mono); font-size: 0.78rem; }
+.notepanel textarea:focus { outline: 1px solid var(--accent); }
+.notepanel .save { margin-top: 0.45rem; width: 100%; padding: 0.45rem; background: var(--accent); color: var(--ground); border: none; border-radius: 2px; font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em; cursor: pointer; text-transform: uppercase; }
+.notelist { margin-top: 0.5rem; max-height: 120px; overflow-y: auto; }
+.noteitem { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-2); padding: 0.35rem 0; border-bottom: 1px solid var(--rule); line-height: 1.4; }
+.noteitem:last-child { border-bottom: none; }
+.notelist .empty { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-3); }
+a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="content"><div class="wrap">
+
+<header class="masthead">
+  <div class="mast-city" id="m-title"></div>
+  <div class="mast-bar">
+    <span class="mast-dates" id="m-dates"></span>
+    <span class="mast-weather" id="m-weather"></span>
+  </div>
+</header>
+
+<section class="plane-piece" id="plane"></section>
+
+<main id="chapters"></main>
+
+<section class="pocket" id="pocket-section">
+  <div class="section-label">Back pocket</div>
+  <div id="pocket-wrap"></div>
+</section>
+
+<section class="bookings-section" id="bookings-section">
+  <div class="expand">
+    <button class="expand-btn" id="bookings-toggle"><em class="chevron">›</em>&nbsp;The bookings</button>
+    <div class="expand-body" id="bookings-body">
+      <div class="ledger" id="ledger-list"></div>
+    </div>
+  </div>
+</section>
+
+<footer>Shanghai · October 2026</footer>
+</div></div>
+
+<button class="fab" id="fab" aria-label="Notes">✎</button>
+<div class="notepanel" id="notepanel">
+  <textarea id="note-ta" placeholder="A thought, a name, an address…"></textarea>
+  <button class="save" id="note-save">Keep</button>
+  <div class="notelist" id="notelist"></div>
+</div>
+
+<script>
+const TRIP = {
+  meta: {
+    city: "Shanghai",
+    dates: "24 Oct – 1 Nov 2026",
+    flights: { out: "NZ289 · AKL 11:45pm → PVG 6:55am", ret: "NZ288 · PVG 2:15pm → AKL 6:45am +1", ref: "D52ZEH" },
+    base: { name: "OPARTMENT The Far Eastern, 90 Xizang Middle Rd, Huangpu", url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334", map: "https://maps.google.com/?q=90+Xizang+Middle+Road+Huangpu+Shanghai" },
+    plane: {
+      kicker: "Read on the plane",
+      title: "The Second Look",
+      standfirst: "A city rewards a second visit only when you stop looking for what impressed you the first time.",
+      preview: `<p>Six months ago you stood on the Bund and turned around. That gesture, so obvious as to be almost automatic, is what the city trains you to perform. The colonial facade behind you, the corkscrew of Pudong opposite, the argument between them running back and forth across the Huangpu like a rally in a tennis match neither player is prepared to concede. Everyone who visits Shanghai does this. The Chinese state, in ways it does not need to explain, wants you to. The whole city has been arranged so that the visual grammar of the encounter is difficult to avoid. It is not a small thing. It is the argument that Shanghai wanted to have with the twentieth century, and now with the twenty-first, and it is a good argument. You could spend a week looking at that river and never come to the end of what it is trying to tell you.</p>`,
+      full: `<p>But you have already had that conversation. The question a second visit poses is a different one. What is left of a city once you have seen the version of itself it prepared for you, the polished sequence of Rockbund and Xintiandi and Fuxing Park and Wukang Road, the walking tours and the wet markets, the food streets that appear in every English-language guide? What remains, when the performance is over, is the room itself.</p>
+
+<p>Consider the room. Not the stage, the room. There is a story Ballard tells in the memoir he wrote after Empire of the Sun. He returned to Shanghai in the 1990s, forty years after being interned as a child in Lunghua camp, and went to look at the Amherst Avenue house where his family had lived before the Japanese arrived. The building was still there, in what is now Xinhua Road in the western reach of the old French Concession. Someone had subdivided it, packed families into every room, hung laundry across the veranda where his mother had held cocktail parties. He was not distressed by this. He was, he wrote, oddly reassured. The house had gone on. The stage set of his colonial childhood had proved less durable than the walls that had held it. The lives being lived in those rooms in 1991 were closer to the real Shanghai than anything his family had ever seen, and this seemed to him not an indictment but a kind of grace.</p>
+
+<p>This is the thing worth carrying with you into the October week. Shanghai is a city that has spent every one of the last hundred and eighty years being reoccupied by whatever regime happens to be in charge. British and French merchants first, then Japanese soldiers, then the Nationalists briefly, then the Communist Party for three decades of dormancy, then Deng Xiaoping's economic reforms, then the state's rediscovery of soft power and the private capital that has followed it. Each occupation has left behind buildings that it built to announce its permanence. Each has been replaced. The Sassoons expected the Cathay Hotel to be theirs forever. The Kadoories expected the Marble Hall. The People's Liberation Army marched into the International Settlement in May 1949 and reappropriated both. Deng Xiaoping declared Pudong a special economic zone in 1990 and the Chinese state, over the following three decades, built a new skyline on rice paddies and cotton fields to make a rhetorical point that had nothing to do with either. Every one of these was, in its moment, going to last forever. None of them did. What lasted was the water they were all built beside, the streets they were all built along, and the people who had been living in Shanghai before any of them arrived and were living there after each of them was gone.</p>
+
+<p>The second visit is a visit to the room, not the stage. It is possible to arrange a trip to Shanghai that spends most of a week in the Concession alone, walking the same plane-tree streets you walked in April, and to call this a second look. It would not be. It would be watching the same performance from a slightly different seat. What the room offers is different. Yangpu, north of the reclaimed West Bund, where the wharves and cotton mills that fed the concessions from beyond their own borders still stand because nobody has yet had the money or the will to convert them into anything else. Nanshi, the old walled city, which the concession-era treaty maps drew a red line around so that Western law and Chinese law would not overlap. Hongkou, north of Suzhou Creek, the neighbourhood where twenty thousand Jewish refugees from Nazi Europe settled between 1933 and 1941 because Shanghai was the only city in the world that would accept them without a visa, and where, later, the writer Lu Xun spent his final years diagnosing what he saw as the moral pathology of the country he loved. These are the rooms. None of them was built for you. None of them will perform.</p>
+
+<p>There is a specific pleasure available in this. Anyone who has spent time in a foreign city learns eventually that the good hours are the ones spent in places that have no obligation to notice you are there. A wet market at seven in the morning. A hutong lane where an old man is repairing a radio on the pavement. A restaurant with no English menu whose regulars have been eating there for thirty years. These are not authentic in the sense that word is usually deployed, which is to say marketable. They are simply not staged. And what a city is, underneath its stagecraft, is the sum of all the moments in which it is not being asked to prove anything to anyone.</p>
+
+<p>Consider also what has changed in the six months since April. The trip you took then was structured around a specific framing, the Four Waterfronts, the argument that Shanghai's identity could be read off its treatment of the Huangpu at four distinct points. It was a good framing. It got you inside the city in a way that a more scattered itinerary would not have. But every framing is also a limit, and one of the things a second visit is for is to notice the limit. The waterfront thesis is Shanghai's own story about itself. The Bund is Shanghai's face to the West. Pudong is Shanghai's face to itself. West Bund is Shanghai's face to the future it wants. Yangpu, the fourth waterfront you did not fully walk in April, is Shanghai's face to its own working past. All of these are theses. All of them are true. And all of them position Shanghai as a city best understood in relation to what is happening at its edge, where the water meets the land. Which is to say, the city as seen from a boat.</p>
+
+<p>What Shanghai looks like from inside, from a lane house courtyard or an artist's studio or someone's kitchen, is a different city. It is more ordinary and more strange. The lane house is the actual unit of Shanghai. Not the Bund building, not the Pudong tower, not the West Bund museum. The shikumen. Two storeys of grey brick, an internal courtyard, a stone arched doorway. Between the mid-nineteenth century and the mid-twentieth, most of Shanghai's population lived in some version of this. Many of them still do. Every time the international press produces one of its periodic laments about Shanghai's disappearing old neighbourhoods, this is what it is lamenting: the demolition of shikumen. The city has demolished tens of thousands of them since 1990 to make way for the towers that appear on every guidebook cover. It has also preserved some, most famously Xintiandi, which is now a shopping district in shikumen costume. What it has done less visibly is leave a great number of them alone, still occupied, still functioning, in neighbourhoods where nothing else has changed enough to make them worth photographing. The old walled city is one of these. Hongkou is another. If you want to know what Shanghai actually is, as opposed to what it wants you to think it is, you go to the shikumen the city has forgotten to demolish or restore.</p>
+
+<p>A word about art. Shanghai's gallery scene has, over the past ten years, become one of the two or three most serious in Asia. This is not a projection. Auction volumes, primary sales, the fair calendar around West Bund Art and Design and Art021 in November, the international dealers who have opened Shanghai outposts, the private museums that have proliferated along the reclaimed West Bund waterfront, all of this represents a genuine consolidation of Chinese contemporary art around this city. The important thing for a visitor to understand is that the museums are not where the interesting work is. The museums are where the story of the interesting work gets told. The work itself is in the small galleries, the ones that operate from converted lane houses in the Concession, from upper floors on Anfu Road, from spaces at the top of former textile mills at M50. Capsule at 275 Anfu Road, in a 1930s garden house. BANK, now in the White Building at 457 North Shaanxi Road after two previous addresses. Antenna Space up at M50. These are galleries you should walk into by appointment, when the shows are quiet, and where, if you are alert enough to notice, you may be looking at the artists who will define the next twenty years of Chinese art before anyone outside a very small world knows their names.</p>
+
+<p>And a word about eating. There is a coincidence of timing that matters. Late October in Shanghai is hairy crab season, the six or seven weeks when the male mitten crabs mature in the tenth lunar month and the females in the ninth, and the best restaurants in the city serve almost nothing else. It is also, as it happens, the season when the Michelin Guide is at its most useful in Shanghai, which is to say when the Bib Gourmand list is a genuinely reliable filter rather than a suggestion. The 2026 guide runs to thirty-five Bib Gourmand entries in the city, most of them Chinese kitchens serving one thing at a serious level, and this is the register the eating on this trip should be tuned to. Not the fine dining rooms, which are excellent but which perform for you. The one-dish shops. The noodle counters. The neighbourhood banquet halls that have been at the same address for thirty years. Twelve of the thirty-five Bibs are within a fifteen-minute walk of the hotel. That is unusual. Take advantage.</p>
+
+<p>What you are looking for, then, in the week that follows, is not the city Shanghai wants to show you. That city you already saw. You are looking for what remains when the show is over: the rooms, the meals, the small studios, the water at Yangpu that is still a working river rather than a stage. The person who sees a city twice sees it differently the second time not because the city has changed, though of course it has, but because they know what to ignore. In April you ignored nothing. In October you can afford to. That is the whole discipline of a second look. Choose what to walk past. The city will notice you doing it, in the way that cities notice the visitors who have started to see them clearly, and it will begin, however imperceptibly, to offer you the things it did not offer the first time.</p>
+
+<p>The plane will land at six fifty-five in the morning. There will be light on the tarmac. The immigration hall will be full and then, an hour later, empty. You will get in a car and be driven forty-five minutes to a hotel two minutes from the old walled city, and the driver will not ask you what you have come to see, because he assumes, correctly, that a foreigner arriving in Shanghai in late October has come to see the same things every other foreigner has come to see. What he will not know, and what you will begin to demonstrate over the eight days that follow, is that the visitor who comes back the second time is a different visitor entirely. The river is the same river. The city is the same city. The disciplines you bring to it are what has changed. Bring the discipline of the second look, and Shanghai will meet you there.</p>`
+    }
+  },
+
+  bookings: [
+    { label: "OPARTMENT The Far Eastern", sub: "24 Oct – 1 Nov · 8 nights · check-in 3pm", state: "confirmed", ref: "Booking 1486589539828358 · PIN 9982", url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334" },
+    { label: "Flights, Air New Zealand", sub: "NZ570 / NZ289 / NZ288 / NZ527 · D52ZEH", state: "confirmed" },
+    { label: "Cejerdary, hairy crab", sub: "Sat 31 Oct · 7pm · reserve 10 days ahead", state: "open" },
+    { label: "Fu He Hui, Michelin 2★", sub: "Sat 24 Oct · 8pm · book 2 weeks ahead", state: "open" },
+    { label: "Da Vittorio Shanghai", sub: "Thu 29 Oct · 8pm · Waldorf Astoria Bund", state: "open" },
+    { label: "Yong Yi Ting, Michelin 1★", sub: "Fri 30 Oct · 7pm · Mandarin Oriental", state: "open" },
+    { label: "Capsule studio visit", sub: "Mon 26 Oct · write 3 weeks ahead, name artists", state: "open", url: "mailto:info@capsuleshanghai.com" },
+    { label: "Historic Shanghai heritage access", sub: "Thu 29 Oct · write 2 months ahead", state: "open", url: "https://www.historic-shanghai.com/" },
+    { label: "UnTour ayi home dinner", sub: "Wed 28 Oct · book 6–8 weeks ahead", state: "open", url: "mailto:info@untourfoodtours.com" }
+  ],
+
+  days: [
+    {
+      id: "d1", dow: "Saturday", date: "24 October", chapter: "I",
+      title: "Where the River Is Still Working",
+      essay: `<p>An early landing has, in this city, a specific quality. Shanghai at seven is already three hours into its day. The delivery scooters are on the second run. The dumpling shops on Xizang Middle Road have been open since five. By the time the taxi from Pudong clears the Yan'an tunnel and drops you at the hotel, the working city has already, invisibly, made all its most important decisions of the morning: what is being cooked for lunch, what will arrive at the wet market this afternoon, whose grandchild will be walked to school and by whom.</p>
+<p>There is no point trying to insert yourself into any of this before nightfall. Jet lag has its own timetable and it is worth respecting. What the day is really for is the walk after dark, north of the Bund, past the point where the promenade stops being maintained and the tourists stop appearing on the map. Yangpu Binjiang was cotton mills and shipyards and a power station until the 2010s. Some of it has been converted into museums by the same municipal reclamation project that produced the West Bund. Most of it has not. The cranes are still standing over water that no longer needs them. The Yangshupu Waterworks, a red-brick pumping station built by the British in 1883 and still operating, is one of the oldest continuously functioning industrial buildings in China.</p>
+<p>Walk east from there as the light fails and the light on the far bank comes up, and you are looking at a version of the Bund view that almost nobody sees, from an angle almost nobody uses, because it involves walking somewhere the city has not yet invited you to walk. This is the room, not the stage. Begin here.</p>`,
+      events: [
+        { time: "6:55am", title: "NZ289 lands PVG", kind: "travel", note: "Business Premier. Before leaving the terminal, bind Alipay or WeChat Pay to a foreign Visa or Mastercard. Almost nothing else works.", ref: "D52ZEH" },
+        { time: "~8:30am", title: "OPARTMENT The Far Eastern", kind: "base", state: "confirmed",
+          note: "Bags in, room from 3pm. Ask about early check-in given the sunrise landing.",
+          ref: "Booking 1486589539828358 · PIN 9982",
+          url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334",
+          map: "https://maps.google.com/?q=90+Xizang+Middle+Road+Huangpu+Shanghai" },
+        { time: "10:30am", title: "Nanxiang Steamed Bun (Bib Gourmand)", kind: "food",
+          note: "85 Yuyuan Rd, in the Yu Garden bazaar, 7 min walk. Xiaolongbao at the address they were invented. The eight-treasure crab meat dumplings are only served October and November. Alipay only, queues form early.",
+          map: "https://maps.google.com/?q=85+Yuyuan+Road+Shanghai",
+          expand: {
+            label: "About the Bib entry",
+            body: `<p>Nanxiang Mantou Dian has been at the City God Temple since 1900, one of only three original xiaolongbao houses left in the city that still make the wrappers on the premises before every service. The 2026 Michelin Bib Gourmand list retained it, as it has every year since the Shanghai guide launched. There are two counters and an upstairs dining room. The counters move quickly; the room takes twice as long. On a Saturday morning after a red-eye, join the ground-floor queue and eat standing.</p>
+<p>Order the pork xiaolongbao (16 to a steamer) and, if it is still in season, the eight-treasure crab meat variety, which only appears in the last three months of the lunar year. The wrappers should be visibly translucent, holding without breaking. If soup spills out of yours when you lift it, the kitchen has left the pastry too thin. If it doesn't spill at all, too thick. Somewhere in between is the whole point.</p>`
+          }
+        },
+        { time: "Early afternoon", title: "The room, and sleep", kind: "rest",
+          note: "Ninety minutes horizontal is worth more than any ambition for the daylight hours. The suite has a bath." },
+        { time: "4:30pm", title: "DiDi to Yangshupu Waterworks", kind: "travel",
+          note: "830 Yangshupu Rd, Yangpu. ~30 min through the tunnel. The 1883 pumping station, Scottish-designed red brick, is on the walk-through route of the Yangpu Binjiang riverfront.",
+          map: "https://maps.google.com/?q=830+Yangshupu+Road+Shanghai" },
+        { time: "5:00pm", title: "Yangpu Binjiang riverfront", kind: "explore",
+          note: "The former Shanghai Fish Market, the derelict textile mills, the Mao-era cranes. This stretch of river has not been softened for visitors. Walk until you are ready to eat. The lights come up on Pudong directly across the water, an entirely different composition than the one you know from the Bund.",
+          map: "https://maps.google.com/?q=Yangpu+Binjiang+Waterfront+Shanghai" },
+        { time: "8:00pm", title: "Fu He Hui, Michelin 2★", kind: "food", state: "open",
+          url: "http://www.fuhehui.com/",
+          note: "1037 Yuyuan Rd, Changning. Chef Tony Lu's Buddhist vegetarian tasting menu. Reserve two weeks ahead by phone: +86 21 3251 0018. 20 min by DiDi from the Waterworks.",
+          map: "https://maps.google.com/?q=1037+Yuyuan+Road+Shanghai",
+          expand: {
+            label: "Why this room, on this night",
+            body: `<p>A two-Michelin-star vegetarian restaurant on the first night in China is a considered opening move. The kitchen at Fu He Hui, run by chef Tony Lu (also behind Fu 1015 and Fu 1088), works in the tradition of Buddhist temple cooking as a contemporary form rather than a devotional one. The tasting menu is eight or ten courses depending on the night, and there is no meat on any of them. The technique is what you have come for. Everything is fabricated in the kitchen from scratch, including several dishes that look and behave, on the tongue, like meat but are not.</p>
+<p>The room is a heritage garden villa in Changning, quiet at eight on a Saturday, with a wine list that runs Burgundy against a small selection of Chinese natural wines. Book two weeks out. This is the meal that says, arriving at the end of the first day, that the eating on this trip will be paid attention to.</p>`
+          }
+        }
+      ]
+    },
+
+    {
+      id: "d2", dow: "Sunday", date: "25 October", chapter: "II",
+      title: "Concrete That Remembers What It Was",
+      essay: `<p>West Bund is what happens when a state government identifies eleven kilometres of decommissioned industrial waterfront and, rather than sell it to residential developers, hands it to museums. The result, over about fifteen years, is a corridor of contemporary art institutions built inside the shells of what was there before. Cement silos. Fuel tanks. Coal handling docks. Aircraft hangars. Every architect involved was told, explicitly, not to hide the original bones.</p>
+<p>This is why, walking through Tank Shanghai at ten in the morning with the door just opened and the first light on the concrete, you have the experience so specific to Shanghai's contemporary museum quarter: standing in a room whose ceiling is thirty metres above your head and whose original purpose was to hold two thousand tonnes of aviation fuel for the airport that no longer exists.</p>
+<p>The Long Museum, ten minutes north on the same waterfront path, is the private collection of Liu Yiqian and Wang Wei, a couple who made their money in mainland Chinese finance and then spent the next twenty years assembling one of the largest private holdings of postwar Chinese art in the world. The building, by the Shanghai architect Liu Yichun, is an inverted concrete umbrella system on the site of a former coal wharf. The columns of the wharf are visible in the museum's basement. What you are looking at, when you look at the collection housed inside them, is what serious Chinese money chose to buy in the years between the Cultural Revolution's end and now, which is to say, the visual record of one country's rediscovery of its own century. The scale of the enterprise is unlike anything in the West. It is closer to what the Rockefellers or the Fricks were doing in New York in 1910. Take it seriously.</p>`,
+      events: [
+        { time: "9:00am", title: "Da Hu Chun (Bib Gourmand)", kind: "food",
+          note: "136 Sichuan Middle Rd, 6 min walk. The Shanghainese pan-fried bun in its original form. Order four buns and a bowl of curry beef vermicelli. Michelin Bib retained 2026.",
+          map: "https://maps.google.com/?q=136+Sichuan+Middle+Road+Shanghai" },
+        { time: "10:00am", title: "Tank Shanghai", kind: "culture",
+          url: "https://www.tankshanghai.com/",
+          note: "2380 Longteng Ave, Xuhui. Five aviation fuel tanks converted by OMA-trained Li Hu. Arrive on the hour, before the tour groups.",
+          map: "https://maps.google.com/?q=Tank+Shanghai+2380+Longteng+Avenue" },
+        { time: "12:30pm", title: "Long Museum West Bund", kind: "culture",
+          url: "http://www.thelongmuseum.com/",
+          note: "3398 Longteng Ave. 20-minute walk north along the river path. The Liu Yiqian and Wang Wei private collection: Zeng Fanzhi, Zhang Xiaogang, the full spread of Chinese contemporary painting since the 1980s.",
+          map: "https://maps.google.com/?q=Long+Museum+West+Bund+Shanghai" },
+        { time: "2:30pm", title: "Wei Xiang Zhai (Michelin Selected)", kind: "food",
+          note: "14 Yandang Rd, near Fuxing Park. 15 min by DiDi from West Bund. Sesame-paste noodles the neighbourhood has been eating for eighty years. Small, cheap, no menu in English.",
+          map: "https://maps.google.com/?q=14+Yandang+Road+Shanghai" },
+        { time: "4:00pm", title: "Yuz Museum", kind: "culture",
+          url: "https://www.yuzmshanghai.org/",
+          note: "35 Fenggu Rd, in the former Longhua Airport hangar. Budi Tek's private museum. The hangar itself is worth the visit.",
+          map: "https://maps.google.com/?q=Yuz+Museum+Shanghai" },
+        { time: "7:30pm", title: "Cheng Long Hang, Michelin 1★", kind: "food", state: "open",
+          note: "216 Jiujiang Rd, near Henan Rd. 10 min DiDi from the West Bund. Hairy crab at its most classical: whole female crab, ginger tea, huangjiu warmed in a stone cup. Book via Dianping.",
+          map: "https://maps.google.com/?q=216+Jiujiang+Road+Shanghai",
+          expand: {
+            label: "Why Cheng Long Hang first",
+            body: `<p>You are going to eat hairy crab twice this week: once tonight, at the more traditional end of the register, and once again on the final Saturday at Cejerdary, which serves it exclusively as picked meat in noodle broth. Cheng Long Hang has one Michelin star and has been doing the classical presentation for over three decades: the whole crab arrives on a plate with vinegar and ginger and instructions on how to open it. The kitchen also does the full ben bang repertoire built around the season: crab roe with tofu, crab meat lion's head, xiefen xiaolongbao. If you have never actually eaten a hairy crab whole, this is the room to learn how. If you have, this is the room to be reminded why the entire national obsession makes sense.</p>`
+          }
+        }
+      ]
+    },
+
+    {
+      id: "d3", dow: "Monday", date: "26 October", chapter: "III",
+      title: "Behind Which Door the Work Is Made",
+      essay: `<p>A working artist's studio is not a gallery. The distinction matters. In a gallery the work has been chosen, framed, priced and lit; you are seeing what has already been decided about it. In a studio the work is still being made, which means the room contains a version of a thing that does not yet know what it is going to be. Half-finished canvases lean against walls. Sketches are taped to the fridge. There is a kettle, a dog, a chair the artist sits in when they are not working, and the smell of whatever solvent they use. To walk into that room is to be given, briefly, the private phase of the making. Almost nobody who visits a city as a tourist ever sees it.</p>
+<p>Shanghai's gallery scene has, over the past decade, developed a genuinely useful convention. The serious primary-market galleries, the ones that represent artists rather than resell them, will, if asked in the right way, arrange a studio visit. It is not a service they advertise. It is not on the website. But if you have written ahead, if you have taken the time to look at the roster and picked the two or three artists whose work you actually want to see more of, and if you have been to the gallery first and made yourself a person rather than a name in an inbox, the studio door will sometimes open. Capsule at 275 Anfu Road, in a 1930s garden house behind an unmarked gate, is the gallery most consistently willing to do this. Enrico Polato, who founded it in 2016, is a working curator with genuine relationships to his artists. The gallery is by appointment in any case, which means the visit is already conducted at a different register from a walk-in. Extend the conversation.</p>
+<p>The rest of the day is what the neighbourhood offers if you stop looking for its highlights. Anfu Road on a Monday morning has a domestic quality that vanishes by Friday. The plane trees are still there, but the crowd is not, and the shops are opening slowly, and the residents are walking dogs. This is the Concession as an actual place, briefly, before it becomes a photograph again.</p>`,
+      events: [
+        { time: "9:30am", title: "Yangzhou Fan Dian (Bib Gourmand)", kind: "food",
+          note: "308 Fuzhou Rd, 8 min walk. Huaiyang cooking from Yangzhou: braised lion's head meatball, fried rice, dry-fried river shrimp. A serious neighbourhood kitchen the guide has quietly kept on the Bib list for years.",
+          map: "https://maps.google.com/?q=308+Fuzhou+Road+Shanghai" },
+        { time: "11:00am", title: "Capsule Shanghai", kind: "culture", state: "open",
+          url: "https://capsuleshanghai.com/",
+          note: "1st floor, Building 16, Lane 275 Anfu Rd. By appointment: info@capsuleshanghai.com. Tue–Sat 11am–6pm.",
+          map: "https://maps.google.com/?q=275+Anfu+Road+Shanghai",
+          expand: {
+            label: "How to try for a studio visit",
+            body: `<p>Write from New Zealand at least three weeks out. Address the email to Enrico Polato and the gallery team. Mention two specific roster artists whose work you are interested in. Pixy Liao (Shanghai-born, Brooklyn-based, autobiographical photography) or Gao Yuan (Kunming-born, Beijing-based, mixed-media) are among the artists most likely to be in Shanghai at any given time. Tao Siqi is worth naming as an alternative. Ask whether a studio visit might be possible during the week of 24 October to 1 November. Explain briefly what you do for work and why you are interested. There is no guarantee. Write early, write specifically, and be prepared to buy something small if the visit happens. If the gallery says no, still visit Capsule. The Cremonini paintings and the Iacono trompe l'œil work, both of whom show with the gallery, are worth an hour on their own.</p>`
+          }
+        },
+        { time: "12:30pm", title: "BANK / MABSOCIETY", kind: "culture",
+          url: "https://bankmabsociety.com/",
+          note: "White Building 5F, 457 North Shaanxi Rd, Jing'an. 12 min by DiDi. Mathieu Borysevicz's gallery, moved here in 2024. Tue–Sat 10:30am–6:30pm.",
+          map: "https://maps.google.com/?q=457+North+Shaanxi+Road+Shanghai" },
+        { time: "2:00pm", title: "Qiao Ai Lai Lai Xiao Long (Bib Gourmand)", kind: "food",
+          note: "150 Yunnan South Rd, 6 min from BANK. Michelin Bib 2026. Twelve pork xiaolongbao, six crab-and-pork (in season now), a bowl of xiefen wonton. Kitchen visible from the pavement.",
+          map: "https://maps.google.com/?q=150+Yunnan+South+Road+Shanghai" },
+        { time: "3:30pm", title: "Anfu and Wukang, unhurried", kind: "explore",
+          note: "Back to the Concession. Harmay at 122 Anfu Rd is worth an hour. Sinan Books at 517 Fuxing Middle Rd, 10 min on foot, in a Sinan Mansions villa.",
+          map: "https://maps.google.com/?q=Anfu+Road+Shanghai" },
+        { time: "7:00pm", title: "Polux by Paul Pairet (Bib Gourmand)", kind: "food",
+          url: "https://poluxbypaulpairet.com/",
+          note: "No. 5 Lane 181, Taicang Rd, Xintiandi. Michelin Bib 2026, held for the third year. Pairet's most casual room: a French bistro that treats French bistro cooking seriously. Book via WeChat.",
+          map: "https://maps.google.com/?q=Polux+Xintiandi+Shanghai",
+          expand: {
+            label: "About Polux",
+            body: `<p>Pairet, the chef behind Ultraviolet (Shanghai's only 3-star until it closed in late 2025), opened Polux in 2016 as, in his own words, an anti-concept restaurant. It is a French café: bistro classics, minimal fuss, done at fine-dining precision. Steak tartare, French onion soup, a burger engineered like nothing you have eaten before. The room seats about forty. Book two or three days ahead through the Xintiandi WeChat concierge or Dianping. Sit on the terrace if the weather holds.</p>`
+          }
+        }
+      ]
+    },
+
+    {
+      id: "d4", dow: "Tuesday", date: "27 October", chapter: "IV",
+      title: "An Inland Waterway",
+      essay: `<p>The Huangpu is the river Shanghai is known for. Suzhou Creek is the river Shanghai was built on. Before the Bund existed, the creek carried the cotton and silk of the Jiangsu hinterland into the port, and the tea and rice back out, and the manufactories that grew along its banks between 1860 and 1937 produced the industrial base of what became modern China. Cotton mills. Flour mills. Textile factories. The best of the buildings that housed them are still standing along a two-kilometre stretch near Moganshan Road, and at the far western end of that stretch, in an old textile mill complex, someone had the idea in 2000 to let contemporary artists rent studio space by the square metre. That someone was, in effect, wrong about the future direction of the property. M50 was supposed to be demolished. It never was.</p>
+<p>What survived is not what the Concession galleries are. It is rougher, larger, more experimental, less commercial in an obvious sense and more commercial in a slow one. Antenna Space, on the second floor of Building 17, run by Simon Wang since 2013, represents a roster of Chinese and international artists whose work is difficult in a way that rewards patience. ShanghART in Building 16 has been there since the mill complex became galleries and is the closest thing Shanghai has to a foundational contemporary art institution: Lorenz Helbling, its Swiss founder, has been representing Chinese artists in Shanghai since 1996.</p>
+<p>The people you meet inside these two rooms know things about Chinese art that almost nobody in the West does. Ask. Be a person, not a checklist. The information you leave with will not be available in any book.</p>`,
+      events: [
+        { time: "9:00am", title: "A Niang Mian Guan (Bib Gourmand)", kind: "food",
+          note: "36 Sinan Rd. 20 min by DiDi. One of the most beloved noodle shops in the city and a Michelin Bib since 2017. The eel noodle (huangyu mian) is the anchor dish. Cash-free, opens at 8am, sells out by 2pm.",
+          map: "https://maps.google.com/?q=36+Sinan+Road+Shanghai",
+          expand: {
+            label: "Why worth the DiDi",
+            body: `<p>A Niang has been on the Michelin Bib list every year since the guide launched in Shanghai in 2017. Nine yuan gets you a bowl of soup noodles. Add eel or pork chop or shrimp for another twenty. The eel is butterflied, deep-fried, then dressed in a slightly sweet dark sauce and served over the noodles with the broth on the side. You can pour it in or eat the noodles dry. Both work. The shop seats about fifteen, wooden stools, no menu in English, but pointing works and the staff are patient with foreigners.</p>`
+          }
+        },
+        { time: "11:00am", title: "Antenna Space", kind: "culture",
+          url: "http://antenna-space.com/en/",
+          note: "Room 202, Building 17, 50 Moganshan Rd, Putuo. Tue–Sat 11am–6:30pm. Simon Wang's roster: Yu Honglei, Guan Xiao, Nadim Abbas, Karsten Fodinger.",
+          map: "https://maps.google.com/?q=Antenna+Space+M50+Shanghai" },
+        { time: "12:00pm", title: "ShanghART and the M50 complex", kind: "culture",
+          url: "http://www.shanghartgallery.com/",
+          note: "Building 16, 50 Moganshan Rd. Founded 1996 by Lorenz Helbling. Represents Yang Fudong, Sun Xun, Ding Yi, Zhang Enli. Walk Building 16 and 17: Vanguard, EastLink, OFOTO, Chronus. The map is at the M50 north gate.",
+          map: "https://maps.google.com/?q=M50+Creative+Park+Shanghai" },
+        { time: "2:30pm", title: "Jingmei Wuxi Noodle (Bib Gourmand)", kind: "food",
+          note: "138 Yanping Rd, 10 min south of M50. Michelin Bib 2026. Wuxi-style noodles: sweet broth, delicate spare rib, one of the least-touristed Bibs in the city. Alipay or WeChat.",
+          map: "https://maps.google.com/?q=138+Yanping+Road+Shanghai" },
+        { time: "4:00pm", title: "Suzhou Creek walk, east from M50", kind: "explore",
+          note: "The creek path is walkable to the North Bund, ~90 min. Do the first half. Passes disused mill buildings, working barges, the confluence with the Huangpu. Come off at the Waibaidu Bridge, the 1907 steel bridge that marks the old International Settlement boundary.",
+          map: "https://maps.google.com/?q=Suzhou+Creek+Moganshan+Road+Shanghai" },
+        { time: "7:30pm", title: "Xin Rong Ji (Nanjing Xi Lu), Michelin 1★", kind: "food", state: "open",
+          note: "168 Nanjing West Rd, Jing'an. The Taizhou seafood group's flagship. Whole yellow croaker steamed in oil and scallion, sea urchin egg, wild river shrimp. Book two weeks ahead.",
+          map: "https://maps.google.com/?q=168+Nanjing+West+Road+Shanghai" }
+      ]
+    },
+
+    {
+      id: "d5", dow: "Wednesday", date: "28 October", chapter: "V",
+      title: "Cooked by Someone Who Knows You Are Coming",
+      essay: `<p>Shanghainese home cooking is a genre almost impossible to eat in a restaurant. The reason is structural. Restaurants require dishes that hold at temperature and travel from the pass to the table, which means most of the classic ben bang preparations, the slow-simmered pork belly, the drunken chicken steeped overnight, the stir-fried river shrimp done in ninety seconds and served immediately, are optimised out of the professional kitchen. The versions you get at Chun or Jesse or Fu 1015 are excellent restaurant versions. They are not what people cook at home. What people cook at home requires a home, and someone to cook it, and a small enough gathering that the timing can be controlled by one person for one table.</p>
+<p>This has become, in the past few years, a small and unadvertised category of Shanghai eating: the private ayi table, arranged through a handful of English-speaking food operators or via a personal introduction, in which a Shanghainese cook, usually a woman in her fifties or sixties who has been feeding her own family this way for decades, will prepare a full home meal for a table of one to six people in her apartment or a rented residential kitchen. It is not cheap and it is not consistent. The good ones are rare. The best of them is a form of eating that will change your understanding of the cuisine.</p>
+<p>The rest of the day is preparation and recovery. A morning at the Shanghai Museum East, the Pudong branch that opened in 2024, whose bronze and jade galleries are unlike anything at the People's Square branch. An afternoon in Hongkou, where the walk is what matters. The evening, at the ayi's table, is the reason you came.</p>`,
+      events: [
+        { time: "8:30am", title: "Chun (Michelin Bib Gourmand)", kind: "food",
+          note: "124 Jinxian Rd, French Concession. 15 min by DiDi. Auntie Qu's ben bang home cooking, on the Michelin Bib list continuously since 2017. Twelve tables. No reservations. Get there at 8:30 for a fifteen-minute wait; anything after ten is a two-hour queue. Cash or WeChat, no English menu.",
+          map: "https://maps.google.com/?q=124+Jinxian+Road+Shanghai",
+          expand: {
+            label: "About Chun",
+            body: `<p>Auntie Qu started cooking for money in the late 1990s after her husband was made redundant. She rented a shopfront on Jinxian Road that had been a tailor's, put in twelve tables and a kitchen the size of a wardrobe, and never advertised. Word travelled anyway. The room has not changed since. There is no menu; the waitress tells you what is being cooked today. In late October: drunken chicken with Shaoxing wine, red-braised pork belly, smoked fish, spring bamboo, whatever green vegetable is in season. Twenty to thirty yuan per dish. The best home Shanghainese in a restaurant setting in the city, and the least surprising Bib on the list.</p>`
+          }
+        },
+        { time: "10:00am", title: "Shanghai Museum East", kind: "culture",
+          url: "https://www.shanghaimuseum.net/en/mus-east",
+          note: "1952 Century Blvd, Pudong. 25 min by DiDi through the tunnel. The new branch, opened 2024, larger than the People's Square building. Timed entry, book via the museum's WeChat mini-program at least a day ahead.",
+          map: "https://maps.google.com/?q=Shanghai+Museum+East+Pudong" },
+        { time: "1:30pm", title: "Lei Garden (Pudong), Michelin 1★", kind: "food",
+          note: "3F Shanghai IFC, 8 Century Ave. Cantonese dim sum done at one-star level. Short walk from the museum. Book via Dianping.",
+          map: "https://maps.google.com/?q=Shanghai+IFC+Pudong" },
+        { time: "3:00pm", title: "Duolun Road Cultural Street, Hongkou", kind: "explore",
+          note: "25 min by DiDi north to Hongkou. The preserved pedestrian lane where Lu Xun, Mao Dun and half of Shanghai's 1930s literary left lived. Bronze statues along the lane. The Shanghai Duolun Museum of Modern Art holds shows in a heritage building at the midpoint.",
+          map: "https://maps.google.com/?q=Duolun+Road+Hongkou+Shanghai" },
+        { time: "7:30pm", title: "Ayi home dinner", kind: "food", state: "open",
+          url: "mailto:info@untourfoodtours.com",
+          note: "See expand for how to try to arrange. If it does not come together: fallback below.",
+          expand: {
+            label: "How to arrange the ayi dinner (unconfirmed)",
+            body: `<p>UnTour Food Tours run a Dinner in a Local Home private experience for one to six guests, cooked by a Shanghainese ayi in her own apartment. Contact info@untourfoodtours.com six to eight weeks ahead. Confirm the cook is Shanghainese rather than Sichuan. Expect drunken chicken, red-braised pork belly, river shrimp, seasonal vegetables cooked five different ways. Around CNY 800–1200 per head. An alternative operator is Le Baoli Kitchen, contactable via WeChat.</p>
+<p><strong>Fallback if neither can be arranged:</strong> Lan Xin (Michelin Bib Gourmand 2026), 130 Jinxian Rd, a shopfront two doors down from Chun, run by an old husband-and-wife team. Same cuisine, same street, same Bib rating; the closest thing to a home meal available on a walk-in basis.</p>`
+          }
+        }
+      ]
+    },
+
+    {
+      id: "d6", dow: "Thursday", date: "29 October", chapter: "VI",
+      title: "The Building You Cannot Just Walk Into",
+      essay: `<p>Shanghai has an inordinate number of heritage buildings that no one is allowed to enter. The Rockefeller-funded PSA at the former Nanshi Power Station, which you saw in April, is not one of them. Nor is Rockbund. The city has been comparatively generous with its public architecture. What it has been less generous with, for reasons that are partly political and partly practical, are the residential and clubland spaces of the pre-1949 city: the Astor House Hotel where Einstein stayed and where Shanghai's first electric light was installed, the Cercle Sportif Français, the Shanghai Race Club, the Broadway Mansions from the top of which the Japanese Army watched the city surrender in 1937. Some have been restored and are open in a limited way. Some are used by state agencies and are effectively invisible. And a few, the most interesting few, are open by private appointment to visitors who have made the arrangement in advance.</p>
+<p>Historic Shanghai, a small heritage tour operator run by the writer Katya Knyazeva, arranges specialist walks and, on request, private access visits to buildings that are not on the standard circuit. The Astor House lobby restoration, the Ohel Rachel Synagogue at 500 North Shaanxi Road (usually closed, opens for pre-arranged groups), the interior of the Metropole Hotel. The specifics change. The point of the arrangement is that you are not on a scheduled tour with fifteen other people. You are inside a room that has not been open to visitors that week.</p>
+<p>The alternate move, if the heritage arrangement does not come together, is Rockbund again. The building itself, the 1932 Royal Asiatic Society, is architecturally the finest surviving pre-1949 gallery interior in the city, and the shows have been consistently good since it reopened after renovation in 2010.</p>`,
+      events: [
+        { time: "9:00am", title: "Nanxiang or Da Hu Chun for breakfast", kind: "food",
+          note: "The Bib-listed shengjianbao at either counter, still the two best in the city. Compare bottoms: Nanxiang crisps flatter, Da Hu Chun gives you a domed base. Both cash-free." },
+        { time: "11:00am", title: "Historic Shanghai heritage access", kind: "culture", state: "open",
+          url: "https://www.historic-shanghai.com/",
+          note: "See expand for how to arrange. Fallback: Rockbund Art Museum, 10 min walk from hotel.",
+          expand: {
+            label: "How to try for a closed-building visit",
+            body: `<p>Historic Shanghai (Katya Knyazeva and Patrick Cranley) arranges private access visits to closed heritage buildings. Contact via the site or info@historic-shanghai.com two months out. Ask specifically about the Ohel Rachel Synagogue (500 North Shaanxi Rd, requires state permission), the Astor House Hotel restoration (currently limited public access), or the interior of the Broadway Mansions. Not all requests are granted. Fee typically CNY 1,500–3,000 depending on the building.</p>
+<p><strong>Fallback if no private visit arranged:</strong> Rockbund Art Museum, 20 Huqiu Rd, Huangpu. The 1932 Royal Asiatic Society building. Different show from April. Ten minutes on foot from the hotel.</p>`
+          }
+        },
+        { time: "2:00pm", title: "Fu 1015, Michelin 1★", kind: "food", state: "open",
+          url: "http://www.fuguan1015.com/",
+          note: "1015 Yuyuan Rd, Changning. Tony Lu's Shanghainese kitchen (same operator as Fu He Hui). A restored garden villa. The eight-course tasting menu is the standard. Long lead time on booking.",
+          map: "https://maps.google.com/?q=1015+Yuyuan+Road+Shanghai" },
+        { time: "5:00pm", title: "Long Bar, Waldorf Astoria", kind: "food",
+          note: "2 East Zhongshan No. 1 Rd, on the Bund. The reconstruction of the original Shanghai Club bar, 34 metres long. A martini and an hour. A legitimate place to read for a while as the light changes on the water.",
+          map: "https://maps.google.com/?q=Waldorf+Astoria+Shanghai+Bund" },
+        { time: "8:00pm", title: "Da Vittorio Shanghai, Michelin 2★", kind: "food", state: "open",
+          url: "https://www.davittorio.com/en/da-vittorio-shanghai",
+          note: "3F Waldorf Astoria on the Bund. The Cerea family's Shanghai kitchen (three stars in Brusaporto). Book two weeks ahead. Serious Italian at the top of its register.",
+          map: "https://maps.google.com/?q=Waldorf+Astoria+Bund+Shanghai" }
+      ]
+    },
+
+    {
+      id: "d7", dow: "Friday", date: "30 October", chapter: "VII",
+      title: "Two Minutes South of the Door",
+      essay: `<p>Everything Shanghai calls its old city is younger than the old city. This is the small trick of Shanghai geography that becomes clear only after a few visits. The Bund is old by Chinese port standards, but it is 1840s and after, which puts it after the American Revolution. The French Concession is 1849 forward. Xintiandi's shikumen are late nineteenth century. What was Shanghai before any of these arrived, before the Opium War drew a boundary around the foreign concessions and left the Chinese city outside it, was a walled Ming-dynasty market town that had been there since the 1550s. That city is Nanshi. The wall was demolished in 1912 to make way for a ring road, which is still there. Everything inside the ring is what predates every other Shanghai you know.</p>
+<p>Yu Garden is inside the ring. So is Fangbang Middle Road, and the still-functioning City God Temple, and a wet market that has been at the corner of Guangqi Road since Ming times. Most tourists who come to the old city come for Yu Garden and the reconstructed bazaar around it, and they leave without going three streets deeper into the neighbourhood where the actual old Shanghai still lives. If you walk south of Yuyuan Road past the temple and keep going, past the alley where children play on paved stones, past the men playing xiangqi at the small square, past the shop selling paper offerings for Qingming and funerals, you are somewhere the Concession never reached.</p>
+<p>The scale is different. The rooflines are different. The way people occupy the street is different. This is the city Ballard's Amherst Avenue villa was built to distinguish itself from. It is still here.</p>`,
+      events: [
+        { time: "9:00am", title: "Yu Du Lao Wei Mian (Bib Gourmand)", kind: "food",
+          note: "48 Liyuan Rd, Huangpu. 5 min walk from the hotel. Michelin Bib 2026. Fish soup noodles served the way the walled city has been serving them for a century. Ten yuan a bowl, cash or WeChat.",
+          map: "https://maps.google.com/?q=48+Liyuan+Road+Shanghai" },
+        { time: "10:30am", title: "Yu Garden, briefly", kind: "explore",
+          note: "Yuyuan Rd, 4 min walk. Enter through the north gate. The rockery, the ponds, the Ming Sansui Hall. Fifteen minutes, no more. The point is to establish scale before what comes next.",
+          map: "https://maps.google.com/?q=Yu+Garden+Shanghai" },
+        { time: "11:15am", title: "Fangbang Middle Road, unhurried", kind: "explore",
+          note: "South from Yu Garden along the ring road, then east on Fangbang Middle. TCM shops, incense sellers, a knife sharpener, laundry across the second floors. Follow the alleys off it. Getting mildly lost here is the point.",
+          map: "https://maps.google.com/?q=Fangbang+Middle+Road+Shanghai" },
+        { time: "1:00pm", title: "Tan (Bib Gourmand, new 2026)", kind: "food",
+          note: "Yu Garden precinct. Sichuan cooking, opened by the team behind The BRIDGE in Chengdu. Bib Gourmand 2026 (new entry). Reserve via Dianping or walk in for a table before 12:30.",
+          map: "https://maps.google.com/?q=Tan+Sichuan+Yu+Garden+Shanghai",
+          expand: {
+            label: "Why Tan is worth building the walled-city day around",
+            body: `<p>Tan opened in Yu Garden in 2025 and landed on the Bib Gourmand list in 2026 within its first eight months. The kitchen is run by the same team behind The BRIDGE in Chengdu, which is the reference restaurant for serious Sichuan cooking outside Sichuan itself. Order the mapo tofu, the shuizhuyu (fish poached in chilli oil), and the fuqi feipian, which is a sliced beef and offal salad in an aggressively fragrant sauce. Prices are ordinary for Yu Garden, quality is not. The room seats about forty, quiet on weekdays.</p>`
+          }
+        },
+        { time: "3:00pm", title: "City God Temple", kind: "explore",
+          note: "249 Fangbang Middle Rd. Active place of worship, Ming foundation, restored 1994. Sit for ten minutes. Elderly worshippers, incense, the low hum of the neighbourhood at prayer.",
+          map: "https://maps.google.com/?q=Shanghai+City+God+Temple" },
+        { time: "4:00pm", title: "Guangqi Road wet market", kind: "explore",
+          note: "Corner of Guangqi and Fuyou Roads, 3 min from the temple. Fish, ducks, rice noodles through steam, greens that will be sold out by 6pm. Do not buy anything. Watch how it works.",
+          map: "https://maps.google.com/?q=Guangqi+Road+Shanghai" },
+        { time: "7:00pm", title: "Yong Yi Ting, Michelin 1★", kind: "food", state: "open",
+          url: "https://www.mandarinoriental.com/shanghai/pudong/fine-dining/restaurants/chinese-cuisine/yong-yi-ting",
+          note: "Mandarin Oriental Pudong, 111 Pudong Rd South. The best Jiangnan (Yangtze Delta) tasting menu in Shanghai. Chef Tony Lu's team. Book two weeks ahead.",
+          map: "https://maps.google.com/?q=Mandarin+Oriental+Pudong+Shanghai" }
+      ]
+    },
+
+    {
+      id: "d8", dow: "Saturday", date: "31 October", chapter: "VIII",
+      title: "Twelve Crabs to a Bowl",
+      essay: `<p>Hairy crab is a national obsession that operates almost entirely on the honour system of season. The Chinese mitten crab, Eriocheir sinensis, produces a specific configuration of roe and hepatopancreatic fat that reaches its peak in the female in the ninth lunar month and the male in the tenth. Outside those six weeks the crab is available but is not the crab. In the last week of October the male is at the top of its curve. The crabs are farmed in the freshwater of Yangcheng Lake, an hour and a half west of Shanghai in Jiangsu, and the best of them arrive at Shanghai restaurants within a day of leaving the water. What the city does with them, in the last two months of the year, is arrange most of its serious eating around them. To be here in October and not eat hairy crab is to have missed something that will not be there when you come back.</p>
+<p>Cejerdary at 59 Guangdong Road, on the Bund end of the road, has been the most influential single restaurant in Shanghai's hairy crab culture for the past decade. The founder, Xu Jing, opened it in 2010 with a single dish: crab roe noodles, twelve crabs picked by hand into each bowl, 360 yuan a portion, the price unchanged since. The restaurant runs its own crab farms on Yangcheng Lake and processes the meat at its own facility. The room is small and austere, more Buddhist temple than Bund restaurant, with wooden furniture and no music and a menu of six items. What you have come for is one bowl of the golden crab noodles and, if you can eat it, a small dish of drunken crab, marinated raw in Shaoxing wine.</p>
+<p>The morning is Hongkou, again, but the corners of it April did not reach. Lu Xun Park where he is buried. The Jewish Refugee Museum at Ohel Moishe Synagogue that documents the twenty thousand European refugees who came here between 1933 and 1941 and left in 1949. The synagogue at 62 Changyang Road is one of the two remaining in Shanghai, restored in 2007, and the small permanent exhibition upstairs is one of the more affecting historical rooms in the city.</p>`,
+      events: [
+        { time: "9:00am", title: "Nanxiang counter, one more time", kind: "food",
+          note: "The last day the walled city is on the doorstep. Ten minutes and a steamer, standing." },
+        { time: "10:30am", title: "Jewish Refugee Museum, Ohel Moishe Synagogue", kind: "culture",
+          url: "http://www.jewishrefugeesmuseum.com/",
+          note: "62 Changyang Rd, Hongkou. 20 min by DiDi. The restored 1927 synagogue and permanent exhibition on the 20,000 European refugees who lived here between 1933 and 1941. Open 9am–4:30pm.",
+          map: "https://maps.google.com/?q=Ohel+Moishe+Synagogue+Shanghai" },
+        { time: "12:30pm", title: "Lu Xun Park and Lu Xun Museum", kind: "explore",
+          note: "288 Sichuan North Rd, a short DiDi from the synagogue. His grave, the small museum, and the park, which on a Saturday will be full of retirees dancing, singing, playing xiangqi. Sit for a while.",
+          map: "https://maps.google.com/?q=Lu+Xun+Park+Shanghai" },
+        { time: "2:00pm", title: "Rongjia Yellow Croaker Noodle (Bib Gourmand)", kind: "food",
+          note: "76 Wujiang Rd, Jing'an. Michelin Bib 2026. A single-dish noodle shop: yellow croaker fillet in milky soup, thick noodles, one preparation, forty yuan. On the way back from Hongkou.",
+          map: "https://maps.google.com/?q=76+Wujiang+Road+Shanghai" },
+        { time: "3:30pm", title: "Back to the hotel, rest", kind: "rest",
+          note: "The crab dinner deserves an empty stomach and a clear afternoon." },
+        { time: "7:00pm", title: "Cejerdary", kind: "food", state: "open",
+          note: "59 Guangdong Rd, Huangpu. 10 min walk from the hotel, or 5 by DiDi. Book by phone via the hotel concierge or the WeChat mini-program. Reserve ten days ahead.",
+          map: "https://maps.google.com/?q=59+Guangdong+Road+Shanghai",
+          expand: {
+            label: "What to order",
+            body: `<p>The golden crab roe noodles at 360 yuan. One whole drunken male crab at around 100 yuan. If the appetite holds, the crab meat and truffle rice at 280 yuan. Free ginger tea, San Pellegrino, and roasted peanuts to close. The room seats about twenty and moves in ninety-minute sittings. There is a queue for walk-ins after 6pm; the reservation is what gets you in on the last night of the trip without the wait. This is the meal to eat on the last night. The season, the room, the hotel five minutes' walk away for after.</p>`
+          }
+        }
+      ]
+    },
+
+    {
+      id: "d9", dow: "Sunday", date: "1 November", chapter: "IX",
+      title: "An Airport Is a Kind of Sequel",
+      essay: `<p>The flight home departs at 2:15 in the afternoon, which is one of the most generous departure times in the international schedule. It gives back the morning. Checkout is before noon. Pudong Airport, from the old walled city, is a comfortable forty-five minutes with the Sunday traffic. There is no rush.</p>
+<p>What the morning is really for is the last look. Everyone has their own version of this: the walk back to the place the trip started, the coffee in the neighbourhood that has, quietly, become familiar. In Shanghai the natural choice is the Bund at daybreak. Not because it is what you saw first in April but because, having spent a week not looking at it, you can now look at it clearly. From the promenade at seven in the morning the light is on the colonial facade behind you and the Pudong skyline is in shadow across the water. It is the reverse of the sunset composition you know from every guidebook.</p>
+<p>Almost nobody is there. The old men doing tai chi under the plane trees. The joggers. A fisherman on the promenade wall with a bamboo pole. The city taking its own morning at its own pace, the same way it does when nobody is looking.</p>`,
+      events: [
+        { time: "6:30am", title: "The Bund at first light", kind: "explore",
+          note: "Walk east from the hotel to the promenade. 12 min. Zhongshan East 1st Rd at the Waibaidu Bridge end. Watch the light come up on the buildings behind you. Half an hour.",
+          map: "https://maps.google.com/?q=The+Bund+Shanghai" },
+        { time: "8:00am", title: "Breakfast at the Peninsula lobby", kind: "food",
+          url: "https://www.peninsula.com/en/shanghai",
+          note: "32 The Bund. The best hotel breakfast on the Bund, in the ground-floor lounge of the 2009 building at the north end. Continental, no queue at eight on a Sunday, watching the river.",
+          map: "https://maps.google.com/?q=Peninsula+Shanghai" },
+        { time: "10:00am", title: "Pack, check out", kind: "base",
+          note: "Before 12:00 noon." },
+        { time: "11:30am", title: "DiDi to Pudong", kind: "travel",
+          note: "45 to 60 minutes depending on the tunnel. Business class check-in at Pudong Terminal 2, Air New Zealand desks." },
+        { time: "2:15pm", title: "NZ288 to Auckland", kind: "travel",
+          note: "Business Premier. Arrives 6:45am Mon 2 Nov AKL.", ref: "D52ZEH" },
+        { time: "8:50am Mon", title: "NZ527 to Christchurch", kind: "travel",
+          note: "Arrives 10:15am CHC." }
+      ]
+    }
+  ],
+
+  pocket: [
+    { group: "Bib Gourmand walking distance from the hotel", items: [
+      ["Nanxiang Steamed Bun", "85 Yuyuan Rd. Xiaolongbao at the address they were invented. Michelin Bib 2026."],
+      ["Da Hu Chun", "136 Sichuan Middle Rd. The pan-fried shengjianbao house. Bib 2026."],
+      ["Qiao Ai Lai Lai Xiao Long", "150 Yunnan South Rd. Xiaolongbao and xiefen wonton. Bib 2026."],
+      ["Lu Bo Lang", "115 Yuyuan Rd, inside the Yu Garden bazaar. Ben bang classics in a Ming-style pavilion. Bib 2026."],
+      ["Yu Du Lao Wei Mian", "48 Liyuan Rd. Old walled-city fish soup noodles. Bib 2026."],
+      ["Yangzhou Fan Dian", "308 Fuzhou Rd. Huaiyang. Bib 2026."],
+      ["De Xing Guan", "471 Guangdong Rd. Michelin Selected. Huaiyang, the eel noodle is the anchor."],
+      ["Wei Xiang Zhai (Yandang Lu)", "14 Yandang Rd. Sesame-paste noodles the neighbourhood has eaten for eighty years. Michelin Selected."],
+      ["Yunhe Noodle", "108 Guangdong Rd. Bib 2026. Yellow croaker noodle soup."],
+      ["Rong Cuisine (Huangpu)", "The casual arm of Xin Rong Ji. Bib 2026. The yellow croaker noodle soup is the anchor dish."],
+      ["Lao Zheng Xing", "556 Fuzhou Rd. Michelin 1★. The oldest Ben Bang restaurant in Shanghai, since 1862."],
+      ["Wang Bao He", "603 Fuzhou Rd. The oldest hairy crab house, since 1744, with its own huangjiu still."]
+    ]},
+    { group: "Bib Gourmand further afield, worth the DiDi", items: [
+      ["Chun", "124 Jinxian Rd, French Concession. Auntie Qu's home Shanghainese. Bib every year since 2017."],
+      ["Lan Xin", "130 Jinxian Rd. Same street as Chun, husband-and-wife team. Bib 2026. The walk-in alternative."],
+      ["A Niang Mian Guan", "36 Sinan Rd. Eel noodles. Bib since 2017."],
+      ["Jingmei Wuxi Noodle", "138 Yanping Rd, Jing'an. Wuxi-style noodles. Bib 2026."],
+      ["Rongjia Yellow Croaker Noodle", "76 Wujiang Rd, Jing'an. Single-dish yellow croaker noodle. Bib 2026."],
+      ["Cong's Kitchen", "252 Hengshan Rd. Home-style Cantonese. Bib 2026."],
+      ["Gong De Lin", "445 Nanjing West Rd. Buddhist vegetarian since 1922. Bib 2026."],
+      ["Polux by Paul Pairet", "Xintiandi. French bistro at fine-dining precision. Bib 2026."],
+      ["Blossom", "Sister of two-star Amazing Chinese Cuisine. Chaoshan-Cantonese. New Bib 2026."],
+      ["Tan", "Yu Garden. Serious Sichuan from The BRIDGE team in Chengdu. New Bib 2026."]
+    ]},
+    { group: "Michelin 1★ and 2★ worth booking", items: [
+      ["Fu He Hui", "Buddhist vegetarian tasting menu, 2★. Chef Tony Lu. On the itinerary for Saturday."],
+      ["Yong Yi Ting", "Best Jiangnan tasting menu in the city, 1★. On the itinerary for Friday."],
+      ["Xin Rong Ji (Nanjing Xi Lu)", "Taizhou seafood, 1★. Yellow croaker, wild river shrimp. Book two weeks ahead."],
+      ["Cheng Long Hang", "Hairy crab specialist, 1★. Classical preparation. On the itinerary for Sunday."],
+      ["Fu 1015", "Tony Lu's Shanghainese, 1★. In a garden villa. Long lead time on booking."],
+      ["Da Vittorio Shanghai", "The Cerea family's Italian, 2★. Waldorf Astoria Bund. On the itinerary for Thursday."],
+      ["Ling Long", "1★. Shanghainese with a light touch. Emerging chef Jason Liu."],
+      ["Sir Elly's", "1★. British-influenced fine dining at the top of the Peninsula. The Bund view is the setting."],
+      ["Ji Pin Court", "2★. Contemporary Chinese. One of the most quietly influential kitchens in the city."],
+      ["Sheng Yong Xing", "1★. Peking duck done at fine-dining register. Bund location."]
+    ]},
+    { group: "Rooms worth walking into", items: [
+      ["Rockbund Art Museum", "20 Huqiu Rd. Ten minutes on foot. Different show from April. The 1932 building interior is the visit."],
+      ["Hive Center for Contemporary Art", "270 East Beijing Rd. Free. In a former bank with a stained-glass skylight."],
+      ["Fotografiska Shanghai", "580 Middle Huaihai Rd. Confirm current show."],
+      ["Power Station of Art", "200 Huayuangang Rd. April territory, but the biennale changes each year."]
+    ]},
+    { group: "Drink somewhere", items: [
+      ["Speak Low", "579 Fuxing Middle Rd. Third floor, behind a bookshop, up a staircase behind a false wall. Reservations tight."],
+      ["Union Trading Company", "64 Fenyang Rd. American-style cocktail bar in the Concession. Internationally competitive bartenders."],
+      ["Sober Company", "199 Xikang Rd. Four floors of the same operator's bars stacked. The rooftop is the destination."],
+      ["Fairmont Peace Hotel Jazz Bar", "20 East Nanjing Rd. The Old Jazz Band plays nightly. The room is 1929."]
+    ]},
+    { group: "If it rains for a day", items: [
+      ["Shanghai Museum, People's Square", "201 Renmin Ave. Different from the East branch. Bronze and ceramic galleries. Book via WeChat 12 days out."],
+      ["The Bund Sightseeing Tunnel", "Genuine mid-1990s municipal camp. Six minutes of animated lights under the Huangpu. Absurd. Recommended."],
+      ["Sinan Books, Fuxing Rd", "Bookshop in a heritage villa. An hour, coffee, a chair by the window."]
+    ]},
+    { group: "The private arrangements", items: [
+      ["Capsule studio visit", "Write to info@capsuleshanghai.com three weeks out. Name two roster artists (Pixy Liao, Gao Yuan, Tao Siqi). Buy something small if the visit happens."],
+      ["Historic Shanghai heritage access", "Two months out. historic-shanghai.com. Ask about the Ohel Rachel Synagogue, Astor House, or Broadway Mansions. CNY 1,500–3,000."],
+      ["UnTour ayi home dinner", "Six to eight weeks out. info@untourfoodtours.com. Confirm the cook is Shanghainese, not Sichuan. CNY 800–1200 per head."]
+    ]}
+  ]
+};
+
+</script>
+<script>
+function el(tag, cls, html) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html != null) e.innerHTML = html;
+  return e;
+}
+
+function makeExpand(label, bodyHtml, dropCap) {
+  const wrap = el('div', 'expand');
+  const btn = el('button', 'expand-btn', `<em class="chevron">›</em>&nbsp;${label}`);
+  const body = el('div', 'expand-body');
+  body.innerHTML = `<div class="prose${dropCap ? ' prose-drop' : ''}">${bodyHtml}</div>`;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    body.classList.toggle('open');
+  });
+  wrap.appendChild(btn);
+  wrap.appendChild(body);
+  return wrap;
+}
+
+function renderMasthead() {
+  const m = TRIP.meta;
+  document.getElementById('m-title').innerHTML = m.city + ' <em>in October</em>';
+  document.getElementById('m-dates').textContent = m.dates;
+}
+
+function renderPlanePiece() {
+  const p = TRIP.meta.plane;
+  const sec = document.getElementById('plane');
+  const previewDiv = el('div', 'prose prose-drop', p.preview);
+  sec.appendChild(el('div', 'kicker', p.kicker));
+  sec.appendChild(el('h2', null, p.title));
+  const sf = el('p', 'standfirst', p.standfirst);
+  sec.appendChild(sf);
+  sec.appendChild(previewDiv);
+  sec.appendChild(makeExpand('Continue reading', p.full, false));
+}
+
+function renderChapters() {
+  const wrap = document.getElementById('chapters');
+  const DAY_DATES = { d1:'2026-10-24', d2:'2026-10-25', d3:'2026-10-26', d4:'2026-10-27', d5:'2026-10-28', d6:'2026-10-29', d7:'2026-10-30', d8:'2026-10-31', d9:'2026-11-01' };
+
+  function getMelbDate() {
+    return new Date().toLocaleString('en-CA', { timeZone: 'Asia/Shanghai' }).slice(0, 10);
+  }
+
+  const todayStr = getMelbDate();
+  const tripActive = todayStr >= '2026-10-24' && todayStr <= '2026-11-01';
+  const chapters = [];
+
+  TRIP.days.forEach(day => {
+    const ch = el('section', 'chapter');
+    ch.id = day.id;
+    const dayDate = DAY_DATES[day.id];
+
+    if (tripActive) {
+      if (dayDate < todayStr) ch.classList.add('is-past');
+      else if (dayDate === todayStr) {
+        ch.classList.add('is-today');
+        ch.appendChild(el('div', 'chapter-label', 'Today'));
+      }
+    }
+
+    const head = el('div', 'chapter-head');
+    head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div><div class="chapter-title">${day.title}</div></div><div class="day-weather" id="wx-${day.id}"></div></div>`;
+    ch.appendChild(head);
+
+    // Essay teaser: first sentence visible, rest behind toggle
+    const essayWrap = el('div', null);
+    // Extract first sentence from first <p>
+    const firstPMatch = day.essay.match(/<p>([\s\S]*?)<\/p>/);
+    let teaser = '', rest = day.essay;
+    if (firstPMatch) {
+      const firstP = firstPMatch[1];
+      // Split on first sentence boundary (. followed by space or end)
+      const sentMatch = firstP.match(/^(.*?(?:\.|!|\?)(?:\s|$))([\s\S]*)$/);
+      if (sentMatch && sentMatch[1].length > 40) {
+        teaser = sentMatch[1].trim();
+        const remainder = sentMatch[2].trim();
+        rest = remainder
+          ? `<p>${remainder}</p>` + day.essay.replace(firstPMatch[0], '').trim()
+          : day.essay.replace(firstPMatch[0], '').trim();
+      } else {
+        teaser = firstP;
+        rest = day.essay.replace(firstPMatch[0], '').trim();
+      }
+    }
+    const teaserDiv = el('div', 'essay-teaser');
+    teaserDiv.innerHTML = `<p>${teaser}</p>`;
+    essayWrap.appendChild(teaserDiv);
+    if (rest) {
+      const continueSpan = el('span', 'essay-continue');
+      const expandId = 'essay-' + day.id;
+      continueSpan.innerHTML = `<a href="#" id="btn-${expandId}">Continue reading</a>`;
+      teaserDiv.appendChild(continueSpan);
+      const fullBody = el('div', null);
+      fullBody.id = expandId;
+      fullBody.style.display = 'none';
+      fullBody.innerHTML = `<div class="prose prose-drop" style="margin-top:0.9rem;">${rest}</div>`;
+      essayWrap.appendChild(fullBody);
+      continueSpan.querySelector('a').addEventListener('click', e => {
+        e.preventDefault();
+        fullBody.style.display = 'block';
+        continueSpan.style.display = 'none';
+      });
+    }
+    ch.appendChild(essayWrap);
+
+    // Spine
+    const spine = el('div', 'spine');
+    day.events.forEach(ev => {
+      const stop = el('div', 'stop');
+      stop.dataset.kind = ev.kind;
+
+      const tag = ev.state === 'confirmed' ? '<span class="stop-tag confirmed">Booked</span>'
+                : ev.state === 'open'      ? '<span class="stop-tag open">To book</span>' : '';
+
+      // Title -- link if url provided
+      const titleHtml = ev.url
+        ? `<a href="${ev.url}" target="_blank" rel="noopener">${ev.title}</a>`
+        : ev.title;
+
+      stop.appendChild(el('div', 'stop-time', ev.time));
+      stop.appendChild(el('div', 'stop-head', `<span class="stop-title">${titleHtml}</span>${tag}`));
+      if (ev.note) stop.appendChild(el('div', 'stop-note', ev.note));
+      if (ev.ref)  stop.appendChild(el('div', 'stop-ref', `<span>${ev.ref}</span>`));
+      if (ev.map)  {
+        const ml = el('a', 'stop-map', '↗ Map');
+        ml.href = ev.map; ml.target = '_blank'; ml.rel = 'noopener';
+        stop.appendChild(ml);
+      }
+      if (ev.expand) stop.appendChild(makeExpand(ev.expand.label, ev.expand.body, false));
+      spine.appendChild(stop);
+    });
+
+    ch.appendChild(spine);
+    chapters.push({ el: ch, date: dayDate });
+  });
+
+  if (tripActive) {
+    chapters.sort((a, b) => {
+      const aT = a.date === todayStr, bT = b.date === todayStr;
+      const aP = a.date < todayStr,   bP = b.date < todayStr;
+      if (aT && !bT) return -1; if (bT && !aT) return 1;
+      if (!aP && bP) return -1; if (aP && !bP) return 1;
+      return a.date < b.date ? -1 : 1;
+    });
+  }
+  chapters.forEach(c => wrap.appendChild(c.el));
+}
+
+function renderBookings() {
+  const toggle = document.getElementById('bookings-toggle');
+  const body = document.getElementById('bookings-body');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    body.classList.toggle('open');
+  });
+
+  const list = document.getElementById('ledger-list');
+  TRIP.bookings.forEach(b => {
+    const row = el('div', 'ledger-row');
+    row.innerHTML = `<span class="ldot ${b.state}"></span>
+      <div class="ledger-body">
+        <div class="ledger-label">${b.label}</div>
+        <div class="ledger-sub">${b.sub}</div>
+        ${b.ref ? `<div class="ledger-ref"><span>${b.ref}</span></div>` : ''}
+      </div>
+      <span class="ledger-state ${b.state}">${b.state === 'confirmed' ? 'Booked' : 'To book'}</span>
+      ${b.url ? `<a class="ledger-link" href="${b.url}" target="_blank" rel="noopener">↗</a>` : ''}`;
+    list.appendChild(row);
+  });
+}
+
+function renderPocket() {
+  const wrap = document.getElementById('pocket-wrap');
+  TRIP.pocket.forEach(g => {
+    const grp = el('div', 'pocket-group');
+    const btn = el('button', 'pocket-btn', `${g.group}<span class="chev">›</span>`);
+    const body = el('div', 'pocket-body');
+    g.items.forEach(([n, d]) => {
+      body.appendChild(el('div', 'pocket-item', `<div class="n">${n}</div><div class="d">${d}</div>`));
+    });
+    btn.addEventListener('click', () => { btn.classList.toggle('open'); body.classList.toggle('open'); });
+    grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
+  });
+}
+
+function initNotes() {
+  const fab = document.getElementById('fab');
+  const panel = document.getElementById('notepanel');
+  const ta = document.getElementById('note-ta');
+  const list = document.getElementById('notelist');
+  const draw = () => {
+    const n = JSON.parse(localStorage.getItem('sha_notes') || '[]');
+    list.innerHTML = n.length
+      ? n.map(x => `<div class="noteitem">${x}</div>`).join('')
+      : '<div class="empty">No notes yet.</div>';
+  };
+  fab.addEventListener('click', () => panel.classList.toggle('open'));
+  document.getElementById('note-save').addEventListener('click', () => {
+    const v = ta.value.trim(); if (!v) return;
+    const n = JSON.parse(localStorage.getItem('sha_notes') || '[]');
+    n.unshift(v); localStorage.setItem('sha_notes', JSON.stringify(n));
+    ta.value = ''; draw();
+  });
+  draw();
+}
+
+async function fetchWeather() {
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=31.2304&longitude=121.4737' +
+      '&current=temperature_2m,weather_code' +
+      '&daily=weather_code,temperature_2m_max,temperature_2m_min' +
+      '&temperature_unit=celsius&timezone=Asia%2FShanghai' +
+      '&start_date=2026-10-24&end_date=2026-11-01';
+    const r = await fetch(url);
+    if (!r.ok) return;
+    const d = await r.json();
+
+    const wmoIcon = c => c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
+
+    // Masthead: current temp
+    const cur = Math.round(d.current.temperature_2m);
+    const curIcon = wmoIcon(d.current.weather_code);
+    document.getElementById('m-weather').innerHTML =
+      `${curIcon} <span class="mast-weather-temp">${cur}°</span>`;
+
+    // Per-day: map date string to day id
+    const dateToId = {
+      '2026-10-24': 'd1', '2026-10-25': 'd2', '2026-10-26': 'd3',
+      '2026-10-27': 'd4', '2026-10-28': 'd5', '2026-10-29': 'd6',
+      '2026-10-30': 'd7', '2026-10-31': 'd8', '2026-11-01': 'd9'
+    };
+    d.daily.time.forEach((date, i) => {
+      const id = dateToId[date];
+      if (!id) return;
+      const slot = document.getElementById('wx-' + id);
+      if (!slot) return;
+      const icon = wmoIcon(d.daily.weather_code[i]);
+      const hi = Math.round(d.daily.temperature_2m_max[i]);
+      const lo = Math.round(d.daily.temperature_2m_min[i]);
+      slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${hi}°</span> / ${lo}°</span>`;
+    });
+  } catch(e) {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderMasthead();
+  renderPlanePiece();
+  renderChapters();
+  renderBookings();
+  renderPocket();
+  initNotes();
+  fetchWeather();
+});
+</script>
+</body>
+</html>
