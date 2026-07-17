@@ -110,6 +110,12 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .chapter-meta { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
 .chapter-meta .date-accent { color: var(--accent); }
 .chapter-title { font-family: var(--display); font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 400; line-height: 1.04; letter-spacing: -0.02em; font-optical-sizing: auto; color: var(--ink); }
+.chapter-top { cursor: pointer; }
+.chapter-toggle { flex-shrink: 0; display: flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); padding-top: 0.3rem; }
+.chapter-toggle .chev { display: inline-block; transition: transform 0.18s; font-style: normal; }
+.chapter.open .chapter-toggle .chev { transform: rotate(90deg); }
+.chapter .spine { display: none; }
+.chapter.open .spine { display: block; }
 .day-weather { display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; flex-shrink: 0; padding-top: 0.1rem; }
 .day-weather-icon { font-size: 1.3rem; line-height: 1; }
 .day-weather-temps { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; }
@@ -198,6 +204,17 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .sandbox-item-date { font-family: var(--mono); font-size: 0.58rem; color: var(--rule-2); letter-spacing: 0.04em; margin-top: 0.25rem; }
 .sandbox-empty { font-family: var(--serif); font-style: italic; font-size: 0.9rem; color: var(--ink-3); padding: 0.5rem 0; }
 
+.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: var(--ground); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(45,90,61,0.25); transition: transform 0.12s; }
+.fab svg { pointer-events: none; }
+.fab:hover { transform: scale(1.06); }
+.notepanel { position: fixed; bottom: 5rem; right: 1.4rem; z-index: 50; width: min(300px, calc(100vw - 2.8rem)); background: var(--ground); border: 1px solid var(--rule); border-radius: 4px; padding: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,0.12); display: none; }
+.notepanel.open { display: block; }
+.notepanel-label { font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
+.notepanel textarea { width: 100%; height: 76px; resize: none; background: var(--ground-2); color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; padding: 0.55rem; font-family: var(--mono); font-size: 0.78rem; }
+.notepanel textarea:focus { outline: 1px solid var(--accent); }
+.notepanel .save { margin-top: 0.45rem; width: 100%; padding: 0.45rem; background: var(--accent); color: var(--ground); border: none; border-radius: 2px; font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em; cursor: pointer; text-transform: uppercase; }
+.notepanel-hint { font-family: var(--serif); font-style: italic; font-size: 0.72rem; color: var(--ink-3); margin-top: 0.5rem; line-height: 1.5; }
+
 /* ── FAB / NOTES ──────────────────────────────────────────── */
 footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
 .notelist { margin-top: 0.5rem; max-height: 120px; overflow-y: auto; }
@@ -241,7 +258,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
  <div class="sh26-sandbox-head">
  <div>
  <div class="section-label">Sandbox</div>
- <div class="section-sub">Open items from GitHub. Add from anywhere: the GitHub app, a home-screen bookmark, or the link opposite.</div>
+ <div class="section-sub">Open items from GitHub. Add with the pencil button, bottom right, or from anywhere else: the GitHub app, a home-screen bookmark, or the link opposite.</div>
  </div>
  <a class="sandbox-new-link" href="https://github.com/camerondeath/travel/issues/new" target="_blank" rel="noopener">+ New</a>
  </div>
@@ -257,6 +274,18 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 
 <footer>Shanghai · October 2026</footer>
 </div></div>
+
+<button class="fab" id="fab" aria-label="Save a find">
+ <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M12 5v14M5 12h14"/>
+ </svg>
+</button>
+<div class="notepanel" id="notepanel">
+ <div class="notepanel-label">Save a find</div>
+ <textarea id="note-ta" placeholder="Paste a link, a name, an address, a thought…"></textarea>
+ <button class="save" id="note-save">Save to GitHub ↗</button>
+ <div class="notepanel-hint">Opens a pre-filled GitHub issue in a new tab. One more tap there to confirm it, since you're already signed in. Nothing is stored on this device.</div>
+</div>
 
 <script>
 const TRIP = {
@@ -511,20 +540,14 @@ const TRIP = {
       essay: `<p>A working artist's studio is not a gallery.</p>
 <p>In a gallery the work has been chosen, framed, priced and lit; you are seeing what has already been decided about it. In a studio the work is still being made, which means the room contains a version of a thing that does not yet know what it is going to be. To walk into that room is to be given, briefly, the private phase of the making. Almost nobody who visits a city as a tourist ever sees it.</p>
 <p>Shanghai's gallery scene has, over the past decade, developed a genuinely useful convention. The serious primary-market galleries, the ones that represent artists rather than resell them, will, if asked in the right way, arrange a studio visit. It is not a service they advertise. Capsule at 275 Anfu Road, in a 1930s garden house behind an unmarked gate, is the gallery most consistently willing to do this. Enrico Polato, who founded it in 2016, is a working curator with genuine relationships to his artists. The gallery is by appointment in any case, which means the visit is already conducted at a different register from a walk-in.</p>
-<p>Tuesday is the first day of the week these galleries are actually open; most of the serious ones in Shanghai keep the same Tuesday-to-Saturday rhythm as galleries everywhere, closed Sunday and Monday. It is also the day the map cooperates, if you let it. Capsule is on Anfu Road, so the walk down Anfu and Wukang happens the moment you step out of the gate rather than as a separate expedition doubled back to later in the afternoon. From there the day runs in a single line northeast, Jinxian to North Shaanxi to Nanjing West, and never crosses its own path once.</p>`,
+<p>Tuesday is the first day of the week these galleries are actually open; most of the serious ones in Shanghai keep the same Tuesday-to-Saturday rhythm as galleries everywhere, closed Sunday and Monday. It is also the day the map cooperates, if you let it. Capsule is on Anfu Road, so the walk down Anfu and Wukang happens the moment you step out of the gate rather than as a separate expedition doubled back to later in the afternoon. From there the day runs in a single line northeast, Jinxian to North Shaanxi to Nanjing West, and never crosses its own path once.</p>
+<p>Breakfast is in the room this morning, coffee made while the day gets decided. It puts you leaving from the hotel rather than from Yunnan South Road, which is the more direct line out to Anfu Road anyway.</p>`,
       events: [
-        { time: "9:30am", title: "Qiao Ai Lai Lai Xiao Long", kind: "food", bib: true,
-          bibUrl: "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/qiao-ai-lai-lai-xiao-long-huangpu",
-          note: "150 Yunnan South Rd, ~10 min walk from the hotel. Open daily. Tucked in an alley: confirm the exact lane on the map before setting off, DiDi drivers stop short of the entrance and so, sometimes, do people on foot. Half past nine is when Shanghai actually eats these, and it puts you on the right side of town to leave west.",
-          map: "https://maps.google.com/?q=150+Yunnan+South+Road+Shanghai",
-          expand: {
-            label: "About the shop",
-            body: `<p>This is a small shop, easy to miss from the street, that has been packed since it opened about twenty years ago. The crab roe xiaolongbao is what draws the queue, and in hairy crab season, which this week sits inside, the kitchen loads wontons and spring rolls with crabmeat as well as the standard dumplings, so it's worth ordering a mixed plate rather than committing to one thing. The plain pork soup dumplings are the reliable fallback if the crab versions have sold out. Kitchen visible from the pavement, a handful of stools at the window facing in, genuinely easy to eat here alone, nobody blinks at a single diner mid-morning.</p>`
-          }
-        },
+        { time: "9:30am", title: "In the room", kind: "rest",
+          note: "Coffee, whatever the kitchen has. No queue, no walk, nothing to confirm. Qiao Ai Lai Lai Xiao Long, the crab roe xiaolongbao counter ten minutes from the hotel, is worth doing another morning instead; it's in the back pocket below." },
         { time: "11:00am", title: "Capsule Shanghai", kind: "culture", state: "open",
           url: "https://capsuleshanghai.com/",
-          note: "1st floor, Building 16, Lane 275 Anfu Rd. Tue-Sat 11am-6pm, closed Sun-Mon, Tuesday is the earliest day this works. DiDi from Yunnan South Rd, ~25 min. By appointment: info@capsuleshanghai.com.",
+          note: "1st floor, Building 16, Lane 275 Anfu Rd. Tue-Sat 11am-6pm, closed Sun-Mon, Tuesday is the earliest day this works. DiDi from the hotel, ~20 min. By appointment: info@capsuleshanghai.com.",
           map: "https://maps.google.com/?q=275+Anfu+Road+Shanghai",
           expand: {
             label: "How to try for a studio visit, and how not to overstate it",
@@ -636,8 +659,8 @@ const TRIP = {
 <p>There is a version of this sold to visitors as a private chef, or a dinner in a local family's apartment, and it mostly does not exist as an off-the-shelf product in Shanghai, whatever the listings imply. What does exist is a cooking class held in an actual apartment rather than a commercial teaching kitchen, and that is a substitution, and it should be named as one rather than dressed up. It is not a home-cooked dinner arranged for you. It is a few hours in someone's kitchen with your hands in the dough. As it happens the substitution suits a man travelling alone better than the thing it substitutes for, because there is something to do with your hands and no table of strangers to negotiate.</p>
 <p>The rest of the day stays light on purpose. A late-morning museum, a long lunch break, nothing scheduled between two and five. After five days of walking, the trip can afford an afternoon that goes nowhere at all.</p>`,
       events: [
-        { time: "9:30am", title: "Slow start, no alarm", kind: "rest",
-          note: "Breakfast at the hotel or the four warriors off Yunnan South Rd a second time, now that you know what to point at. Nothing fixed for the morning. This is the only unstructured morning in the week and it is deliberate." },
+        { time: "9:30am", title: "In the room, no alarm", kind: "rest",
+          note: "Coffee, whatever's in the kitchen, taken slowly. This is the only unstructured morning in the week and it is deliberate; the museum can wait until eleven." },
         { time: "11:00am", title: "Shanghai Museum East", kind: "culture", state: "open",
           url: "https://www.shanghaimuseum.net/en/mus-east",
           note: "1952 Century Blvd, Pudong. Closed Mondays; Thursday is a normal open day. DiDi, ~30 min through the tunnel; the metro (Line 6 or 7 to Century Avenue, then a walk) is comparable in time but involves at least one change. Timed entry: book via the museum's WeChat mini-program a day ahead, or ask the concierge.",
@@ -672,8 +695,8 @@ const TRIP = {
 <p>The afternoon anchors on something real and freshly timed. Rockbund's new commission, stuck in movement (in the tide) by the Macau-born, Rio-based artist Jota Mombaça, opened on the 22nd of October, two days before you landed, and runs through February. Rockbund is closed Mondays only, so Friday is a normal open day. The 30th is eight days after the opening, which is the second week: after the opening crowd has gone and before the museum settles into a fixed run of public programming around it, which is the least worn-in a show ever is.</p>
 <p>Then a drink in the room where the taipans drank, seated by seniority, the most senior nearest the door. Ballard's father ran a textile company in this city and would have known that room, or one exactly like it. It is the right hour and the right seat for the day that is in it.</p>`,
       events: [
-        { time: "9:00am", title: "Breakfast near the hotel", kind: "food",
-          note: "Da Hu Chun again if the Saturday queue put you off it, or the four warriors off Yunnan South Rd. Both are about twenty minutes on foot and both are better the second time, when you know what to point at and how to ask for it." },
+        { time: "9:00am", title: "In the room", kind: "rest",
+          note: "Coffee before the walk out to Xinhua Road. No need to eat twice before a day that's mostly on foot." },
         { time: "10:30am", title: "Xinhua Road, on foot", kind: "explore",
           note: "Former Amherst Avenue, western French Concession. DiDi, ~25 min. A residential road of 1920s and 30s villas, still lived in, still unrestored in the way the Wukang corner is not. No fixed address beyond the street itself. Walk it slowly and look at the houses as houses, not exhibits.",
           map: "https://maps.google.com/?q=Xinhua+Road+Shanghai",
@@ -712,8 +735,8 @@ const TRIP = {
 <p>Today you stand at the grave. Lu Xun came to Hongkou in 1927 and died here in 1936, in a Japanese-owned apartment on a street north of Suzhou Creek, having spent his last decade writing about a country he loved in terms it has never quite forgiven and has never once stopped teaching in schools. Duolun Road is where he and half of Shanghai's literary left lived and argued and denounced each other. The park at the end of it, then called Hongkou Park, holds his tomb, moved there in 1956, with calligraphy by Mao on the stone behind it, which is its own quiet joke at the expense of a man whose entire subject was what a society does to the people who tell it the truth. Six months and two thousand kilometres apart, you will have seen where he started and where he stopped. That was not planned. It is worth noticing anyway.</p>
 <p>The evening closes a different loop. Hairy crab is a national obsession that runs almost entirely on the honour system of season. The male mitten crab peaks in the tenth lunar month, which lands in the last week of October this year. Cejerdary at 59 Guangdong Road has been the most influential single restaurant in Shanghai's crab culture for the past decade: one dish, crab roe noodles, twelve crabs picked by hand into every bowl, the price unchanged since 2010. The room seats about twenty on stools at a long counter, more noodle bar than restaurant, and it is, structurally, one of the easiest places in the city to eat alone. On Monday you did the crab the hard way, one animal and forty-five minutes and your hands in it up to the wrist. Tonight somebody else does the work, and the difference between those two meals is most of what there is to say about this city.</p>`,
       events: [
-        { time: "9:00am", title: "One more counter breakfast", kind: "food",
-          note: "Last morning near the walled city. Nanxiang or Da Hu Chun, whichever hasn't been tried yet this week. Then north." },
+        { time: "9:00am", title: "In the room", kind: "rest",
+          note: "Coffee, something simple. Tonight is the crab, and there's no reason to spend the morning's appetite on a counter breakfast before a day that ends at Cejerdary." },
         { time: "10:30am", title: "Duolun Road Cultural Street", kind: "explore",
           note: "Hongkou. DiDi, ~20 min; no metro beats it without a change, and the closest station (Dongbaoxing Road, Line 3/4) is still a ten-minute walk from the street itself.",
           map: "https://maps.google.com/?q=Duolun+Road+Hongkou+Shanghai",
@@ -900,17 +923,22 @@ function renderChapters() {
  ch.id = day.id;
  const dayDate = DAY_DATES[day.id];
 
+ let isToday = false;
  if (tripActive) {
  if (dayDate < todayStr) ch.classList.add('is-past');
  else if (dayDate === todayStr) {
  ch.classList.add('is-today');
+ isToday = true;
  ch.appendChild(el('div', 'chapter-label', 'Today'));
  }
  }
+ if (isToday) ch.classList.add('open');
 
  const head = el('div', 'chapter-head');
  const arcTag = day.arc ? `<div style="font-family:var(--mono);font-size:0.6rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.35rem;">${day.arc}</div>` : '';
- head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div>${arcTag}<div class="chapter-title">${day.title}</div></div><div class="day-weather" id="wx-${day.id}"></div></div>`;
+ const stopWord = day.events.length + (day.events.length === 1 ? ' stop' : ' stops');
+ head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div>${arcTag}<div class="chapter-title">${day.title}</div></div><div style="display:flex;align-items:flex-start;gap:0.9rem;flex-shrink:0;"><div class="day-weather" id="wx-${day.id}"></div><div class="chapter-toggle">${stopWord}<em class="chev">\u203a</em></div></div></div>`;
+ head.querySelector('.chapter-top').addEventListener('click', () => ch.classList.toggle('open'));
  ch.appendChild(head);
 
  // Essay teaser: first sentence visible, rest behind toggle
@@ -1131,6 +1159,28 @@ async function fetchWeather() {
  } catch(e) {}
 }
 
+function initNotes() {
+ const fab = document.getElementById('fab');
+ const panel = document.getElementById('notepanel');
+ const ta = document.getElementById('note-ta');
+ fab.addEventListener('click', () => { panel.classList.toggle('open'); if (panel.classList.contains('open')) ta.focus(); });
+ const save = () => {
+ const v = ta.value.trim();
+ if (!v) return;
+ const title = v.length > 70 ? v.slice(0, 68).trim() + '\u2026' : v;
+ const url = 'https://github.com/camerondeath/travel/issues/new'
+ + '?title=' + encodeURIComponent(title)
+ + '&body=' + encodeURIComponent(v);
+ window.open(url, '_blank', 'noopener');
+ ta.value = '';
+ panel.classList.remove('open');
+ };
+ document.getElementById('note-save').addEventListener('click', save);
+ ta.addEventListener('keydown', e => {
+ if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); save(); }
+ });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
  renderMasthead();
  renderPlanePiece();
@@ -1139,6 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
  renderBookings();
  renderPocket();
  renderSandbox();
+ initNotes();
  fetchWeather();
 });
 </script>
