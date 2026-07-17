@@ -97,11 +97,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .essay-continue a:hover { color: var(--accent-2); border-color: var(--accent); }
 
 
-.chapter { padding: 3rem 0 2.4rem; }
-.chapter-rule { display: flex; align-items: center; gap: 1rem; }
-.chapter-rule::before, .chapter-rule::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
-.chapter-rule svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.5; }
-.chapter-rule svg path { fill: var(--accent); stroke: none; }
+.chapter { padding: 1.9rem 0; border-bottom: 1px solid var(--rule); }
 .chapter.is-past { opacity: 0.45; }
 .chapter.is-today { border-left: 2px solid var(--accent); padding-left: 1.5rem; margin-left: -1.5rem; }
 .chapter-label { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
@@ -111,8 +107,9 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .chapter-meta .date-accent { color: var(--accent); }
 .chapter-title { font-family: var(--display); font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 400; line-height: 1.04; letter-spacing: -0.02em; font-optical-sizing: auto; color: var(--ink); }
 .chapter-top { cursor: pointer; }
-.chapter-toggle { flex-shrink: 0; display: flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); padding-top: 0.3rem; }
-.chapter-toggle .chev { display: inline-block; transition: transform 0.18s; font-style: normal; }
+.chapter-toggle { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--ink-3); transition: background-color 0.12s, color 0.12s; }
+.chapter-top:hover .chapter-toggle { background: var(--ground-2); color: var(--accent); }
+.chapter-toggle .chev { display: inline-block; font-size: 1.05rem; transition: transform 0.18s; font-style: normal; }
 .chapter.open .chapter-toggle .chev { transform: rotate(90deg); }
 .chapter .spine { display: none; }
 .chapter.open .spine { display: block; }
@@ -194,9 +191,6 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .section-label { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0; }
 .section-sub { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: var(--ink-3); margin: 0.5rem 0 1rem; max-width: 40em; }
 .section-sub code { font-family: var(--mono); font-style: normal; font-size: 0.78rem; background: var(--ground-2); padding: 0.1em 0.35em; }
-.sh26-sandbox-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
-.sandbox-new-link { flex-shrink: 0; padding: 0.4rem 0.8rem; border: 1px solid var(--rule-2); color: var(--ink-3); font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: color 0.12s, border-color 0.12s; }
-.sandbox-new-link:hover { color: var(--accent); border-color: var(--accent); }
 .sandbox-item { display: block; padding: 0.7rem 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
 .sandbox-item:last-child { border-bottom: none; }
 .sandbox-item:hover .sandbox-item-text { color: var(--accent); }
@@ -207,13 +201,6 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: var(--ground); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(45,90,61,0.25); transition: transform 0.12s; }
 .fab svg { pointer-events: none; }
 .fab:hover { transform: scale(1.06); }
-.notepanel { position: fixed; bottom: 5rem; right: 1.4rem; z-index: 50; width: min(300px, calc(100vw - 2.8rem)); background: var(--ground); border: 1px solid var(--rule); border-radius: 4px; padding: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,0.12); display: none; }
-.notepanel.open { display: block; }
-.notepanel-label { font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
-.notepanel textarea { width: 100%; height: 76px; resize: none; background: var(--ground-2); color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; padding: 0.55rem; font-family: var(--mono); font-size: 0.78rem; }
-.notepanel textarea:focus { outline: 1px solid var(--accent); }
-.notepanel .save { margin-top: 0.45rem; width: 100%; padding: 0.45rem; background: var(--accent); color: var(--ground); border: none; border-radius: 2px; font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em; cursor: pointer; text-transform: uppercase; }
-.notepanel-hint { font-family: var(--serif); font-style: italic; font-size: 0.72rem; color: var(--ink-3); margin-top: 0.5rem; line-height: 1.5; }
 
 /* ── FAB / NOTES ──────────────────────────────────────────── */
 footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
@@ -255,13 +242,8 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 </section>
 
 <section class="sh26-section" id="sh26-sandbox">
- <div class="sh26-sandbox-head">
- <div>
  <div class="section-label">Sandbox</div>
- <div class="section-sub">Open items from GitHub. Add with the pencil button, bottom right, or from anywhere else: the GitHub app, a home-screen bookmark, or the link opposite.</div>
- </div>
- <a class="sandbox-new-link" href="https://github.com/camerondeath/travel/issues/new" target="_blank" rel="noopener">+ New</a>
- </div>
+ <div class="section-sub">Open items from GitHub. Add with the + button, bottom right — it opens GitHub’s own compose screen, nothing lives on this page. Works the same from the GitHub app or a home-screen bookmark.</div>
  <div id="sh26-sandbox-wrap"></div>
 </section>
 
@@ -275,17 +257,11 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 <footer>Shanghai · October 2026</footer>
 </div></div>
 
-<button class="fab" id="fab" aria-label="Save a find">
+<a class="fab" id="fab" href="https://github.com/camerondeath/travel/issues/new" target="_blank" rel="noopener" aria-label="Add to sandbox">
  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
  <path d="M12 5v14M5 12h14"/>
  </svg>
-</button>
-<div class="notepanel" id="notepanel">
- <div class="notepanel-label">Save a find</div>
- <textarea id="note-ta" placeholder="Paste a link, a name, an address, a thought…"></textarea>
- <button class="save" id="note-save">Save to GitHub ↗</button>
- <div class="notepanel-hint">Opens a pre-filled GitHub issue in a new tab. One more tap there to confirm it, since you're already signed in. Nothing is stored on this device.</div>
-</div>
+</a>
 
 <script>
 const TRIP = {
@@ -936,8 +912,7 @@ function renderChapters() {
 
  const head = el('div', 'chapter-head');
  const arcTag = day.arc ? `<div style="font-family:var(--mono);font-size:0.6rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.35rem;">${day.arc}</div>` : '';
- const stopWord = day.events.length + (day.events.length === 1 ? ' stop' : ' stops');
- head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div>${arcTag}<div class="chapter-title">${day.title}</div></div><div style="display:flex;align-items:flex-start;gap:0.9rem;flex-shrink:0;"><div class="day-weather" id="wx-${day.id}"></div><div class="chapter-toggle">${stopWord}<em class="chev">\u203a</em></div></div></div>`;
+ head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div>${arcTag}<div class="chapter-title">${day.title}</div></div><div style="display:flex;align-items:center;gap:0.7rem;flex-shrink:0;"><div class="day-weather" id="wx-${day.id}"></div><div class="chapter-toggle"><em class="chev">\u203a</em></div></div></div>`;
  head.querySelector('.chapter-top').addEventListener('click', () => ch.classList.toggle('open'));
  ch.appendChild(head);
 
@@ -1023,11 +998,7 @@ function renderChapters() {
  return a.date < b.date ? -1 : 1;
  });
  }
- const GINKGO = '<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 66C29 62 7 45 9 24 11 11 30 3 46 10L50 23 54 10C70 3 89 11 91 24 93 45 71 62 50 66Z"/><path d="M48.6 65.5C48.6 78 48 86 47 94L53 94C52 86 51.4 78 51.4 65.5Z"/></svg>';
- chapters.forEach((c, i) => {
- wrap.appendChild(c.el);
- if (i < chapters.length - 1) wrap.appendChild(el('div', 'chapter-rule', GINKGO));
- });
+  chapters.forEach(c => wrap.appendChild(c.el));
 }
 
 function renderBookings() {
@@ -1159,28 +1130,6 @@ async function fetchWeather() {
  } catch(e) {}
 }
 
-function initNotes() {
- const fab = document.getElementById('fab');
- const panel = document.getElementById('notepanel');
- const ta = document.getElementById('note-ta');
- fab.addEventListener('click', () => { panel.classList.toggle('open'); if (panel.classList.contains('open')) ta.focus(); });
- const save = () => {
- const v = ta.value.trim();
- if (!v) return;
- const title = v.length > 70 ? v.slice(0, 68).trim() + '\u2026' : v;
- const url = 'https://github.com/camerondeath/travel/issues/new'
- + '?title=' + encodeURIComponent(title)
- + '&body=' + encodeURIComponent(v);
- window.open(url, '_blank', 'noopener');
- ta.value = '';
- panel.classList.remove('open');
- };
- document.getElementById('note-save').addEventListener('click', save);
- ta.addEventListener('keydown', e => {
- if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); save(); }
- });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
  renderMasthead();
  renderPlanePiece();
@@ -1189,7 +1138,6 @@ document.addEventListener('DOMContentLoaded', () => {
  renderBookings();
  renderPocket();
  renderSandbox();
- initNotes();
  fetchWeather();
 });
 </script>
