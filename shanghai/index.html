@@ -193,7 +193,8 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 
 /* ── FAB / NOTES ──────────────────────────────────────────── */
 footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
-.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: var(--ground); border: none; cursor: pointer; font-family: var(--display); font-size: 1.2rem; box-shadow: 0 2px 12px rgba(45,90,61,0.25); transition: transform 0.12s; }
+.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: var(--ground); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(45,90,61,0.25); transition: transform 0.12s; }
+.fab svg { pointer-events: none; }
 .fab:hover { transform: scale(1.06); }
 .notepanel { position: fixed; bottom: 5rem; right: 1.4rem; z-index: 50; width: min(300px, calc(100vw - 2.8rem)); background: var(--ground); border: 1px solid var(--rule); border-radius: 4px; padding: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,0.12); display: none; }
 .notepanel.open { display: block; }
@@ -253,7 +254,11 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 <footer>Shanghai · October 2026</footer>
 </div></div>
 
-<button class="fab" id="fab" aria-label="Notes">✎</button>
+<button class="fab" id="fab" aria-label="Save a find">
+ <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M12 5v14M5 12h14"/>
+ </svg>
+</button>
 <div class="notepanel" id="notepanel">
  <div class="notepanel-label">Save a find</div>
  <textarea id="note-ta" placeholder="Paste a link, a name, an address, a thought…"></textarea>
