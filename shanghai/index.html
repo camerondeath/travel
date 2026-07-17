@@ -181,14 +181,15 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .sh26-item .d { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.1rem; letter-spacing: 0.01em; }
 .sh26-item-link { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); text-decoration: none; }
 .sh26-item-link:hover { text-decoration: underline; }
+.sh26-item-link-block { display: block; text-decoration: none; cursor: pointer; }
+.sh26-item-link-block:hover .n { color: var(--accent); }
 
 /* ── SECTION LABEL ────────────────────────────────────────── */
 .section-label { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0; }
 .section-sub { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: var(--ink-3); margin: 0.5rem 0 1rem; max-width: 40em; }
 .section-sub code { font-family: var(--mono); font-style: normal; font-size: 0.78rem; background: var(--ground-2); padding: 0.1em 0.35em; }
-.noteactions { display: flex; gap: 0.35rem; margin-top: 0.35rem; }
-.noteactions button { flex: 1; padding: 0.35rem; background: none; border: 1px solid var(--rule); color: var(--ink-3); font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border-radius: 2px; }
-.noteactions button:hover { color: var(--accent); border-color: var(--accent); }
+.notepanel-label { font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
+.notepanel-hint { font-family: var(--serif); font-style: italic; font-size: 0.72rem; color: var(--ink-3); margin-top: 0.5rem; line-height: 1.5; }
 
 /* ── FAB / NOTES ──────────────────────────────────────────── */
 footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
@@ -238,7 +239,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 
 <section class="sh26-section" id="sh26-sandbox">
  <div class="section-label">Sandbox</div>
- <div class="section-sub">Things found between now and October, not yet decided on. Edit <code>sandbox.md</code> in the repo; this reads from it directly.</div>
+ <div class="section-sub">Things saved with the pencil button below, not yet decided on. Tap a saved item to open it on GitHub; close it there once it's been triaged.</div>
  <div id="sh26-sandbox-wrap"></div>
 </section>
 
@@ -254,10 +255,10 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 
 <button class="fab" id="fab" aria-label="Notes">✎</button>
 <div class="notepanel" id="notepanel">
- <textarea id="note-ta" placeholder="A thought, a name, an address…"></textarea>
- <button class="save" id="note-save">Keep</button>
- <div class="noteactions"><button id="note-copy">Copy all</button><button id="note-clear">Clear</button></div>
- <div class="notelist" id="notelist"></div>
+ <div class="notepanel-label">Save a find</div>
+ <textarea id="note-ta" placeholder="Paste a link, a name, an address, a thought…"></textarea>
+ <button class="save" id="note-save">Save to GitHub ↗</button>
+ <div class="notepanel-hint">Opens a pre-filled GitHub issue. One more tap there to confirm it, since you're already signed in.</div>
 </div>
 
 <script>
@@ -1056,72 +1057,39 @@ function initNotes() {
  const fab = document.getElementById('fab');
  const panel = document.getElementById('notepanel');
  const ta = document.getElementById('note-ta');
- const list = document.getElementById('notelist');
- const draw = () => {
- const n = JSON.parse(localStorage.getItem('sha_notes') || '[]');
- list.innerHTML = n.length
- ? n.map(x => `<div class="noteitem">${x}</div>`).join('')
- : '<div class="empty">No notes yet.</div>';
- };
- fab.addEventListener('click', () => panel.classList.toggle('open'));
+ fab.addEventListener('click', () => { panel.classList.toggle('open'); if (panel.classList.contains('open')) ta.focus(); });
  document.getElementById('note-save').addEventListener('click', () => {
- const v = ta.value.trim(); if (!v) return;
- const n = JSON.parse(localStorage.getItem('sha_notes') || '[]');
- n.unshift(v); localStorage.setItem('sha_notes', JSON.stringify(n));
- ta.value = ''; draw();
+ const v = ta.value.trim();
+ if (!v) return;
+ const title = v.length > 70 ? v.slice(0, 68).trim() + '\u2026' : v;
+ const url = 'https://github.com/camerondeath/travel/issues/new'
+ + '?title=' + encodeURIComponent(title)
+ + '&body=' + encodeURIComponent(v);
+ window.open(url, '_blank', 'noopener');
+ ta.value = '';
+ panel.classList.remove('open');
  });
- document.getElementById('note-copy').addEventListener('click', async e => {
- const n = JSON.parse(localStorage.getItem('sha_notes') || '[]');
- if (!n.length) return;
- try { await navigator.clipboard.writeText(n.map(x => '- ' + x).join('\n')); e.target.textContent = 'Copied'; }
- catch(err) { e.target.textContent = 'Failed'; }
- setTimeout(() => { e.target.textContent = 'Copy all'; }, 1400);
- });
- document.getElementById('note-clear').addEventListener('click', e => {
- if (e.target.dataset.armed) { localStorage.removeItem('sha_notes'); delete e.target.dataset.armed; e.target.textContent = 'Clear'; draw(); return; }
- e.target.dataset.armed = '1'; e.target.textContent = 'Sure?';
- setTimeout(() => { delete e.target.dataset.armed; e.target.textContent = 'Clear'; }, 3000);
- });
- draw();
 }
 
-const SANDBOX_URL = 'https://raw.githubusercontent.com/camerondeath/travel/main/shanghai/sandbox.md';
+const ISSUES_URL = 'https://api.github.com/repos/camerondeath/travel/issues?state=open&per_page=100&sort=created&direction=desc';
 
 async function renderSandbox() {
  const wrap = document.getElementById('sh26-sandbox-wrap');
- const esc = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
- const linkify = t => esc(t).replace(/(https?:\/\/[^\s|<]+)/g, u => '<a class="sh26-item-link" href="' + u + '" target="_blank" rel="noopener">' + u.replace(/^https?:\/\/(www\.)?/,'').slice(0,42) + ' \u2197</a>');
  try {
- const r = await fetch(SANDBOX_URL, { cache: 'no-store' });
+ const r = await fetch(ISSUES_URL, { headers: { Accept: 'application/vnd.github+json' } });
  if (!r.ok) throw new Error(r.status);
- const lines = (await r.text()).split('\n').map(l => l.trim()).filter(l => /^- /.test(l));
- if (!lines.length) { wrap.innerHTML = '<div class="sh26-item"><div class="d">Nothing in the sandbox yet.</div></div>'; return; }
- const groups = {};
- lines.forEach(raw => {
- const done = /^- \[x\]/i.test(raw);
- const body = raw.replace(/^- (\[[ xX]\] )?/, '');
- const parts = body.split('|').map(x => x.trim());
- const date = parts[0] || '';
- const bucket = (parts[1] || 'unsorted').toLowerCase();
- const pointer = parts[2] || '';
- const why = parts.slice(3).join(' | ');
- (groups[bucket] = groups[bucket] || []).push({ date, pointer, why, done });
- });
+ const issues = (await r.json()).filter(i => !i.pull_request);
+ if (!issues.length) { wrap.innerHTML = '<div class="sh26-item"><div class="d">Nothing saved yet. Use the pencil button to add the first one.</div></div>'; return; }
  wrap.innerHTML = '';
- Object.keys(groups).sort().forEach(bucket => {
- const grp = el('div', 'sh26-row');
- const btn = el('button', 'sh26-row-btn', bucket + ' <span style="color:var(--ink-3);font-family:var(--mono);font-size:0.6rem;">' + groups[bucket].length + '</span><span class="sh26-chev">\u203a</span>');
- const body = el('div', 'sh26-row-panel');
- groups[bucket].forEach(it => {
- const item = el('div', 'sh26-item');
- item.innerHTML = '<div class="n"' + (it.done ? ' style="opacity:0.45;text-decoration:line-through;"' : '') + '>' + linkify(it.pointer) + '</div><div class="d">' + esc(it.why) + (it.date ? ' &nbsp;\u00b7&nbsp; ' + esc(it.date) : '') + '</div>';
- body.appendChild(item);
- });
- btn.addEventListener('click', () => { btn.classList.toggle('open'); body.classList.toggle('open'); });
- grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
+ issues.forEach(iss => {
+ const item = el('a', 'sh26-item sh26-item-link-block', '');
+ item.href = iss.html_url; item.target = '_blank'; item.rel = 'noopener';
+ const when = new Date(iss.created_at).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
+ item.innerHTML = '<div class="n">' + iss.title.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</div><div class="d">' + when + ' \u00b7 #' + iss.number + '</div>';
+ wrap.appendChild(item);
  });
  } catch (e) {
- document.getElementById('sh26-sandbox').style.display = 'none';
+ wrap.innerHTML = '<div class="sh26-item"><div class="d">Couldn\u2019t load saved items just now. <a class="sh26-item-link" href="https://github.com/camerondeath/travel/issues" target="_blank" rel="noopener">View on GitHub \u2197</a></div></div>';
  }
 }
 
