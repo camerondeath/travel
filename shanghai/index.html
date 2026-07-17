@@ -1136,7 +1136,10 @@ function renderSandbox() {
  textEl.replaceWith(ta);
  ta.focus();
  ta.setSelectionRange(ta.value.length, ta.value.length);
+ let settled = false;
  const commit = () => {
+ if (settled) return;
+ settled = true;
  const v = ta.value.trim();
  const all = loadSandbox();
  const idx = all.findIndex(x => x.id === item.id);
@@ -1145,14 +1148,21 @@ function renderSandbox() {
  all[idx].text = v;
  saveSandbox(all);
  item.text = v;
+ if (!ta.isConnected) return;
  const fresh = el('div', 'sandbox-item-text', v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
  fresh.addEventListener('click', () => textEl.click());
  ta.replaceWith(fresh);
  };
+ const cancel = () => {
+ if (settled) return;
+ settled = true;
+ ta.removeEventListener('blur', commit);
+ renderSandbox();
+ };
  ta.addEventListener('blur', commit);
  ta.addEventListener('keydown', e => {
  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); ta.blur(); }
- if (e.key === 'Escape') { e.preventDefault(); renderSandbox(); }
+ if (e.key === 'Escape') { e.preventDefault(); cancel(); }
  });
  });
 
