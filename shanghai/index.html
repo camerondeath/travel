@@ -39,7 +39,10 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .content { position: relative; }
 
 /* ── MASTHEAD ─────────────────────────────────────────────── */
-.masthead { padding: 3.5rem 0 2rem; }
+.masthead { padding: 3.5rem 0 2rem; position: relative; }
+.mast-leaf { position: absolute; top: 2.2rem; right: 0; width: 34px; height: 34px; opacity: 0.55; }
+.mast-leaf path { fill: none; stroke: var(--accent); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 640px) { .mast-leaf { width: 26px; height: 26px; top: 1.6rem; } }
 .mast-city { font-family: var(--display); font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 400; line-height: 0.88; letter-spacing: -0.03em; font-optical-sizing: auto; color: var(--ink); }
 .mast-city em { font-style: italic; color: var(--accent); font-weight: 300; }
 .mast-bar { display: flex; align-items: center; gap: 1.2rem; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
@@ -61,26 +64,26 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
  font-weight: 400; padding: 0.04em 0.1em 0 0; color: var(--accent); font-optical-sizing: auto; }
 
 /* ── EXPAND TOGGLE ────────────────────────────────────────── */
-.expand { margin-top: 0.8rem; }
-.expand-btn {
+.sh26-panel { margin-top: 0.8rem; }
+.sh26-panel-btn {
  display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
  background: none; border: none; padding: 0.2rem 0;
  font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
  letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
  transition: color 0.12s;
 }
-.expand-btn:hover { color: var(--accent-2); }
-.expand-btn .chevron { display: inline-block; transition: transform 0.18s; font-style: normal; }
-.expand-btn.open .chevron { transform: rotate(90deg); }
-.expand-body {
+.sh26-panel-btn:hover { color: var(--accent-2); }
+.sh26-panel-btn .sh26-chevron { display: inline-block; transition: transform 0.18s; font-style: normal; }
+.sh26-panel-btn.open .sh26-chevron { transform: rotate(90deg); }
+.sh26-panel-body {
  display: none; margin-top: 1rem;
  padding: 1.2rem 1.4rem;
  background: var(--ground-2);
  border-left: 2px solid var(--accent);
 }
-.expand-body.open { display: block; }
-.expand-body .prose p { font-size: 0.92rem; color: var(--ink-2); }
-.expand-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--accent); }
+.sh26-panel-body.open { display: block; }
+.sh26-panel-body .prose p { font-size: 0.92rem; color: var(--ink-2); }
+.sh26-panel-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--accent); }
 
 /* ── ESSAY TEASER ─────────────────────────────────────────── */
 .essay-teaser { margin-bottom: 0.5rem; }
@@ -153,22 +156,24 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .ledger-link:hover { color: var(--accent-2); }
 
 /* ── BACK POCKET ──────────────────────────────────────────── */
-.pocket { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
-.pocket-group { margin-bottom: 0.25rem; }
-.pocket-btn {
+.sh26-section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+.sh26-row { margin-bottom: 0.25rem; }
+.sh26-row-btn {
  width: 100%; display: flex; align-items: center; justify-content: space-between;
  background: none; border: none; border-bottom: 1px solid var(--rule);
  padding: 0.85rem 0; cursor: pointer; color: var(--ink);
  font-family: var(--serif); font-size: 1rem; font-weight: 400; text-align: left;
 }
-.pocket-btn .chev { font-family: var(--mono); color: var(--ink-3); font-size: 0.8rem; transition: transform 0.18s; }
-.pocket-btn.open .chev { transform: rotate(90deg); }
-.pocket-body { display: none; padding: 0.4rem 0 0.9rem; }
-.pocket-body.open { display: block; }
-.pocket-item { padding: 0.5rem 0; border-bottom: 1px solid var(--rule); }
-.pocket-item:last-child { border-bottom: none; }
-.pocket-item .n { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-2); }
-.pocket-item .d { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.1rem; letter-spacing: 0.01em; }
+.sh26-row-btn .sh26-chev { font-family: var(--mono); color: var(--ink-3); font-size: 0.8rem; transition: transform 0.18s; }
+.sh26-row-btn.open .sh26-chev { transform: rotate(90deg); }
+.sh26-row-panel { display: none; padding: 0.4rem 0 0.9rem; }
+.sh26-row-panel.open { display: block; }
+.sh26-item { padding: 0.5rem 0; border-bottom: 1px solid var(--rule); }
+.sh26-item:last-child { border-bottom: none; }
+.sh26-item .n { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-2); }
+.sh26-item .d { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.1rem; letter-spacing: 0.01em; }
+.sh26-item-link { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); text-decoration: none; }
+.sh26-item-link:hover { text-decoration: underline; }
 
 /* ── SECTION LABEL ────────────────────────────────────────── */
 .section-label { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0; }
@@ -194,6 +199,14 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 <div class="content"><div class="wrap">
 
 <header class="masthead">
+ <svg class="mast-leaf" viewBox="0 0 48 48" aria-hidden="true">
+ <path d="M24 42 C8 38, 2 24, 6 14 C9 8, 16 4, 22 8 L24 13 L26 8 C32 4, 39 8, 42 14 C46 24, 40 38, 24 42 Z" />
+ <path d="M24 42 L24 20" />
+ <path d="M24 20 L11 12" />
+ <path d="M24 20 L37 12" />
+ <path d="M24 20 L17 9" />
+ <path d="M24 20 L31 9" />
+ </svg>
  <div class="mast-city" id="m-title"></div>
  <div class="mast-bar">
  <span class="mast-dates" id="m-dates"></span>
@@ -203,17 +216,17 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 
 <section class="plane-piece" id="plane"></section>
 
-<section class="pocket" id="voices-section">
+<section class="sh26-section" id="sh26-voices">
  <div class="section-label">Other voices</div>
  <div class="section-sub">The same trip, reread in a writer's register. More to come here over time.</div>
- <div id="voices-wrap"></div>
+ <div id="sh26-voices-wrap"></div>
 </section>
 
 <main id="chapters"></main>
 
-<section class="pocket" id="pocket-section">
+<section class="sh26-section" id="sh26-pocket">
  <div class="section-label">Back pocket</div>
- <div id="pocket-wrap"></div>
+ <div id="sh26-pocket-wrap"></div>
 </section>
 
 <section class="bookings-section" id="bookings-section">
@@ -304,7 +317,6 @@ const TRIP = {
     { label: "Shanghai Museum East, timed entry", sub: "Thu 29 Oct · book via WeChat mini-program a day ahead, or ask concierge", state: "open" },
     { label: "Shanghai Mama, private cooking class", sub: "Thu 29 Oct · 6:00pm · solo booking, confirm 3+ weeks ahead", state: "open", url: "https://www.tripadvisor.com/AttractionProductReview-g308272-d15658232-Private_Home_Cooking_Class_with_Shanghai_Mama-Shanghai.html" },
     { label: "Capsule Shanghai, studio-visit request", sub: "Tue 27 Oct · write 3 weeks ahead, name two artists", state: "open", url: "mailto:info@capsuleshanghai.com" },
-    { label: "Historic Shanghai, Empire of the Sun walk", sub: "Fri 30 Oct · book 2-3 weeks ahead, solo or pair rate", state: "open", url: "https://www.historic-shanghai.com/historic-shanghai-tours/" },
     { label: "Rockbund Art Museum, timed entry if required", sub: "Fri 30 Oct · check nearer the date", state: "open", url: "https://www.rockbundartmuseum.org" }
   ],
 
@@ -595,19 +607,23 @@ const TRIP = {
     {
       id: "d7", dow: "Friday", date: "30 October", chapter: "VII",
       arc: "A slower day",
-      title: "Old Shanghai, on Foot and by Appointment",
-      essay: `<p>There's a version of "closed-door access" sold to visitors in Shanghai that promises private entry to shuttered heritage buildings, the Astor House, the old Jewish synagogues, the Cercle Sportif. Most of it doesn't really exist as a bookable thing for one or two people; what's real is smaller and better: private, theme-led walking tours through the neighbourhoods themselves, run by people who've spent decades researching them.</p>
-<p>Historic Shanghai, founded by the writer and photographer Katya Knyazeva, runs exactly this. Among the standing private-tour themes is one built around J.G. Ballard's Empire of the Sun, the streets, the house, the internment camp geography that the plane essay opened with. It's a genuine private booking, priced for one or two people, not a group product with your name added to a roster.</p>
+      title: "The House on Amherst Avenue",
+      essay: `<p>There's a version of "closed-door access" sold to visitors in Shanghai that promises private entry to shuttered heritage buildings, the Astor House, the old Jewish synagogues, the Cercle Sportif. Most of it doesn't really exist as a systematic, bookable thing. What's real, in this particular corner, is smaller and requires no booking at all: the actual streets Ballard wrote about are still there, still findable, and the walk to them is free.</p>
+<p>Xinhua Road, in the far western reach of the old French Concession, was Amherst Avenue before 1949. The Ballard family house, the one the plane essay described him returning to in the 1990s, is somewhere on this street, still standing, still subdivided into apartments the way he found it. The exact number isn't something worth pinning down precisely here, better to walk the street itself and take in the general run of 1920s and 30s villas, rather than hunt a single door. Nobody runs a tour of this. You just go and look, from the pavement, the way any resident's neighbour would.</p>
 <p>The afternoon anchors on something real and freshly timed: Rockbund's new show, stuck in movement (in the tide) by the Macau-born, Rio-based artist Jota Mombaça, opens on the 22nd of October, two days before you land, and runs through February. Rockbund is closed Mondays only, so Friday is a normal open day. You'll be seeing the show in its first week.</p>`,
       events: [
         { time: "9:00am", title: "Breakfast near the hotel", kind: "food",
           note: "Da Hu Chun or Nanxiang again, whichever queue looks shorter. Both are close enough to alternate all week without planning." },
-        { time: "10:30am", title: "Historic Shanghai - Empire of the Sun walk", kind: "explore", state: "open",
-          url: "https://www.historic-shanghai.com/historic-shanghai-tours/",
-          note: "Meeting point confirmed on booking, usually former French Concession. DiDi to the meeting point, ~15–20 min. Private tours run roughly 2.5–3 hours and start around RMB 3,500 for one or two people. Book 2–3 weeks ahead.",
-          map: "https://maps.google.com/?q=Historic+Shanghai" },
-        { time: "1:00pm", title: "Lunch, wherever the walk ends", kind: "food",
-          note: "No plan, the guide will end the walk somewhere with food nearby; ask for a Bib Gourmand or counter-style suggestion on the spot." },
+        { time: "10:30am", title: "Xinhua Road, on foot", kind: "explore",
+          note: "Former Amherst Avenue, western French Concession. DiDi, ~25 min. A residential road of 1920s and 30s villas, still lived in, still unrestored in the way Xintiandi and the Wukang corner are not. No fixed address to give here beyond the street itself, walk it slowly and look at the houses as houses, not exhibits.",
+          map: "https://maps.google.com/?q=Xinhua+Road+Shanghai",
+          expand: {
+            label: "Why this street",
+            body: `<p>Xinhua Road runs for about a kilometre through what was, before 1949, one of the most desirable residential pockets of the International Settlement's western extension, garden villas built for taipans and diplomats on generous plots, unlike the terraced lane houses that make up most of the old Concession. J.G. Ballard's family lived on this street, then called Amherst Avenue, until the Japanese occupation forced them into Lunghua internment camp in 1943, the experience that became Empire of the Sun. Ballard returned in the 1990s and found the house still standing, subdivided, lived in by families with no particular knowledge of who had been there before them, which he wrote about as a kind of grace rather than a loss. The street today is much as he found it then: residential, ungentrified, unmarked. There is no plaque. That is more or less the point of coming.</p>`
+          }
+        },
+        { time: "1:00pm", title: "Lunch nearby", kind: "food",
+          note: "No plan. Xinhua Road sits in a quiet residential pocket with a handful of small local kitchens rather than destination restaurants, walk until something looks busy with regulars." },
         { time: "3:00pm", title: "Rockbund Art Museum", kind: "culture",
           url: "https://www.rockbundartmuseum.org",
           note: "20 Huqiu Rd, Huangpu. Closed Mondays, open every other day of the week, including this Friday. Walk from the hotel, ~10 min.",
@@ -691,35 +707,35 @@ const TRIP = {
 
   pocket: [
     { group: "Bib Gourmand walking distance from the hotel", items: [
-      ["Nanxiang Steamed Bun", "85 Yuyuan Rd, 7 min walk. Xiaolongbao counter, the address the dish was invented at."],
-      ["Da Hu Chun", "136 Sichuan Middle Rd, 6 min walk. Qingshui-style pan-fried shengjianbao, drier and breadier than the soupy versions elsewhere."],
-      ["Qiao Ai Lai Lai Xiao Long", "150 Yunnan South Rd. Crab roe xiaolongbao, window counter."],
-      ["Yu Du Lao Wei Mian", "501 Liyuan Rd. Zhoushan seafood noodles, croaker and beltfish, open 8am to 3am."],
-      ["Yunhe Noodle", "108 Guangdong Rd. Yellow croaker noodle soup, single dish."],
-      ["Wang Bao He", "603 Fuzhou Rd. The oldest hairy crab house in the city, since 1744, worth checking current format before a solo visit, it leans toward the banquet end of the crab-house spectrum."]
+      ["Nanxiang Steamed Bun", "85 Yuyuan Rd, 7 min walk. Xiaolongbao counter, the address the dish was invented at.", "https://guide.michelin.com/en/shanghai-municipality/shanghai/restaurant/nanxiang-steamed-bun-city-god-temple"],
+      ["Da Hu Chun", "136 Sichuan Middle Rd, 6 min walk. Qingshui-style pan-fried shengjianbao, drier and breadier than the soupy versions elsewhere.", "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/da-hu-chun-middle-sichuan-road"],
+      ["Qiao Ai Lai Lai Xiao Long", "150 Yunnan South Rd. Crab roe xiaolongbao, window counter.", "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/qiao-ai-lai-lai-xiao-long-huangpu"],
+      ["Yu Du Lao Wei Mian", "501 Liyuan Rd. Zhoushan seafood noodles, croaker and beltfish, open 8am to 3am.", "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/yu-du-lao-wei-mian-huangpu"],
+      ["Yunhe Noodle", "108 Guangdong Rd. Yellow croaker noodle soup, single dish.", "https://maps.google.com/?q=108+Guangdong+Road+Shanghai"],
+      ["Wang Bao He", "603 Fuzhou Rd. The oldest hairy crab house in the city, since 1744, worth checking current format before a solo visit, it leans toward the banquet end of the crab-house spectrum.", "https://maps.google.com/?q=603+Fuzhou+Road+Shanghai"]
     ]},
     { group: "Bib Gourmand further afield, worth the DiDi", items: [
-      ["Chun", "124 Jinxian Rd, French Concession. Ben bang home cooking ordered dish by dish, no reservations, arrive early for a short wait. Lunch service mainly."],
-      ["Lan Xin", "130 Jinxian Rd, same street as Chun. Walk-in alternative if Chun's queue is too long."],
-      ["A Niang Mian Guan", "36 Sinan Rd. Eel noodles, Bib since 2017, morning-only before it sells out."],
-      ["Jingmei Wuxi Noodle", "138 Yanping Rd, Jing'an. Wuxi braised pork rib noodle."],
-      ["Rongjia Yellow Croaker Noodle", "688 Nanjing West Rd. Sister kitchen to one-star Xin Rong Ji."],
-      ["Cong's Kitchen", "252 Hengshan Rd. Home-style Cantonese, best checked for portion format before booking solo."],
-      ["Gong De Lin", "445 Nanjing West Rd. Buddhist vegetarian since 1922, the ground-floor breakfast noodle counter (roughly 7-10am) is genuinely solo-friendly; the fuller dinner menu leans toward sharing plates."],
-      ["Tan", "Yu Garden precinct. Sichuan from the team behind The BRIDGE, Chengdu. New to the Bib list in 2026, small plates sized for one."]
+      ["Chun", "124 Jinxian Rd, French Concession. Ben bang home cooking ordered dish by dish, no reservations, arrive early for a short wait. Lunch service mainly.", "https://maps.google.com/?q=124+Jinxian+Road+Shanghai"],
+      ["Lan Xin", "130 Jinxian Rd, same street as Chun. Walk-in alternative if Chun's queue is too long.", "https://maps.google.com/?q=130+Jinxian+Road+Shanghai"],
+      ["A Niang Mian Guan", "36 Sinan Rd. Eel noodles, Bib since 2017, morning-only before it sells out.", "https://maps.google.com/?q=36+Sinan+Road+Shanghai"],
+      ["Jingmei Wuxi Noodle", "138 Yanping Rd, Jing'an. Wuxi braised pork rib noodle.", "https://maps.google.com/?q=138+Yanping+Road+Shanghai"],
+      ["Rongjia Yellow Croaker Noodle", "688 Nanjing West Rd. Sister kitchen to one-star Xin Rong Ji.", "https://guide.michelin.com/en/shanghai-municipality/shanghai/restaurant/rongjia-noodle-soup-with-yellow-croaker"],
+      ["Cong's Kitchen", "252 Hengshan Rd. Home-style Cantonese, best checked for portion format before booking solo.", "https://maps.google.com/?q=252+Hengshan+Road+Shanghai"],
+      ["Gong De Lin", "445 Nanjing West Rd. Buddhist vegetarian since 1922, the ground-floor breakfast noodle counter (roughly 7-10am) is genuinely solo-friendly; the fuller dinner menu leans toward sharing plates.", "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/gong-de-lin-jingan"],
+      ["Tan", "Yu Garden precinct. Sichuan from the team behind The BRIDGE, Chengdu. New to the Bib list in 2026, small plates sized for one.", "https://maps.google.com/?q=Tan+Sichuan+Yu+Garden+Shanghai"]
     ]},
     { group: "Rooms worth walking into", items: [
-      ["Rockbund Art Museum", "20 Huqiu Rd, 10 min walk. Closed Mondays. Jota Mombaça opens 22 Oct."],
-      ["Hive Center for Contemporary Art", "270 East Beijing Rd. Free. Former bank with a stained-glass skylight."],
-      ["Fotografiska Shanghai", "580 Middle Huaihai Rd. Confirm current show nearer the date."],
-      ["Power Station of Art", "200 Huayuangang Rd. Closed Mondays, like most Shanghai museums. April territory, worth a return if the current show is new."]
+      ["Rockbund Art Museum", "20 Huqiu Rd, 10 min walk. Closed Mondays. Jota Mombaça opens 22 Oct.", "https://www.rockbundartmuseum.org"],
+      ["Hive Center for Contemporary Art", "270 East Beijing Rd. Free. Former bank with a stained-glass skylight.", "https://maps.google.com/?q=270+East+Beijing+Road+Shanghai"],
+      ["Fotografiska Shanghai", "127 Guangfu Rd, Jing'an, overlooking Suzhou Creek. Confirm current show nearer the date.", "https://shanghai.fotografiska.com/en"],
+      ["Power Station of Art", "200 Huayuangang Rd. Closed Mondays, like most Shanghai museums. April territory, worth a return if the current show is new.", "https://www.powerstationofart.com"]
     ]},
     { group: "Practical, near the hotel", items: [
-      ["Watsons pharmacy", "Common chain along Nanjing Road East and Middle, basic medication, sunscreen, toiletries. Ask the front desk for the nearest branch."],
-      ["Hema Fresh (盒马)", "Alibaba's modern grocery chain, snacks, bottled water, fruit, a genuinely interesting supermarket to wander even without buying much."],
+      ["Watsons pharmacy", "Common chain along Nanjing Road East and Middle, basic medication, sunscreen, toiletries. Ask the front desk for the nearest branch.", "https://maps.google.com/?q=Watsons+Nanjing+Road+East+Shanghai"],
+      ["Hema Fresh (盒马)", "Alibaba's modern grocery chain, snacks, bottled water, fruit, a genuinely interesting supermarket to wander even without buying much.", "https://maps.google.com/?q=Hema+Fresh+Huangpu+Shanghai"],
       ["7-Eleven / FamilyMart", "Several within a few minutes' walk, bottled water, phone data top-ups, ATMs, basic essentials, open late."],
       ["Laundry", "The hotel offers same-day laundry, see the concierge section below rather than hunting for a launderette."],
-      ["ATMs", "Bank of China or ICBC branches on Nanjing Road East reliably accept foreign cards; smaller bank ATMs sometimes don't."]
+      ["ATMs", "Bank of China or ICBC branches on Nanjing Road East reliably accept foreign cards; smaller bank ATMs sometimes don't.", "https://maps.google.com/?q=Bank+of+China+Nanjing+Road+East+Shanghai"]
     ]},
     { group: "Ask the concierge to book", items: [
       ["Cejerdary reservation", "Phone or WeChat booking on the day, especially for Saturday. The front desk calling in Mandarin will get a table faster than a foreign number."],
@@ -728,15 +744,20 @@ const TRIP = {
       ["Any Bib Gourmand walk-in queue", "If a queue looks long, ask the concierge to call ahead, several of the smaller shops will hold a stool for a phone booking even without an English line."],
       ["Late checkout on the 1st", "Worth confirming a day or two ahead given the 2:15pm flight, not guaranteed, but commonly granted."],
       ["Laundry / pressing", "Same-day service, usually collected by 10am for return that evening."],
-      ["Historic Shanghai and Shanghai Mama confirmations", "Both are third-party bookings made from home, the concierge can help re-confirm by phone once you've arrived, which local operators sometimes prefer over email."]
+      ["Shanghai Mama confirmation", "A third-party booking made from home, the concierge can help re-confirm by phone once you've arrived, which local operators sometimes prefer over email."]
     ]},
     { group: "If it rains for a day", items: [
-      ["Shanghai Museum, People's Square", "201 Renmin Ave. Closed Mondays, like the East branch. Bronze and ceramic galleries. Book via WeChat 12 days out."],
-      ["The Bund Sightseeing Tunnel", "Genuine mid-1990s municipal camp. Six minutes of animated lights under the Huangpu. Absurd. Recommended."],
-      ["Sinan Books, Fuxing Rd", "Bookshop in a heritage villa. An hour, coffee, a chair by the window."]
+      ["Shanghai Museum, People's Square", "201 Renmin Ave. Closed Mondays, like the East branch. Bronze and ceramic galleries. Book via WeChat 12 days out.", "https://www.shanghaimuseum.net/en/"],
+      ["The Bund Sightseeing Tunnel", "Genuine mid-1990s municipal camp. Six minutes of animated lights under the Huangpu. Absurd. Recommended.", "https://maps.google.com/?q=Bund+Sightseeing+Tunnel+Shanghai"],
+      ["Sinan Books, Fuxing Rd", "Bookshop in a heritage villa. An hour, coffee, a chair by the window.", "https://maps.google.com/?q=517+Fuxing+Middle+Road+Shanghai"]
+    ]},
+    { group: "Worth arranging yourself, if you want more than the itinerary", items: [
+      ["A bespoke Historic Shanghai walk", "Not a standard bookable tour, historic-shanghai.com is a small heritage society, mostly scheduled member events plus occasional private walks by request. If you're keen, email a few weeks out and ask, but don't count on it landing on a specific day.", "https://www.historic-shanghai.com/"],
+      ["UnTour or Monster, a second time", "Both operators already appear this week (UnTour-adjacent Shanghai Mama, Monster covered in April). If one clicked for you, most run several other themed walks worth a look for a future trip.", "https://untourfoodtours.com/"]
     ]}
   ]
 };
+
 
 
 
@@ -752,9 +773,9 @@ function el(tag, cls, html) {
 }
 
 function makeExpand(label, bodyHtml, dropCap) {
- const wrap = el('div', 'expand');
- const btn = el('button', 'expand-btn', `<em class="chevron">›</em>&nbsp;${label}`);
- const body = el('div', 'expand-body');
+ const wrap = el('div', 'sh26-panel');
+ const btn = el('button', 'sh26-panel-btn', `<em class="sh26-chevron">›</em>&nbsp;${label}`);
+ const body = el('div', 'sh26-panel-body');
  body.innerHTML = `<div class="prose${dropCap ? ' prose-drop' : ''}">${bodyHtml}</div>`;
  btn.addEventListener('click', () => {
  btn.classList.toggle('open');
@@ -916,15 +937,15 @@ function renderBookings() {
 }
 
 function renderVoices() {
- const wrap = document.getElementById('voices-wrap');
+ const wrap = document.getElementById('sh26-voices-wrap');
  if (!TRIP.voices || !TRIP.voices.length) {
- document.getElementById('voices-section').style.display = 'none';
+ document.getElementById('sh26-voices').style.display = 'none';
  return;
  }
  TRIP.voices.forEach(v => {
- const grp = el('div', 'pocket-group');
- const btn = el('button', 'pocket-btn', `${v.author} &middot; <em style="font-style:italic;">${v.title}</em><span class="chev">&rsaquo;</span>`);
- const body = el('div', 'pocket-body');
+ const grp = el('div', 'sh26-row');
+ const btn = el('button', 'sh26-row-btn', `${v.author} &middot; <em style="font-style:italic;">${v.title}</em><span class="sh26-chev">&rsaquo;</span>`);
+ const body = el('div', 'sh26-row-panel');
  body.innerHTML = `<div class="prose prose-drop" style="padding-top:0.6rem;">${v.body}</div>`;
  btn.addEventListener('click', () => { btn.classList.toggle('open'); body.classList.toggle('open'); });
  grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
@@ -932,13 +953,14 @@ function renderVoices() {
 }
 
 function renderPocket() {
- const wrap = document.getElementById('pocket-wrap');
+ const wrap = document.getElementById('sh26-pocket-wrap');
  TRIP.pocket.forEach(g => {
- const grp = el('div', 'pocket-group');
- const btn = el('button', 'pocket-btn', `${g.group}<span class="chev">›</span>`);
- const body = el('div', 'pocket-body');
- g.items.forEach(([n, d]) => {
- body.appendChild(el('div', 'pocket-item', `<div class="n">${n}</div><div class="d">${d}</div>`));
+ const grp = el('div', 'sh26-row');
+ const btn = el('button', 'sh26-row-btn', `${g.group}<span class="sh26-chev">›</span>`);
+ const body = el('div', 'sh26-row-panel');
+ g.items.forEach(([n, d, u]) => {
+ const link = u ? ` <a class="sh26-item-link" href="${u}" target="_blank" rel="noopener">↗</a>` : '';
+ body.appendChild(el('div', 'sh26-item', `<div class="n">${n}${link}</div><div class="d">${d}</div>`));
  });
  btn.addEventListener('click', () => { btn.classList.toggle('open'); body.classList.toggle('open'); });
  grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
@@ -968,6 +990,15 @@ function initNotes() {
 
 async function fetchWeather() {
  try {
+ // Open-Meteo's forecast window is ~16 days; the masthead's "current" reading only
+ // means anything once we're inside that window relative to trip start, otherwise
+ // it would show today's real Shanghai weather next to October trip dates, which
+ // reads as wrong no matter how accurate the number technically is.
+ const tripStart = new Date('2026-10-24T00:00:00+08:00');
+ const now = new Date();
+ const daysUntilTrip = (tripStart - now) / 86400000;
+ const showCurrent = daysUntilTrip <= 16 && daysUntilTrip >= -8;
+
  const url = 'https://api.open-meteo.com/v1/forecast?latitude=31.2304&longitude=121.4737' +
  '&current=temperature_2m,weather_code' +
  '&daily=weather_code,temperature_2m_max,temperature_2m_min' +
@@ -979,11 +1010,13 @@ async function fetchWeather() {
 
  const wmoIcon = c => c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
 
- // Masthead: current temp
+ // Masthead: current temp, only shown once it's actually relevant to the trip
+ if (showCurrent && d.current) {
  const cur = Math.round(d.current.temperature_2m);
  const curIcon = wmoIcon(d.current.weather_code);
  document.getElementById('m-weather').innerHTML =
  `${curIcon} <span class="mast-weather-temp">${cur}°</span>`;
+ }
 
  // Per-day: map date string to day id
  const dateToId = {
