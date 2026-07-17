@@ -189,7 +189,19 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .section-sub { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: var(--ink-3); margin: 0.5rem 0 1rem; max-width: 40em; }
 .section-sub code { font-family: var(--mono); font-style: normal; font-size: 0.78rem; background: var(--ground-2); padding: 0.1em 0.35em; }
 .notepanel-label { font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
-.notepanel-hint { font-family: var(--serif); font-style: italic; font-size: 0.72rem; color: var(--ink-3); margin-top: 0.5rem; line-height: 1.5; }
+
+.sh26-sandbox-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
+.sandbox-copy-btn { flex-shrink: 0; padding: 0.4rem 0.8rem; background: none; border: 1px solid var(--rule-2); color: var(--ink-3); font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: color 0.12s, border-color 0.12s; }
+.sandbox-copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+.sandbox-item { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.7rem 0; border-bottom: 1px solid var(--rule); }
+.sandbox-item:last-child { border-bottom: none; }
+.sandbox-item-text { flex: 1; min-width: 0; font-family: var(--serif); font-size: 0.92rem; color: var(--ink-2); line-height: 1.55; white-space: pre-wrap; cursor: text; padding: 0.1rem 0; }
+.sandbox-item-text:hover { color: var(--ink); }
+.sandbox-item-date { font-family: var(--mono); font-size: 0.58rem; color: var(--rule-2); letter-spacing: 0.04em; margin-top: 0.3rem; }
+.sandbox-item-ta { flex: 1; min-width: 0; font-family: var(--serif); font-size: 0.92rem; color: var(--ink); line-height: 1.55; background: var(--ground-2); border: 1px solid var(--accent); border-radius: 2px; padding: 0.4rem 0.5rem; resize: vertical; }
+.sandbox-item-del { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; border: none; background: none; color: var(--ink-3); font-family: var(--mono); font-size: 0.85rem; line-height: 1; cursor: pointer; margin-top: 0.15rem; }
+.sandbox-item-del:hover { color: #a8522f; }
+.sandbox-empty { font-family: var(--serif); font-style: italic; font-size: 0.9rem; color: var(--ink-3); padding: 0.5rem 0; }
 
 /* ── FAB / NOTES ──────────────────────────────────────────── */
 footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
@@ -239,8 +251,13 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 </section>
 
 <section class="sh26-section" id="sh26-sandbox">
+ <div class="sh26-sandbox-head">
+ <div>
  <div class="section-label">Sandbox</div>
- <div class="section-sub">Things saved with the pencil button below, not yet decided on. Tap a saved item to open it on GitHub; close it there once it's been triaged.</div>
+ <div class="section-sub">Saved on this phone. Tap any item to edit it, tap × to remove it.</div>
+ </div>
+ <button class="sandbox-copy-btn" id="sandbox-copy">Copy for Claude</button>
+ </div>
  <div id="sh26-sandbox-wrap"></div>
 </section>
 
@@ -262,8 +279,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 <div class="notepanel" id="notepanel">
  <div class="notepanel-label">Save a find</div>
  <textarea id="note-ta" placeholder="Paste a link, a name, an address, a thought…"></textarea>
- <button class="save" id="note-save">Save to GitHub ↗</button>
- <div class="notepanel-hint">Opens a pre-filled GitHub issue. One more tap there to confirm it, since you're already signed in.</div>
+ <button class="save" id="note-save">Add</button>
 </div>
 
 <script>
@@ -1058,6 +1074,16 @@ function renderPocket() {
  });
 }
 
+const SANDBOX_KEY = 'sha_sandbox';
+
+function loadSandbox() {
+ try { return JSON.parse(localStorage.getItem(SANDBOX_KEY) || '[]'); }
+ catch (e) { return []; }
+}
+function saveSandbox(items) {
+ localStorage.setItem(SANDBOX_KEY, JSON.stringify(items));
+}
+
 function initNotes() {
  const fab = document.getElementById('fab');
  const panel = document.getElementById('notepanel');
@@ -1066,36 +1092,95 @@ function initNotes() {
  document.getElementById('note-save').addEventListener('click', () => {
  const v = ta.value.trim();
  if (!v) return;
- const title = v.length > 70 ? v.slice(0, 68).trim() + '\u2026' : v;
- const url = 'https://github.com/camerondeath/travel/issues/new'
- + '?title=' + encodeURIComponent(title)
- + '&body=' + encodeURIComponent(v);
- window.open(url, '_blank', 'noopener');
+ const items = loadSandbox();
+ items.unshift({ id: 's' + Date.now().toString(36), text: v, date: new Date().toISOString() });
+ saveSandbox(items);
  ta.value = '';
  panel.classList.remove('open');
+ renderSandbox();
+ });
+ ta.addEventListener('keydown', e => {
+ if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); document.getElementById('note-save').click(); }
  });
 }
 
-const ISSUES_URL = 'https://api.github.com/repos/camerondeath/travel/issues?state=open&per_page=100&sort=created&direction=desc';
-
-async function renderSandbox() {
+function renderSandbox() {
  const wrap = document.getElementById('sh26-sandbox-wrap');
- try {
- const r = await fetch(ISSUES_URL, { headers: { Accept: 'application/vnd.github+json' } });
- if (!r.ok) throw new Error(r.status);
- const issues = (await r.json()).filter(i => !i.pull_request);
- if (!issues.length) { wrap.innerHTML = '<div class="sh26-item"><div class="d">Nothing saved yet. Use the pencil button to add the first one.</div></div>'; return; }
+ const items = loadSandbox();
  wrap.innerHTML = '';
- issues.forEach(iss => {
- const item = el('a', 'sh26-item sh26-item-link-block', '');
- item.href = iss.html_url; item.target = '_blank'; item.rel = 'noopener';
- const when = new Date(iss.created_at).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
- item.innerHTML = '<div class="n">' + iss.title.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</div><div class="d">' + when + ' \u00b7 #' + iss.number + '</div>';
- wrap.appendChild(item);
- });
- } catch (e) {
- wrap.innerHTML = '<div class="sh26-item"><div class="d">Couldn\u2019t load saved items just now. <a class="sh26-item-link" href="https://github.com/camerondeath/travel/issues" target="_blank" rel="noopener">View on GitHub \u2197</a></div></div>';
+
+ if (!items.length) {
+ wrap.appendChild(el('div', 'sandbox-empty', 'Nothing saved yet. Use the + button to add the first one.'));
+ return;
  }
+
+ items.forEach(item => {
+ const row = el('div', 'sandbox-item');
+ row.dataset.id = item.id;
+
+ const textWrap = el('div', null);
+ const textEl = el('div', 'sandbox-item-text', item.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+ const when = new Date(item.date).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
+ const dateEl = el('div', 'sandbox-item-date', when);
+ textWrap.appendChild(textEl);
+ textWrap.appendChild(dateEl);
+ textWrap.style.flex = '1';
+ textWrap.style.minWidth = '0';
+
+ textEl.addEventListener('click', () => {
+ if (row.querySelector('textarea')) return;
+ const ta = document.createElement('textarea');
+ ta.className = 'sandbox-item-ta';
+ ta.value = item.text;
+ ta.rows = Math.min(8, Math.max(2, Math.ceil(item.text.length / 40)));
+ textEl.replaceWith(ta);
+ ta.focus();
+ ta.setSelectionRange(ta.value.length, ta.value.length);
+ const commit = () => {
+ const v = ta.value.trim();
+ const all = loadSandbox();
+ const idx = all.findIndex(x => x.id === item.id);
+ if (idx === -1) return;
+ if (!v) { all.splice(idx, 1); saveSandbox(all); renderSandbox(); return; }
+ all[idx].text = v;
+ saveSandbox(all);
+ item.text = v;
+ const fresh = el('div', 'sandbox-item-text', v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+ fresh.addEventListener('click', () => textEl.click());
+ ta.replaceWith(fresh);
+ };
+ ta.addEventListener('blur', commit);
+ ta.addEventListener('keydown', e => {
+ if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); ta.blur(); }
+ if (e.key === 'Escape') { e.preventDefault(); renderSandbox(); }
+ });
+ });
+
+ const del = el('button', 'sandbox-item-del', '\u00d7');
+ del.setAttribute('aria-label', 'Remove');
+ del.addEventListener('click', () => {
+ const all = loadSandbox().filter(x => x.id !== item.id);
+ saveSandbox(all);
+ renderSandbox();
+ });
+
+ row.appendChild(textWrap);
+ row.appendChild(del);
+ wrap.appendChild(row);
+ });
+}
+
+function initSandboxCopy() {
+ const btn = document.getElementById('sandbox-copy');
+ if (!btn) return;
+ btn.addEventListener('click', async () => {
+ const items = loadSandbox();
+ if (!items.length) { btn.textContent = 'Nothing to copy'; setTimeout(() => btn.textContent = 'Copy for Claude', 1400); return; }
+ const text = items.map(i => '- ' + i.text.replace(/\n/g, ' ')).join('\n');
+ try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied \u2014 paste into chat'; }
+ catch (e) { btn.textContent = 'Copy failed'; }
+ setTimeout(() => btn.textContent = 'Copy for Claude', 2000);
+ });
 }
 
 async function fetchWeather() {
@@ -1156,6 +1241,7 @@ document.addEventListener('DOMContentLoaded', () => {
  renderBookings();
  renderPocket();
  renderSandbox();
+ initSandboxCopy();
  initNotes();
  fetchWeather();
 });
