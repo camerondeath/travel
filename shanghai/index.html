@@ -326,7 +326,7 @@ const TRIP = {
     city: "Shanghai",
     dates: "24 Oct – 1 Nov 2026",
     flights: { out: "NZ289 · AKL 11:45pm → PVG 6:55am", ret: "NZ288 · PVG 2:15pm → AKL 6:45am +1", ref: "D52ZEH" },
-    base: { name: "OPARTMENT The Far Eastern, 90 Xizang Middle Rd, Huangpu", url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334", map: "https://www.amap.com/search?query=90+Xizang+Middle+Road+Huangpu+Shanghai" },
+    base: { name: "OPARTMENT The Far Eastern, 90 Xizang Middle Rd, Huangpu", url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334", map: "https://maps.google.com/?q=90+Xizang+Middle+Road+Huangpu+Shanghai" },
     plane: {
       kicker: "Read on the plane",
       title: "The Second Look",
@@ -378,7 +378,7 @@ const TRIP = {
   bookings: [
     { label: "OPARTMENT The Far Eastern", sub: "24 Oct – 1 Nov · 8 nights · check-in 3pm · checkout before noon", state: "confirmed", ref: "Booking 1486589539828358 · PIN 9982", url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334" },
     { label: "Flights, Air New Zealand", sub: "NZ570 / NZ289 / NZ288 / NZ527 · D52ZEH · NZ288 bag drop closes 12:45pm", state: "confirmed" },
-    { label: "Wang Bao He, whole hairy crab", sub: "Mon 26 Oct · 6:30pm · concierge to confirm they will seat one, and the per-crab price", state: "open", url: "https://www.amap.com/search?query=603+Fuzhou+Road+Shanghai" },
+    { label: "Wang Bao He, whole hairy crab", sub: "Mon 26 Oct · 6:30pm · concierge to confirm they will seat one, and the per-crab price", state: "open", url: "https://maps.google.com/?q=603+Fuzhou+Road+Shanghai" },
     { label: "Cejerdary, crab roe noodles", sub: "Sat 31 Oct · 6:30pm · walk-in queue after 6, or ask concierge to call ahead", state: "open" },
     { label: "Shanghai Museum East, timed entry", sub: "Thu 29 Oct · book via WeChat mini-program a day ahead, or ask concierge", state: "open" },
     { label: "Shanghai Mama, private cooking class", sub: "Thu 29 Oct · 6:00pm · solo booking, confirm 3+ weeks ahead", state: "open", url: "https://www.tripadvisor.com/AttractionProductReview-g308272-d15658232-Private_Home_Cooking_Class_with_Shanghai_Mama-Shanghai.html" },
@@ -420,11 +420,11 @@ const TRIP = {
           note: "Taxi rank or DiDi from arrivals, ~45–60 min through the tunnel. Bags in. Room from 3pm. Ask about early check-in now, at the desk, while the bags are going in. It is the day's only real variable.",
           ref: "Booking 1486589539828358 · PIN 9982",
           url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334",
-          map: "https://www.amap.com/search?query=90+Xizang+Middle+Road+Huangpu+Shanghai" },
+          map: "https://maps.google.com/?q=90+Xizang+Middle+Road+Huangpu+Shanghai" },
         { time: "9:30am", title: "Da Hu Chun", kind: "food", bib: true,
           bibUrl: "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/da-hu-chun-middle-sichuan-road",
           note: "Address is contested: Michelin lists 136 Sichuan Middle Rd, Google returns 11 Sichuan South Rd, and reviewers on both report walking straight past the pin. Confirm on Amap or Baidu before setting off. Either way it is ~20 minutes on foot east from the hotel, not the six the map implies. Opens 8am daily. The Shanghainese pan-fried bun in its original form, ordered at the counter, eaten standing.",
-          map: "https://www.amap.com/search?query=Da+Hu+Chun+Sichuan+Road+Shanghai",
+          map: "https://maps.google.com/?q=Da+Hu+Chun+Sichuan+Road+Shanghai",
           expand: {
             label: "About the shop, and what to order",
             body: `<p>Da Hu Chun opened in 1932, moved away for a period and returned, and has now held its Bib Gourmand for eight consecutive years. The style here is the qingshui, or plain-water, school of shengjianbao: a fully fermented dough with almost no gelatin added, which gives a drier, breadier bun than the soupier versions sold elsewhere, and is the reason locals distinguish this shop from the rest of the city's pan-fried bun trade. Order the classic pork, and if you're curious, the crabmeat-and-roe version sold alongside it in season. The mini wontons in clear broth make a good palate cleanser between rounds. This is the correct first meal of the trip: it is on the way to nowhere except the Bund, which is the direction you're going, and it takes eleven minutes.</p>`
@@ -432,10 +432,10 @@ const TRIP = {
         },
         { time: "11:45am", title: "Yangshupu Waterworks", kind: "explore",
           note: "830 Yangshupu Rd, Yangpu. DiDi from Da Hu Chun, ~30 min; the only sensible way, since the nearest metro (Line 4/12, Dalian Road) is still a 15-minute walk from the water. A working municipal pumping station built by the British in 1883, red brick with a castellated roofline that looks more like a small fortress than a piece of civic infrastructure, and it still treats a share of the city's water supply today, one of the oldest continuously operating industrial buildings in China.",
-          map: "https://www.amap.com/search?query=830+Yangshupu+Road+Shanghai" },
+          map: "https://maps.google.com/?q=830+Yangshupu+Road+Shanghai" },
         { time: "12:30pm", title: "Yangpu Binjiang riverfront, on foot", kind: "explore",
           note: "The former Shanghai Fish Market, the derelict textile mills, the Mao-era cranes. Walk downstream, southwest, toward the towers. Four hours if you sit as often as you should, and you should. There are converted warehouse cafés along the path when you need one.",
-          map: "https://www.amap.com/search?query=Yangpu+Binjiang+Waterfront+Shanghai" },
+          map: "https://maps.google.com/?q=Yangpu+Binjiang+Waterfront+Shanghai" },
         { time: "4:30pm", title: "The light", kind: "explore",
           note: "Sunset is 5:02. Be on the water for it. The twenty minutes either side are the reason the whole day is shaped this way, and they are the one thing on this itinerary that cannot be rescheduled." },
         { time: "5:30pm", title: "DiDi back", kind: "travel",
@@ -443,7 +443,7 @@ const TRIP = {
         { time: "6:45pm", title: "Yu Du Lao Wei Mian", kind: "food", state: "open", bib: true,
           bibUrl: "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/yu-du-lao-wei-mian-huangpu",
           note: "501 Liyuan Rd, ~15 min walk south of the hotel or a short DiDi. Open 8am to 3am daily, so there is no deadline on this one at all. Order the beltfish, not the croaker: it is only boned and at its best in October and November, and there is already a better croaker bowl in this week on Tuesday.",
-          map: "https://www.amap.com/search?query=501+Liyuan+Road+Shanghai",
+          map: "https://maps.google.com/?q=501+Liyuan+Road+Shanghai",
           expand: {
             label: "About the shop",
             body: `<p>The owner grew up in Zhoushan, the fishing archipelago off the Zhejiang coast, and learned to make noodles from his mother before opening this shop in Huangpu more than a decade ago. Everything on the menu is built around seafood shipped in from home: a milky broth studded with yellow croaker, or with beltfish, which only shows up boned and at its best in October and November, which means this week is the correct week to order it. The yellow croaker spring rolls are the other thing regulars order without fail. It runs long hours, from eight in the morning to three the next morning, and the seafood is kept visibly on ice at the counter so you can point at what you want added to the bowl.</p>`
@@ -466,7 +466,7 @@ const TRIP = {
       events: [
         { time: "8:15am", title: "The four warriors", kind: "food",
           note: "Yunnan South Rd and the lanes running off it, ~10 min walk south. No address on purpose: buy da bing, you tiao, ci fan tuan and dou jiang from whoever has the queue, eat them standing, be finished by nine. Salty dou jiang, not sweet. It is the one of the four that people who did not grow up here get wrong.",
-          map: "https://www.amap.com/search?query=Yunnan+South+Road+Shanghai",
+          map: "https://maps.google.com/?q=Yunnan+South+Road+Shanghai",
           expand: {
             label: "Why bother, and what you are looking at",
             body: `<p>The four warriors are the closest thing Shanghai has to a fixed breakfast liturgy, and they are disappearing, not through any policy but through economics: the shops are tiny, the margins are pennies, the operators are old, and the ground they stand on is worth more as anything else. What is left is concentrated in the older lanes of Huangpu and Hongkou, which is where you are. The tell for a good one is the dou jiang. Sweet soy milk is a drink. Salty dou jiang is a construction: the hot milk is poured over vinegar in the bowl at the moment of serving, which curdles it on contact, and then dried shrimp, zha cai pickle, chopped spring onion, chilli oil and torn you tiao go in on top and collapse into it. It is eaten with a spoon, it costs about four yuan, and it is the single most Shanghainese thing you can put in your mouth before eight in the morning.</p>`
@@ -475,7 +475,7 @@ const TRIP = {
         { time: "10:00am", title: "Tank Shanghai", kind: "culture",
           url: "https://www.tankshanghai.com/",
           note: "2380 Longteng Ave, Xuhui. Open daily, no weekly closure. DiDi from Yunnan South Rd, ~35 min; leave by 9:15. The metro route (Line 10 to Yuqiao, then a 20-minute walk) adds half an hour, not worth it for a single stop.",
-          map: "https://www.amap.com/search?query=Tank+Shanghai+2380+Longteng+Avenue",
+          map: "https://maps.google.com/?q=Tank+Shanghai+2380+Longteng+Avenue",
           expand: {
             label: "About the building",
             body: `<p>The five cylinders were aviation fuel tanks for the old Longhua Airport, decommissioned when the airport closed and left standing on reclaimed riverfront land until the architect Li Hu, trained at OMA under Rem Koolhaas, was given the site around 2015. He kept the tanks' original steel skins and cut new openings between them rather than building a conventional gallery shell inside, so the exhibition spaces still read as industrial vessels rather than white cubes. The complex opened in 2019 and has become one of the anchor stops on the West Bund museum strip, alongside a large public lawn that fills with people flying kites on weekend afternoons regardless of what's showing inside.</p>`
@@ -484,7 +484,7 @@ const TRIP = {
         { time: "12:30pm", title: "Long Museum West Bund", kind: "culture",
           url: "http://www.thelongmuseum.com/",
           note: "3398 Longteng Ave. Tue-Sun 9:30am-5:30pm, closed Monday, so Sunday is fine. 20-minute walk north along the river path from Tank Shanghai. Walk it, don't DiDi, the path itself is the point of the corridor.",
-          map: "https://www.amap.com/search?query=Long+Museum+West+Bund+Shanghai",
+          map: "https://maps.google.com/?q=Long+Museum+West+Bund+Shanghai",
           expand: {
             label: "About the collection",
             body: `<p>Liu Yiqian made his money in Shanghai's early stock and real-estate markets and, with his wife Wang Wei, has spent more than two decades building one of the largest private collections of modern and contemporary Chinese art anywhere, alongside a significant holding of classical Chinese painting and revolutionary-era propaganda art housed at their other Long Museum branch in Pudong. This West Bund building, by the Shanghai-based architect Liu Yichun, sits on the site of a former coal transfer dock; the concrete umbrella vaults that support the roof are the original wharf structure, left exposed rather than clad over. The rotating contemporary shows tend to favour Chinese painters who came of age after 1989, hung without much wall text, on the theory that the work should carry the room rather than the labels.</p>`
@@ -492,7 +492,7 @@ const TRIP = {
         },
         { time: "2:30pm", title: "Wei Xiang Zhai", kind: "food",
           note: "14 Yandang Rd, near Fuxing Park. DiDi, ~20 min from West Bund, there is no useful direct metro from this stretch of river. Sesame-paste noodles the neighbourhood has eaten for eighty years. Small counter, no English menu, easy alone. Martina's pick in April, unused.",
-          map: "https://www.amap.com/search?query=14+Yandang+Road+Shanghai",
+          map: "https://maps.google.com/?q=14+Yandang+Road+Shanghai",
           expand: {
             label: "About the noodle",
             body: `<p>Wei Xiang Zhai has been on Yandang Road, a short pedestrian street tucked behind Huaihai Road near Fuxing Park, since the early 1990s, and the shop still runs the same single dish it opened with: dry-tossed noodles in a toasted sesame and peanut paste, served either with a clear beef broth on the side or with wontons stirred through the same sauce. It's a small, plain room, closer to a canteen than a restaurant, and the appeal is entirely in the paste itself, nuttier and less sweet than most sesame noodle preparations sold to tourists elsewhere in the city. No English menu, but the two options, noodles with broth, or wontons in sauce, cover almost everything anyone orders.</p>`
@@ -504,7 +504,7 @@ const TRIP = {
           note: "Order in through Ele.me or Meituan; the hotel can set this up for you if it isn't running yet. An early, low-effort evening after a day on your feet, with the bar below left optional." },
         { time: "8:30pm", title: "Bar Leone, if the legs hold", kind: "food",
           note: "527 Middle Fuxing Rd, DiDi ~15 min. Hong Kong's aperitivo bar, now here, and one of the few rooms in this city where a man alone at the bar with a Garibaldi is the most ordinary thing in it. April had it in the back pocket and never used it. Genuinely optional, but the alternative is a hotel room, and there are eight of those this week.",
-          map: "https://www.amap.com/search?query=527+Middle+Fuxing+Road+Shanghai" }
+          map: "https://maps.google.com/?q=527+Middle+Fuxing+Road+Shanghai" }
       ]
     },
 
@@ -520,11 +520,11 @@ const TRIP = {
       events: [
         { time: "9:15am", title: "The walk south", kind: "explore",
           note: "On foot, ~25 min: Xizang Middle Rd, across Yan'an Rd (the old creek boundary, which is why it is so wide), into the grid. Do not DiDi this one. The distance is the point of the day and it takes twenty-five minutes to make it.",
-          map: "https://www.amap.com/search?query=Yan'an+East+Road+Xizang+Middle+Road+Shanghai" },
+          map: "https://maps.google.com/?q=Yan'an+East+Road+Xizang+Middle+Road+Shanghai" },
         { time: "9:45am", title: "Nanxiang Steamed Bun", kind: "food", bib: true,
           bibUrl: "https://guide.michelin.com/en/shanghai-municipality/shanghai/restaurant/nanxiang-steamed-bun-city-god-temple",
           note: "In the Yu Garden bazaar by the City God Temple, ~25 min walk from the hotel. Careful with the pin: there are several Nanxiang branches, and the bazaar original (not Yuyuan Road, which is a different street out west in Changning) is the one on the Bib list. Monday morning is a fraction of the weekend queue, which is why this sits here and not on the Saturday you land.",
-          map: "https://www.amap.com/search?query=Nanxiang+Mantou+Dian+Yu+Garden+Shanghai",
+          map: "https://maps.google.com/?q=Nanxiang+Mantou+Dian+Yu+Garden+Shanghai",
           expand: {
             label: "About the shop, and what to order",
             body: `<p>Nanxiang Mantou Dian opened at this address in 1900 and is the shop most food historians credit with the modern Shanghai xiaolongbao. It has held its Bib Gourmand every year the guide has run in the city. There are two counters at street level and a slower sit-down room upstairs; the counters are the point and the faster option. Order the standard pork xiaolongbao, sixteen to a steamer, and if it's on, the crab meat variety, which only appears for about six weeks a year centred on the autumn crab season, so this week is exactly the window. Alipay only. A queue at the ground-floor counter moves fast, usually under fifteen minutes even when it looks long from the street, and on a Monday at a quarter to ten it will barely exist.</p>`
@@ -532,7 +532,7 @@ const TRIP = {
         },
         { time: "10:45am", title: "Fangbang Middle Road, unhurried", kind: "explore",
           note: "On foot, south from the bazaar along the ring road, then east on Fangbang Middle. No destination. Follow whichever alley looks interesting. Nearly two hours, and it is the day.",
-          map: "https://www.amap.com/search?query=Fangbang+Middle+Road+Shanghai",
+          map: "https://maps.google.com/?q=Fangbang+Middle+Road+Shanghai",
           expand: {
             label: "What to notice",
             body: `<p>Fangbang Middle Road roughly traces the old town's original main east-west axis, inside the vanished city wall, and the blocks south of it toward Xiaonanmen are where the reconstruction money that transformed Yu Garden's bazaar simply ran out. What's left is un-prettified: two-storey tenements with laundry strung between them, traditional medicine shops selling dried roots out of glass jars, a knife sharpener working a foot-pedal grinding wheel on the pavement, small temples to local deities squeezed between shopfronts. None of it is curated for a visitor's benefit. Follow whichever side alley looks like it's going somewhere; most of them are barely wide enough for two people to pass.</p>`
@@ -541,7 +541,7 @@ const TRIP = {
         { time: "12:30pm", title: "Tan", kind: "food", bib: true,
           bibUrl: "https://guide.michelin.com/en/cn/shanghai-municipality/shanghai/restaurants/bib-gourmand",
           note: "Yu Garden precinct. Walk, ~10 min from Fangbang Middle. Have the concierge confirm it opens on Mondays before you set off; small kitchens take a weekly rest day and this one's schedule was not independently confirmed.",
-          map: "https://www.amap.com/search?query=Tan+Sichuan+Yu+Garden+Shanghai",
+          map: "https://maps.google.com/?q=Tan+Sichuan+Yu+Garden+Shanghai",
           expand: {
             label: "About the kitchen, and why it's new to the list",
             body: `<p>Tan opened in the Yu Garden precinct in 2025 and picked up a Bib Gourmand within its first year, one of eight new additions to the 2026 Shanghai list. It's run by the team behind The BRIDGE in Chengdu, widely regarded as one of the reference kitchens for serious Sichuan food outside Sichuan itself, which is a real pedigree rather than a marketing line. Order two or three small plates rather than a set menu: mapo tofu, made properly numbing rather than just hot, shuizhuyu, fish poached in chilli oil, and fuqi feipian, a sliced beef and offal salad in an aggressively fragrant dressing, are the three dishes reviewers keep returning to, and all three are sized for one person to order alongside just one other dish. Prices sit at ordinary Yu Garden levels, which makes the kitchen's actual quality a genuine surprise for the neighbourhood. It is also, this week, the only thing standing between you and eight days of wheat and river fish, so order the numbing one.</p>`
@@ -549,7 +549,7 @@ const TRIP = {
         },
         { time: "2:00pm", title: "City God Temple", kind: "explore",
           note: "249 Fangbang Middle Rd. Walk, ~10 min. Open Mondays, 8:30 to 4:30, unlike almost everything else in this city today. Active place of worship, Ming foundation. Sit for ten minutes.",
-          map: "https://www.amap.com/search?query=Shanghai+City+God+Temple",
+          map: "https://maps.google.com/?q=Shanghai+City+God+Temple",
           expand: {
             label: "What it is",
             body: `<p>The City God Temple, or Chenghuang Miao, has stood at roughly this spot since 1403, dedicated to the Taoist deity believed to protect the city and oversee the moral conduct of its residents, a role something like a municipal magistrate for the afterlife. It was badly damaged during the Japanese occupation and again during the Cultural Revolution, and the buildings standing today are largely a 1990s reconstruction, though the temple has functioned as an active place of worship more or less continuously since. Incense smoke, offerings of fruit and paper money, and a steady trickle of older worshippers rather than tour groups. It gives the old town a genuine centre of gravity that Yu Garden, for all its polish, doesn't quite have, and today the garden is shut anyway.</p>`
@@ -559,7 +559,7 @@ const TRIP = {
           note: "~25 min north on foot, or a DiDi in ten. Nothing further planned before dinner, and dinner is the biggest thing on the page." },
         { time: "6:30pm", title: "Wang Bao He", kind: "food", state: "open",
           note: "603 Fuzhou Rd, ~12 min walk from the hotel. Founded 1744, which makes it older than every Shanghai in the plane essay: it predates the concessions by a century, which is why it is on this day and not another one. Whole steamed hairy crab, ginger vinegar, warm Shaoxing. Concierge to confirm two things before you go: that they will seat one, and what a single male crab actually costs, because the room leans banquet and the pricing is not always on the menu.",
-          map: "https://www.amap.com/search?query=603+Fuzhou+Road+Shanghai",
+          map: "https://maps.google.com/?q=603+Fuzhou+Road+Shanghai",
           expand: {
             label: "Why whole crab, and why alone",
             body: `<p>A bowl of crab roe noodles, which is Saturday's dinner, is crab that somebody else has already picked for you. It is a magnificent thing and it is not the same experience. Whole crab is forty-five minutes of work: the shell off, the roe out with a spoon, the legs cracked and worked through, the vinegar for the sweetness, the ginger and the warm yellow wine. It is also, structurally, the easiest banquet dish in Chinese food to eat by yourself: one animal, one person, nothing to share and nothing to negotiate. Male crab in the tenth lunar month, which is this week, is the one you want; the roe is the whole point.</p>
@@ -585,7 +585,7 @@ const TRIP = {
         { time: "11:00am", title: "Capsule Shanghai", kind: "culture", state: "open",
           url: "https://capsuleshanghai.com/",
           note: "1st floor, Building 16, Lane 275 Anfu Rd. Tue-Sat 11am-6pm, closed Sun-Mon, Tuesday is the earliest day this works. DiDi from the hotel, ~20 min. By appointment: info@capsuleshanghai.com.",
-          map: "https://www.amap.com/search?query=275+Anfu+Road+Shanghai",
+          map: "https://maps.google.com/?q=275+Anfu+Road+Shanghai",
           expand: {
             label: "How to try for a studio visit, and how not to overstate it",
             body: `<p>Write from New Zealand at least three weeks out. Address the email to Enrico Polato and the gallery team. Mention two specific roster artists whose work you are interested in; Pixy Liao (Shanghai-born, Brooklyn-based, autobiographical photography) or Gao Yuan (Kunming-born, Beijing-based, mixed-media) are both plausible names to raise, though neither is guaranteed to be in Shanghai that week. Ask whether a studio visit might be possible during 24 October to 1 November. Explain briefly what you do and why you're interested. Be honest with yourself about the odds: this is a real, occasionally-granted courtesy from a small gallery, not a bookable product, and there is a genuine chance the answer is no or simply doesn't get a reply in time. If it doesn't happen, the gallery itself is still worth the visit, Capsule's own programme is one of the best in the Concession.</p>`
@@ -593,11 +593,11 @@ const TRIP = {
         },
         { time: "12:15pm", title: "The walk to lunch", kind: "explore",
           note: "On foot, ~20 min northwest: Anfu, across Wulumuqi, onto Changshu. You come out of Capsule onto Anfu Road anyway, so this is a walk rather than a stop. It deliberately does not go to the Wukang Mansion corner, which is four minutes the other way and is the single most photographed junction in the old Concession, which is reason enough on this trip.",
-          map: "https://www.amap.com/search?query=Anfu+Road+Changshu+Road+Shanghai" },
+          map: "https://maps.google.com/?q=Anfu+Road+Changshu+Road+Shanghai" },
         { time: "12:45pm", title: "Xibo", kind: "food",
-          url: "https://www.amap.com/search?query=83+Changshu+Road+Shanghai",
+          url: "https://maps.google.com/?q=83+Changshu+Road+Shanghai",
           note: "83 Changshu Rd, Jing'an. Lunch 12:00–2:30, dinner 6:00–11:00, daily. Xinjiang: cumin lamb over charcoal, hand-torn flatbread, lamb chops, the fried pie stuffed with lamb and onion, marinated wild chives. Salty milk tea if it is on. The owner is from the region. This is the one meal of the week that is not Jiangnan, and after four days of wheat and river fish it is the only correction on the page.",
-          map: "https://www.amap.com/search?query=83+Changshu+Road+Shanghai",
+          map: "https://maps.google.com/?q=83+Changshu+Road+Shanghai",
           expand: {
             label: "Why this is here and not somewhere else",
             body: `<p>The Bib Gourmand list that shapes most of this week is a list of Jiangnan counters: wheat, pork, river fish, sugar in places you would not expect it. It is an excellent filter and it has one blind spot, which is everything west of about Xi'an. Xinjiang cooking is as far from Shanghainese as Chinese food gets, and not by a little: lamb rather than pork, charcoal rather than braise, cumin and chilli and coriander seed rather than soy and rock sugar and rice wine, flatbread rather than noodles, and a Central Asian lineage that runs toward Samarkand rather than down the Yangtze. A week of one thing at a high level stops registering as a high level by about day four. This is the reset, and it lands on the day the map allows it, a kilometre from where the morning ends.</p>`
@@ -606,7 +606,7 @@ const TRIP = {
         { time: "3:00pm", title: "BANK / MABSOCIETY", kind: "culture",
           url: "https://bankmabsociety.com/",
           note: "White Building 5F, 457 North Shaanxi Rd, Jing'an. Tue-Sat 10:30am-6:30pm. DiDi from Jinxian Rd, ~10 min. Mathieu Borysevicz's gallery, moved here in 2024.",
-          map: "https://www.amap.com/search?query=457+North+Shaanxi+Road+Shanghai",
+          map: "https://maps.google.com/?q=457+North+Shaanxi+Road+Shanghai",
           expand: {
             label: "About the gallery",
             body: `<p>Mathieu Borysevicz, an American curator and filmmaker who has lived in Shanghai since the early 2000s, opened BANK in 2013 as MABSOCIETY before folding the two names together. The gallery has moved twice, first from a former bank building on the Bund (the source of the name) to a space near Fuxing Park, and now to the fifth floor of the White Building, a 1930s heritage block on North Shaanxi Road once occupied by the family of the Hong Kong tycoon Robert Hotung. The programme mixes emerging Chinese artists with a smaller roster of international names, and Borysevicz himself is often around and willing to talk about the current show if you ask.</p>`
@@ -617,7 +617,7 @@ const TRIP = {
         { time: "6:30pm", title: "Rongjia Yellow Croaker Noodle", kind: "food", bib: true,
           bibUrl: "https://guide.michelin.com/en/shanghai-municipality/shanghai/restaurant/rongjia-noodle-soup-with-yellow-croaker",
           note: "Room L105A-1, 688 Nanjing West Rd, Jing'an. Open daily. ~15 min walk from BANK, or Line 2/12/13 to West Nanjing Road, exit 5. This is the week's croaker bowl and it is the right one: ask for the wild small croaker from the East China Sea rather than the standard farmed Dachen version if it is on.",
-          map: "https://www.amap.com/search?query=688+Nanjing+West+Road+Shanghai",
+          map: "https://maps.google.com/?q=688+Nanjing+West+Road+Shanghai",
           expand: {
             label: "About the shop",
             body: `<p>Rongjia is the casual sibling of Xin Rong Ji, the one-Michelin-star Taizhou seafood house, and draws its yellow croaker from the same supplier network, which is the reason a shop this modest can serve fish this good. The signature bowl comes two ways: a limited version using small wild croaker from the East China Sea, more expensive and more delicately flavoured, and a standard version using farmed croaker from Dachen Island, which is the one most people order and is entirely satisfying on its own. The broth is a thick, milky fish stock, finished with a sheet of egg and a few pickled vegetables on the side. The room is clean and a little more formal-looking than the week's other counters, but the seating includes small two-tops that work fine solo, and it's a single bowl ordered per person, not a shared-plate kitchen.</p>`
@@ -625,7 +625,7 @@ const TRIP = {
         },
         { time: "8:30pm", title: "Black Note, if you want it", kind: "rest",
           note: "Changhua Rd, DiDi ~10 min north. A jazz loft above an unrelated bar, turquoise door on the right, very dark, real musicians, goes late. Noted in April and skipped. Optional, and the only live music on this itinerary.",
-          map: "https://www.amap.com/search?query=Black+Note+Changhua+Road+Shanghai" }
+          map: "https://maps.google.com/?q=Black+Note+Changhua+Road+Shanghai" }
       ]
     },
     {
@@ -641,7 +641,7 @@ const TRIP = {
         { time: "9:00am", title: "A Niang Mian Guan", kind: "food", bib: true,
           bibUrl: "https://guide.michelin.com/en/cn/shanghai-municipality/shanghai/restaurants/bib-gourmand",
           note: "36 Sinan Rd. Opens 8am, reliably sold out by early afternoon, which is why the day starts on the wrong side of town from where it is going. DiDi, ~20 min. On the Bib list since 2017.",
-          map: "https://www.amap.com/search?query=36+Sinan+Road+Shanghai",
+          map: "https://maps.google.com/?q=36+Sinan+Road+Shanghai",
           expand: {
             label: "About the shop",
             body: `<p>A Niang has been a Bib Gourmand every year since the Shanghai guide began recognising the category, and the reason is a single dish: huangyu mian, eel noodles, made with a butterflied, deep-fried eel dressed in a slightly sweet dark sauce and laid over a bowl of soup noodles. The broth arrives on the side, so you can pour it in for a wetter bowl or eat the noodles dry with just the eel sauce; both are how regulars order it. Around fifteen stools, no English menu, but the eel bowl is really the only order that matters, so pointing at the picture on the wall or saying "huangyu mian" gets you exactly what you came for.</p>`
@@ -649,11 +649,11 @@ const TRIP = {
         },
         { time: "10:00am", title: "Sinan Mansions garden", kind: "explore",
           note: "Sinan Rd, ~5 min walk. A courtyard in the French Concession that is somehow quiet, in a neighbourhood where nothing is. Free. Twenty minutes with a coffee, then go north. Walked past it daily in April and never went in.",
-          map: "https://www.amap.com/search?query=Sinan+Mansions+Shanghai" },
+          map: "https://maps.google.com/?q=Sinan+Mansions+Shanghai" },
         { time: "11:00am", title: "Antenna Space", kind: "culture",
           url: "http://antenna-space.com/en/",
           note: "Room 202, Building 17, 50 Moganshan Rd, Putuo. Tue-Sat 11am-6:30pm. DiDi from Sinan Rd, ~25 min, no changes, and the metro alternative runs closer to forty minutes door to door once you account for the change at People's Square.",
-          map: "https://www.amap.com/search?query=Antenna+Space+M50+Shanghai",
+          map: "https://maps.google.com/?q=Antenna+Space+M50+Shanghai",
           expand: {
             label: "About the gallery",
             body: `<p>Simon Wang opened Antenna Space in 2013 after several years working at other Shanghai galleries, and built a roster around artists making work that resists an easy sales pitch: video, installation, and sculpture that asks for time in the room rather than a quick read. Yu Honglei and Guan Xiao, both included in recent editions of the Shanghai Biennale, are the two names most likely to have work up on any given visit. The space itself is unglamorous, a converted mill floor with concrete columns and minimal lighting design, which is more or less the house style across M50, and is part of why the district still feels like a working art district rather than a finished one.</p>`
@@ -662,7 +662,7 @@ const TRIP = {
         { time: "12:00pm", title: "ShanghART and the M50 complex", kind: "culture",
           url: "http://www.shanghartgallery.com/",
           note: "Building 16, 50 Moganshan Rd. Park open daily; individual galleries generally Tue-Sun, so Wednesday is a safe day for all of them. Walk the whole complex, no fixed order: Vanguard, EastLink, OFOTO, Chronus. Map at the north gate.",
-          map: "https://www.amap.com/search?query=M50+Creative+Park+Shanghai",
+          map: "https://maps.google.com/?q=M50+Creative+Park+Shanghai",
           expand: {
             label: "About ShanghART, and the wider complex",
             body: `<p>Lorenz Helbling, a Swiss art dealer, opened ShanghART in 1996, before most of the artists it now represents had left art school, and before M50 existed as a gallery district at all; the gallery moved here when the mill complex opened to studios in the early 2000s. Its roster reads as a rough who's who of the generation that built Chinese contemporary art's international reputation: Ding Yi, Zhang Enli, Yang Fudong, Sun Xun. The gallery occupies two full floors of Building 16 and shows both established names and younger artists it has picked up more recently. The smaller galleries scattered through the rest of the complex, Vanguard, EastLink, OFOTO for photography, Chronus for a rotating mix, are inconsistent by nature, some closed, some between shows, and the only way to find the good one is to walk past all of them.</p>`
@@ -671,7 +671,7 @@ const TRIP = {
         { time: "1:45pm", title: "Jingmei Wuxi Noodle", kind: "food", bib: true,
           bibUrl: "https://guide.michelin.com/en/cn/shanghai-municipality/shanghai/restaurants/bib-gourmand",
           note: "138 Yanping Rd, ~10 min walk south of M50. Wuxi-style, which means sweeter and richer than anything else this week: braised pork rib, the meat off the bone with no resistance. One of the least-touristed Bibs in the city. Eat it and go, the light is on a timer today.",
-          map: "https://www.amap.com/search?query=138+Yanping+Road+Shanghai",
+          map: "https://maps.google.com/?q=138+Yanping+Road+Shanghai",
           expand: {
             label: "About the shop",
             body: `<p>The owner is from Wuxi, on the shore of Lake Tai in southern Jiangsu, and the menu leans on the sweeter, richer style of that region rather than Shanghai's own. The signature is the Wuxi braised pork rib noodle, ribs simmered until the meat comes away from the bone with no resistance, in a broth with a faint caramelised sweetness that marks it out from the plainer Shanghainese noodle shops elsewhere on this trip. It's a genuinely small, family-run counter and it sees almost no foreign visitors, which is part of the appeal after a morning at two contemporary galleries.</p>`
@@ -679,10 +679,10 @@ const TRIP = {
         },
         { time: "2:45pm", title: "Suzhou Creek, downstream from M50", kind: "explore",
           note: "On foot, ~90 min to the Waibaidu Bridge, which puts you there around 4:15 with the light still on it. Start now or the second half happens in the dark. Do the whole thing if the legs hold, stop wherever it stops being interesting.",
-          map: "https://www.amap.com/search?query=Suzhou+Creek+Moganshan+Road+Shanghai" },
+          map: "https://maps.google.com/?q=Suzhou+Creek+Moganshan+Road+Shanghai" },
         { time: "4:30pm", title: "North Bund at dusk", kind: "explore",
           note: "Waibaidu Bridge, 1907, the first all-steel bridge in China and the point where the creek gives up and becomes the Huangpu. Sunset 4:56. Then walk back to the hotel, ~30 min, or DiDi it if the fifteen kilometres have landed.",
-          map: "https://www.amap.com/search?query=Waibaidu+Bridge+Shanghai" },
+          map: "https://maps.google.com/?q=Waibaidu+Bridge+Shanghai" },
         { time: "6:30pm", title: "Delivery night", kind: "rest",
           note: "Ele.me or Meituan. Two galleries, a mill complex and the length of the creek. This one is earned." }
       ]
@@ -703,7 +703,7 @@ const TRIP = {
         { time: "11:00am", title: "Shanghai Museum East", kind: "culture", state: "open",
           url: "https://www.shanghaimuseum.net/en/mus-east",
           note: "1952 Century Blvd, Pudong. Closed Mondays; Thursday is a normal open day. DiDi, ~30 min through the tunnel; the metro (Line 6 or 7 to Century Avenue, then a walk) is comparable in time but involves at least one change. Timed entry: book via the museum's WeChat mini-program a day ahead, or ask the concierge.",
-          map: "https://www.amap.com/search?query=Shanghai+Museum+East+Pudong",
+          map: "https://maps.google.com/?q=Shanghai+Museum+East+Pudong",
           expand: {
             label: "About the branch",
             body: `<p>The Shanghai Museum's People's Square building, opened in 1996, has been the city's main repository of bronze, ceramic and calligraphy for thirty years and is genuinely excellent, which is exactly why the East branch matters: rather than duplicating that collection, the Pudong building, opened in phases from 2023 to 2024, was built to hold material that had been in storage for lack of space, alongside a dedicated gallery of Chinese antiquities repatriated or purchased back from overseas collections. The bronze holdings on the ground floor include Warring States period vessels that hadn't been on public display in decades. It's a larger, more modern building than the original, with none of the queueing culture that's built up around the People's Square branch, worth knowing if you'd rather see this collection without a crowd.</p>`
@@ -740,7 +740,7 @@ const TRIP = {
           note: "Coffee before the walk out to Xinhua Road. No need to eat twice before a day that's mostly on foot." },
         { time: "10:30am", title: "Xinhua Road, on foot", kind: "explore",
           note: "Former Amherst Avenue, western French Concession. DiDi, ~25 min. A residential road of 1920s and 30s villas, still lived in, still unrestored in the way the Wukang corner is not. No fixed address beyond the street itself. Walk it slowly and look at the houses as houses, not exhibits.",
-          map: "https://www.amap.com/search?query=Xinhua+Road+Shanghai",
+          map: "https://maps.google.com/?q=Xinhua+Road+Shanghai",
           expand: {
             label: "Why this street",
             body: `<p>Xinhua Road runs for about a kilometre through what was, before 1949, one of the most desirable residential pockets of the International Settlement's western extension: garden villas built for taipans and diplomats on generous plots, unlike the terraced lane houses that make up most of the old Concession. J.G. Ballard's family lived on this street, then called Amherst Avenue, until the Japanese occupation forced them into Lunghua internment camp in 1943, the experience that became Empire of the Sun. Ballard returned in the 1990s and found the house still standing, subdivided, lived in by families with no particular knowledge of who had been there before them, which he wrote about as a kind of grace rather than a loss. The street today is much as he found it then: residential, ungentrified, unmarked. There is no plaque. That is more or less the point of coming.</p>`
@@ -751,7 +751,7 @@ const TRIP = {
         { time: "3:00pm", title: "Rockbund Art Museum", kind: "culture",
           url: "https://www.rockbundartmuseum.org",
           note: "20 Huqiu Rd, Huangpu. Closed Mondays, open every other day of the week. DiDi from Xinhua Rd, ~30 min. From the hotel it is ~25 min on foot.",
-          map: "https://www.amap.com/search?query=Rockbund+Art+Museum+Shanghai",
+          map: "https://maps.google.com/?q=Rockbund+Art+Museum+Shanghai",
           expand: {
             label: "About the show",
             body: `<p>Jota Mombaça is a Macau-born, Rio de Janeiro-based artist working across performance, writing, and installation, with a practice built around questions of colonial violence, water, and bodies in transit, which makes the Bund a loaded place to install it. Stuck in movement (in the tide) is a new commission for Rockbund's ground and upper floors, opening 22 October 2026 and running through 21 February 2027. Rockbund itself occupies the 1932 Royal Asiatic Society building, one of the few pre-1949 gallery interiors in the city that survives more or less intact, so the container deserves as much attention as the work inside it. The Society was the cultural institution the International Settlement built to give its merchant population a sense of intellectual credibility, and it is now showing an artist whose subject is what that arrangement cost.</p>`
@@ -760,10 +760,10 @@ const TRIP = {
         { time: "5:00pm", title: "Long Bar, Waldorf Astoria", kind: "food",
           url: "https://www.hilton.com/en/hotels/shawawa-waldorf-astoria-shanghai-on-the-bund/",
           note: "2 The Bund, ~10 min walk south from Rockbund. The Shanghai Club's 34-metre bar, rebuilt: the room where the taipans drank, seated by seniority, most senior nearest the door and the juniors at the far end where the barman took longest to reach. One martini, an hour, a book. Another April note that never got its evening.",
-          map: "https://www.amap.com/search?query=Waldorf+Astoria+Shanghai+on+the+Bund" },
+          map: "https://maps.google.com/?q=Waldorf+Astoria+Shanghai+on+the+Bund" },
         { time: "6:45pm", title: "Lan Xin", kind: "food",
           note: "130 Jinxian Rd, DiDi ~20 min west from the Bund. Open until 9:30. Ben bang home cooking, dish by dish, in a room that is smaller and more cramped than its reputation suggests and where the owner looks fiercer than he is. Order more than feels sensible for one: red-braised pork, the eel in scallion oil, whatever green is chalked up. This is the week's only sit-down Shanghainese home cooking that isn't a class, and it is the meal the Thursday essay is arguing about.",
-          map: "https://www.amap.com/search?query=130+Jinxian+Road+Shanghai" }
+          map: "https://maps.google.com/?q=130+Jinxian+Road+Shanghai" }
       ]
     },
 
@@ -781,7 +781,7 @@ const TRIP = {
           note: "Coffee, something simple. Tonight is the crab, and there's no reason to spend the morning's appetite on a counter breakfast before a day that ends at Cejerdary." },
         { time: "10:30am", title: "Duolun Road Cultural Street", kind: "explore",
           note: "Hongkou. DiDi, ~20 min; no metro beats it without a change, and the closest station (Dongbaoxing Road, Line 3/4) is still a ten-minute walk from the street itself.",
-          map: "https://www.amap.com/search?query=Duolun+Road+Hongkou+Shanghai",
+          map: "https://maps.google.com/?q=Duolun+Road+Hongkou+Shanghai",
           expand: {
             label: "Who lived here",
             body: `<p>Duolun Road runs about four hundred metres and was, between roughly 1927 and 1936, the address of most of the writers associated with China's League of Left-Wing Writers, including Lu Xun himself for a period, alongside Mao Dun, Guo Moruo, and Rou Shi, who was among five young writers executed by the Nationalist government in 1931 in an event Lu Xun wrote about at length afterward. The street has been restored with unusual care by Shanghai standards: original shikumen and Art Deco facades rather than reconstructions, bronze statues of the writers set into small plazas along the route, and a small dedicated museum roughly at the midpoint. It's quiet enough on most days that it's possible to actually read the plaques rather than negotiate a crowd for them.</p>`
@@ -789,7 +789,7 @@ const TRIP = {
         },
         { time: "12:30pm", title: "Lu Xun Park and Lu Xun Museum", kind: "explore",
           note: "288 Sichuan North Rd. Walk from Duolun Road, ~10 min. His grave, the small museum, and a park full of Saturday life: dancing, birdcages, cards on stone tables.",
-          map: "https://www.amap.com/search?query=Lu+Xun+Park+Shanghai",
+          map: "https://maps.google.com/?q=Lu+Xun+Park+Shanghai",
           expand: {
             label: "About the park and the writer",
             body: `<p>Lu Xun spent the last years of his life, from 1927 until his death in 1936, living in this part of Hongkou, and the park, then called Hongkou Park, was renamed for him after 1949. His tomb sits in a quiet section toward the rear, moved here in 1956 from an earlier burial site, with a bronze bust and calligraphy by Mao Zedong on the stone behind it. The attached museum is small and old-fashioned in its display style, manuscripts and personal effects in glass cases rather than anything interactive, which suits the subject. The park around it functions the way most Shanghai parks do on a Saturday: ballroom dancing to a portable speaker, men with birdcages hung from tree branches, card games at the stone tables. Sit in it for twenty minutes rather than treating it as a walk-through. He would have hated the bust and he would have recognised the card games.</p>`
@@ -801,7 +801,7 @@ const TRIP = {
           note: "DiDi, ~20 min. Nothing more. Save it." },
         { time: "6:30pm", title: "Cejerdary", kind: "food", state: "open",
           note: "59 Guangdong Rd, Huangpu. ~10 min walk from the hotel. Counter seating, single dish, easy alone. Walk-ins queue from six; ask the concierge to call ahead if you would rather not stand.",
-          map: "https://www.amap.com/search?query=59+Guangdong+Road+Shanghai",
+          map: "https://maps.google.com/?q=59+Guangdong+Road+Shanghai",
           expand: {
             label: "What to order",
             body: `<p>The golden crab roe noodles, around 360 yuan. If the appetite holds, a small dish of drunken crab, marinated raw in Shaoxing wine, which is the same wine you drank at the source in April and the same correction it was making on Monday night, applied cold this time. Free ginger tea and roasted peanuts to close. The room moves in fast sittings; a reservation arranged through the concierge is what gets you a stool without the queue on a Saturday night. This is the meal the week has been building toward and it is the last one.</p>`
@@ -821,11 +821,11 @@ const TRIP = {
       events: [
         { time: "6:15am", title: "The Bund at first light", kind: "explore",
           note: "~20 min walk east from the hotel. Zhongshan East 1st Rd, the Waibaidu Bridge end. Sunrise 6:10. Half an hour, no further plan, no photographs required.",
-          map: "https://www.amap.com/search?query=The+Bund+Shanghai" },
+          map: "https://maps.google.com/?q=The+Bund+Shanghai" },
         { time: "8:00am", title: "Breakfast at the Peninsula lobby", kind: "food",
           url: "https://www.peninsula.com/en/shanghai",
           note: "32 The Bund, ~5 min walk north along the promenade. As good a hotel breakfast as the Bund does, ground-floor lounge, no queue at eight on a Sunday. The one deliberately unearned thing on this itinerary.",
-          map: "https://www.amap.com/search?query=Peninsula+Shanghai" },
+          map: "https://maps.google.com/?q=Peninsula+Shanghai" },
         { time: "9:15am", title: "Walk back, pack", kind: "base",
           note: "~20 min on foot. Bags done by ten." },
         { time: "10:15am", title: "Check out", kind: "base",
@@ -845,42 +845,42 @@ const TRIP = {
       ["Da Hu Chun", "Michelin says 136 Sichuan Middle Rd, Google says 11 Sichuan South Rd, both pins are unreliable. ~20 min walk east. Qingshui-style shengjianbao, drier and breadier than the soupy versions elsewhere.", "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/da-hu-chun-middle-sichuan-road"],
       ["Qiao Ai Lai Lai Xiao Long", "150 Yunnan South Rd, ~10 min walk. Crab roe xiaolongbao, window counter, kitchen visible from the pavement.", "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/qiao-ai-lai-lai-xiao-long-huangpu"],
       ["Yu Du Lao Wei Mian", "501 Liyuan Rd, ~15 min walk. Zhoushan seafood noodles, croaker and beltfish. Open 8am to 3am, which makes it the fallback for any evening that runs long.", "https://guide.michelin.com/us/en/shanghai-municipality/shanghai/restaurant/yu-du-lao-wei-mian-huangpu"],
-      ["Yunhe Noodle", "108 Guangdong Rd, ~8 min walk. Yellow croaker noodle soup, single dish, twenty minutes start to finish. Cut from the week only because there was already a better croaker bowl in it.", "https://www.amap.com/search?query=108+Guangdong+Road+Shanghai"],
+      ["Yunhe Noodle", "108 Guangdong Rd, ~8 min walk. Yellow croaker noodle soup, single dish, twenty minutes start to finish. Cut from the week only because there was already a better croaker bowl in it.", "https://maps.google.com/?q=108+Guangdong+Road+Shanghai"],
       ["Nanxiang Steamed Bun", "In the Yu Garden bazaar by the City God Temple, ~25 min walk. Where the xiaolongbao was invented. Beware the pin: several branches, and the bazaar original (not Yuyuan Road out west) is the one you want.", "https://guide.michelin.com/en/shanghai-municipality/shanghai/restaurant/nanxiang-steamed-bun-city-god-temple"],
-      ["Wang Bao He", "603 Fuzhou Rd, ~12 min walk. The oldest crab house in the city, since 1744. Leans banquet; confirm they will seat one and confirm the per-crab price before committing.", "https://www.amap.com/search?query=603+Fuzhou+Road+Shanghai"],
+      ["Wang Bao He", "603 Fuzhou Rd, ~12 min walk. The oldest crab house in the city, since 1744. Leans banquet; confirm they will seat one and confirm the per-crab price before committing.", "https://maps.google.com/?q=603+Fuzhou+Road+Shanghai"],
       ["Gong De Lin", "445 Nanjing West Rd. Buddhist vegetarian since 1922. The ground-floor breakfast noodle counter, roughly 7 to 10am, is genuinely solo-friendly; the dinner menu leans toward sharing plates.", "https://guide.michelin.com/ae-az/en/shanghai-municipality/shanghai/restaurant/gong-de-lin-jingan"]
     ]},
     { group: "Worth the DiDi", items: [
-      ["Xibo", "83 Changshu Rd, Jing'an. Lunch 12–2:30, dinner 6–11. Xinjiang: cumin lamb, charcoal, flatbread, salty milk tea. The one thing on this list that isn't Jiangnan.", "https://www.amap.com/search?query=83+Changshu+Road+Shanghai"],
-      ["Di Shui Dong", "Hunan, French Concession. Chilli-forward and pork-heavy. The other non-Jiangnan option, and the one that will hurt.", "https://www.amap.com/search?query=Di+Shui+Dong+Shanghai"],
-      ["Lan Xin", "130 Jinxian Rd. Ben bang home cooking, dish by dish, cramped, no reservations, open till 9:30.", "https://www.amap.com/search?query=130+Jinxian+Road+Shanghai"],
-      ["A Niang Mian Guan", "36 Sinan Rd. Eel noodles, Bib since 2017. Opens 8am, gone by early afternoon.", "https://www.amap.com/search?query=36+Sinan+Road+Shanghai"],
-      ["Jingmei Wuxi Noodle", "138 Yanping Rd, Jing'an. Wuxi braised pork rib noodle, sweeter and richer than the rest of the week.", "https://www.amap.com/search?query=138+Yanping+Road+Shanghai"],
+      ["Xibo", "83 Changshu Rd, Jing'an. Lunch 12–2:30, dinner 6–11. Xinjiang: cumin lamb, charcoal, flatbread, salty milk tea. The one thing on this list that isn't Jiangnan.", "https://maps.google.com/?q=83+Changshu+Road+Shanghai"],
+      ["Di Shui Dong", "Hunan, French Concession. Chilli-forward and pork-heavy. The other non-Jiangnan option, and the one that will hurt.", "https://maps.google.com/?q=Di+Shui+Dong+Shanghai"],
+      ["Lan Xin", "130 Jinxian Rd. Ben bang home cooking, dish by dish, cramped, no reservations, open till 9:30.", "https://maps.google.com/?q=130+Jinxian+Road+Shanghai"],
+      ["A Niang Mian Guan", "36 Sinan Rd. Eel noodles, Bib since 2017. Opens 8am, gone by early afternoon.", "https://maps.google.com/?q=36+Sinan+Road+Shanghai"],
+      ["Jingmei Wuxi Noodle", "138 Yanping Rd, Jing'an. Wuxi braised pork rib noodle, sweeter and richer than the rest of the week.", "https://maps.google.com/?q=138+Yanping+Road+Shanghai"],
       ["Rongjia Yellow Croaker Noodle", "688 Nanjing West Rd. Sister kitchen to the one-star Xin Rong Ji. Ask for the wild croaker.", "https://guide.michelin.com/en/shanghai-municipality/shanghai/restaurant/rongjia-noodle-soup-with-yellow-croaker"],
-      ["Man Man Tang Bao", "641 West Jianguo Rd. Four tables, a father and son, some of the best soup dumplings in the city.", "https://www.amap.com/search?query=641+West+Jianguo+Road+Shanghai"],
-      ["Tan", "Yu Garden precinct. Sichuan from the team behind The BRIDGE, Chengdu. New to the Bib list in 2026, small plates sized for one.", "https://www.amap.com/search?query=Tan+Sichuan+Yu+Garden+Shanghai"],
-      ["Beiye Tofu", "31 Yongkang Rd. Soy gelato and pudding. Twenty minutes and four yuan of pure sugar in a week that is otherwise all salt.", "https://www.amap.com/search?query=31+Yongkang+Road+Shanghai"]
+      ["Man Man Tang Bao", "641 West Jianguo Rd. Four tables, a father and son, some of the best soup dumplings in the city.", "https://maps.google.com/?q=641+West+Jianguo+Road+Shanghai"],
+      ["Tan", "Yu Garden precinct. Sichuan from the team behind The BRIDGE, Chengdu. New to the Bib list in 2026, small plates sized for one.", "https://maps.google.com/?q=Tan+Sichuan+Yu+Garden+Shanghai"],
+      ["Beiye Tofu", "31 Yongkang Rd. Soy gelato and pudding. Twenty minutes and four yuan of pure sugar in a week that is otherwise all salt.", "https://maps.google.com/?q=31+Yongkang+Road+Shanghai"]
     ]},
     { group: "Somewhere to sit in the evening", items: [
-      ["Bar Leone", "527 Middle Fuxing Rd. Hong Kong's aperitivo bar, now here. Simple drinks done exactly. A man alone at the bar is the most ordinary thing in the room.", "https://www.amap.com/search?query=527+Middle+Fuxing+Road+Shanghai"],
-      ["Long Bar, Waldorf Astoria", "2 The Bund. The Shanghai Club's 34-metre bar, rebuilt. Strong martinis, 1920s banking-hall proportions, and a legitimate place to read for two hours.", "https://www.amap.com/search?query=Waldorf+Astoria+Shanghai+on+the+Bund"],
-      ["Black Note", "Changhua Rd. Jazz loft above an unrelated bar, turquoise door on the right. Very dark, very good, goes late.", "https://www.amap.com/search?query=Black+Note+Changhua+Road+Shanghai"],
-      ["JZ Club", "Hengshan Rd. Shanghai's serious jazz institution. Intimate, real musicians, real crowd, cover at the door.", "https://www.amap.com/search?query=JZ+Club+Hengshan+Road+Shanghai"],
-      ["Root Down", "145 Nanchang Rd. Japanese-style listening bar. Absinthe cocktails, old-school funk on the decks.", "https://www.amap.com/search?query=145+Nanchang+Road+Shanghai"],
-      ["Paal", "94 Nanchang Rd. A cocktail bar that feels like a friend's dining room, built around one communal table. Five minutes from Root Down.", "https://www.amap.com/search?query=94+Nanchang+Road+Shanghai"]
+      ["Bar Leone", "527 Middle Fuxing Rd. Hong Kong's aperitivo bar, now here. Simple drinks done exactly. A man alone at the bar is the most ordinary thing in the room.", "https://maps.google.com/?q=527+Middle+Fuxing+Road+Shanghai"],
+      ["Long Bar, Waldorf Astoria", "2 The Bund. The Shanghai Club's 34-metre bar, rebuilt. Strong martinis, 1920s banking-hall proportions, and a legitimate place to read for two hours.", "https://maps.google.com/?q=Waldorf+Astoria+Shanghai+on+the+Bund"],
+      ["Black Note", "Changhua Rd. Jazz loft above an unrelated bar, turquoise door on the right. Very dark, very good, goes late.", "https://maps.google.com/?q=Black+Note+Changhua+Road+Shanghai"],
+      ["JZ Club", "Hengshan Rd. Shanghai's serious jazz institution. Intimate, real musicians, real crowd, cover at the door.", "https://maps.google.com/?q=JZ+Club+Hengshan+Road+Shanghai"],
+      ["Root Down", "145 Nanchang Rd. Japanese-style listening bar. Absinthe cocktails, old-school funk on the decks.", "https://maps.google.com/?q=145+Nanchang+Road+Shanghai"],
+      ["Paal", "94 Nanchang Rd. A cocktail bar that feels like a friend's dining room, built around one communal table. Five minutes from Root Down.", "https://maps.google.com/?q=94+Nanchang+Road+Shanghai"]
     ]},
     { group: "Rooms worth walking into", items: [
-      ["Hive Center for Contemporary Art", "270 East Beijing Rd. Free. A former bank with a monumental stained-glass skylight, showing established Chinese artists.", "https://www.amap.com/search?query=270+East+Beijing+Road+Shanghai"],
-      ["Space 185, Bund Art Center", "185 Sichuan Middle Rd. Free. Renaissance-style 1903 building, international and Chinese contemporary.", "https://www.amap.com/search?query=185+Sichuan+Middle+Road+Shanghai"],
+      ["Hive Center for Contemporary Art", "270 East Beijing Rd. Free. A former bank with a monumental stained-glass skylight, showing established Chinese artists.", "https://maps.google.com/?q=270+East+Beijing+Road+Shanghai"],
+      ["Space 185, Bund Art Center", "185 Sichuan Middle Rd. Free. Renaissance-style 1903 building, international and Chinese contemporary.", "https://maps.google.com/?q=185+Sichuan+Middle+Road+Shanghai"],
       ["Shanghai Museum, People's Square", "201 Renmin Ave. Closed Mondays. Bronze and ceramic galleries alone are a half-day. Free timed tickets via WeChat, released 12 days out at 12:10pm sharp and gone in twenty minutes.", "https://www.shanghaimuseum.net/en/"],
-      ["Sinan Books", "517 Fuxing Middle Rd. Bookshop in a heritage villa. An hour, a coffee, a chair by the window.", "https://www.amap.com/search?query=517+Fuxing+Middle+Road+Shanghai"],
-      ["The Bund Sightseeing Tunnel", "Genuine mid-1990s municipal camp. Six minutes of animated lights under the Huangpu. Absurd. Recommended.", "https://www.amap.com/search?query=Bund+Sightseeing+Tunnel+Shanghai"]
+      ["Sinan Books", "517 Fuxing Middle Rd. Bookshop in a heritage villa. An hour, a coffee, a chair by the window.", "https://maps.google.com/?q=517+Fuxing+Middle+Road+Shanghai"],
+      ["The Bund Sightseeing Tunnel", "Genuine mid-1990s municipal camp. Six minutes of animated lights under the Huangpu. Absurd. Recommended.", "https://maps.google.com/?q=Bund+Sightseeing+Tunnel+Shanghai"]
     ]},
     { group: "Practical, near the hotel", items: [
-      ["Watsons pharmacy", "Common chain along Nanjing Road East and Middle: basic medication, sunscreen, toiletries. Ask the front desk for the nearest branch.", "https://www.amap.com/search?query=Watsons+Nanjing+Road+East+Shanghai"],
-      ["Hema Fresh (盒马)", "Alibaba's grocery chain. Snacks, water, fruit, and a genuinely interesting supermarket to wander even without buying much.", "https://www.amap.com/search?query=Hema+Fresh+Huangpu+Shanghai"],
+      ["Watsons pharmacy", "Common chain along Nanjing Road East and Middle: basic medication, sunscreen, toiletries. Ask the front desk for the nearest branch.", "https://maps.google.com/?q=Watsons+Nanjing+Road+East+Shanghai"],
+      ["Hema Fresh (盒马)", "Alibaba's grocery chain. Snacks, water, fruit, and a genuinely interesting supermarket to wander even without buying much.", "https://maps.google.com/?q=Hema+Fresh+Huangpu+Shanghai"],
       ["7-Eleven / FamilyMart", "Several within a few minutes' walk. Water, phone data top-ups, ATMs, open late."],
-      ["ATMs", "Bank of China or ICBC branches on Nanjing Road East reliably accept foreign cards; smaller bank ATMs sometimes don't.", "https://www.amap.com/search?query=Bank+of+China+Nanjing+Road+East+Shanghai"]
+      ["ATMs", "Bank of China or ICBC branches on Nanjing Road East reliably accept foreign cards; smaller bank ATMs sometimes don't.", "https://maps.google.com/?q=Bank+of+China+Nanjing+Road+East+Shanghai"]
     ]},
     { group: "Concierge, on arrival (not already in the ledger)", items: [
       ["Tan, Monday opening hours", "Worth a call ahead. Small Yu Garden kitchens take a weekday off and this one's Monday schedule was not independently confirmed."],
@@ -889,8 +889,8 @@ const TRIP = {
     ]},
     { group: "If it rains for a day", items: [
       ["Shanghai Museum, People's Square", "The default. Closed Mondays. Book via WeChat 12 days out.", "https://www.shanghaimuseum.net/en/"],
-      ["Hive, then Space 185", "270 East Beijing Rd and 185 Sichuan Middle Rd, both free, both indoors, ten minutes apart, both within twenty minutes of the hotel on foot.", "https://www.amap.com/search?query=270+East+Beijing+Road+Shanghai"],
-      ["Any lane in the old city on a wet morning", "Rain makes Nanshi look like a different city, and it empties the bazaar completely. The alleys south of Fangbang Middle are the ones to take.", "https://www.amap.com/search?query=Fangbang+Middle+Road+Shanghai"]
+      ["Hive, then Space 185", "270 East Beijing Rd and 185 Sichuan Middle Rd, both free, both indoors, ten minutes apart, both within twenty minutes of the hotel on foot.", "https://maps.google.com/?q=270+East+Beijing+Road+Shanghai"],
+      ["Any lane in the old city on a wet morning", "Rain makes Nanshi look like a different city, and it empties the bazaar completely. The alleys south of Fangbang Middle are the ones to take.", "https://maps.google.com/?q=Fangbang+Middle+Road+Shanghai"]
     ]},
     { group: "Worth arranging yourself, if you want more than the itinerary", items: [
       ["A bespoke Historic Shanghai walk", "Not a standard bookable tour. historic-shanghai.com is a small heritage society running mostly member events plus occasional private walks by request. Email a few weeks out and ask, but don't count on it landing on a specific day.", "https://www.historic-shanghai.com/"],
