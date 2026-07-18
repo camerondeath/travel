@@ -25,7 +25,7 @@
  --serif: 'Newsreader', Georgia, serif;
  --display: 'Fraunces', Georgia, serif;
  --mono: 'Inter', -apple-system, system-ui, sans-serif;
- --col: 720px;
+ --col: 960px;
  --pad: 1.5rem;
  --measure: 34em;
 }
@@ -1000,6 +1000,7 @@ function renderChapters() {
  e.preventDefault();
  fullBody.style.display = 'block';
  continueSpan.style.display = 'none';
+ ch.classList.add('open');
  });
  }
  ch.appendChild(essayWrap);
