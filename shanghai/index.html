@@ -1295,7 +1295,7 @@ function renderSandbox() {
   var actions = el('div', 'sandbox-item-actions');
   var editBtn = el('button', 'sandbox-item-btn', 'edit');
   editBtn.type = 'button';
-  editBtn.addEventListener('click', function () { if (SandboxUI.openEdit) SandboxUI.openEdit(it); });
+  editBtn.addEventListener('click', function (e) { e.stopPropagation(); if (SandboxUI.openEdit) SandboxUI.openEdit(it); });
   var doneBtn = el('button', 'sandbox-item-btn', it.done ? 'undo' : 'done');
   doneBtn.type = 'button';
   doneBtn.addEventListener('click', function () { toggleSandboxItem(it.id); });
