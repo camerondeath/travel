@@ -209,6 +209,37 @@ footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); fon
 .noteitem:last-child { border-bottom: none; }
 .notelist .empty { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-3); }
 a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+
+/* ── SANDBOX CAPTURE + ITEM CONTROLS ──────────────────────── */
+.sandbox-capture { position: fixed; bottom: 4.6rem; right: 1.4rem; z-index: 49; width: min(320px, calc(100vw - 2.8rem)); background: var(--ground); border: 1px solid var(--rule); border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.14); padding: 0.6rem; display: none; }
+.sandbox-capture.open { display: block; }
+.sandbox-capture input { width: 100%; box-sizing: border-box; font-family: var(--serif); font-size: 0.92rem; color: var(--ink-1); background: transparent; border: none; border-bottom: 1px solid var(--rule); padding: 0.3rem 0.1rem; outline: none; }
+.sandbox-capture input::placeholder { color: var(--ink-3); }
+.sandbox-capture .hint { font-family: var(--mono); font-size: 0.55rem; color: var(--rule-2); letter-spacing: 0.04em; margin-top: 0.4rem; text-transform: uppercase; }
+.sandbox-item { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.55rem 0; border-bottom: 1px solid var(--rule); }
+.sandbox-item:last-child { border-bottom: none; }
+.sandbox-item-body { flex: 1 1 auto; min-width: 0; }
+.sandbox-item.done .sandbox-item-text { text-decoration: line-through; color: var(--ink-3); }
+.sandbox-item-actions { flex: 0 0 auto; display: flex; gap: 0.35rem; opacity: 0.35; transition: opacity 0.12s; }
+.sandbox-item:hover .sandbox-item-actions { opacity: 1; }
+.sandbox-item-btn { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); background: none; border: none; cursor: pointer; padding: 0.15rem 0.35rem; }
+.sandbox-item-btn:hover { color: var(--accent); }
+.sandbox-toolbar { display: flex; justify-content: flex-end; margin-top: 0.6rem; }
+.sandbox-clear-btn { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rule-2); background: none; border: none; cursor: pointer; padding: 0.2rem 0.4rem; }
+.sandbox-clear-btn:hover { color: var(--accent); }
+
+/* ── DAY INDEX CHIPS ──────────────────────────────────────── */
+.day-index { display: flex; flex-wrap: wrap; gap: 0.3rem; padding: 1.2rem 0 1.4rem; margin-bottom: 0.4rem; border-bottom: 1px solid var(--rule); }
+.day-chip { flex: 0 0 auto; display: inline-flex; flex-direction: column; align-items: flex-start; padding: 0.5rem 0.7rem; background: var(--ground-2); border: 1px solid transparent; border-radius: 6px; cursor: pointer; text-decoration: none; transition: background 0.12s, border-color 0.12s; min-width: 68px; }
+.day-chip:hover { background: var(--ground); border-color: var(--rule-2); }
+.day-chip .dc-num { font-family: var(--mono); font-size: 0.55rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.day-chip .dc-date { font-family: var(--display); font-size: 0.98rem; font-weight: 400; color: var(--ink); line-height: 1.1; margin-top: 0.2rem; font-optical-sizing: auto; }
+.day-chip .dc-arc { font-family: var(--serif); font-style: italic; font-size: 0.7rem; color: var(--ink-3); margin-top: 0.2rem; line-height: 1.25; max-width: 12ch; }
+
+/* ── DAY HEADER ARC + NEIGHBOURHOOD ───────────────────────── */
+.chapter-arc { font-family: var(--serif); font-style: italic; font-size: 0.88rem; color: var(--accent); margin-top: 0.25rem; margin-bottom: 0.15rem; }
+.chapter-hood { display: inline-block; font-family: var(--mono); font-size: 0.55rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); background: var(--ground-2); padding: 0.2em 0.55em; border-radius: 2px; margin-top: 0.4rem; }
+
 </style>
 </head>
 <body>
@@ -228,13 +259,15 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 
 <section class="plane-piece" id="plane"></section>
 
+<div class="day-index" id="day-index" aria-label="Trip index"></div>
+
+<main id="chapters"></main>
+
 <section class="sh26-section" id="sh26-voices">
  <div class="section-label">Other voices</div>
  <div class="section-sub">The same trip, reread in a writer's register. More to come here over time.</div>
  <div id="sh26-voices-wrap"></div>
 </section>
-
-<main id="chapters"></main>
 
 <section class="sh26-section" id="sh26-pocket">
  <div class="section-label">Back pocket</div>
@@ -243,7 +276,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 
 <section class="sh26-section" id="sh26-sandbox">
  <div class="section-label">Sandbox</div>
- <div class="section-sub">Open items from GitHub. Add with the + button, bottom right — it opens GitHub’s own compose screen, nothing lives on this page. Works the same from the GitHub app or a home-screen bookmark.</div>
+ <div class="section-sub">A scratchpad for things spotted along the way. Hit the + button, bottom right, drop a line, review later. Saved in this browser only, nothing leaves the page.</div>
  <div id="sh26-sandbox-wrap"></div>
 </section>
 
@@ -257,11 +290,16 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 <footer>Shanghai · October 2026</footer>
 </div></div>
 
-<a class="fab" id="fab" href="https://github.com/camerondeath/travel/issues/new" target="_blank" rel="noopener" aria-label="Add to sandbox">
+<div class="sandbox-capture" id="sandbox-capture">
+ <input type="text" id="sandbox-input" placeholder="Drop a find…" autocomplete="off" />
+ <div class="hint">Enter to save · Esc to close</div>
+</div>
+
+<button class="fab" id="fab" type="button" aria-label="Add to scratchpad">
  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
- <path d="M12 5v14M5 12h14"/>
+  <path d="M12 5v14M5 12h14"/>
  </svg>
-</a>
+</button>
 
 <script>
 const TRIP = {
@@ -832,6 +870,12 @@ const TRIP = {
     { group: "Worth arranging yourself, if you want more than the itinerary", items: [
       ["A bespoke Historic Shanghai walk", "Not a standard bookable tour. historic-shanghai.com is a small heritage society running mostly member events plus occasional private walks by request. Email a few weeks out and ask, but don't count on it landing on a specific day.", "https://www.historic-shanghai.com/"],
       ["Capsule studio visit", "The one real long shot on this trip. Write three weeks out, name two roster artists, explain what you do. A genuine occasional courtesy, not a product.", "mailto:info@capsuleshanghai.com"]
+    ]},
+    { group: "In town while you're here", items: [
+      ["Sleep No More at the McKinnon Hotel", "Punchdrunk's masked-audience immersive theatre, in its permanent Shanghai run. Daily except Monday and Tuesday, three-plus hours, entirely solo-friendly by design. Book ahead via SmartTicket or the venue.", "https://www.smartshanghai.com/event/punchdrunk-sleep-no-more-mckinnon-hotel"],
+      ["On Top of the World Tree, Shanghai Museum", "201 Renmin Ave, walking distance from the hotel. Nearly 3,000 artifacts from Mexico, Peru and China, tracing the Olmec, Maya, Inca and their Shang and Zhou counterparts. Runs until 14 November, closed Mondays. Book timed tickets via WeChat.", "https://www.smartshanghai.com/event/on-top-of-the-world-tree-ancient-civilizations-of-the-americas"],
+      ["Reinventing Landscape, West Bund Museum", "Volume IV of the museum's five-year Pompidou collaboration, ~70 works from the French collection. Sits three minutes' walk from Long Museum and Tank Shanghai, both of which are already on Sunday. Closed Mondays.", "https://www.smartshanghai.com/event/79451"],
+      ["Fotografiska Wednesday Jazz, 28 October", "Foto Live jazz-and-cocktails night on the 4F lounge stage. The 28th is your Wednesday. Sits between the M50 walk and dinner if you want to keep the evening on rather than a delivery night.", "https://www.smartshanghai.com/event/foto-live-wednesday-jazz-cocktails-at-fotografiska"]
     ]}
   ]
 };
@@ -911,8 +955,11 @@ function renderChapters() {
  if (isToday) ch.classList.add('open');
 
  const head = el('div', 'chapter-head');
- const arcTag = day.arc ? `<div style="font-family:var(--mono);font-size:0.6rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.35rem;">${day.arc}</div>` : '';
- head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div>${arcTag}<div class="chapter-title">${day.title}</div></div><div style="display:flex;align-items:center;gap:0.7rem;flex-shrink:0;"><div class="day-weather" id="wx-${day.id}"></div><div class="chapter-toggle"><em class="chev">\u203a</em></div></div></div>`;
+ const HOODS = { d0: 'In flight', d1: 'Yangpu Riverfront', d2: 'West Bund', d3: 'Nanshi · Old City', d4: "French Concession → Jing'an", d5: 'M50 & Suzhou Creek', d6: 'Pudong', d7: 'Xinhua Road & the Bund', d8: 'Hongkou', d9: 'Bund → Pudong' };
+ const arcTag = day.arc ? `<div class="chapter-arc">${day.arc}</div>` : '';
+ const hood = HOODS[day.id];
+ const hoodTag = hood ? `<div><span class="chapter-hood">${hood}</span></div>` : '';
+ head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div>${arcTag}<div class="chapter-title">${day.title}</div>${hoodTag}</div><div style="display:flex;align-items:center;gap:0.7rem;flex-shrink:0;"><div class="day-weather" id="wx-${day.id}"></div><div class="chapter-toggle"><em class="chev">\u203a</em></div></div></div>`;
  head.querySelector('.chapter-top').addEventListener('click', () => ch.classList.toggle('open'));
  ch.appendChild(head);
 
@@ -1049,35 +1096,117 @@ function renderPocket() {
  });
 }
 
-const ISSUES_URL = 'https://api.github.com/repos/camerondeath/travel/issues?state=open&per_page=100&sort=created&direction=desc';
+const SANDBOX_KEY = 'sh26_sandbox';
 
-async function renderSandbox() {
- const wrap = document.getElementById('sh26-sandbox-wrap');
- try {
- const r = await fetch(ISSUES_URL, { headers: { Accept: 'application/vnd.github+json' } });
- if (!r.ok) throw new Error(r.status);
- const issues = (await r.json()).filter(i => !i.pull_request);
- if (!issues.length) {
- wrap.innerHTML = '';
- wrap.appendChild(el('div', 'sandbox-empty', 'Nothing saved yet. Use \u201c+ New\u201d above, from anywhere.'));
- return;
- }
- wrap.innerHTML = '';
- issues.forEach(iss => {
- const row = el('a', 'sandbox-item');
- row.href = iss.html_url; row.target = '_blank'; row.rel = 'noopener';
- const when = new Date(iss.created_at).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
- const title = iss.title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
- row.innerHTML = '<div class="sandbox-item-text">' + title + '</div><div class="sandbox-item-date">' + when + ' \u00b7 #' + iss.number + '</div>';
- wrap.appendChild(row);
+function loadSandbox() {
+ try { return JSON.parse(localStorage.getItem(SANDBOX_KEY)) || []; }
+ catch (e) { return []; }
+}
+function saveSandbox(items) {
+ try { localStorage.setItem(SANDBOX_KEY, JSON.stringify(items)); } catch (e) {}
+}
+function addSandboxItem(text) {
+ text = (text || '').trim();
+ if (!text) return;
+ const items = loadSandbox();
+ items.push({ id: Date.now() + '' + Math.floor(Math.random() * 1000), text: text, created: Date.now(), done: false });
+ saveSandbox(items);
+ renderSandbox();
+}
+function removeSandboxItem(id) {
+ saveSandbox(loadSandbox().filter(function (it) { return it.id !== id; }));
+ renderSandbox();
+}
+function toggleSandboxItem(id) {
+ const items = loadSandbox().map(function (it) {
+  if (it.id === id) it.done = !it.done;
+  return it;
  });
- } catch (e) {
+ saveSandbox(items);
+ renderSandbox();
+}
+function clearSandboxAll() {
+ if (!confirm('Clear all scratchpad items? This can\'t be undone.')) return;
+ saveSandbox([]);
+ renderSandbox();
+}
+
+function renderSandbox() {
+ const wrap = document.getElementById('sh26-sandbox-wrap');
+ const items = loadSandbox().slice().sort(function (a, b) { return b.created - a.created; });
  wrap.innerHTML = '';
- wrap.appendChild(el('div', 'sandbox-empty', 'Couldn\u2019t load just now. '));
- const link = el('a', 'sh26-item-link', 'View on GitHub \u2197');
- link.href = 'https://github.com/camerondeath/travel/issues'; link.target = '_blank'; link.rel = 'noopener';
- wrap.querySelector('.sandbox-empty').appendChild(link);
+ if (!items.length) {
+  wrap.appendChild(el('div', 'sandbox-empty', 'Nothing saved yet. Tap the + button, bottom right, to drop something in.'));
+  return;
  }
+ items.forEach(function (it) {
+  const row = el('div', 'sandbox-item' + (it.done ? ' done' : ''));
+  const when = new Date(it.created).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
+  const safe = it.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const body = el('div', 'sandbox-item-body',
+   '<div class="sandbox-item-text">' + safe + '</div><div class="sandbox-item-date">' + when + '</div>');
+  const actions = el('div', 'sandbox-item-actions');
+  const doneBtn = el('button', 'sandbox-item-btn', it.done ? 'undo' : 'done');
+  doneBtn.type = 'button';
+  doneBtn.addEventListener('click', function () { toggleSandboxItem(it.id); });
+  const delBtn = el('button', 'sandbox-item-btn', 'delete');
+  delBtn.type = 'button';
+  delBtn.addEventListener('click', function () { removeSandboxItem(it.id); });
+  actions.appendChild(doneBtn);
+  actions.appendChild(delBtn);
+  row.appendChild(body);
+  row.appendChild(actions);
+  wrap.appendChild(row);
+ });
+ const bar = el('div', 'sandbox-toolbar');
+ const clr = el('button', 'sandbox-clear-btn', 'Clear all');
+ clr.type = 'button';
+ clr.addEventListener('click', clearSandboxAll);
+ bar.appendChild(clr);
+ wrap.appendChild(bar);
+}
+
+function initSandboxCapture() {
+ const fab = document.getElementById('fab');
+ const box = document.getElementById('sandbox-capture');
+ const input = document.getElementById('sandbox-input');
+ if (!fab || !box || !input) return;
+ function open() { box.classList.add('open'); input.focus(); }
+ function close() { box.classList.remove('open'); input.value = ''; }
+ fab.addEventListener('click', function () {
+  if (box.classList.contains('open')) { close(); } else { open(); }
+ });
+ input.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') { addSandboxItem(input.value); input.value = ''; input.focus(); }
+  else if (e.key === 'Escape') { close(); }
+ });
+ document.addEventListener('click', function (e) {
+  if (box.classList.contains('open') && !box.contains(e.target) && e.target !== fab && !fab.contains(e.target)) { close(); }
+ });
+}
+
+function renderDayIndex() {
+ const wrap = document.getElementById('day-index');
+ if (!wrap) return;
+ const HOOD_SHORT = { d0: 'In flight', d1: 'Yangpu', d2: 'West Bund', d3: 'Old city', d4: 'Concession', d5: 'M50 & the creek', d6: 'Pudong', d7: 'Xinhua & Bund', d8: 'Hongkou', d9: 'Homeward' };
+ TRIP.days.forEach(function (day, i) {
+  const chip = el('a', 'day-chip');
+  chip.href = '#' + day.id;
+  const shortDate = day.date.replace(/(\d+)\s+(\w{3})\w*/, '$1 $2');
+  chip.innerHTML =
+   '<span class="dc-num">Ch. ' + (day.chapter || i) + '</span>' +
+   '<span class="dc-date">' + shortDate + '</span>' +
+   '<span class="dc-arc">' + (HOOD_SHORT[day.id] || '') + '</span>';
+  chip.addEventListener('click', function (e) {
+   e.preventDefault();
+   const target = document.getElementById(day.id);
+   if (target) {
+    target.classList.add('open');
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   }
+  });
+  wrap.appendChild(chip);
+ });
 }
 
 async function fetchWeather() {
@@ -1136,8 +1265,10 @@ document.addEventListener('DOMContentLoaded', () => {
  renderVoices();
  renderChapters();
  renderBookings();
+ renderDayIndex();
  renderPocket();
  renderSandbox();
+ initSandboxCapture();
  fetchWeather();
 });
 </script>
