@@ -232,6 +232,15 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 .sandbox-toolbar { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 0.6rem; }
 .sandbox-clear-btn { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rule-2); background: none; border: none; cursor: pointer; padding: 0.2rem 0.4rem; }
 .sandbox-clear-btn:hover { color: var(--accent); }
+.sandbox-capture input + input { margin-top: 0.1rem; }
+.sandbox-capture-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 0.55rem; }
+.sandbox-capture-bar .hint { margin: 0; }
+.sandbox-save-btn { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ground); background: var(--accent); border: none; border-radius: 5px; cursor: pointer; padding: 0.3rem 0.75rem; }
+.sandbox-save-btn:hover { opacity: 0.9; }
+.sandbox-item-link { font-family: var(--serif); font-size: 0.92rem; color: var(--accent); line-height: 1.5; text-decoration: none; border-bottom: 1px solid var(--rule-2); }
+.sandbox-item-link:hover { border-bottom-color: var(--accent); }
+.sandbox-item-title { font-family: var(--serif); font-size: 0.92rem; color: var(--ink-2); line-height: 1.5; }
+.sandbox-item-note { font-family: var(--serif); font-size: 0.82rem; color: var(--ink-3); line-height: 1.5; margin-top: 0.15rem; }
 
 /* ── DAY INDEX CHIPS ──────────────────────────────────────── */
 .day-index { display: flex; flex-wrap: nowrap; gap: 0.3rem; padding: 0.8rem 0 1rem; margin-bottom: 0.4rem; border-bottom: 1px solid var(--rule); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin; position: sticky; top: 0; z-index: 40; background: var(--ground); scroll-snap-type: x proximity; }
@@ -310,8 +319,13 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 </div></div>
 
 <div class="sandbox-capture" id="sandbox-capture">
- <input type="text" id="sandbox-input" placeholder="Drop a find…" autocomplete="off" />
- <div class="hint">Enter to save · Esc to close</div>
+ <input type="url" id="sandbox-url" placeholder="Paste a link…" autocomplete="off" inputmode="url" />
+ <input type="text" id="sandbox-name" placeholder="Name it (optional)" autocomplete="off" />
+ <input type="text" id="sandbox-note" placeholder="Note (optional)" autocomplete="off" />
+ <div class="sandbox-capture-bar">
+  <span class="hint">Enter to save · Esc to close</span>
+  <button type="button" class="sandbox-save-btn" id="sandbox-save">Save</button>
+ </div>
 </div>
 
 <button class="fab" id="fab" type="button" aria-label="Add to scratchpad">
@@ -1137,20 +1151,83 @@ function loadSandbox() {
 function saveSandbox(items) {
  try { localStorage.setItem(SANDBOX_KEY, JSON.stringify(items)); } catch (e) {}
 }
-function addSandboxItem(text) {
- text = (text || '').trim();
- if (!text) return;
- const items = loadSandbox();
- items.push({ id: Date.now() + '' + Math.floor(Math.random() * 1000), text: text, created: Date.now(), done: false });
+var SandboxUI = { open: null, openEdit: null, close: null };
+
+function sbEsc(s) {
+ return String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function sbNormalizeUrl(u) {
+ u = (u || '').trim();
+ if (!u) return '';
+ if (!/^https?:\/\//i.test(u)) {
+  if (/^[\w.-]+\.[a-z]{2,}([\/?#]|$)/i.test(u)) u = 'https://' + u;
+  else return '';
+ }
+ return u;
+}
+function sbIsBareUrl(s) {
+ return /^https?:\/\/\S+$/i.test((s || '').trim());
+}
+function sbDeriveName(rawUrl) {
+ var u = sbNormalizeUrl(rawUrl);
+ if (!u) return '';
+ var parsed;
+ try { parsed = new URL(u); } catch (e) { return ''; }
+ var host = parsed.hostname.replace(/^www\./, '');
+ function dec(x) { try { return decodeURIComponent(x.replace(/\+/g, ' ')).trim(); } catch (e) { return x.replace(/\+/g, ' ').trim(); } }
+ if (/(^|\.)instagram\.com$/i.test(host)) {
+  var seg = parsed.pathname.split('/').filter(Boolean);
+  if (!seg.length) return 'Instagram';
+  if (['p', 'reel', 'reels', 'tv', 'explore', 'stories'].indexOf(seg[0].toLowerCase()) !== -1) return 'Instagram post';
+  return '@' + seg[0];
+ }
+ var isGMaps = (/(^|\.)google\.[a-z.]+$/i.test(host) && /\/maps/i.test(parsed.pathname))
+  || /(^|\.)maps\.google\./i.test(host)
+  || /(^|\.)maps\.app\.goo\.gl$/i.test(host);
+ if (isGMaps) {
+  var pm = parsed.pathname.match(/\/place\/([^\/]+)/);
+  if (pm) return dec(pm[1]);
+  var q = parsed.searchParams.get('q');
+  if (q && !/^-?\d+(\.\d+)?,-?\d+/.test(q)) return dec(q);
+  return 'Google Maps';
+ }
+ if (/(^|\.)maps\.apple\.com$/i.test(host)) {
+  var aq = parsed.searchParams.get('q') || parsed.searchParams.get('name');
+  if (aq) return dec(aq);
+  return 'Apple Maps';
+ }
+ return host;
+}
+
+function upsertSandboxItem(fields, editId) {
+ var url = sbNormalizeUrl(fields.url);
+ var name = (fields.name || '').trim();
+ var note = (fields.note || '').trim();
+ if (!url && !name && !note) return false;
+ var items = loadSandbox();
+ if (editId) {
+  for (var i = 0; i < items.length; i++) {
+   if (items[i].id === editId) {
+    items[i].url = url; items[i].name = name; items[i].note = note;
+    if ('text' in items[i]) delete items[i].text;
+    break;
+   }
+  }
+ } else {
+  items.push({ id: Date.now() + '' + Math.floor(Math.random() * 1000), created: Date.now(), done: false, url: url, name: name, note: note });
+ }
  saveSandbox(items);
  renderSandbox();
+ return true;
 }
+
 function removeSandboxItem(id) {
  saveSandbox(loadSandbox().filter(function (it) { return it.id !== id; }));
  renderSandbox();
 }
 function toggleSandboxItem(id) {
- const items = loadSandbox().map(function (it) {
+ var items = loadSandbox().map(function (it) {
   if (it.id === id) it.done = !it.done;
   return it;
  });
@@ -1163,53 +1240,80 @@ function clearSandboxAll() {
  renderSandbox();
 }
 
+function sbItemPlain(it) {
+ if (it.url || it.name || it.note) {
+  var parts = [];
+  if (it.name) parts.push(it.name);
+  if (it.url) parts.push(it.url);
+  var head = parts.join(' ');
+  return it.note ? (head ? head + ' | ' + it.note : it.note) : head;
+ }
+ return it.text || '';
+}
 function copyAllSandbox() {
- const items = loadSandbox().slice().sort(function (a, b) { return a.created - b.created; });
+ var items = loadSandbox().slice().sort(function (a, b) { return a.created - b.created; });
  if (!items.length) return;
- const text = items.map(function (it) { return (it.done ? '[done] ' : '') + it.text; }).join('\n');
- const done = function () {
-  const btn = document.getElementById('sandbox-copy-btn');
-  if (btn) { const t = btn.textContent; btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = t; }, 1200); }
+ var text = items.map(function (it) { return (it.done ? '[done] ' : '') + sbItemPlain(it); }).join('\n');
+ var done = function () {
+  var btn = document.getElementById('sandbox-copy-btn');
+  if (btn) { var t = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = t; }, 1200); }
  };
  if (navigator.clipboard && navigator.clipboard.writeText) {
-  navigator.clipboard.writeText(text).then(done).catch(function(){ window.prompt('Copy your notes:', text); });
+  navigator.clipboard.writeText(text).then(done).catch(function () { window.prompt('Copy your notes:', text); });
  } else {
   window.prompt('Copy your notes:', text);
  }
 }
 
+function sbTitleHtml(it) {
+ var url = it.url ? sbNormalizeUrl(it.url) : (sbIsBareUrl(it.text) ? sbNormalizeUrl(it.text) : '');
+ if (url) {
+  var label = (it.name || '').trim();
+  if (!label) label = sbDeriveName(url) || url;
+  return '<a class="sandbox-item-link" href="' + sbEsc(url) + '" target="_blank" rel="noopener noreferrer">' + sbEsc(label) + '</a>';
+ }
+ var t = (it.name || it.text || '').trim();
+ return '<span class="sandbox-item-title">' + sbEsc(t) + '</span>';
+}
+
 function renderSandbox() {
- const wrap = document.getElementById('sh26-sandbox-wrap');
- const items = loadSandbox().slice().sort(function (a, b) { return b.created - a.created; });
+ var wrap = document.getElementById('sh26-sandbox-wrap');
+ var items = loadSandbox().slice().sort(function (a, b) { return b.created - a.created; });
  wrap.innerHTML = '';
  if (!items.length) {
   wrap.appendChild(el('div', 'sandbox-empty', 'Nothing saved yet. Tap the + button, bottom right, to drop something in.'));
   return;
  }
  items.forEach(function (it) {
-  const row = el('div', 'sandbox-item' + (it.done ? ' done' : ''));
-  const when = new Date(it.created).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
-  const safe = it.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const body = el('div', 'sandbox-item-body',
-   '<div class="sandbox-item-text">' + safe + '</div><div class="sandbox-item-date">' + when + '</div>');
-  const actions = el('div', 'sandbox-item-actions');
-  const doneBtn = el('button', 'sandbox-item-btn', it.done ? 'undo' : 'done');
+  var row = el('div', 'sandbox-item' + (it.done ? ' done' : ''));
+  var when = new Date(it.created).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
+  var note = (it.note || '').trim();
+  var html = sbTitleHtml(it)
+   + (note ? '<div class="sandbox-item-note">' + sbEsc(note) + '</div>' : '')
+   + '<div class="sandbox-item-date">' + when + '</div>';
+  var body = el('div', 'sandbox-item-body', html);
+  var actions = el('div', 'sandbox-item-actions');
+  var editBtn = el('button', 'sandbox-item-btn', 'edit');
+  editBtn.type = 'button';
+  editBtn.addEventListener('click', function () { if (SandboxUI.openEdit) SandboxUI.openEdit(it); });
+  var doneBtn = el('button', 'sandbox-item-btn', it.done ? 'undo' : 'done');
   doneBtn.type = 'button';
   doneBtn.addEventListener('click', function () { toggleSandboxItem(it.id); });
-  const delBtn = el('button', 'sandbox-item-btn', 'delete');
+  var delBtn = el('button', 'sandbox-item-btn', 'delete');
   delBtn.type = 'button';
   delBtn.addEventListener('click', function () { removeSandboxItem(it.id); });
+  actions.appendChild(editBtn);
   actions.appendChild(doneBtn);
   actions.appendChild(delBtn);
   row.appendChild(body);
   row.appendChild(actions);
   wrap.appendChild(row);
  });
- const bar = el('div', 'sandbox-toolbar');
- const cpy = el('button', 'sandbox-clear-btn', 'Copy all');
+ var bar = el('div', 'sandbox-toolbar');
+ var cpy = el('button', 'sandbox-clear-btn', 'Copy all');
  cpy.type = 'button'; cpy.id = 'sandbox-copy-btn';
  cpy.addEventListener('click', copyAllSandbox);
- const clr = el('button', 'sandbox-clear-btn', 'Clear all');
+ var clr = el('button', 'sandbox-clear-btn', 'Clear all');
  clr.type = 'button';
  clr.addEventListener('click', clearSandboxAll);
  bar.appendChild(cpy);
@@ -1218,19 +1322,57 @@ function renderSandbox() {
 }
 
 function initSandboxCapture() {
- const fab = document.getElementById('fab');
- const box = document.getElementById('sandbox-capture');
- const input = document.getElementById('sandbox-input');
- if (!fab || !box || !input) return;
- function open() { box.classList.add('open'); input.focus(); }
- function close() { box.classList.remove('open'); input.value = ''; }
+ var fab = document.getElementById('fab');
+ var box = document.getElementById('sandbox-capture');
+ var urlIn = document.getElementById('sandbox-url');
+ var nameIn = document.getElementById('sandbox-name');
+ var noteIn = document.getElementById('sandbox-note');
+ var saveBtn = document.getElementById('sandbox-save');
+ if (!fab || !box || !urlIn || !nameIn || !noteIn || !saveBtn) return;
+ var editId = null;
+ var nameTouched = false;
+
+ function reset() { urlIn.value = ''; nameIn.value = ''; noteIn.value = ''; editId = null; nameTouched = false; }
+ function open() { box.classList.add('open'); setTimeout(function () { urlIn.focus(); }, 0); }
+ function close() { box.classList.remove('open'); reset(); }
+ function openEdit(it) {
+  reset();
+  editId = it.id;
+  if (it.url) { urlIn.value = it.url; nameIn.value = it.name || ''; noteIn.value = it.note || ''; }
+  else if (sbIsBareUrl(it.text)) { urlIn.value = it.text; nameIn.value = it.name || ''; noteIn.value = it.note || ''; }
+  else { nameIn.value = (it.name || it.text || ''); noteIn.value = it.note || ''; }
+  nameTouched = true;
+  box.classList.add('open');
+  setTimeout(function () { urlIn.focus(); }, 0);
+ }
+ function commit() {
+  var ok = upsertSandboxItem({ url: urlIn.value, name: nameIn.value, note: noteIn.value }, editId);
+  if (!ok) return;
+  if (editId) { close(); }
+  else {
+   reset();
+   var t = saveBtn.textContent; saveBtn.textContent = 'Saved';
+   setTimeout(function () { saveBtn.textContent = t; }, 900);
+   urlIn.focus();
+  }
+ }
+
+ SandboxUI.open = open; SandboxUI.openEdit = openEdit; SandboxUI.close = close;
+
  fab.addEventListener('click', function () {
   if (box.classList.contains('open')) { close(); } else { open(); }
  });
- input.addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') { addSandboxItem(input.value); input.value = ''; input.focus(); }
-  else if (e.key === 'Escape') { close(); }
+ urlIn.addEventListener('input', function () {
+  if (!nameTouched) { nameIn.value = sbDeriveName(urlIn.value); }
  });
+ nameIn.addEventListener('input', function () { nameTouched = true; });
+ [urlIn, nameIn, noteIn].forEach(function (inp) {
+  inp.addEventListener('keydown', function (e) {
+   if (e.key === 'Enter') { e.preventDefault(); commit(); }
+   else if (e.key === 'Escape') { close(); }
+  });
+ });
+ saveBtn.addEventListener('click', commit);
  document.addEventListener('click', function (e) {
   if (box.classList.contains('open') && !box.contains(e.target) && e.target !== fab && !fab.contains(e.target)) { close(); }
  });
