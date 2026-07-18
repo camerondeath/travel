@@ -1,0 +1,10 @@
+{
+  "name": "Shanghai · October 2026",
+  "short_name": "Shanghai",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f6f3",
+  "theme_color": "#f7f6f3",
+  "description": "A solo itinerary for Shanghai, 24 Oct – 1 Nov 2026."
+}
