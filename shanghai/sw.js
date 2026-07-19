@@ -1,6 +1,6 @@
 // Shanghai itinerary — offline service worker
 // Bump CACHE_VERSION to force clients to refetch the shell on next load.
-const CACHE_VERSION = 'sh26-v7';
+const CACHE_VERSION = 'sh26-v8';
 const SHELL = './';               // the itinerary page (index.html)
 const WEATHER_HOST = 'api.open-meteo.com';
 // Fonts are served from this repo now (Google Fonts is blocked in mainland
@@ -31,6 +31,19 @@ self.addEventListener('fetch', event => {
 
   // Weather: network-first, fall back to cache.
   if (url.hostname === WEATHER_HOST) {
+    event.respondWith(
+      fetch(req).then(res => {
+        const copy = res.clone();
+        caches.open(CACHE_VERSION).then(c => c.put(req, copy)).catch(() => {});
+        return res;
+      }).catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // The events feed is refreshed out of band, so serving it cache-first would
+  // show last visit's list until the visit after. Network-first, cache fallback.
+  if (url.origin === self.location.origin && url.pathname.endsWith('/events.json')) {
     event.respondWith(
       fetch(req).then(res => {
         const copy = res.clone();

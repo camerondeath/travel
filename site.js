@@ -17,6 +17,39 @@ const SCHEDULED_NAMES = (function () {
  return names;
 })();
 
+// "Tan" should match "Tan, Monday opening hours" but never "Tank Shanghai":
+// a prefix only counts when it ends on a word boundary.
+function namesMatch(a, b) {
+ if (a === b) return true;
+ const longer = a.length > b.length ? a : b;
+ const shorter = a.length > b.length ? b : a;
+ return longer.indexOf(shorter) === 0 && !/[a-z0-9]/i.test(longer.charAt(shorter.length));
+}
+
+// One disclosure row (button + collapsible panel) with the aria wiring done
+// once. Voices, back-pocket groups, archived events and the bookings ledgers
+// all share this shape.
+let discSeq = 0;
+function makeDisclosureRow(labelHtml, opts) {
+ opts = opts || {};
+ const grp = el('div', 'sh26-row');
+ const btn = el('button', 'sh26-row-btn', `<span class="sh26-row-label">${labelHtml}</span><span class="sh26-chev">›</span>`);
+ btn.type = 'button';
+ const body = el('div', 'sh26-row-panel');
+ body.id = 'disc-' + (++discSeq);
+ btn.setAttribute('aria-controls', body.id);
+ function setOpen(open) {
+  btn.classList.toggle('open', open);
+  body.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+ }
+ setOpen(!!opts.open);
+ btn.addEventListener('click', () => setOpen(!btn.classList.contains('open')));
+ grp.appendChild(btn);
+ grp.appendChild(body);
+ return { grp, body };
+}
+
 function makeExpand(label, bodyHtml, dropCap) {
  const wrap = el('div', 'sh26-panel');
  const btn = el('button', 'sh26-panel-btn', `<em class="sh26-chevron">›</em>&nbsp;${label}`);
@@ -113,6 +146,13 @@ function renderChapters() {
  function toggleChapter() {
  const nowOpen = ch.classList.toggle('open');
  head.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+ // Closing a day puts its essay back to the teaser, so a previously
+ // expanded essay can't sit fully open inside a collapsed chapter.
+ if (!nowOpen) {
+ const full = ch.querySelector('[id^="essay-"]');
+ const t = ch.querySelector('.essay-teaser');
+ if (full && t) { full.style.display = 'none'; t.style.display = ''; }
+ }
  }
  head.addEventListener('click', toggleChapter);
  head.addEventListener('keydown', e => {
@@ -198,11 +238,13 @@ function renderChapters() {
 function renderBookings() {
  const confirmedList = document.getElementById('ledger-confirmed');
  const openList = document.getElementById('ledger-open');
- if (!confirmedList || !openList || !TRIP.bookings) return;
- const total = TRIP.bookings.length;
- const done = TRIP.bookings.filter(b => b.state === 'confirmed').length;
+ if (!confirmedList || !openList) return;
  const section = document.getElementById('bookings-section');
- if (section && total) {
+ const bookings = TRIP.bookings || [];
+ if (!bookings.length) { if (section) section.style.display = 'none'; return; }
+ const total = bookings.length;
+ const done = bookings.filter(b => b.state === 'confirmed').length;
+ if (section) {
   const pct = Math.round((done / total) * 100);
   const prog = el('div', 'ledger-progress');
   const allDone = done === total;
@@ -210,8 +252,9 @@ function renderBookings() {
    + (allDone ? ' · all set' : ' · <b>' + (total - done) + '</b> still to book') + '</div>'
    + '<div class="ledger-progress-bar"><div class="ledger-progress-fill" style="width:' + pct + '%"></div></div>';
   section.insertBefore(prog, section.firstChild);
+  section.insertBefore(el('div', 'section-label', 'Bookings'), prog);
  }
- TRIP.bookings.forEach(b => {
+ bookings.forEach(b => {
  const row = el('div', 'ledger-row');
  row.innerHTML = `<span class="ldot ${b.state}"></span>
  <div class="ledger-body">
@@ -224,13 +267,23 @@ function renderBookings() {
  (b.state === 'confirmed' ? confirmedList : openList).appendChild(row);
  });
 
- // An empty group would otherwise leave a heading with nothing under it.
+ // Fold each ledger behind a counted disclosure — the progress line above
+ // already tells the story, so eight rows shouldn't cost eight rows of page.
+ // The static labels in the page HTML supply the group names.
  [confirmedList, openList].forEach(list => {
-  if (!list.children.length) {
+  const label = list.previousElementSibling;
+  const hasLabel = label && label.classList.contains('section-label');
+  const count = list.children.length;
+  if (!count) {
    list.style.display = 'none';
-   const label = list.previousElementSibling;
-   if (label && label.classList.contains('section-label')) label.style.display = 'none';
+   if (hasLabel) label.style.display = 'none';
+   return;
   }
+  const title = hasLabel ? label.textContent.trim() : '';
+  const d = makeDisclosureRow(title + ' <span class="sh26-count">' + count + '</span>');
+  list.parentNode.insertBefore(d.grp, list);
+  d.body.appendChild(list);
+  if (hasLabel) label.style.display = 'none';
  });
 }
 
@@ -243,16 +296,9 @@ function renderVoices() {
  return;
  }
  TRIP.voices.forEach(v => {
- const grp = el('div', 'sh26-row');
- // Label wrapped so it is a single flex item — otherwise the author, the
- // separator and the title each become items and wrap against the chevron.
- const btn = el('button', 'sh26-row-btn', `<span class="sh26-row-label">${v.author} &middot; <em style="font-style:italic;">${v.title}</em></span><span class="sh26-chev">&rsaquo;</span>`);
- const body = el('div', 'sh26-row-panel');
- body.innerHTML = `<div class="prose prose-drop" style="padding-top:0.6rem;">${v.body}</div>`;
- const vid = 'v-' + Math.random().toString(36).slice(2, 8);
- body.id = vid; btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', vid);
- btn.addEventListener('click', () => { const open = btn.classList.toggle('open'); body.classList.toggle('open'); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); });
- grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
+ const d = makeDisclosureRow(`${v.author} &middot; <em style="font-style:italic;">${v.title}</em>`);
+ d.body.innerHTML = `<div class="prose prose-drop" style="padding-top:0.6rem;">${v.body}</div>`;
+ wrap.appendChild(d.grp);
  });
 }
 
@@ -318,21 +364,10 @@ async function renderEvents() {
   if (!live.length) wrap.appendChild(el('div', 'sandbox-empty', 'Nothing current — see earlier finds below.'));
 
   if (archived.length) {
-   const grp = el('div', 'sh26-row');
-   grp.style.marginTop = '1.2rem';
-   const btn = el('button', 'sh26-row-btn',
-    '<span class="sh26-row-label">Earlier finds (' + archived.length + ')</span><span class="sh26-chev">›</span>');
-   btn.type = 'button';
-   const body = el('div', 'sh26-row-panel');
-   archived.forEach(ev => body.appendChild(eventRow(ev, { archived: true, canKeep: canKeep })));
-   const gid = 'ev-' + Math.random().toString(36).slice(2, 8);
-   body.id = gid; btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', gid);
-   btn.addEventListener('click', () => {
-    const open = btn.classList.toggle('open');
-    body.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-   });
-   grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
+   const d = makeDisclosureRow('Earlier finds <span class="sh26-count">' + archived.length + '</span>');
+   d.grp.style.marginTop = '1.2rem';
+   archived.forEach(ev => d.body.appendChild(eventRow(ev, { archived: true, canKeep: canKeep })));
+   wrap.appendChild(d.grp);
   }
 
   if (data.updated) wrap.appendChild(el('div', 'event-updated', 'Refreshed ' + data.updated));
@@ -344,19 +379,14 @@ function renderPocket() {
  const wrap = document.getElementById('site-pocket-wrap');
  if (!wrap || !TRIP.pocket) return;
  TRIP.pocket.forEach(g => {
- const grp = el('div', 'sh26-row');
- const btn = el('button', 'sh26-row-btn', `<span class="sh26-row-label">${g.group}</span><span class="sh26-chev">›</span>`);
- const body = el('div', 'sh26-row-panel');
- g.items.forEach(([n, d, u]) => {
+ const d = makeDisclosureRow(`${g.group} <span class="sh26-count">${g.items.length}</span>`);
+ g.items.forEach(([n, desc, u]) => {
  const link = u ? ` <a class="sh26-item-link" href="${u}" target="_blank" rel="noopener">↗</a>` : '';
- const onWeek = SCHEDULED_NAMES.some(t => n === t || t.indexOf(n) === 0 || n.indexOf(t) === 0);
+ const onWeek = SCHEDULED_NAMES.some(t => namesMatch(n, t));
  const tag = onWeek ? ` <span class="pocket-tag">On the week</span>` : '';
- body.appendChild(el('div', 'sh26-item', `<div class="n">${n}${tag}${link}</div><div class="d">${d}</div>`));
+ d.body.appendChild(el('div', 'sh26-item', `<div class="n">${n}${tag}${link}</div><div class="d">${desc}</div>`));
  });
- const gid = 'g-' + Math.random().toString(36).slice(2, 8);
- body.id = gid; btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', gid);
- btn.addEventListener('click', () => { const open = btn.classList.toggle('open'); body.classList.toggle('open'); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); });
- grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
+ wrap.appendChild(d.grp);
  });
 }
 
@@ -775,11 +805,13 @@ function initExpandAll() {
    c.classList.toggle('open', anyClosed);
    const head = c.querySelector('.chapter-head');
    if (head) head.setAttribute('aria-expanded', anyClosed ? 'true' : 'false');
-   // reveal any collapsed essay bodies when opening all
-   if (anyClosed) {
-    const teaser = c.querySelector('.essay-teaser');
-    const full = c.querySelector('[id^="essay-"]');
-    if (teaser && full) { teaser.style.display = 'none'; full.style.display = 'block'; }
+   // reveal any collapsed essay bodies when opening all,
+   // and put them back to teasers when closing all
+   const teaser = c.querySelector('.essay-teaser');
+   const full = c.querySelector('[id^="essay-"]');
+   if (teaser && full) {
+    teaser.style.display = anyClosed ? 'none' : '';
+    full.style.display = anyClosed ? 'block' : 'none';
    }
   });
   btn.textContent = anyClosed ? 'Close all days' : 'Open all days';
