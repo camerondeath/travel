@@ -7,233 +7,86 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --ground:   #f7f6f3;
-  --ground-2: #eeecea;
-  --ground-3: #e4e2de;
-  --ink:      #1a1916;
-  --ink-2:    #3a3834;
-  --ink-3:    #6b6860;
-  --accent:   #2d5a3d;
-  --accent-2: #1e3d29;
-  --accent-lt: #e8f0eb;
-  --rule:     #dddbd7;
-  --rule-2:   #ccc9c4;
-  --good:     #2d5a3d;
-  --open:     #4a6fa5;
-  --serif:    'Newsreader', Georgia, serif;
-  --display:  'Fraunces', Georgia, serif;
-  --mono:     'Inter', -apple-system, system-ui, sans-serif;
-  --col: 680px;
-  --pad: 1.5rem;
-}
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; font-size: 17px; }
-body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
-.wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--pad); }
-
-/* ── NO GLOW ON LIGHT ─────────────────────────────────────── */
-.glow { display: none; }
-.content { position: relative; }
-
-/* ── MASTHEAD ─────────────────────────────────────────────── */
-.masthead { padding: 3.5rem 0 2rem; }
-.mast-city { font-family: var(--display); font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 400; line-height: 0.88; letter-spacing: -0.03em; font-optical-sizing: auto; color: var(--ink); }
-.mast-city em { font-style: italic; color: var(--accent); font-weight: 300; }
-.mast-bar { display: flex; align-items: center; gap: 1.2rem; margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
-.mast-dates { font-family: var(--mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
-.mast-weather { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.7rem; color: var(--ink-3); margin-left: auto; }
-.mast-weather-temp { color: var(--ink-2); font-weight: 500; }
-
-/* ── PLANE PIECE ──────────────────────────────────────────── */
-.plane-piece { padding: 2.5rem 0 3rem; border-bottom: 1px solid var(--rule); }
-.kicker { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.9rem; }
-.plane-piece h2 { font-family: var(--display); font-size: clamp(1.9rem, 5vw, 3rem); font-weight: 400; line-height: 1.02; letter-spacing: -0.02em; font-optical-sizing: auto; margin-bottom: 0.8rem; color: var(--ink); }
-.standfirst { font-family: var(--serif); font-size: 1.18rem; font-weight: 300; font-style: italic; color: var(--accent); line-height: 1.45; margin-bottom: 2rem; max-width: 32ch; }
-
-/* ── PROSE ────────────────────────────────────────────────── */
-.prose p { margin-bottom: 1.25em; color: var(--ink-2); font-size: 1rem; }
-.prose p:last-child { margin-bottom: 0; }
-.prose-drop > p:first-of-type::first-letter {
-  font-family: var(--display); float: left; font-size: 4em; line-height: 0.76;
-  font-weight: 400; padding: 0.04em 0.1em 0 0; color: var(--accent); font-optical-sizing: auto; }
-
-/* ── EXPAND TOGGLE ────────────────────────────────────────── */
-.expand { margin-top: 0.8rem; }
-.expand-btn {
-  display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
-  background: none; border: none; padding: 0.2rem 0;
-  font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
-  transition: color 0.12s;
-}
-.expand-btn:hover { color: var(--accent-2); }
-.expand-btn .chevron { display: inline-block; transition: transform 0.18s; font-style: normal; }
-.expand-btn.open .chevron { transform: rotate(90deg); }
-.expand-body {
-  display: none; margin-top: 1rem;
-  padding: 1.2rem 1.4rem;
-  background: var(--ground-2);
-  border-left: 2px solid var(--accent);
-}
-.expand-body.open { display: block; }
-.expand-body .prose p { font-size: 0.92rem; color: var(--ink-2); }
-.expand-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--accent); }
-
-/* ── ESSAY TEASER ─────────────────────────────────────────── */
-.essay-teaser { margin-bottom: 0.5rem; }
-.essay-teaser p { font-family: var(--serif); font-size: 1rem; color: var(--ink-3); line-height: 1.7; margin: 0; display: inline; }
-.essay-continue { display: inline; font-family: var(--serif); font-size: 1rem; color: var(--ink-3); }
-.essay-continue::before { content: '\2026\00a0'; color: var(--rule-2); }
-.essay-continue a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; vertical-align: baseline; }
-.essay-continue a:hover { color: var(--accent-2); border-color: var(--accent); }
-
-
-.chapter { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
-.chapter.is-past { opacity: 0.45; }
-.chapter.is-today { border-left: 2px solid var(--accent); padding-left: 1.5rem; margin-left: -1.5rem; }
-.chapter-label { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
-.chapter-head { margin-bottom: 1.8rem; }
-.chapter-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; }
-.chapter-meta { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
-.chapter-meta .date-accent { color: var(--accent); }
-.chapter-title { font-family: var(--display); font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 400; line-height: 1.04; letter-spacing: -0.02em; font-optical-sizing: auto; color: var(--ink); }
-.day-weather { display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; flex-shrink: 0; padding-top: 0.1rem; }
-.day-weather-icon { font-size: 1.3rem; line-height: 1; }
-.day-weather-temps { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; }
-.day-weather-temps .hi { color: var(--ink-2); }
-
-/* ── SPINE ────────────────────────────────────────────────── */
-.spine { position: relative; padding-left: 2rem; margin-top: 1.5rem; }
-.spine::before { content: ''; position: absolute; left: 0; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--rule); }
-.stop { position: relative; margin-bottom: 1.8rem; }
-.stop:last-child { margin-bottom: 0; }
-.stop::before {
-  content: ''; position: absolute; left: -2rem; top: 0.52rem;
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--ground); border: 1px solid var(--rule-2);
-}
-.stop[data-kind="food"]::before { border-color: var(--accent); background: var(--ground); }
-.stop[data-kind="culture"]::before { background: var(--accent); border-color: var(--accent); }
-.stop-time { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.15rem; }
-.stop-head { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
-.stop-title { font-family: var(--display); font-size: 1.1rem; font-weight: 400; color: var(--ink); line-height: 1.2; font-optical-sizing: auto; }
-.stop-title a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule-2); }
-.stop-title a:hover { color: var(--accent); border-color: var(--accent); }
-.stop-tag { font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15em 0.55em; border-radius: 1px; flex-shrink: 0; }
-.stop-tag.confirmed { color: var(--good); border: 1px solid color-mix(in srgb, var(--good) 40%, transparent); background: var(--accent-lt); }
-.stop-tag.open { color: var(--open); border: 1px solid color-mix(in srgb, var(--open) 35%, transparent); }
-.stop-note { font-family: var(--serif); font-size: 0.88rem; color: var(--ink-3); line-height: 1.65; }
-.stop-ref { font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); margin-top: 0.3rem; letter-spacing: 0.04em; }
-.stop-ref span { color: var(--ink-3); }
-.stop-map { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); text-decoration: none; margin-top: 0.35rem; display: inline-block; }
-.stop-map:hover { color: var(--accent-2); }
-
-/* ── BOOKINGS LEDGER ──────────────────────────────────────── */
-.bookings-section { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
-.ledger { margin-top: 1.2rem; }
-.ledger-row { display: flex; align-items: baseline; gap: 0.9rem; padding: 0.65rem 0; border-bottom: 1px solid var(--rule); }
-.ledger-row:first-child { border-top: 1px solid var(--rule); }
-.ldot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; align-self: center; }
-.ldot.confirmed { background: var(--good); }
-.ldot.open { background: var(--open); }
-.ledger-body { flex: 1; min-width: 0; }
-.ledger-label { font-family: var(--display); font-size: 0.98rem; font-weight: 400; color: var(--ink); font-optical-sizing: auto; }
-.ledger-sub { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); margin-top: 0.1rem; letter-spacing: 0.02em; }
-.ledger-ref { font-family: var(--mono); font-size: 0.6rem; color: var(--rule-2); margin-top: 0.15rem; }
-.ledger-ref span { color: var(--accent); }
-.ledger-state { font-family: var(--mono); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
-.ledger-state.confirmed { color: var(--good); }
-.ledger-state.open { color: var(--open); }
-.ledger-link { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); text-decoration: none; flex-shrink: 0; }
-.ledger-link:hover { color: var(--accent-2); }
-
-/* ── BACK POCKET ──────────────────────────────────────────── */
-.pocket { padding: 3rem 0; border-bottom: 1px solid var(--rule); }
-.pocket-group { margin-bottom: 0.25rem; }
-.pocket-btn {
-  width: 100%; display: flex; align-items: center; justify-content: space-between;
-  background: none; border: none; border-bottom: 1px solid var(--rule);
-  padding: 0.85rem 0; cursor: pointer; color: var(--ink);
-  font-family: var(--serif); font-size: 1rem; font-weight: 400; text-align: left;
-}
-.pocket-btn .chev { font-family: var(--mono); color: var(--ink-3); font-size: 0.8rem; transition: transform 0.18s; }
-.pocket-btn.open .chev { transform: rotate(90deg); }
-.pocket-body { display: none; padding: 0.4rem 0 0.9rem; }
-.pocket-body.open { display: block; }
-.pocket-item { padding: 0.5rem 0; border-bottom: 1px solid var(--rule); }
-.pocket-item:last-child { border-bottom: none; }
-.pocket-item .n { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-2); }
-.pocket-item .d { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.1rem; letter-spacing: 0.01em; }
-
-/* ── SECTION LABEL ────────────────────────────────────────── */
-.section-label { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0; }
-
-/* ── FAB / NOTES ──────────────────────────────────────────── */
-footer { padding: 3rem 0 4rem; text-align: center; font-family: var(--mono); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
-.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: var(--ground); border: none; cursor: pointer; font-family: var(--display); font-size: 1.2rem; box-shadow: 0 2px 12px rgba(45,90,61,0.25); transition: transform 0.12s; }
-.fab:hover { transform: scale(1.06); }
-.notepanel { position: fixed; bottom: 5rem; right: 1.4rem; z-index: 50; width: min(300px, calc(100vw - 2.8rem)); background: var(--ground); border: 1px solid var(--rule); border-radius: 4px; padding: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,0.12); display: none; }
-.notepanel.open { display: block; }
-.notepanel textarea { width: 100%; height: 76px; resize: none; background: var(--ground-2); color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; padding: 0.55rem; font-family: var(--mono); font-size: 0.78rem; }
-.notepanel textarea:focus { outline: 1px solid var(--accent); }
-.notepanel .save { margin-top: 0.45rem; width: 100%; padding: 0.45rem; background: var(--accent); color: var(--ground); border: none; border-radius: 2px; font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em; cursor: pointer; text-transform: uppercase; }
-.notelist { margin-top: 0.5rem; max-height: 120px; overflow-y: auto; }
-.noteitem { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-2); padding: 0.35rem 0; border-bottom: 1px solid var(--rule); line-height: 1.4; }
-.noteitem:last-child { border-bottom: none; }
-.notelist .empty { font-family: var(--mono); font-size: 0.65rem; color: var(--ink-3); }
-a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
-</style>
+<link rel="stylesheet" href="../site.css">
 </head>
 <body>
-<div class="glow"></div>
 <div class="content"><div class="wrap">
 
 <header class="masthead">
-  <div class="mast-city" id="m-title"></div>
-  <div class="mast-bar">
-    <span class="mast-dates" id="m-dates"></span>
-    <span class="mast-weather" id="m-weather"></span>
-  </div>
+ <svg class="mast-leaf" viewBox="0 0 100 100" aria-hidden="true">
+ <path d="M50 66C29 62 7 45 9 24 11 11 30 3 46 10L50 23 54 10C70 3 89 11 91 24 93 45 71 62 50 66Z"/><path d="M48.6 65.5C48.6 78 48 86 47 94L53 94C52 86 51.4 78 51.4 65.5Z"/>
+ </svg>
+ <div class="mast-city" id="m-title"></div>
+ <div class="mast-bar">
+ <span class="mast-dates" id="m-dates"></span>
+ <span class="mast-weather" id="m-weather"></span>
+ </div>
 </header>
 
 <section class="plane-piece" id="plane"></section>
 
+<div class="day-index" id="day-index" aria-label="Trip index"></div>
+<div class="day-controls" id="day-controls-wrap"><button type="button" id="expand-all-btn" class="expand-all-btn" aria-pressed="false">Open all days</button></div>
+
 <main id="chapters"></main>
 
-<section class="pocket" id="pocket-section">
-  <div class="section-label">Back pocket</div>
-  <div id="pocket-wrap"></div>
+<section class="bookings-section" id="bookings-section">
+ <div class="section-label" style="margin-bottom:1rem;">Confirmed</div>
+ <div class="ledger" id="ledger-confirmed"></div>
+ <div class="section-label" style="margin:2rem 0 1rem;">Still to book</div>
+ <div class="ledger" id="ledger-open"></div>
 </section>
 
-<section class="bookings-section" id="bookings-section">
-  <div class="expand">
-    <button class="expand-btn" id="bookings-toggle"><em class="chevron">›</em>&nbsp;The bookings</button>
-    <div class="expand-body" id="bookings-body">
-      <div class="ledger" id="ledger-list"></div>
-    </div>
-  </div>
+<section class="sh26-section" id="site-pocket">
+ <div class="section-label">Back pocket</div>
+ <div id="site-pocket-wrap"></div>
+</section>
+
+<section class="sh26-section" id="site-sandbox">
+ <div class="section-label">Sandbox</div>
+ <div class="section-sub">A scratchpad for things spotted along the way. Hit the + button, bottom right, drop a line, review later. Saved in this browser only, nothing leaves the page.</div>
+ <div id="site-sandbox-wrap"></div>
+</section>
+
+<section class="sh26-section" id="site-voices">
+ <div class="section-label">Other voices</div>
+ <div class="section-sub">The same trip, reread in a writer's register. More to come here over time.</div>
+ <div id="site-voices-wrap"></div>
 </section>
 
 <footer>Melbourne · July 2026</footer>
 </div></div>
 
-<button class="fab" id="fab" aria-label="Notes">✎</button>
-<div class="notepanel" id="notepanel">
-  <textarea id="note-ta" placeholder="A thought, a name, an address…"></textarea>
-  <button class="save" id="note-save">Keep</button>
-  <div class="notelist" id="notelist"></div>
+<div class="sandbox-capture" id="sandbox-capture">
+ <input type="url" id="sandbox-url" placeholder="Paste a link…" autocomplete="off" inputmode="url" />
+ <input type="text" id="sandbox-name" placeholder="Name it (optional)" autocomplete="off" />
+ <input type="text" id="sandbox-note" placeholder="Note (optional)" autocomplete="off" />
+ <div class="sandbox-capture-bar">
+  <span class="hint">Enter to save · Esc to close</span>
+  <button type="button" class="sandbox-save-btn" id="sandbox-save">Save</button>
+ </div>
 </div>
+
+<button class="fab" id="fab" type="button" aria-label="Add to scratchpad">
+ <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 5v14M5 12h14"/>
+ </svg>
+</button>
 
 <script>
 const TRIP = {
   meta: {
     city: "Melbourne",
+    slug: "melbourne-2026",
     dates: "8–12 July 2026",
+    monthLabel: "in July",
+    tz: "Australia/Melbourne",
+    geo: { lat: -37.8136, lon: 144.9631 },
+    tripStart: "2026-07-08",
+    tripEnd: "2026-07-12",
+    tripStartISO: "2026-07-08T00:00:00+10:00",
     flights: { out: "QF170 · CHC 3:45pm → MEL 5:35pm", ret: "QF167 · MEL 9:15am → CHC 2:45pm · check-in closes 8:15am", ref: "E8GW8J" },
-    base: { name: "192 Little Collins Street", airbnb: "https://www.airbnb.co.nz/rooms/1832876", map: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
+    base: { name: "192 Little Collins Street", airbnb: "https://www.airbnb.co.nz/rooms/1832876", map: "https://maps.apple.com/?q=192+Little+Collins+Street+Melbourne" },
     plane: {
       kicker: "Read on the plane",
       title: "You Will Be Let In",
@@ -285,19 +138,19 @@ const TRIP = {
 
   days: [
     {
-      id: "wed", dow: "Wednesday", date: "8 July", chapter: "I",
+      id: "wed", iso: "2026-07-08", dow: "Wednesday", date: "8 July", chapter: "I",
       title: "Landing Into the Dark",
       essay: `<p>Descent into a winter city comes in two parts. First the lights -- the orange grid of the outer suburbs, the strung filaments of the freeways, the wet black shine of everything in the gaps between -- and then, without ceremony, the ground, and the particular cold that meets a body on the airbridge of a southern city in July. A cold with the sea somewhere in it. You crossed the water from one island and put down on the lip of a whole continent, and for the first hour none of it belongs to you. The taxi rank. The motorway. The green signs with names on them that mean nothing yet. This is the most foreign the place will ever feel, and the good news is that it lasts about forty minutes.</p>
 <p>Then a door, and a set of stairs, and a flat above a street in the dead centre of the grid, with the bags finally down and the long sigh of having arrived somewhere. There is a version of this evening that ends here, with toast and an early collapse, and it is a mistake. Arrival is not a place you reach by landing. It is a thing that happens later, somewhere warm, the moment you sit down at a counter you did not have to find and order the first thing without thinking too hard about it.</p>
 <p>So you go back out into the cold, which is shorter than you feared, the length of a narrow street, and into a long lit room that was full before you got there and will be full after you leave. Sherry, and small salted things, and the particular heat that comes off other people who are already mid-evening and have no idea you have just crossed a sea. A room that has held this same corner for twenty years and intends to hold it for twenty more. You are nobody here, which is the whole relief of it. The displacement of the airport drains out somewhere around the second glass, and the city, which showed you nothing on the way down, quietly opens its first door.</p>`,
       events: [
         { time: "3:45pm", title: "QF170 departs Christchurch", kind: "travel", note: "Boeing 737. Check-in closes 2:45pm CHC. Gold lounge access: Qantas CHC lounge, international terminal." },
-        { time: "5:35pm", title: "Land at Tullamarine", kind: "travel", note: "Terminal 2. Gold status, priority bags. Uber rank from arrivals -- about 35 minutes to the CBD.", map: "https://maps.google.com/?q=Melbourne+Airport+Tullamarine" },
-        { time: "~6:15pm", title: "192 Little Collins Street", kind: "base", note: "Access instructions arrive 48 hours before.", url: "https://www.airbnb.co.nz/rooms/1832876", map: "https://maps.google.com/?q=192+Little+Collins+Street+Melbourne" },
+        { time: "5:35pm", title: "Land at Tullamarine", kind: "travel", note: "Terminal 2. Gold status, priority bags. Uber rank from arrivals -- about 35 minutes to the CBD.", map: "https://maps.apple.com/?q=Melbourne+Airport+Tullamarine" },
+        { time: "~6:15pm", title: "192 Little Collins Street", kind: "base", note: "Access instructions arrive 48 hours before.", url: "https://www.airbnb.co.nz/rooms/1832876", map: "https://maps.apple.com/?q=192+Little+Collins+Street+Melbourne" },
         { time: "7:30pm", title: "Bar Lourinhã", kind: "food", state: "confirmed",
           url: "https://barlourinha.com.au",
           note: "37 Little Collins Street, 3-minute walk. Bar seat. Order 4-5 things across the evening.",
-          map: "https://maps.google.com/?q=37+Little+Collins+Street+Melbourne",
+          map: "https://maps.apple.com/?q=37+Little+Collins+Street+Melbourne",
           expand: {
             label: "About Bar Lourinhã",
             body: `<p>Matt McConnell and his partner Jo Gamvros opened this room in 2006, and it has been part of the city's dining furniture ever since -- one of the venues that anchored what the CBD laneway culture later became. Twenty years on, the room still does what it was always designed to do: feed people well at the bar, without ceremony.</p>
@@ -309,18 +162,18 @@ const TRIP = {
     },
 
     {
-      id: "thu", dow: "Thursday", date: "9 July", chapter: "II",
+      id: "thu", iso: "2026-07-09", dow: "Thursday", date: "9 July", chapter: "II",
       title: "Work, Then the North, Then a Dane",
       essay: `<p>Few discomforts are as exquisite as having a city laid out below the window and choosing, for a morning, not to have it. Light comes up grey and then gold over the grid. Trams start their grinding down on the wide street. And you sit with a laptop and a coffee gone cold, doing the work that paid for the trip, while the most interesting place you have been in months waits on the other side of the glass with its hands in its pockets. There is a discipline to it, and a strange pleasure, the pleasure of deferral. The day is a held breath. You know exactly when it will be let out.</p>
 <p>Two o'clock is the exhale. North on a rattling tram, out of the formality of the centre and across an invisible line into older, looser country -- nineteenth-century terraces with their iron lace, shopfronts that have been forty different things, a street that wears every decade it has lived through at once and apologises for none of them. The pace drops. The buildings come down to two storeys and human scale. You drift west on foot with no particular errand, past the galleries and the op shops and the front bars filling early, and the afternoon does the thing afternoons in this part of town are good at, which is to dissolve.</p>
 <p>And then the day gathers itself for something it has been pointing at all along. A small room, a bare stage, the house lights down. One person, alone, with no set and no help, standing in for an entire poisoned court -- the prince and the ghost and the drowned girl and the clown with the skull, all of it passing through a single body in a single voice that keeps changing hands. There is nowhere to hide up there and nothing to hide behind, which is the entire point of attempting it this way. A whole kingdom of grief and delay and bad decisions, held for two hours inside one figure on an empty floor. You walk back out into the cold afterwards turning it over, the way the best evenings make you, slightly altered, not quite ready to talk.</p>`,
       events: [
         { time: "8:00am", title: "Work block", kind: "work", note: "From the apartment. Clear by 2pm." },
-        { time: "~9:30am", title: "Pellegrini's", kind: "food", note: "66 Bourke Street, 5-minute walk. 1954 and proud of it.", map: "https://maps.google.com/?q=66+Bourke+Street+Melbourne" },
-        { time: "2:00pm", title: "Tram 86 north to Fitzroy", kind: "travel", note: "From the Bourke Street stop, 15 minutes. Off at Smith and Gertrude Street corner.", map: "https://maps.google.com/?q=Gertrude+Street+Fitzroy+Melbourne" },
+        { time: "~9:30am", title: "Pellegrini's", kind: "food", note: "66 Bourke Street, 5-minute walk. 1954 and proud of it.", map: "https://maps.apple.com/?q=66+Bourke+Street+Melbourne" },
+        { time: "2:00pm", title: "Tram 86 north to Fitzroy", kind: "travel", note: "From the Bourke Street stop, 15 minutes. Off at Smith and Gertrude Street corner.", map: "https://maps.apple.com/?q=Gertrude+Street+Fitzroy+Melbourne" },
         { time: "2:15–5:00pm", title: "Gertrude Street", kind: "explore",
           note: "Walk west from Smith Street. Leave by half four -- dinner has a hard deadline.",
-          map: "https://maps.google.com/?q=Gertrude+Street+Fitzroy+Melbourne",
+          map: "https://maps.apple.com/?q=Gertrude+Street+Fitzroy+Melbourne",
           expand: {
             label: "Gertrude Street guide",
             body: `<p>Gertrude Street runs only six blocks from Smith to Nicholson, but it concentrates more of what makes Melbourne interesting per metre than almost anywhere in the city. Time Out ranked it the second coolest street in the world in 2022, which is both accurate and beside the point -- the locals who eat and drink here have not noticed the accolade and do not behave accordingly.</p>
@@ -330,7 +183,7 @@ const TRIP = {
         { time: "5:15pm", title: "Tipo 00", kind: "food", state: "confirmed",
           url: "https://www.tipo00.com.au",
           note: "361 Little Bourke Street. Bar seat confirmed. Depart by 6:30 -- 12-minute walk to Fairfax Studio.",
-          map: "https://maps.google.com/?q=361+Little+Bourke+Street+Melbourne",
+          map: "https://maps.apple.com/?q=361+Little+Bourke+Street+Melbourne",
           expand: {
             label: "About Tipo 00",
             body: `<p>Andreas Papadakis spent four years at Vue de Monde before opening this room in 2014, and his fine-dining instincts are what make it different from every other pasta bar in the city. The name refers to the finest grade of Italian flour, and the menu is built around fresh pasta made daily in a kitchen visible from the counter. Named one of the best Italian restaurants in the world in 2022 -- not the kind of claim this place makes about itself; it just keeps being excellent.</p>
@@ -341,7 +194,7 @@ const TRIP = {
           url: "https://www.artscentremelbourne.com.au",
           note: "Fairfax Studio, Arts Centre Melbourne. Seat F15, Stalls Premium, Door 1. Mobile ticket open before arrival. About 2 hours 20 minutes with interval.",
           ref: "#10678334",
-          map: "https://maps.google.com/?q=Arts+Centre+Melbourne+St+Kilda+Road",
+          map: "https://maps.apple.com/?q=Arts+Centre+Melbourne+St+Kilda+Road",
           expand: {
             label: "About the show",
             body: `<p>Suzy Izzard performs all 23 characters of Shakespeare's Hamlet alone on a bare stage with no set, no props, no costume changes. The adaptation is by her brother Mark Izzard, direction by Selina Cadell from the RSC; the production ran triple-extended seasons in New York, Chicago and London, nominated for the Drama League's Distinguished Performance Award. Melbourne is the longest run on the Australian tour -- closing 12 July, two days after this performance.</p>
@@ -352,7 +205,7 @@ const TRIP = {
     },
 
     {
-      id: "fri", dow: "Friday", date: "10 July", chapter: "III",
+      id: "fri", iso: "2026-07-10", dow: "Friday", date: "10 July", chapter: "III",
       title: "The City's Interior",
       essay: `<p>Some buildings cannot be read from the street at all. You can stand across the road and take in the 1920s stonework, the worn brass of the lobby, the lift with the folding gate, and understand almost nothing, because the building's entire life is happening on the upper floors, behind doors, in rooms the size of a generous cupboard. Go up. On the right day the doors stand open and the landings give off a confusion of smells -- cut paper and printing ink, hot wax, the strange dry sweetness of perfume oils being blended by hand. A milliner here. A bookbinder there. A painter who has held the same north light for thirty years. A working hive of people making small things slowly, stacked floor on floor in the middle of a city that mostly forgets they are up there.</p>
 <p>Down at street level the lanes do the same trick in reverse, threading between the grand fronts, the city's working underside turned into its quiet pleasure. You move through them with no map worth the name, taking the turn that looks like it leads to a loading dock and finding it leads somewhere better. It is a morning spent going inward and upward, into the parts of the place that keep themselves just out of sight, and it tunes the eye for what the afternoon has in store.</p>
@@ -360,7 +213,7 @@ const TRIP = {
       events: [
         { time: "9:30am", title: "Nicholas Building", kind: "explore",
           note: "37 Swanston Street, 5-minute walk. Take the original lift, push on unlocked doors. Studios, printmakers, galleries, a perfumer. Around an hour.",
-          map: "https://maps.google.com/?q=37+Swanston+Street+Melbourne",
+          map: "https://maps.apple.com/?q=37+Swanston+Street+Melbourne",
           expand: {
             label: "About the Nicholas Building",
             body: `<p>Built in 1926, a heritage tower on the corner of Swanston and Flinders Lane that most people walk past without entering. Above the retail ground floor: studios and workshops rented by people who need a physical space but not a shopfront. Take the original lift to any floor and push on the unlocked doors. A letterpress studio with a Heidelberg press in daily use. A vintage clothing dealer whose stock has been accumulating since the 1970s. A milliner. A perfumer making fragrance to commission. A printmaker. Nobody is performing for visitors -- the doors are open because it is a working building. The Cathedral Arcade on the ground floor has been there since 1927. Allow an hour, follow what interests you.</p>`
@@ -368,17 +221,17 @@ const TRIP = {
         },
         { time: "10:30am", title: "Laneways south", kind: "explore",
           note: "Tattersalls Lane, Caledonian Lane, Duckboard Place in daylight. Come out on Flinders Lane.",
-          map: "https://maps.google.com/?q=Flinders+Lane+Melbourne"
+          map: "https://maps.apple.com/?q=Flinders+Lane+Melbourne"
         },
         { time: "12:30pm", title: "Lunch, Flinders Lane", kind: "food",
           note: "Cumulus Inc at number 45 is the reliable anchor -- marble counter, walk-in welcome, wine by the glass from early. Or drift and see what takes you.",
-          map: "https://maps.google.com/?q=45+Flinders+Lane+Melbourne"
+          map: "https://maps.apple.com/?q=45+Flinders+Lane+Melbourne"
         },
         { time: "2:00pm", title: "Cartier, NGV International", kind: "culture", state: "confirmed",
           url: "https://www.ngv.vic.gov.au",
           note: "180 St Kilda Road, 15-minute walk south. Free guided tour at 2:30pm -- register at the info desk on arrival. Allow 2 hours minimum.",
           ref: "#5704410",
-          map: "https://maps.google.com/?q=NGV+International+180+St+Kilda+Road+Melbourne",
+          map: "https://maps.apple.com/?q=NGV+International+180+St+Kilda+Road+Melbourne",
           expand: {
             label: "About the exhibition",
             body: `<p>The exhibition begins with the moment Cartier stopped being a competent Parisian jeweller and became something else. In 1900 Louis, Pierre and Jacques inherited the firm; within a decade they had opened in London and New York and started collecting clients -- the Maharaja of Patiala, King Edward VII, Dame Nellie Melba. The Maharaja commissioned a necklace anchored by a 234-carat yellow diamond; lost after Indian independence, recovered in 1998 stripped of stones, Cartier replaced them with replicas. Both versions are here.</p>
@@ -387,13 +240,13 @@ const TRIP = {
         },
         { time: "~4:15pm", title: "The Domain", kind: "explore",
           note: "Exit the NGV into the water wall garden. The Domain stretches south: elm paths, the Shrine of Remembrance in late afternoon light. Walk back toward the city when ready. Punch Lane is 20 minutes on foot.",
-          map: "https://maps.google.com/?q=Domain+Parklands+Melbourne"
+          map: "https://maps.apple.com/?q=Domain+Parklands+Melbourne"
         },
         { time: "6:30pm", title: "Saadi", kind: "food", state: "confirmed",
           url: "https://saadi.com.au",
           note: "18 Punch Lane, downstairs. Arrive on time, no waiting area. $85 four-course set menu on Friday.",
           ref: "7V9NFNX4NPW7 · $50/head cancellation within 24hrs",
-          map: "https://maps.google.com/?q=18+Punch+Lane+Melbourne",
+          map: "https://maps.apple.com/?q=18+Punch+Lane+Melbourne",
           expand: {
             label: "About Saadi",
             body: `<p>Saavni Krishnan and Sriram Aditya spent three years running Saadi as a pop-up -- at Etta, Public Wine Shop, Manzé -- before taking the former Sunda space on Punch Lane permanently in September 2025. Krishnan grew up in Mumbai to Punjabi and Tamilian parents, trained at Fred's Sydney and sous-chef at Manzé. Aditya is Tamilian, shaped by his father's Navy postings across the subcontinent, most recently head chef at Gemini in Coburg.</p>
@@ -404,7 +257,7 @@ const TRIP = {
     },
 
     {
-      id: "sat", dow: "Saturday", date: "11 July", chapter: "IV",
+      id: "sat", iso: "2026-07-11", dow: "Saturday", date: "11 July", chapter: "IV",
       title: "Market, Gardens, a Laneway Kitchen",
       essay: `<p>No alarm. That alone changes the shape of the air in a room. Light arrives and is allowed to, and the first hour belongs to nobody and nothing, which after three scheduled days feels close to extravagant. A day with no time pinned to its front end tends to find its own pace, and its own pace, here, leads to a market.</p>
 <p>Under the long sheds the cold is part of the point. Breath shows. Hands stay in pockets between stalls. The deli hall runs warm and dense with the smell of hung meat and cut cheese and coffee held in paper cups for the heat as much as the drink, and the produce rows out the back glisten with the particular self-respect of winter vegetables -- the brassicas, the bitter leaves, the muddy roots that actually want this weather. It is loud and social and faintly competitive, a few thousand people moving through the same cold space on the same loose errand, and it is at its best in the last hour before noon, when it begins, almost imperceptibly, to wind itself down.</p>
@@ -415,7 +268,7 @@ const TRIP = {
         { time: "~10:00am", title: "Queen Victoria Market", kind: "explore",
           url: "https://www.qvm.com.au",
           note: "15-minute walk north. Arrive between 10 and 11 for the full range -- fresh food winds down by midday.",
-          map: "https://maps.google.com/?q=Queen+Victoria+Market+Melbourne",
+          map: "https://maps.apple.com/?q=Queen+Victoria+Market+Melbourne",
           expand: {
             label: "About the market",
             body: `<p>Queen Victoria Market is the largest open-air market in the southern hemisphere and has operated on this site since 1878 -- the same era as the gold-rush architecture, the same unbroken continuity. It covers two city blocks. The upper market (Elizabeth Street side) is the tourist end: clothes, souvenirs, honey. Go instead to the deli hall on the north side, a long covered shed of European-style providores that has been feeding Melbourne since the 1920s. Polish smallgoods, Italian cheeses, Spanish olives, half a dozen Continental delis in a row. Take your time.</p>
@@ -425,7 +278,7 @@ const TRIP = {
         },
         { time: "~12:30pm", title: "Carlton Gardens", kind: "explore",
           note: "20-minute walk northeast or tram. The Royal Exhibition Building and the gardens. Back to the city by late afternoon.",
-          map: "https://maps.google.com/?q=Carlton+Gardens+Melbourne",
+          map: "https://maps.apple.com/?q=Carlton+Gardens+Melbourne",
           expand: {
             label: "Carlton and the Royal Exhibition Building",
             body: `<p>The Royal Exhibition Building stands at the centre of the Carlton Gardens -- a World Heritage listed hall built for the 1880 Melbourne International Exhibition, predating Federation by twenty years, that hosted the first sitting of the Australian Parliament in 1901. Grand out of all proportion to any current use: a central dome flanked by pavilions, the whole thing raised in thirteen months by a city that needed to impress the world and had the money to do it. The gardens were designed by William Sangster in the 1870s -- axial paths, a fountain, mature elms. In July they are bare and cold and without tourists, which makes them ideal.</p>
@@ -436,7 +289,7 @@ const TRIP = {
           url: "https://www.leehofook.com.au",
           note: "11-15 Duckboard Place, off Flinders Lane. 5-minute walk. Smart business casual. 15-minute grace period.",
           ref: "#11936 · $88/head cancellation within 24hrs",
-          map: "https://maps.google.com/?q=11+Duckboard+Place+Melbourne",
+          map: "https://maps.apple.com/?q=11+Duckboard+Place+Melbourne",
           expand: {
             label: "About Lee Ho Fook",
             body: `<p>Victor Liong arrived from Brunei at six, grew up in Sydney, trained at Marque under Mark Best and then at Mr Wong, and moved to Melbourne in 2013. He named the restaurant after the Warren Zevon lyric in Werewolves of London -- which tells you something about the register: serious cooking, not taking itself seriously. Moved from Collingwood to Duckboard Place in 2015.</p>
@@ -447,7 +300,7 @@ const TRIP = {
     },
 
     {
-      id: "sun", dow: "Sunday", date: "12 July", chapter: "V",
+      id: "sun", iso: "2026-07-12", dow: "Sunday", date: "12 July", chapter: "V",
       title: "The Early Door",
       essay: `<p>Waking in the dark to leave a place has its own particular flavour, half theft and half farewell. An alarm in the black hours. A flat you have only just learned the sounds of, quiet now in a way it has not been before. Bags by the door where you set them the night before, already half a stranger to the rooms behind you. There is no time for sentiment and that is a mercy, because the clock is the only thing in charge, and the clock says go.</p>
 <p>Down on the street the city does, at last, the one thing it has refused to do all week. It shows you its outside. Nothing is open, so there is no inside to be let into -- only the wide wet road under the sodium lights, the shut grand fronts, the lanes black and giving nothing, the whole grid emptied of everyone and, for these few minutes, entirely yours. It is the most of Melbourne you have seen at once, and it is beautiful, and it is closed. You came in through a wall of water four nights ago. You go out through this, the cold and the dark and the empty.</p>
@@ -490,263 +343,6 @@ const TRIP = {
   ]
 };
 </script>
-<script>
-function el(tag, cls, html) {
-  const e = document.createElement(tag);
-  if (cls) e.className = cls;
-  if (html != null) e.innerHTML = html;
-  return e;
-}
-
-function makeExpand(label, bodyHtml, dropCap) {
-  const wrap = el('div', 'expand');
-  const btn = el('button', 'expand-btn', `<em class="chevron">›</em>&nbsp;${label}`);
-  const body = el('div', 'expand-body');
-  body.innerHTML = `<div class="prose${dropCap ? ' prose-drop' : ''}">${bodyHtml}</div>`;
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('open');
-    body.classList.toggle('open');
-  });
-  wrap.appendChild(btn);
-  wrap.appendChild(body);
-  return wrap;
-}
-
-function renderMasthead() {
-  const m = TRIP.meta;
-  document.getElementById('m-title').innerHTML = m.city + ' <em>in July</em>';
-  document.getElementById('m-dates').textContent = m.dates;
-}
-
-function renderPlanePiece() {
-  const p = TRIP.meta.plane;
-  const sec = document.getElementById('plane');
-  const previewDiv = el('div', 'prose prose-drop', p.preview);
-  sec.appendChild(el('div', 'kicker', p.kicker));
-  sec.appendChild(el('h2', null, p.title));
-  const sf = el('p', 'standfirst', p.standfirst);
-  sec.appendChild(sf);
-  sec.appendChild(previewDiv);
-  sec.appendChild(makeExpand('Continue reading', p.full, false));
-}
-
-function renderChapters() {
-  const wrap = document.getElementById('chapters');
-  const DAY_DATES = { wed: '2026-07-08', thu: '2026-07-09', fri: '2026-07-10', sat: '2026-07-11', sun: '2026-07-12' };
-
-  function getMelbDate() {
-    return new Date().toLocaleString('en-CA', { timeZone: 'Australia/Melbourne' }).slice(0, 10);
-  }
-
-  const todayStr = getMelbDate();
-  const tripActive = todayStr >= '2026-07-08' && todayStr <= '2026-07-12';
-  const chapters = [];
-
-  TRIP.days.forEach(day => {
-    const ch = el('section', 'chapter');
-    ch.id = day.id;
-    const dayDate = DAY_DATES[day.id];
-
-    if (tripActive) {
-      if (dayDate < todayStr) ch.classList.add('is-past');
-      else if (dayDate === todayStr) {
-        ch.classList.add('is-today');
-        ch.appendChild(el('div', 'chapter-label', 'Today'));
-      }
-    }
-
-    const head = el('div', 'chapter-head');
-    head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div><div class="chapter-title">${day.title}</div></div><div class="day-weather" id="wx-${day.id}"></div></div>`;
-    ch.appendChild(head);
-
-    // Essay teaser: first sentence visible, rest behind toggle
-    const essayWrap = el('div', null);
-    // Extract first sentence from first <p>
-    const firstPMatch = day.essay.match(/<p>([\s\S]*?)<\/p>/);
-    let teaser = '', rest = day.essay;
-    if (firstPMatch) {
-      const firstP = firstPMatch[1];
-      // Split on first sentence boundary (. followed by space or end)
-      const sentMatch = firstP.match(/^(.*?(?:\.|!|\?)(?:\s|$))([\s\S]*)$/);
-      if (sentMatch && sentMatch[1].length > 40) {
-        teaser = sentMatch[1].trim();
-        const remainder = sentMatch[2].trim();
-        rest = remainder
-          ? `<p>${remainder}</p>` + day.essay.replace(firstPMatch[0], '').trim()
-          : day.essay.replace(firstPMatch[0], '').trim();
-      } else {
-        teaser = firstP;
-        rest = day.essay.replace(firstPMatch[0], '').trim();
-      }
-    }
-    const teaserDiv = el('div', 'essay-teaser');
-    teaserDiv.innerHTML = `<p>${teaser}</p>`;
-    essayWrap.appendChild(teaserDiv);
-    if (rest) {
-      const continueSpan = el('span', 'essay-continue');
-      const expandId = 'essay-' + day.id;
-      continueSpan.innerHTML = `<a href="#" id="btn-${expandId}">Continue reading</a>`;
-      teaserDiv.appendChild(continueSpan);
-      const fullBody = el('div', null);
-      fullBody.id = expandId;
-      fullBody.style.display = 'none';
-      fullBody.innerHTML = `<div class="prose prose-drop" style="margin-top:0.9rem;">${rest}</div>`;
-      essayWrap.appendChild(fullBody);
-      continueSpan.querySelector('a').addEventListener('click', e => {
-        e.preventDefault();
-        fullBody.style.display = 'block';
-        continueSpan.style.display = 'none';
-      });
-    }
-    ch.appendChild(essayWrap);
-
-    // Spine
-    const spine = el('div', 'spine');
-    day.events.forEach(ev => {
-      const stop = el('div', 'stop');
-      stop.dataset.kind = ev.kind;
-
-      const tag = ev.state === 'confirmed' ? '<span class="stop-tag confirmed">Booked</span>'
-                : ev.state === 'open'      ? '<span class="stop-tag open">To book</span>' : '';
-
-      // Title -- link if url provided
-      const titleHtml = ev.url
-        ? `<a href="${ev.url}" target="_blank" rel="noopener">${ev.title}</a>`
-        : ev.title;
-
-      stop.appendChild(el('div', 'stop-time', ev.time));
-      stop.appendChild(el('div', 'stop-head', `<span class="stop-title">${titleHtml}</span>${tag}`));
-      if (ev.note) stop.appendChild(el('div', 'stop-note', ev.note));
-      if (ev.ref)  stop.appendChild(el('div', 'stop-ref', `<span>${ev.ref}</span>`));
-      if (ev.map)  {
-        const ml = el('a', 'stop-map', '↗ Map');
-        ml.href = ev.map; ml.target = '_blank'; ml.rel = 'noopener';
-        stop.appendChild(ml);
-      }
-      if (ev.expand) stop.appendChild(makeExpand(ev.expand.label, ev.expand.body, false));
-      spine.appendChild(stop);
-    });
-
-    ch.appendChild(spine);
-    chapters.push({ el: ch, date: dayDate });
-  });
-
-  if (tripActive) {
-    chapters.sort((a, b) => {
-      const aT = a.date === todayStr, bT = b.date === todayStr;
-      const aP = a.date < todayStr,   bP = b.date < todayStr;
-      if (aT && !bT) return -1; if (bT && !aT) return 1;
-      if (!aP && bP) return -1; if (aP && !bP) return 1;
-      return a.date < b.date ? -1 : 1;
-    });
-  }
-  chapters.forEach(c => wrap.appendChild(c.el));
-}
-
-function renderBookings() {
-  const toggle = document.getElementById('bookings-toggle');
-  const body = document.getElementById('bookings-body');
-  toggle.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    body.classList.toggle('open');
-  });
-
-  const list = document.getElementById('ledger-list');
-  TRIP.bookings.forEach(b => {
-    const row = el('div', 'ledger-row');
-    row.innerHTML = `<span class="ldot ${b.state}"></span>
-      <div class="ledger-body">
-        <div class="ledger-label">${b.label}</div>
-        <div class="ledger-sub">${b.sub}</div>
-        ${b.ref ? `<div class="ledger-ref"><span>${b.ref}</span></div>` : ''}
-      </div>
-      <span class="ledger-state ${b.state}">${b.state === 'confirmed' ? 'Booked' : 'To book'}</span>
-      ${b.url ? `<a class="ledger-link" href="${b.url}" target="_blank" rel="noopener">↗</a>` : ''}`;
-    list.appendChild(row);
-  });
-}
-
-function renderPocket() {
-  const wrap = document.getElementById('pocket-wrap');
-  TRIP.pocket.forEach(g => {
-    const grp = el('div', 'pocket-group');
-    const btn = el('button', 'pocket-btn', `${g.group}<span class="chev">›</span>`);
-    const body = el('div', 'pocket-body');
-    g.items.forEach(([n, d]) => {
-      body.appendChild(el('div', 'pocket-item', `<div class="n">${n}</div><div class="d">${d}</div>`));
-    });
-    btn.addEventListener('click', () => { btn.classList.toggle('open'); body.classList.toggle('open'); });
-    grp.appendChild(btn); grp.appendChild(body); wrap.appendChild(grp);
-  });
-}
-
-function initNotes() {
-  const fab = document.getElementById('fab');
-  const panel = document.getElementById('notepanel');
-  const ta = document.getElementById('note-ta');
-  const list = document.getElementById('notelist');
-  const draw = () => {
-    const n = JSON.parse(localStorage.getItem('mel_notes') || '[]');
-    list.innerHTML = n.length
-      ? n.map(x => `<div class="noteitem">${x}</div>`).join('')
-      : '<div class="empty">No notes yet.</div>';
-  };
-  fab.addEventListener('click', () => panel.classList.toggle('open'));
-  document.getElementById('note-save').addEventListener('click', () => {
-    const v = ta.value.trim(); if (!v) return;
-    const n = JSON.parse(localStorage.getItem('mel_notes') || '[]');
-    n.unshift(v); localStorage.setItem('mel_notes', JSON.stringify(n));
-    ta.value = ''; draw();
-  });
-  draw();
-}
-
-async function fetchWeather() {
-  try {
-    const url = 'https://api.open-meteo.com/v1/forecast?latitude=-37.8136&longitude=144.9631' +
-      '&current=temperature_2m,weather_code' +
-      '&daily=weather_code,temperature_2m_max,temperature_2m_min' +
-      '&temperature_unit=celsius&timezone=Australia%2FMelbourne' +
-      '&start_date=2026-07-08&end_date=2026-07-12';
-    const r = await fetch(url);
-    if (!r.ok) return;
-    const d = await r.json();
-
-    const wmoIcon = c => c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
-
-    // Masthead: current temp
-    const cur = Math.round(d.current.temperature_2m);
-    const curIcon = wmoIcon(d.current.weather_code);
-    document.getElementById('m-weather').innerHTML =
-      `${curIcon} <span class="mast-weather-temp">${cur}°</span>`;
-
-    // Per-day: map date string to day id
-    const dateToId = {
-      '2026-07-08': 'wed', '2026-07-09': 'thu', '2026-07-10': 'fri',
-      '2026-07-11': 'sat', '2026-07-12': 'sun'
-    };
-    d.daily.time.forEach((date, i) => {
-      const id = dateToId[date];
-      if (!id) return;
-      const slot = document.getElementById('wx-' + id);
-      if (!slot) return;
-      const icon = wmoIcon(d.daily.weather_code[i]);
-      const hi = Math.round(d.daily.temperature_2m_max[i]);
-      const lo = Math.round(d.daily.temperature_2m_min[i]);
-      slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${hi}°</span> / ${lo}°</span>`;
-    });
-  } catch(e) {}
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderMasthead();
-  renderPlanePiece();
-  renderChapters();
-  renderBookings();
-  renderPocket();
-  initNotes();
-  fetchWeather();
-});
-</script>
+<script src="../site.js"></script>
 </body>
 </html>
