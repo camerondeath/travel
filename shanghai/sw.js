@@ -1,12 +1,16 @@
 // Shanghai itinerary — offline service worker
 // Bump CACHE_VERSION to force clients to refetch the shell on next load.
-const CACHE_VERSION = 'sh26-v6';
+const CACHE_VERSION = 'sh26-v7';
 const SHELL = './';               // the itinerary page (index.html)
 const WEATHER_HOST = 'api.open-meteo.com';
+// Fonts are served from this repo now (Google Fonts is blocked in mainland
+// China), so they precache like any other same-origin asset.
+const FONTS = ['../fonts/fraunces.woff2', '../fonts/fraunces-italic.woff2',
+               '../fonts/newsreader.woff2', '../fonts/inter.woff2'];
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then(cache => cache.addAll([SHELL, './index.html', './manifest.json', './icon-192.png', './icon-512.png', './events.json', '../site.css', '../site.js']))
+    caches.open(CACHE_VERSION).then(cache => cache.addAll([SHELL, './index.html', './manifest.json', './icon-192.png', './icon-512.png', './events.json', '../site.css', '../site.js'].concat(FONTS)))
       .catch(() => {})
   );
   self.skipWaiting();
@@ -37,22 +41,9 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Fonts (cross-origin, opaque): cache-first, revalidate in background.
-  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
-    event.respondWith(
-      caches.match(req).then(cached => {
-        const network = fetch(req).then(res => {
-          const copy = res.clone();
-          caches.open(CACHE_VERSION).then(c => c.put(req, copy)).catch(() => {});
-          return res;
-        }).catch(() => cached);
-        return cached || network;
-      })
-    );
-    return;
-  }
+  // Fonts are same-origin now, so they fall through to the handler below.
 
-  // Everything same-origin (the page shell): stale-while-revalidate.
+  // Everything same-origin (the page shell and fonts): stale-while-revalidate.
   if (url.origin === self.location.origin) {
     event.respondWith(
       caches.match(req).then(cached => {

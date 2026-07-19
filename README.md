@@ -71,8 +71,22 @@ within the last 14 days as **New**. Shanghai uses this. Shape:
 ]}
 ```
 Refresh it however you like — by hand, or with a scheduled agent that searches
-for new events in the trip window, curates, and commits the file. The page just
-renders whatever `events.json` currently says.
+for new events in the trip window, curates, and commits the file.
+
+**Nothing is ever lost to a refresh.** Four layers, deliberately:
+
+1. **Entries are never deleted, only archived.** A listing that has ended gets
+   `"archived": true` (plus `archivedOn`) instead of being removed.
+2. **Archived entries stay on the page**, behind an "Earlier finds (N)"
+   disclosure under the live list — muted, but one tap away.
+3. **"Keep" copies an entry into the Sandbox**, which is yours and which no
+   refresh touches. Use it for anything you might want later.
+4. **Git history** holds every past version of `events.json`, so even a bad
+   write is recoverable with `git log -p -- shanghai/events.json`.
+
+The weekly agent is instructed never to delete, never to rewrite an existing
+entry's `added` date or blurb, and to verify the entry count hasn't decreased
+before committing. To correct a wrong entry it archives it and adds a new one.
 
 ## Offline (PWA)
 
@@ -93,9 +107,11 @@ paper without losing the addresses.
 
 ## Conventions
 
-- Fonts: Fraunces (display), Newsreader (body serif), Inter (labels). Each has a
-  `size-adjust` fallback at the top of `site.css` so the web fonts swap in
-  without resizing the page; re-measure those ratios if you change a typeface.
+- Fonts: Fraunces (display), Newsreader (body serif), Inter (labels), served
+  from `fonts/` as variable woff2 with `font-display: block` — text isn't painted
+  until the real font is ready, so nothing resizes on load, and there's no
+  dependency on Google Fonts (blocked in mainland China). See the note at the
+  top of `site.css` before changing any of that.
 - Colour + type are CSS variables at the top of `site.css`; light and dark are
   both defined there. Change a token once, it lands everywhere.
 - Use em dashes (—), not hyphens, in prose.

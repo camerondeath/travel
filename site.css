@@ -1,13 +1,46 @@
-/* ── FALLBACK FONT METRICS ────────────────────────────────────
-   The web fonts arrive after first paint, so text is briefly drawn in a
-   fallback. Georgia is ~15% wider than Fraunces and Arial ~6% narrower than
-   Inter, so the swap used to visibly resize the page. These size-adjusted
-   fallbacks render at the web fonts' proportions, so the swap is invisible.
-   Ratios measured in-browser at the same font-size. If the local face is
-   missing (Linux/Android), the stack just falls through unadjusted.        */
-@font-face { font-family: 'Fraunces fallback';   src: local('Georgia'), local('Times New Roman'); size-adjust: 86.6%; }
-@font-face { font-family: 'Newsreader fallback'; src: local('Georgia'), local('Times New Roman'); size-adjust: 101.7%; }
-@font-face { font-family: 'Inter fallback';      src: local('Arial'), local('Helvetica Neue');    size-adjust: 105.9%; }
+/* ── FONTS (self-hosted) ──────────────────────────────────────
+   The masthead used to visibly resize on load: a fallback painted first, then
+   the web font swapped in at different proportions.
+
+   A size-adjust fallback cannot fix that here. Fraunces and Newsreader are
+   variable fonts with an optical-size axis, so their width relative to Georgia
+   is not constant — measured, Fraunces runs 105.6% of Georgia at 16px but
+   87.6% at 88px. No single size-adjust value tracks that, and tuning it for the
+   masthead makes body-scale text worse.
+
+   So the swap is removed instead. The fonts are served from this repo with
+   font-display: block, so text is simply not painted until the real font is
+   ready — nothing is ever drawn in a fallback, so nothing resizes.
+
+   Self-hosting also drops the dependency on Google Fonts, which is blocked in
+   mainland China — where this itinerary actually gets used — and lets the
+   service worker precache the files for genuine offline use. Four variable
+   files, 328KB total, latin subset (as the Google build was). url() is
+   resolved against this stylesheet, so one path works from every folder.
+
+   Inter has no optical axis, so its ratio to Arial is a constant 105.5% at any
+   size; that fallback is exact and worth keeping for the pre-paint layout.  */
+@font-face {
+ font-family: 'Fraunces'; font-style: normal; font-weight: 300 400; font-display: block;
+ src: url('fonts/fraunces.woff2') format('woff2');
+ unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+ font-family: 'Fraunces'; font-style: italic; font-weight: 300 400; font-display: block;
+ src: url('fonts/fraunces-italic.woff2') format('woff2');
+ unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+ font-family: 'Newsreader'; font-style: normal; font-weight: 300 500; font-display: block;
+ src: url('fonts/newsreader.woff2') format('woff2');
+ unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+ font-family: 'Inter'; font-style: normal; font-weight: 400 500; font-display: block;
+ src: url('fonts/inter.woff2') format('woff2');
+ unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face { font-family: 'Inter fallback'; src: local('Arial'), local('Helvetica Neue'); size-adjust: 105.5%; }
 
 :root {
  --ground: #f7f6f3;
@@ -23,8 +56,8 @@
  --rule-2: #ccc9c4;
  --good: #2d5a3d;
  --open: #4a6fa5;
- --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Times New Roman', serif;
- --display: 'Fraunces', 'Fraunces fallback', Georgia, 'Times New Roman', serif;
+ --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+ --display: 'Fraunces', Georgia, 'Times New Roman', serif;
  --sans: 'Inter', 'Inter fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
  --col: 960px;
  --pad: 1.5rem;
@@ -241,6 +274,11 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .event-venue { font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); margin-top: 0.15rem; }
 .event-blurb { font-family: var(--serif); font-size: 0.85rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.25rem; max-width: 44em; }
 .event-updated { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-top: 1rem; }
+.event-row.is-archived { opacity: 0.62; }
+.event-row.is-archived:hover { opacity: 1; }
+.event-keep { flex: 0 0 auto; align-self: flex-start; font-family: var(--sans); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); background: none; border: 1px solid var(--rule-2); border-radius: 4px; cursor: pointer; padding: 0.25rem 0.55rem; margin-top: 0.15rem; transition: color 0.12s, border-color 0.12s; }
+.event-keep:hover { color: var(--accent); border-color: var(--accent); }
+.event-keep:disabled { color: var(--accent); border-color: var(--accent); cursor: default; }
 
 /* ── SECTION LABEL ────────────────────────────────────────── */
 .section-label { font-family: var(--sans); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0; }
