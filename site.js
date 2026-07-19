@@ -239,6 +239,44 @@ function renderVoices() {
  });
 }
 
+// "What's on": dated events pulled from a per-trip events.json, refreshed
+// out of band (e.g. by a scheduled agent). Only runs on pages that include
+// the section; hides itself if the file is missing or empty.
+async function renderEvents() {
+ const wrap = document.getElementById('site-events-wrap');
+ const section = document.getElementById('site-events');
+ if (!wrap || !section) return;
+ section.style.display = 'none';
+ try {
+  const r = await fetch('events.json', { cache: 'no-cache' });
+  if (!r.ok) return;
+  const data = await r.json();
+  const events = (data.events || []).slice();
+  if (!events.length) return;
+  events.sort((a, b) => String(a.sortDate || '').localeCompare(String(b.sortDate || '')));
+  const now = Date.now();
+  const NEW_MS = 14 * 86400000;
+  wrap.innerHTML = '';
+  events.forEach(ev => {
+   const addedMs = ev.added ? new Date(ev.added + 'T00:00:00').getTime() : NaN;
+   const isNew = !isNaN(addedMs) && (now - addedMs) >= 0 && (now - addedMs) <= NEW_MS;
+   const badge = isNew ? '<span class="event-new">New</span>' : '';
+   const link = ev.url ? ' <a class="event-link" href="' + ev.url + '" target="_blank" rel="noopener">↗</a>' : '';
+   const row = el('div', 'event-row');
+   row.innerHTML =
+    '<div class="event-when">' + (ev.when || '') + '</div>' +
+    '<div class="event-body">' +
+     '<div class="event-title">' + (ev.title || '') + badge + link + '</div>' +
+     (ev.venue ? '<div class="event-venue">' + ev.venue + '</div>' : '') +
+     (ev.blurb ? '<div class="event-blurb">' + ev.blurb + '</div>' : '') +
+    '</div>';
+   wrap.appendChild(row);
+  });
+  if (data.updated) wrap.appendChild(el('div', 'event-updated', 'Refreshed ' + data.updated));
+  section.style.display = '';
+ } catch (e) { /* leave hidden */ }
+}
+
 function renderPocket() {
  const wrap = document.getElementById('site-pocket-wrap');
  TRIP.pocket.forEach(g => {
@@ -707,6 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
  renderDayIndex();
  initExpandAll();
  renderPocket();
+ renderEvents();
  renderSandbox();
  initSandboxCapture();
  fetchWeather();
