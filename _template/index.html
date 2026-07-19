@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--
+  ── HOW TO ADD A NEW TRIP ─────────────────────────────────────────────
+  1. Copy this whole folder to a new one named for the city, e.g.  ../tokyo/
+  2. Fill in the TRIP object below (search for "FILL IN"). Nothing else
+     needs editing — site.css and site.js (one level up) do all the work.
+  3. Add one entry to the TRIPS array in ../index.html so the hub links here.
+  4. That's it. Weather, the day index, the "Now / In N days" status, the
+     bookings tracker and the sandbox all come from the shared engine.
+
+  Fields the engine reads from TRIP.meta:
+     city, monthLabel, dates      → masthead    ("Tokyo in May", "4–9 May 2027")
+     slug                         → per-trip sandbox storage key (keep unique)
+     tz                           → IANA timezone, e.g. "Asia/Tokyo"
+     geo {lat, lon}               → weather lookup
+     tripStart / tripEnd (ISO)    → status pill + Now-strip + per-day weather
+     tripStartISO                 → start with correct UTC offset
+     plane {kicker,title,standfirst,preview,full}  → the "read on the plane" essay
+  Each day: id, iso, dow, date, chapter, title, teaser, essay, events[],
+     plus optional arc, hood, hoodShort. Each event: time, title, kind, note,
+     and optional state ("confirmed"|"open"), url, map, ref, bib, bibUrl, expand.
+  ──────────────────────────────────────────────────────────────────────
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Trip</title> <!-- FILL IN -->
+<meta name="description" content="Working itinerary."> <!-- FILL IN -->
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171512" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap"></noscript>
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<div class="content"><div class="wrap">
+
+<header class="masthead">
+ <svg class="mast-leaf" viewBox="0 0 100 100" aria-hidden="true">
+ <path d="M50 66C29 62 7 45 9 24 11 11 30 3 46 10L50 23 54 10C70 3 89 11 91 24 93 45 71 62 50 66Z"/><path d="M48.6 65.5C48.6 78 48 86 47 94L53 94C52 86 51.4 78 51.4 65.5Z"/>
+ </svg>
+ <a class="mast-back" href="../"><span class="mb-arrow">&larr;</span> Trip notes</a>
+ <div class="mast-city" id="m-title"></div>
+ <div class="mast-bar">
+ <span class="mast-dates" id="m-dates"></span>
+ <span class="mast-status" id="m-status"></span>
+ <span class="mast-weather" id="m-weather"></span>
+ </div>
+</header>
+
+<section class="plane-piece" id="plane"></section>
+
+<div class="day-index" id="day-index" aria-label="Trip index"></div>
+<div class="day-controls" id="day-controls-wrap"><button type="button" id="expand-all-btn" class="expand-all-btn" aria-pressed="false">Open all days</button></div>
+
+<main id="chapters"></main>
+
+<section class="bookings-section" id="bookings-section">
+ <div class="section-label" style="margin-bottom:1rem;">Confirmed</div>
+ <div class="ledger" id="ledger-confirmed"></div>
+ <div class="section-label" style="margin:2rem 0 1rem;">Still to book</div>
+ <div class="ledger" id="ledger-open"></div>
+</section>
+
+<section class="sh26-section" id="site-pocket">
+ <div class="section-label">Back pocket</div>
+ <div id="site-pocket-wrap"></div>
+</section>
+
+<section class="sh26-section" id="site-sandbox">
+ <div class="section-label">Sandbox</div>
+ <div class="section-sub">A scratchpad for things spotted along the way. Hit the + button, bottom right, drop a line, review later. Saved in this browser only, nothing leaves the page.</div>
+ <div id="site-sandbox-wrap"></div>
+</section>
+
+<section class="sh26-section" id="site-voices">
+ <div class="section-label">Other voices</div>
+ <div class="section-sub">The same trip, reread in a writer's register. More to come here over time.</div>
+ <div id="site-voices-wrap"></div>
+</section>
+
+<footer>New Trip</footer> <!-- FILL IN -->
+</div></div>
+
+<div class="sandbox-capture" id="sandbox-capture">
+ <input type="url" id="sandbox-url" placeholder="Paste a link…" autocomplete="off" inputmode="url" />
+ <input type="text" id="sandbox-name" placeholder="Name it (optional)" autocomplete="off" />
+ <input type="text" id="sandbox-note" placeholder="Note (optional)" autocomplete="off" />
+ <div class="sandbox-capture-bar">
+  <span class="hint">Enter to save · Esc to close</span>
+  <button type="button" class="sandbox-save-btn" id="sandbox-save">Save</button>
+ </div>
+</div>
+
+<button class="fab" id="fab" type="button" aria-label="Add to scratchpad">
+ <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 5v14M5 12h14"/>
+ </svg>
+</button>
+
+<script>
+/* ── FILL IN: replace every placeholder below with the real trip ── */
+const TRIP = {
+  meta: {
+    city: "New City",
+    slug: "new-city-2027",
+    dates: "1–5 May 2027",
+    monthLabel: "in May",
+    tz: "Asia/Tokyo",
+    geo: { lat: 0, lon: 0 },
+    tripStart: "2027-05-01",
+    tripEnd: "2027-05-05",
+    tripStartISO: "2027-05-01T00:00:00+09:00",
+    plane: {
+      kicker: "Read on the plane",
+      title: "Essay title",
+      standfirst: "A single-sentence thesis for the trip, set in italic.",
+      preview: `<p>The opening paragraph, shown before "Continue reading".</p>`,
+      full: `<p>The rest of the essay, revealed on demand.</p>`
+    }
+  },
+
+  // Optional. Remove the whole key if unused — the section hides itself.
+  voices: [
+    // { author: "In the manner of …", title: "…", body: `<p>…</p>` }
+  ],
+
+  bookings: [
+    { label: "Flights", sub: "Ref …", state: "confirmed" },
+    { label: "Something to book", sub: "date · note", state: "open" }
+  ],
+
+  days: [
+    {
+      id: "d1", iso: "2027-05-01", dow: "Saturday", date: "1 May", chapter: "I",
+      hood: "Neighbourhood", hoodShort: "Hood", arc: "Optional arc label",
+      title: "Day title",
+      teaser: "One sentence shown before the essay opens.",
+      essay: `<p>Day essay, one or more paragraphs.</p>`,
+      events: [
+        { time: "9:00am", title: "First stop", kind: "food", state: "open",
+          note: "Address, how to get there, what to order.",
+          map: "https://maps.apple.com/?q=Somewhere",
+          expand: { label: "More", body: `<p>Longer aside, shown on demand.</p>` } }
+      ]
+    }
+  ],
+
+  pocket: [
+    { group: "A category", items: [
+      ["Name", "One-line description.", "https://maps.apple.com/?q=Name"]
+    ]}
+  ]
+};
+</script>
+<script src="../site.js"></script>
+</body>
+</html>

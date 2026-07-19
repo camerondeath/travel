@@ -34,10 +34,35 @@ function makeExpand(label, bodyHtml, dropCap) {
  return wrap;
 }
 
+// Live trip status relative to today, used in the masthead.
+function tripStatusMeta() {
+ const m = TRIP.meta;
+ if (!m.tripStart) return null;
+ const today = new Date(); today.setHours(0, 0, 0, 0);
+ const start = new Date(m.tripStart + 'T00:00:00');
+ const end = new Date((m.tripEnd || m.tripStart) + 'T00:00:00');
+ const DAY = 86400000;
+ if (today < start) {
+  const days = Math.round((start - today) / DAY);
+  if (days === 0) return { kind: 'next', label: 'Starts today' };
+  if (days === 1) return { kind: 'next', label: 'Starts tomorrow' };
+  return { kind: 'next', label: 'In ' + days + ' days' };
+ }
+ if (today <= end) {
+  const dayNum = Math.round((today - start) / DAY) + 1;
+  const total = Math.round((end - start) / DAY) + 1;
+  return { kind: 'now', label: 'Day ' + dayNum + ' of ' + total };
+ }
+ return { kind: 'past', label: 'Past' };
+}
+
 function renderMasthead() {
  const m = TRIP.meta;
  document.getElementById('m-title').innerHTML = m.city + (m.monthLabel ? ' <em>' + m.monthLabel + '</em>' : '');
  document.getElementById('m-dates').textContent = m.dates;
+ const s = tripStatusMeta();
+ const slot = document.getElementById('m-status');
+ if (slot && s) { slot.className = 'mast-status ' + s.kind; slot.textContent = s.label; }
 }
 
 function renderPlanePiece() {
@@ -170,6 +195,18 @@ function renderChapters() {
 function renderBookings() {
  const confirmedList = document.getElementById('ledger-confirmed');
  const openList = document.getElementById('ledger-open');
+ const total = TRIP.bookings.length;
+ const done = TRIP.bookings.filter(b => b.state === 'confirmed').length;
+ const section = document.getElementById('bookings-section');
+ if (section && total) {
+  const pct = Math.round((done / total) * 100);
+  const prog = el('div', 'ledger-progress');
+  const allDone = done === total;
+  prog.innerHTML = '<div class="ledger-progress-text"><b>' + done + '</b> of ' + total + ' booked'
+   + (allDone ? ' · all set' : ' · <b>' + (total - done) + '</b> still to book') + '</div>'
+   + '<div class="ledger-progress-bar"><div class="ledger-progress-fill" style="width:' + pct + '%"></div></div>';
+  section.insertBefore(prog, section.firstChild);
+ }
  TRIP.bookings.forEach(b => {
  const row = el('div', 'ledger-row');
  row.innerHTML = `<span class="ldot ${b.state}"></span>

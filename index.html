@@ -180,26 +180,37 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
  margin-top: 0.6rem;
  max-width: 44ch;
 }
+.trip-foot {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+ margin-top: 0.6rem;
+ flex-wrap: wrap;
+}
 .trip-dates {
  font-family: var(--sans);
  font-size: 0.62rem;
  color: var(--ink-3);
- margin-top: 0.5rem;
  letter-spacing: 0.04em;
 }
-.trip-pill {
+.trip-status {
  display: inline-block;
  font-family: var(--sans);
  font-size: 0.55rem;
  font-weight: 500;
- letter-spacing: 0.1em;
+ letter-spacing: 0.11em;
  text-transform: uppercase;
- color: var(--ink-3);
- border: 1px solid var(--rule-2);
  border-radius: 2px;
- padding: 0.15em 0.55em;
- margin-top: 0.5rem;
+ padding: 0.2em 0.6em;
+ line-height: 1.4;
 }
+.trip-status.next { color: var(--accent); background: var(--accent-lt); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+.trip-status.now { color: var(--ground); background: var(--accent); border: 1px solid var(--accent); }
+.trip-status.past { color: var(--ink-3); border: 1px solid var(--rule-2); }
+.trip-status.soon { color: var(--ink-3); border: 1px solid var(--rule-2); }
+/* Past trips recede so the next trip reads first; they lift back on interaction. */
+.trip.is-past { opacity: 0.58; transition: opacity 0.15s; }
+.trip.is-past:hover, .trip.is-past:focus-visible { opacity: 1; }
 
 /* ── FOOTER ───────────────────────────────────────────────── */
 footer {
@@ -225,7 +236,7 @@ a:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
  <header class="masthead">
  <div class="mast-kicker">Cameron Death</div>
  <div class="mast-title">Trip <em>notes</em></div>
- <p class="mast-intro">Working itineraries, not brochures - built to be walked, edited as they're used, and kept honest about what's confirmed and what's still just a plan.</p>
+ <p class="mast-intro">Working itineraries, not brochures — built to be walked, edited as they're used, and kept honest about what's confirmed and what's still just a plan.</p>
  </header>
 
  <section class="trips-section">
@@ -246,16 +257,18 @@ a:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
 <script>
 const TRIPS = [
  {
- date: "2026-10-24",
+ date: "2026-10-23",
+ end: "2026-11-01",
  meta: "China · 2026",
  title: "China <em>October 2026</em>",
- desc: "Shanghai, second visit - Yangpu waterfront, small galleries, the old walled city, Hongkou, and hairy crab season, tuned toward Michelin Bib Gourmand and solo counter seats.",
+ desc: "Shanghai, second visit — Yangpu waterfront, small galleries, the old walled city, Hongkou, and hairy crab season, tuned toward Michelin Bib Gourmand and solo counter seats.",
  dates: "Oct 24 – Nov 1, 2026",
  href: "./shanghai/",
  placeholder: false
  },
  {
  date: "2026-07-08",
+ end: "2026-07-12",
  meta: "Australia · 2026",
  title: "Melbourne <em>2026</em>",
  desc: "Food, laneways, art, and four nights of deliberate slow travel in winter.",
@@ -265,14 +278,36 @@ const TRIPS = [
  },
  {
  date: "2026-04-01",
+ end: "2026-04-12",
  meta: "China · 2026",
  title: "China <em>April 2026</em>",
- desc: "Shanghai and Shaoxing - the Bund, French Concession, Qingming Festival, a day by high-speed rail.",
+ desc: "Shanghai and Shaoxing — the Bund, French Concession, Qingming Festival, a day by high-speed rail.",
  dates: "1 – 12 April 2026",
  href: "./china-april-2026.html",
  placeholder: false
  }
 ];
+
+// Live trip status from today's date, so the hub always shows what's next.
+function tripStatus(t) {
+ if (t.placeholder) return { kind: "soon", label: "Coming soon" };
+ const today = new Date(); today.setHours(0, 0, 0, 0);
+ const start = new Date(t.date + "T00:00:00");
+ const end = new Date((t.end || t.date) + "T00:00:00");
+ const DAY = 86400000;
+ if (today < start) {
+  const days = Math.round((start - today) / DAY);
+  if (days === 0) return { kind: "next", label: "Starts today" };
+  if (days === 1) return { kind: "next", label: "Starts tomorrow" };
+  return { kind: "next", label: "In " + days + " days" };
+ }
+ if (today <= end) {
+  const dayNum = Math.round((today - start) / DAY) + 1;
+  const total = Math.round((end - start) / DAY) + 1;
+  return { kind: "now", label: "On now · day " + dayNum + " of " + total };
+ }
+ return { kind: "past", label: "Past" };
+}
 
 let newestFirst = true;
 
@@ -285,6 +320,8 @@ function renderTrips() {
  });
 
  list.innerHTML = sorted.map(t => {
+ const s = tripStatus(t);
+ const statusPill = `<span class="trip-status ${s.kind}">${s.label}</span>`;
  if (t.placeholder) {
  return `<li class="trip placeholder">
  <div class="trip-meta">${t.meta}</div>
@@ -292,19 +329,18 @@ function renderTrips() {
  <div class="trip-title">${t.title}</div>
  </div>
  <p class="trip-desc">${t.desc}</p>
- <div class="trip-dates">${t.dates}</div>
- <div class="trip-pill">Coming soon</div>
+ <div class="trip-foot"><span class="trip-dates">${t.dates}</span>${statusPill}</div>
  </li>`;
  }
  return `<li>
- <a class="trip" href="${t.href}">
+ <a class="trip ${s.kind === 'past' ? 'is-past' : ''}${s.kind === 'now' ? ' is-now' : ''}" href="${t.href}">
  <div class="trip-meta">${t.meta}</div>
  <div class="trip-row">
  <div class="trip-title">${t.title}</div>
  <span class="trip-arrow">›</span>
  </div>
  <p class="trip-desc">${t.desc}</p>
- <div class="trip-dates">${t.dates}</div>
+ <div class="trip-foot"><span class="trip-dates">${t.dates}</span>${statusPill}</div>
  </a>
  </li>`;
  }).join("");

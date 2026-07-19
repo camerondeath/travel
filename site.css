@@ -43,7 +43,15 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .content { position: relative; }
 
 /* ── MASTHEAD ─────────────────────────────────────────────── */
-.masthead { padding: 3.5rem 0 2rem; position: relative; overflow: hidden; }
+.masthead { padding: 2.4rem 0 2rem; position: relative; overflow: hidden; }
+.mast-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--sans); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; margin-bottom: 1.4rem; transition: color 0.12s; position: relative; z-index: 1; }
+.mast-back:hover { color: var(--accent); }
+.mast-back .mb-arrow { transition: transform 0.15s; }
+.mast-back:hover .mb-arrow { transform: translateX(-3px); }
+.mast-status { font-family: var(--sans); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 2px; padding: 0.22em 0.6em; line-height: 1.4; }
+.mast-status.next { color: var(--accent); background: var(--accent-lt); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+.mast-status.now { color: var(--ground); background: var(--accent); border: 1px solid var(--accent); }
+.mast-status.past { color: var(--ink-3); border: 1px solid var(--rule-2); }
 .mast-leaf { position: absolute; top: 1.2rem; right: -2.4rem; width: 168px; height: 168px; opacity: 0.10; pointer-events: none; }
 .mast-leaf path { fill: var(--accent); stroke: none; }
 @media (max-width: 640px) { .mast-leaf { width: 104px; height: 104px; top: 1rem; right: -1.6rem; opacity: 0.09; } }
@@ -148,6 +156,10 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .stop-tag.open { color: var(--open); border: 1px solid color-mix(in srgb, var(--open) 35%, transparent); }
 .bib-badge { font-family: var(--serif); font-style: italic; font-size: 0.7rem; letter-spacing: 0.02em; color: #a8522f; text-decoration: none; border-bottom: 1px solid #d9a688; padding-bottom: 1px; flex-shrink: 0; }
 .bib-badge:hover { color: #7d3c22; border-color: #a8522f; }
+@media (prefers-color-scheme: dark) {
+ .bib-badge { color: #d99a72; border-bottom-color: #7d4a30; }
+ .bib-badge:hover { color: #e8b48f; border-color: #d99a72; }
+}
 .stop-note { font-family: var(--serif); font-size: 0.88rem; color: var(--ink-3); line-height: 1.65; max-width: 40em; }
 .stop-ref { font-family: var(--sans); font-size: 0.62rem; color: var(--rule-2); margin-top: 0.3rem; letter-spacing: 0.04em; }
 .stop-ref span { color: var(--ink-3); }
@@ -157,6 +169,11 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 /* ── BOOKINGS LEDGER ──────────────────────────────────────── */
 .bookings-section { padding: 3rem 0; border-bottom: 1px solid var(--rule); scroll-margin-top: 5.75rem; }
 .ledger { margin-top: 1.2rem; }
+.ledger-progress { margin-top: 1rem; }
+.ledger-progress-text { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+.ledger-progress-text b { color: var(--accent); font-weight: 500; }
+.ledger-progress-bar { margin-top: 0.5rem; height: 3px; background: var(--ground-3); border-radius: 2px; overflow: hidden; }
+.ledger-progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
 .ledger-row { display: flex; align-items: baseline; gap: 0.9rem; padding: 0.65rem 0; border-bottom: 1px solid var(--rule); }
 .ledger-row:first-child { border-top: 1px solid var(--rule); }
 .ldot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; align-self: center; }
