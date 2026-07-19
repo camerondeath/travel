@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New trip</title>
+<meta name="description" content="Scaffold a new trip page for Trip notes.">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171512" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap"></noscript>
+<link rel="stylesheet" href="../site.css">
+<style>
+.masthead { padding: 2.4rem 0 2rem; }
+.form-intro { font-family: var(--serif); color: var(--ink-3); font-size: 1rem; line-height: 1.65; max-width: var(--measure); margin-bottom: 2rem; }
+.field { margin-bottom: 1.4rem; max-width: 40rem; }
+.field label { display: block; font-family: var(--sans); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 0.4rem; }
+.field .hint { font-family: var(--serif); font-style: italic; font-size: 0.82rem; color: var(--ink-3); margin-top: 0.3rem; }
+.field input, .field textarea {
+ width: 100%; box-sizing: border-box; font-family: var(--serif); font-size: 1rem; color: var(--ink);
+ background: var(--ground-2); border: 1px solid var(--rule); border-radius: 6px; padding: 0.6rem 0.7rem; outline: none;
+}
+.field input:focus, .field textarea:focus { border-color: var(--accent); }
+.field textarea { min-height: 4.5rem; resize: vertical; line-height: 1.5; }
+.row { display: flex; gap: 1rem; flex-wrap: wrap; }
+.row .field { flex: 1 1 12rem; }
+.gen-btn {
+ font-family: var(--sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+ color: var(--ground); background: var(--accent); border: none; border-radius: 6px; cursor: pointer; padding: 0.7rem 1.4rem;
+}
+.gen-btn:hover { background: var(--accent-2); }
+.output { margin-top: 2.5rem; display: none; }
+.output.show { display: block; }
+.step { margin-bottom: 2rem; }
+.step-head { font-family: var(--sans); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
+.step p { font-family: var(--serif); font-size: 0.95rem; color: var(--ink-2); line-height: 1.6; margin-bottom: 0.8rem; }
+.step code { font-family: var(--sans); font-size: 0.82rem; background: var(--ground-2); padding: 0.1em 0.4em; border-radius: 3px; }
+pre.box {
+ font-family: 'SF Mono', ui-monospace, Menlo, monospace; font-size: 0.74rem; line-height: 1.55; color: var(--ink-2);
+ background: var(--ground-2); border: 1px solid var(--rule); border-radius: 8px; padding: 1rem; overflow-x: auto; white-space: pre; max-height: 22rem;
+}
+.act-row { display: flex; gap: 0.8rem; margin: 0.7rem 0 0; flex-wrap: wrap; }
+.act-btn {
+ font-family: var(--sans); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+ color: var(--accent); background: none; border: 1px solid var(--rule-2); border-radius: 5px; cursor: pointer; padding: 0.45rem 0.9rem; text-decoration: none; display: inline-block;
+}
+.act-btn:hover { border-color: var(--accent); color: var(--accent-2); }
+.err { color: #a8522f; font-family: var(--serif); font-size: 0.9rem; margin-top: 1rem; }
+</style>
+</head>
+<body>
+<div class="content"><div class="wrap">
+
+<header class="masthead">
+ <a class="mast-back" href="../"><span class="mb-arrow">&larr;</span> Trip notes</a>
+ <div class="mast-city">New <em>trip</em></div>
+</header>
+
+<p class="form-intro">Fill in the basics. This builds a ready-to-edit trip page on the shared design system, plus the one line to paste into the hub. Everything else — the essay, the days, the bookings — you fill in afterwards, in the file it gives you.</p>
+
+<form id="trip-form" autocomplete="off">
+ <div class="row">
+  <div class="field">
+   <label for="f-city">City</label>
+   <input type="text" id="f-city" placeholder="Tokyo" required>
+  </div>
+  <div class="field">
+   <label for="f-region">Region label</label>
+   <input type="text" id="f-region" placeholder="Japan">
+   <div class="hint">Shown on the hub card, e.g. “Japan · 2027”.</div>
+  </div>
+ </div>
+
+ <div class="row">
+  <div class="field">
+   <label for="f-start">Start date</label>
+   <input type="date" id="f-start" required>
+   <div class="hint">First day of the trip (drives the countdown).</div>
+  </div>
+  <div class="field">
+   <label for="f-end">End date</label>
+   <input type="date" id="f-end" required>
+  </div>
+ </div>
+
+ <div class="row">
+  <div class="field">
+   <label for="f-tz">Timezone</label>
+   <input type="text" id="f-tz" list="tz-list" placeholder="Asia/Tokyo" required>
+   <datalist id="tz-list">
+    <option value="Asia/Shanghai"><option value="Asia/Tokyo"><option value="Asia/Hong_Kong">
+    <option value="Asia/Singapore"><option value="Asia/Bangkok"><option value="Asia/Seoul">
+    <option value="Australia/Melbourne"><option value="Australia/Sydney"><option value="Pacific/Auckland">
+    <option value="Europe/London"><option value="Europe/Paris"><option value="Europe/Rome">
+    <option value="America/New_York"><option value="America/Los_Angeles">
+   </datalist>
+  </div>
+  <div class="field">
+   <label for="f-lat">Latitude</label>
+   <input type="number" id="f-lat" step="0.0001" placeholder="35.6762" required>
+  </div>
+  <div class="field">
+   <label for="f-lon">Longitude</label>
+   <input type="number" id="f-lon" step="0.0001" placeholder="139.6503" required>
+   <div class="hint">City centre — used for the weather strip.</div>
+  </div>
+ </div>
+
+ <div class="field">
+  <label for="f-blurb">One-line blurb</label>
+  <textarea id="f-blurb" placeholder="What this trip is about — shown on the hub card."></textarea>
+ </div>
+
+ <button type="submit" class="gen-btn">Build the shell</button>
+ <div class="err" id="form-err"></div>
+</form>
+
+<div class="output" id="output">
+ <div class="step">
+  <div class="step-head">Step 1 · The trip page</div>
+  <p>Create a folder named <code id="folder-name">tokyo</code>/ in the repo and save this as <code>index.html</code> inside it. Then open it and replace the placeholder essay, days, bookings and back-pocket with the real trip.</p>
+  <div class="act-row">
+   <a class="act-btn" id="dl-file" download="index.html">Download index.html</a>
+   <button class="act-btn" id="copy-file" type="button">Copy file</button>
+  </div>
+  <pre class="box" id="file-box"></pre>
+ </div>
+
+ <div class="step">
+  <div class="step-head">Step 2 · Link it from the hub</div>
+  <p>Paste this line into the <code>TRIPS</code> array at the top of the hub's <code>index.html</code> (order doesn't matter — the hub sorts by date):</p>
+  <div class="act-row">
+   <button class="act-btn" id="copy-snip" type="button">Copy line</button>
+  </div>
+  <pre class="box" id="snip-box"></pre>
+ </div>
+
+ <div class="step">
+  <div class="step-head">Step 3 · Publish</div>
+  <p>Commit both files and push. The new trip appears on the hub with a live “In N days” countdown, and inherits every future design change automatically.</p>
+ </div>
+</div>
+
+</div></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function slugify(s) { return (s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
+function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s) { return esc(s).replace(/"/g,'&quot;'); }
+
+// IANA offset (e.g. "+09:00") for a timezone on a given date.
+function tzOffsetISO(tz, date) {
+ try {
+  const dtf = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23',
+   year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const p = dtf.formatToParts(date).reduce((a, x) => (a[x.type] = x.value, a), {});
+  const asUTC = Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+  let off = Math.round((asUTC - date.getTime()) / 60000); // minutes ahead of UTC
+  const sign = off >= 0 ? '+' : '-'; off = Math.abs(off);
+  const hh = String(Math.floor(off / 60)).padStart(2, '0');
+  const mm = String(off % 60).padStart(2, '0');
+  return sign + hh + ':' + mm;
+ } catch (e) { return '+00:00'; }
+}
+
+function dateRangeLabel(s, e) {
+ const sd = s.getUTCDate(), ed = e.getUTCDate();
+ const sm = s.getUTCMonth(), em = e.getUTCMonth();
+ const sy = s.getUTCFullYear(), ey = e.getUTCFullYear();
+ const mo = i => MONTHS[i].slice(0, 3);
+ if (sy === ey && sm === em) return sd + '–' + ed + ' ' + MONTHS[sm] + ' ' + sy;
+ if (sy === ey) return sd + ' ' + mo(sm) + ' – ' + ed + ' ' + mo(em) + ' ' + sy;
+ return sd + ' ' + mo(sm) + ' ' + sy + ' – ' + ed + ' ' + mo(em) + ' ' + ey;
+}
+
+// Assemble the trip page. Split the closing script tags so they don't end THIS script.
+const S_OPEN = '<' + 'script>';
+const S_CLOSE = '<' + '/script>';
+const S_SRC = '<' + 'script src="../site.js">' + '<' + '/script>';
+
+function buildTripFile(v) {
+ const fonts = 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap';
+ return [
+'<!DOCTYPE html>',
+'<html lang="en">',
+'<head>',
+'<meta charset="UTF-8">',
+'<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+'<title>' + esc(v.city) + ' · ' + esc(v.monthLabel.replace(/^in /, '')) + ' ' + v.year + '</title>',
+'<meta name="description" content="Working itinerary for ' + escAttr(v.city) + ', ' + escAttr(v.dates) + '.">',
+'<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">',
+'<meta name="theme-color" content="#171512" media="(prefers-color-scheme: dark)">',
+'<link rel="preconnect" href="https://fonts.googleapis.com">',
+'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
+'<link rel="stylesheet" media="print" onload="this.media=\'all\'" href="' + fonts + '">',
+'<noscript><link rel="stylesheet" href="' + fonts + '"></noscript>',
+'<link rel="stylesheet" href="../site.css">',
+'</head>',
+'<body>',
+'<div class="content"><div class="wrap">',
+'',
+'<header class="masthead">',
+' <svg class="mast-leaf" viewBox="0 0 100 100" aria-hidden="true">',
+' <path d="M50 66C29 62 7 45 9 24 11 11 30 3 46 10L50 23 54 10C70 3 89 11 91 24 93 45 71 62 50 66Z"/><path d="M48.6 65.5C48.6 78 48 86 47 94L53 94C52 86 51.4 78 51.4 65.5Z"/>',
+' </svg>',
+' <a class="mast-back" href="../"><span class="mb-arrow">&larr;</span> Trip notes</a>',
+' <div class="mast-city" id="m-title"></div>',
+' <div class="mast-bar">',
+' <span class="mast-dates" id="m-dates"></span>',
+' <span class="mast-status" id="m-status"></span>',
+' <span class="mast-weather" id="m-weather"></span>',
+' </div>',
+'</header>',
+'',
+'<section class="plane-piece" id="plane"></section>',
+'',
+'<div class="day-index" id="day-index" aria-label="Trip index"></div>',
+'<div class="day-controls" id="day-controls-wrap"><button type="button" id="expand-all-btn" class="expand-all-btn" aria-pressed="false">Open all days</button></div>',
+'',
+'<main id="chapters"></main>',
+'',
+'<section class="bookings-section" id="bookings-section">',
+' <div class="section-label" style="margin-bottom:1rem;">Confirmed</div>',
+' <div class="ledger" id="ledger-confirmed"></div>',
+' <div class="section-label" style="margin:2rem 0 1rem;">Still to book</div>',
+' <div class="ledger" id="ledger-open"></div>',
+'</section>',
+'',
+'<section class="sh26-section" id="site-pocket">',
+' <div class="section-label">Back pocket</div>',
+' <div id="site-pocket-wrap"></div>',
+'</section>',
+'',
+'<section class="sh26-section" id="site-sandbox">',
+' <div class="section-label">Sandbox</div>',
+' <div class="section-sub">A scratchpad for things spotted along the way. Hit the + button, bottom right, drop a line, review later. Saved in this browser only, nothing leaves the page.</div>',
+' <div id="site-sandbox-wrap"></div>',
+'</section>',
+'',
+'<section class="sh26-section" id="site-voices">',
+' <div class="section-label">Other voices</div>',
+' <div class="section-sub">The same trip, reread in a writer\'s register. More to come here over time.</div>',
+' <div id="site-voices-wrap"></div>',
+'</section>',
+'',
+'<footer>' + esc(v.city) + ' · ' + esc(v.monthLabel.replace(/^in /, '')) + ' ' + v.year + '</footer>',
+'</div></div>',
+'',
+'<div class="sandbox-capture" id="sandbox-capture">',
+' <input type="url" id="sandbox-url" placeholder="Paste a link…" autocomplete="off" inputmode="url" />',
+' <input type="text" id="sandbox-name" placeholder="Name it (optional)" autocomplete="off" />',
+' <input type="text" id="sandbox-note" placeholder="Note (optional)" autocomplete="off" />',
+' <div class="sandbox-capture-bar">',
+'  <span class="hint">Enter to save · Esc to close</span>',
+'  <button type="button" class="sandbox-save-btn" id="sandbox-save">Save</button>',
+' </div>',
+'</div>',
+'',
+'<button class="fab" id="fab" type="button" aria-label="Add to scratchpad">',
+' <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">',
+'  <path d="M12 5v14M5 12h14"/>',
+' </svg>',
+'</button>',
+'',
+S_OPEN,
+'/* Fill in the trip below. Only the essay, days, bookings and pocket need writing;',
+'   the meta block is already set from the form. */',
+'const TRIP = {',
+'  meta: {',
+'    city: ' + JSON.stringify(v.city) + ',',
+'    slug: ' + JSON.stringify(v.slug) + ',',
+'    dates: ' + JSON.stringify(v.dates) + ',',
+'    monthLabel: ' + JSON.stringify(v.monthLabel) + ',',
+'    tz: ' + JSON.stringify(v.tz) + ',',
+'    geo: { lat: ' + v.lat + ', lon: ' + v.lon + ' },',
+'    tripStart: ' + JSON.stringify(v.start) + ',',
+'    tripEnd: ' + JSON.stringify(v.end) + ',',
+'    tripStartISO: ' + JSON.stringify(v.startISO) + ',',
+'    plane: {',
+'      kicker: "Read on the plane",',
+'      title: "Essay title",',
+'      standfirst: "A one-sentence thesis for the trip.",',
+'      preview: `<p>Opening paragraph, shown before Continue reading.</p>`,',
+'      full: `<p>The rest of the essay.</p>`',
+'    }',
+'  },',
+'',
+'  // Optional. Delete this key if unused and the section hides itself.',
+'  voices: [],',
+'',
+'  bookings: [',
+'    { label: "Flights", sub: "Ref …", state: "confirmed" },',
+'    { label: "Something to book", sub: "date · note", state: "open" }',
+'  ],',
+'',
+'  days: [',
+'    {',
+'      id: "d1", iso: ' + JSON.stringify(v.start) + ', dow: ' + JSON.stringify(v.startDow) + ', date: ' + JSON.stringify(v.startDateLabel) + ', chapter: "I",',
+'      hood: "Neighbourhood", hoodShort: "Hood", arc: "Optional arc label",',
+'      title: "Day title",',
+'      teaser: "One sentence shown before the essay opens.",',
+'      essay: `<p>Day essay.</p>`,',
+'      events: [',
+'        { time: "9:00am", title: "First stop", kind: "food", state: "open",',
+'          note: "Address, how to get there, what to order.",',
+'          map: "https://maps.apple.com/?q=Somewhere" }',
+'      ]',
+'    }',
+'  ],',
+'',
+'  pocket: [',
+'    { group: "A category", items: [',
+'      ["Name", "One-line description.", "https://maps.apple.com/?q=Name"]',
+'    ]}',
+'  ]',
+'};',
+S_CLOSE,
+S_SRC,
+'</body>',
+'</html>',
+''
+ ].join('\n');
+}
+
+function buildSnippet(v) {
+ return ' {\n' +
+  ' date: ' + JSON.stringify(v.start) + ',\n' +
+  ' end: ' + JSON.stringify(v.end) + ',\n' +
+  ' meta: ' + JSON.stringify(v.meta) + ',\n' +
+  ' title: ' + JSON.stringify(v.city + ' <em>' + v.year + '</em>') + ',\n' +
+  ' desc: ' + JSON.stringify(v.blurb || (v.city + '.')) + ',\n' +
+  ' dates: ' + JSON.stringify(v.dates) + ',\n' +
+  ' href: ' + JSON.stringify('./' + v.folder + '/') + ',\n' +
+  ' placeholder: false\n' +
+  ' },';
+}
+
+function collect() {
+ const city = $('f-city').value.trim();
+ const region = $('f-region').value.trim();
+ const start = $('f-start').value;   // yyyy-mm-dd
+ const end = $('f-end').value;
+ const tz = $('f-tz').value.trim();
+ const lat = parseFloat($('f-lat').value);
+ const lon = parseFloat($('f-lon').value);
+ const blurb = $('f-blurb').value.trim();
+ if (!city || !start || !end || !tz || isNaN(lat) || isNaN(lon)) throw new Error('Fill in city, dates, timezone and coordinates.');
+ if (end < start) throw new Error('End date is before the start date.');
+ const sD = new Date(start + 'T00:00:00Z');
+ const eD = new Date(end + 'T00:00:00Z');
+ const year = sD.getUTCFullYear();
+ const monthLabel = 'in ' + MONTHS[sD.getUTCMonth()];
+ const dates = dateRangeLabel(sD, eD);
+ const slug = slugify(city) + '-' + year;
+ const folder = slugify(city);
+ const startISO = start + 'T00:00:00' + tzOffsetISO(tz, new Date(start + 'T12:00:00Z'));
+ const meta = (region ? region + ' · ' : '') + year;
+ const startDow = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][sD.getUTCDay()];
+ const startDateLabel = sD.getUTCDate() + ' ' + MONTHS[sD.getUTCMonth()];
+ return { city, region, start, end, tz, lat, lon, blurb, year, monthLabel, dates, slug, folder, startISO, meta, startDow, startDateLabel };
+}
+
+async function copyText(text, btn) {
+ try { await navigator.clipboard.writeText(text); }
+ catch (e) { window.prompt('Copy:', text); return; }
+ const t = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => btn.textContent = t, 1200);
+}
+
+$('trip-form').addEventListener('submit', e => {
+ e.preventDefault();
+ $('form-err').textContent = '';
+ let v;
+ try { v = collect(); } catch (err) { $('form-err').textContent = err.message; return; }
+ const file = buildTripFile(v);
+ const snip = buildSnippet(v);
+ $('folder-name').textContent = v.folder;
+ $('file-box').textContent = file;
+ $('snip-box').textContent = snip;
+ const blob = new Blob([file], { type: 'text/html' });
+ $('dl-file').href = URL.createObjectURL(blob);
+ $('copy-file').onclick = () => copyText(file, $('copy-file'));
+ $('copy-snip').onclick = () => copyText(snip, $('copy-snip'));
+ $('output').classList.add('show');
+ $('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+</body>
+</html>
