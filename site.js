@@ -369,6 +369,45 @@ function loadSandbox() {
 function saveSandbox(items) {
  try { localStorage.setItem(SANDBOX_KEY, JSON.stringify(items)); } catch (e) {}
 }
+
+// Sandbox notes used to live under a per-page key, before the shared engine
+// namespaced them by slug. Anything still sitting under an old key is imported
+// here so a rename can never strand someone's notes. Deliberately safe:
+//  - the legacy entry is left in localStorage untouched, as a backup
+//  - a one-time marker stops re-importing items you have since deleted
+//  - merges by id, so running twice can't duplicate
+const LEGACY_SANDBOX_KEYS = { 'shanghai-2026': ['sh26_sandbox', 'sha_sandbox'] };
+
+function migrateLegacySandbox() {
+ try {
+  const slug = (TRIP.meta && TRIP.meta.slug) || '';
+  const legacy = LEGACY_SANDBOX_KEYS[slug];
+  if (!legacy) return 0;
+  const marker = 'sandbox_migrated_' + slug;
+  if (localStorage.getItem(marker)) return 0;
+  const items = loadSandbox();
+  const seen = {};
+  items.forEach(function (it) { if (it && it.id) seen[it.id] = true; });
+  let added = 0;
+  legacy.forEach(function (key) {
+   let old;
+   try { old = JSON.parse(localStorage.getItem(key)); } catch (e) { return; }
+   if (!Array.isArray(old)) return;
+   old.forEach(function (it) {
+    if (!it || typeof it !== 'object') return;
+    if (!it.id) it.id = Date.now() + '' + Math.floor(Math.random() * 1000);
+    if (seen[it.id]) return;
+    seen[it.id] = true;
+    items.push(it);
+    added++;
+   });
+  });
+  if (added) saveSandbox(items);
+  localStorage.setItem(marker, String(Date.now()));
+  return added;
+ } catch (e) { return 0; }
+}
+
 var SandboxUI = { open: null, openEdit: null, close: null };
 
 function sbEsc(s) {
@@ -816,6 +855,7 @@ document.addEventListener('DOMContentLoaded', () => {
  initExpandAll();
  renderPocket();
  renderEvents();
+ migrateLegacySandbox();
  renderSandbox();
  initSandboxCapture();
  fetchWeather();
