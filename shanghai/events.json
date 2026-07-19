@@ -1,5 +1,5 @@
 {
-  "updated": "19 Jul 2026",
+  "updated": "20 Jul 2026",
   "note": "Dated events during 23 Oct – 1 Nov 2026. Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. Git history holds every past version of this file.",
   "events": [
     {
@@ -41,6 +41,16 @@
       "blurb": "Foto Live jazz-and-cocktails on the 4F lounge stage. The 28th is your Wednesday — sits between the M50 walk and dinner if you'd rather keep the evening on than order in.",
       "url": "https://www.smartshanghai.com/event/foto-live-wednesday-jazz-cocktails-at-fotografiska",
       "added": "2026-07-19"
+    },
+    {
+      "title": "Jota Mombaça: stuck in movement (in the tide)",
+      "when": "opens 22 Oct",
+      "sortDate": "2026-10-23",
+      "venue": "Rockbund Art Museum",
+      "kind": "art",
+      "blurb": "Three shows open together on the 22nd: Mombaça's fragmented, planetary-grief opera anchors the museum alongside Kandis Williams' collage piece A Cave and Wong Kit Yi's karaoke-themed companion work. On the Bund, a short hop from People's Square.",
+      "url": "https://www.rockbundartmuseum.org/exhibition/jota-mombaca-stuck-in-movement-in-the-tide",
+      "added": "2026-07-20"
     }
   ]
 }
