@@ -24,9 +24,13 @@ shanghai/             The canonical upcoming trip. Runs on the shared engine and
                       ships as an offline PWA (manifest.json + sw.js + icons +
                       events.json).
 melbourne/            A past trip on the shared engine.
-china-april-2026.html An earlier, self-contained trip (still inlines its own copy
-                      of the engine; a frozen archive — see below).
+china-april-2026.html An earlier trip, also on the shared engine (it sits at the
+                      repo root, so its paths are site.css / site.js, no ../).
 ```
+
+Every page is on the shared engine, so there is exactly one place to change how
+the site looks. The render functions tolerate a page omitting a section (China
+April has no sandbox, for instance) — they no-op when their container is absent.
 
 **The split that keeps everything cohesive:** *design* lives in the shared engine,
 *content* lives in each trip's `TRIP` object. Tweaking the look while working on
@@ -36,9 +40,13 @@ trip, past and future, automatically.
 ## Adding a trip
 
 **Fast path:** open [`/new/`](https://camerondeath.github.io/travel/new/) (the
-"Add a trip" link on the hub), fill in the basics, download the generated
-`index.html` into a new `city/` folder, paste the one-line snippet it gives you
-into the hub's `TRIPS` array, commit, push.
+"Add a trip" link on the hub). Search for the cities — add as many as the trip
+covers — and pick the dates. Country, timezone, coordinates, folder name, slug
+and the hub card are all derived from the city lookup (Open-Meteo geocoding, the
+same provider as the weather), so there is nothing else to type. Download the
+generated `index.html` into the new folder, paste the one-line snippet into the
+hub's `TRIPS` array, commit, push. The first city sets the timezone and the
+weather point.
 
 **By hand:** copy `_template/` to `city/`, fill in the `TRIP` object (placeholders
 are marked `FILL IN`), then add the hub card:
@@ -76,9 +84,18 @@ does not cost offline support. Bump `CACHE_VERSION` in `sw.js` when the shell
 changes. To give a new trip offline support, copy Shanghai's `manifest.json` +
 `sw.js` + icons and adjust.
 
+## Printing
+
+`@media print` in `site.css` opens every collapsed day, panel and back-pocket
+group, drops the interactive chrome (chips, scratchpad, toggles), and prints map
+and booking links with their URLs spelled out — so a trip can be carried on
+paper without losing the addresses.
+
 ## Conventions
 
-- Fonts: Fraunces (display), Newsreader (body serif), Inter (labels).
+- Fonts: Fraunces (display), Newsreader (body serif), Inter (labels). Each has a
+  `size-adjust` fallback at the top of `site.css` so the web fonts swap in
+  without resizing the page; re-measure those ratios if you change a typeface.
 - Colour + type are CSS variables at the top of `site.css`; light and dark are
   both defined there. Change a token once, it lands everywhere.
 - Use em dashes (—), not hyphens, in prose.

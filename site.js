@@ -58,8 +58,10 @@ function tripStatusMeta() {
 
 function renderMasthead() {
  const m = TRIP.meta;
- document.getElementById('m-title').innerHTML = m.city + (m.monthLabel ? ' <em>' + m.monthLabel + '</em>' : '');
- document.getElementById('m-dates').textContent = m.dates;
+ const title = document.getElementById('m-title');
+ const dates = document.getElementById('m-dates');
+ if (title) title.innerHTML = m.city + (m.monthLabel ? ' <em>' + m.monthLabel + '</em>' : '');
+ if (dates) dates.textContent = m.dates;
  const s = tripStatusMeta();
  const slot = document.getElementById('m-status');
  if (slot && s) { slot.className = 'mast-status ' + s.kind; slot.textContent = s.label; }
@@ -68,6 +70,7 @@ function renderMasthead() {
 function renderPlanePiece() {
  const p = TRIP.meta.plane;
  const sec = document.getElementById('plane');
+ if (!sec || !p) return;
  const previewDiv = el('div', 'prose prose-drop', p.preview);
  sec.appendChild(el('div', 'kicker', p.kicker));
  sec.appendChild(el('h2', null, p.title));
@@ -195,6 +198,7 @@ function renderChapters() {
 function renderBookings() {
  const confirmedList = document.getElementById('ledger-confirmed');
  const openList = document.getElementById('ledger-open');
+ if (!confirmedList || !openList || !TRIP.bookings) return;
  const total = TRIP.bookings.length;
  const done = TRIP.bookings.filter(b => b.state === 'confirmed').length;
  const section = document.getElementById('bookings-section');
@@ -219,17 +223,30 @@ function renderBookings() {
  ${b.url ? `<a class="ledger-link" href="${b.url}" target="_blank" rel="noopener">↗</a>` : ''}`;
  (b.state === 'confirmed' ? confirmedList : openList).appendChild(row);
  });
+
+ // An empty group would otherwise leave a heading with nothing under it.
+ [confirmedList, openList].forEach(list => {
+  if (!list.children.length) {
+   list.style.display = 'none';
+   const label = list.previousElementSibling;
+   if (label && label.classList.contains('section-label')) label.style.display = 'none';
+  }
+ });
 }
 
 function renderVoices() {
  const wrap = document.getElementById('site-voices-wrap');
+ const section = document.getElementById('site-voices');
+ if (!wrap) return;                       // page opted out of this section
  if (!TRIP.voices || !TRIP.voices.length) {
- document.getElementById('site-voices').style.display = 'none';
+ if (section) section.style.display = 'none';
  return;
  }
  TRIP.voices.forEach(v => {
  const grp = el('div', 'sh26-row');
- const btn = el('button', 'sh26-row-btn', `${v.author} &middot; <em style="font-style:italic;">${v.title}</em><span class="sh26-chev">&rsaquo;</span>`);
+ // Label wrapped so it is a single flex item — otherwise the author, the
+ // separator and the title each become items and wrap against the chevron.
+ const btn = el('button', 'sh26-row-btn', `<span class="sh26-row-label">${v.author} &middot; <em style="font-style:italic;">${v.title}</em></span><span class="sh26-chev">&rsaquo;</span>`);
  const body = el('div', 'sh26-row-panel');
  body.innerHTML = `<div class="prose prose-drop" style="padding-top:0.6rem;">${v.body}</div>`;
  const vid = 'v-' + Math.random().toString(36).slice(2, 8);
@@ -279,9 +296,10 @@ async function renderEvents() {
 
 function renderPocket() {
  const wrap = document.getElementById('site-pocket-wrap');
+ if (!wrap || !TRIP.pocket) return;
  TRIP.pocket.forEach(g => {
  const grp = el('div', 'sh26-row');
- const btn = el('button', 'sh26-row-btn', `${g.group}<span class="sh26-chev">›</span>`);
+ const btn = el('button', 'sh26-row-btn', `<span class="sh26-row-label">${g.group}</span><span class="sh26-chev">›</span>`);
  const body = el('div', 'sh26-row-panel');
  g.items.forEach(([n, d, u]) => {
  const link = u ? ` <a class="sh26-item-link" href="${u}" target="_blank" rel="noopener">↗</a>` : '';
@@ -432,6 +450,7 @@ function sbTitleHtml(it) {
 
 function renderSandbox() {
  var wrap = document.getElementById('site-sandbox-wrap');
+ if (!wrap) return;                       // page opted out of the scratchpad
  var items = loadSandbox().slice().sort(function (a, b) { return b.created - a.created; });
  wrap.innerHTML = '';
  if (!items.length) {
@@ -715,6 +734,11 @@ async function fetchWeather() {
  }
 
  // Per-day forecast: only meaningful once the range is inside the horizon.
+ // A finished trip (or one still months out) can only ever get an error back,
+ // so don't spend the request at all.
+ const daysPastEnd = (now - new Date(TRIP.meta.tripEnd + 'T23:59:59')) / 86400000;
+ if (daysUntilTrip > 16 || daysPastEnd > 0) return;
+
  const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${TRIP.meta.geo.lat}&longitude=${TRIP.meta.geo.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&timezone=${encodeURIComponent(TRIP.meta.tz)}&start_date=${TRIP.meta.tripStart}&end_date=${TRIP.meta.tripEnd}`);
  if (!r.ok) return;
  const d = await r.json();

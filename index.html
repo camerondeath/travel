@@ -11,6 +11,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,1,300;9..144,1,400&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* Size-adjusted fallbacks so the web fonts swap in without resizing the page.
+   Ratios measured against the real faces; see site.css for the full note. */
+@font-face { font-family: 'Fraunces fallback';   src: local('Georgia'), local('Times New Roman'); size-adjust: 86.6%; }
+@font-face { font-family: 'Newsreader fallback'; src: local('Georgia'), local('Times New Roman'); size-adjust: 101.7%; }
+@font-face { font-family: 'Inter fallback';      src: local('Arial'), local('Helvetica Neue');    size-adjust: 105.9%; }
 :root {
  --ground: #f7f6f3;
  --ground-2: #eeecea;
@@ -23,9 +28,9 @@
  --accent-lt:#e8f0eb;
  --rule: #dddbd7;
  --rule-2: #ccc9c4;
- --serif: 'Newsreader', Georgia, serif;
- --display: 'Fraunces', Georgia, serif;
- --sans: 'Inter', -apple-system, system-ui, sans-serif;
+ --serif: 'Newsreader', 'Newsreader fallback', Georgia, serif;
+ --display: 'Fraunces', 'Fraunces fallback', Georgia, serif;
+ --sans: 'Inter', 'Inter fallback', -apple-system, system-ui, sans-serif;
  --col: 680px;
  --pad: 1.5rem;
 }
@@ -278,8 +283,8 @@ a:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
  <section class="trips-section">
  <div class="section-row">
  <div class="section-label">Trips</div>
- <button class="sort-btn" id="sort-btn" onclick="toggleSort()">
- Newest first <span class="sort-arrow" id="sort-arrow">↓</span>
+ <button class="sort-btn" id="sort-btn" onclick="toggleSort()" aria-label="Change trip order">
+ <span id="sort-label">Newest first</span> <span class="sort-arrow" id="sort-arrow">↓</span>
  </button>
  </div>
 
@@ -389,10 +394,8 @@ function renderTrips() {
 
 function toggleSort() {
  newestFirst = !newestFirst;
- const btn = document.getElementById("sort-btn");
- const arrow = document.getElementById("sort-arrow");
- btn.childNodes[0].textContent = newestFirst ? "Newest first " : "Oldest first ";
- arrow.classList.toggle("flipped", !newestFirst);
+ document.getElementById("sort-label").textContent = newestFirst ? "Newest first" : "Oldest first";
+ document.getElementById("sort-arrow").classList.toggle("flipped", !newestFirst);
  renderTrips();
 }
 

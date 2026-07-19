@@ -1,3 +1,14 @@
+/* ── FALLBACK FONT METRICS ────────────────────────────────────
+   The web fonts arrive after first paint, so text is briefly drawn in a
+   fallback. Georgia is ~15% wider than Fraunces and Arial ~6% narrower than
+   Inter, so the swap used to visibly resize the page. These size-adjusted
+   fallbacks render at the web fonts' proportions, so the swap is invisible.
+   Ratios measured in-browser at the same font-size. If the local face is
+   missing (Linux/Android), the stack just falls through unadjusted.        */
+@font-face { font-family: 'Fraunces fallback';   src: local('Georgia'), local('Times New Roman'); size-adjust: 86.6%; }
+@font-face { font-family: 'Newsreader fallback'; src: local('Georgia'), local('Times New Roman'); size-adjust: 101.7%; }
+@font-face { font-family: 'Inter fallback';      src: local('Arial'), local('Helvetica Neue');    size-adjust: 105.9%; }
+
 :root {
  --ground: #f7f6f3;
  --ground-2: #eeecea;
@@ -12,9 +23,9 @@
  --rule-2: #ccc9c4;
  --good: #2d5a3d;
  --open: #4a6fa5;
- --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
- --display: 'Fraunces', Georgia, 'Times New Roman', serif;
- --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+ --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Times New Roman', serif;
+ --display: 'Fraunces', 'Fraunces fallback', Georgia, 'Times New Roman', serif;
+ --sans: 'Inter', 'Inter fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
  --col: 960px;
  --pad: 1.5rem;
  --measure: 34em;
@@ -36,7 +47,10 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; font-size: 18px; }
 body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after { animation: none !important; transition: none !important; }
+ html { scroll-behavior: auto; }   /* the chip/Now-strip jumps shouldn't glide */
+}
 .wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--pad); }
 
 /* ── NO GLOW ON LIGHT ─────────────────────────────────────── */
@@ -98,8 +112,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .sh26-panel-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--accent); }
 
 /* ── ESSAY TEASER ─────────────────────────────────────────── */
-.essay-teaser { margin-bottom: 0.5rem; }
-.essay-teaser { max-width: var(--measure); }
+.essay-teaser { margin-bottom: 0.5rem; max-width: var(--measure); }
 .essay-teaser p { font-family: var(--serif); font-size: 1rem; color: var(--ink-3); line-height: 1.7; margin: 0; display: inline; }
 .essay-continue { display: inline; font-family: var(--serif); font-size: 1rem; color: var(--ink-3); }
 .essay-continue::before { content: '\2026\00a0'; color: var(--rule-2); }
@@ -161,7 +174,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
  .bib-badge:hover { color: #e8b48f; border-color: #d99a72; }
 }
 .stop-note { font-family: var(--serif); font-size: 0.88rem; color: var(--ink-3); line-height: 1.65; max-width: 40em; }
-.stop-ref { font-family: var(--sans); font-size: 0.62rem; color: var(--rule-2); margin-top: 0.3rem; letter-spacing: 0.04em; }
+.stop-ref { font-family: var(--sans); font-size: 0.62rem; color: var(--ink-3); margin-top: 0.3rem; letter-spacing: 0.04em; }
 .stop-ref span { color: var(--ink-3); }
 .stop-map { font-family: var(--sans); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); text-decoration: none; margin-top: 0.35rem; display: inline-block; }
 .stop-map:hover { color: var(--accent-2); }
@@ -182,7 +195,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .ledger-body { flex: 1; min-width: 0; }
 .ledger-label { font-family: var(--display); font-size: 0.98rem; font-weight: 400; color: var(--ink); font-optical-sizing: auto; }
 .ledger-sub { font-family: var(--sans); font-size: 0.62rem; color: var(--ink-3); margin-top: 0.1rem; letter-spacing: 0.02em; }
-.ledger-ref { font-family: var(--sans); font-size: 0.6rem; color: var(--rule-2); margin-top: 0.15rem; }
+.ledger-ref { font-family: var(--sans); font-size: 0.6rem; color: var(--ink-3); margin-top: 0.15rem; }
 .ledger-ref span { color: var(--accent); }
 .ledger-state { font-family: var(--sans); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
 .ledger-state.confirmed { color: var(--good); }
@@ -200,7 +213,8 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
  padding: 0.85rem 0; cursor: pointer; color: var(--ink);
  font-family: var(--serif); font-size: 1rem; font-weight: 400; text-align: left;
 }
-.sh26-row-btn .sh26-chev { font-family: var(--sans); color: var(--ink-3); font-size: 0.8rem; transition: transform 0.18s; }
+.sh26-row-label { flex: 1 1 auto; min-width: 0; padding-right: 0.9rem; }
+.sh26-row-btn .sh26-chev { flex: 0 0 auto; font-family: var(--sans); color: var(--ink-3); font-size: 0.8rem; transition: transform 0.18s; }
 .sh26-row-btn.open .sh26-chev { transform: rotate(90deg); }
 .sh26-row-panel { display: none; padding: 0.4rem 0 0.9rem; }
 .sh26-row-panel.open { display: block; }
@@ -226,14 +240,14 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .event-link:hover { color: var(--accent-2); }
 .event-venue { font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); margin-top: 0.15rem; }
 .event-blurb { font-family: var(--serif); font-size: 0.85rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.25rem; max-width: 44em; }
-.event-updated { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--rule-2); margin-top: 1rem; }
+.event-updated { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-top: 1rem; }
 
 /* ── SECTION LABEL ────────────────────────────────────────── */
 .section-label { font-family: var(--sans); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0; }
 .section-sub { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: var(--ink-3); margin: 0.5rem 0 1rem; max-width: 40em; }
 .section-sub code { font-family: var(--sans); font-style: normal; font-size: 0.78rem; background: var(--ground-2); padding: 0.1em 0.35em; }
 .sandbox-item-text { font-family: var(--serif); font-size: 0.92rem; color: var(--ink-2); line-height: 1.5; }
-.sandbox-item-date { font-family: var(--sans); font-size: 0.58rem; color: var(--rule-2); letter-spacing: 0.04em; margin-top: 0.25rem; }
+.sandbox-item-date { font-family: var(--sans); font-size: 0.58rem; color: var(--ink-3); letter-spacing: 0.04em; margin-top: 0.25rem; }
 .sandbox-empty { font-family: var(--serif); font-style: italic; font-size: 0.9rem; color: var(--ink-3); padding: 0.5rem 0; }
 
 .fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: var(--ground); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(45,90,61,0.25); transition: transform 0.12s; }
@@ -241,7 +255,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .fab:hover { transform: scale(1.06); }
 
 /* ── FAB / NOTES ──────────────────────────────────────────── */
-footer { padding: 3rem 0 6rem; text-align: center; font-family: var(--sans); font-size: 0.62rem; color: var(--rule-2); letter-spacing: 0.12em; text-transform: uppercase; }
+footer { padding: 3rem 0 6rem; text-align: center; font-family: var(--sans); font-size: 0.62rem; color: var(--ink-3); letter-spacing: 0.12em; text-transform: uppercase; }
 a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
 
 /* ── SANDBOX CAPTURE + ITEM CONTROLS ──────────────────────── */
@@ -254,7 +268,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 }
 .sandbox-capture input { width: 100%; box-sizing: border-box; font-family: var(--serif); font-size: 0.92rem; color: var(--ink); background: transparent; border: none; border-bottom: 1px solid var(--rule); padding: 0.3rem 0.1rem; outline: none; }
 .sandbox-capture input::placeholder { color: var(--ink-3); }
-.sandbox-capture .hint { font-family: var(--sans); font-size: 0.55rem; color: var(--rule-2); letter-spacing: 0.04em; margin-top: 0.4rem; text-transform: uppercase; }
+.sandbox-capture .hint { font-family: var(--sans); font-size: 0.55rem; color: var(--ink-3); letter-spacing: 0.04em; margin-top: 0.4rem; text-transform: uppercase; }
 .sandbox-item { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.55rem 0; border-bottom: 1px solid var(--rule); }
 .sandbox-item:last-child { border-bottom: none; }
 .sandbox-item-body { flex: 1 1 auto; min-width: 0; }
@@ -265,7 +279,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 .sandbox-item-btn { font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); background: none; border: none; cursor: pointer; padding: 0.15rem 0.35rem; }
 .sandbox-item-btn:hover { color: var(--accent); }
 .sandbox-toolbar { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 0.6rem; }
-.sandbox-clear-btn { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rule-2); background: none; border: none; cursor: pointer; padding: 0.2rem 0.4rem; }
+.sandbox-clear-btn { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); background: none; border: none; cursor: pointer; padding: 0.2rem 0.4rem; }
 .sandbox-clear-btn:hover { color: var(--accent); }
 .sandbox-capture input + input { margin-top: 0.1rem; }
 .sandbox-capture-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 0.55rem; }
@@ -298,6 +312,28 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
 .day-controls { display: flex; justify-content: flex-end; padding: 0.6rem 0 0; margin-bottom: -0.4rem; }
 .expand-all-btn { font-family: var(--sans); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0.2rem 0; }
 .expand-all-btn:hover { color: var(--accent-2); }
+
+/* ── PRINT ────────────────────────────────────────────────────
+   An itinerary is worth carrying on paper. Open every day, drop the
+   interactive chrome, and let long sections break sensibly.            */
+@media print {
+ @page { margin: 16mm; }
+ html { font-size: 11pt; }
+ body { background: #fff; color: #000; }
+ .fab, .sandbox-capture, .day-index, .day-controls, .chapter-toggle,
+ .sh26-panel-btn, .essay-continue, .essay-collapse, .mast-back,
+ #site-sandbox, .sandbox-toolbar { display: none !important; }
+ .mast-leaf { opacity: 0.06; }
+ /* Everything collapsible prints open. */
+ .chapter .spine, .sh26-row-panel, .sh26-panel-body { display: block !important; }
+ .chapter { opacity: 1 !important; border-left: none; margin-left: 0; padding-left: 0; page-break-inside: avoid; }
+ .chapter.is-past { opacity: 1 !important; }
+ .stop, .ledger-row, .event-row { page-break-inside: avoid; }
+ .chapter-title, .plane-piece h2, .mast-city { page-break-after: avoid; }
+ a { text-decoration: none; color: #000; }
+ /* Links are useless on paper unless the address comes with them. */
+ .stop-map[href]::after, .ledger-link[href]::after { content: ' (' attr(href) ')'; font-size: 0.75em; word-break: break-all; }
+}
 
 /* ── DAY HEADER ARC + NEIGHBOURHOOD ───────────────────────── */
 .chapter-arc { font-family: var(--serif); font-style: italic; font-size: 0.88rem; color: var(--accent); margin-top: 0.25rem; margin-bottom: 0.15rem; }
