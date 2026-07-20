@@ -372,6 +372,21 @@ async function renderEvents() {
 
   if (data.updated) wrap.appendChild(el('div', 'event-updated', 'Refreshed ' + data.updated));
   section.style.display = '';
+
+  // The feed is the page's one refreshing section, so give it a jump chip —
+  // but only once it has actually loaded, since the section hides otherwise.
+  const idx = document.getElementById('day-index');
+  if (idx && !idx.classList.contains('now-mode') && !idx.querySelector('[data-jump="site-events"]')) {
+   const chip = el('a', 'day-chip day-chip-jump');
+   chip.href = '#site-events';
+   chip.dataset.jump = 'site-events';
+   chip.innerHTML = '<span class="dc-jump">What’s on</span>';
+   chip.addEventListener('click', e => {
+    e.preventDefault();
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   });
+   idx.appendChild(chip);
+  }
  } catch (e) { /* leave hidden */ }
 }
 
