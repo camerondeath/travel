@@ -328,6 +328,7 @@ const TRIPS = [
  desc: "Shanghai, second visit — Yangpu waterfront, small galleries, the old walled city, Hongkou, and hairy crab season, tuned toward Michelin Bib Gourmand and solo counter seats.",
  dates: "Oct 24 – Nov 1, 2026",
  href: "./shanghai/",
+ feed: "./shanghai/events.json",
  placeholder: false
  },
  {
@@ -396,6 +397,8 @@ function renderTrips() {
  <div class="trip-foot"><span class="trip-dates">${t.dates}</span>${statusPill}</div>
  </li>`;
  }
+ const fresh = freshFinds[t.href]
+ ? `<span class="trip-status next">${freshFinds[t.href]} new in What&rsquo;s on</span>` : "";
  return `<li>
  <a class="trip ${s.kind === 'past' ? 'is-past' : ''}${s.kind === 'now' ? ' is-now' : ''}" href="${t.href}">
  <div class="trip-meta">${t.meta}</div>
@@ -404,11 +407,25 @@ function renderTrips() {
  <span class="trip-arrow">›</span>
  </div>
  <p class="trip-desc">${t.desc}</p>
- <div class="trip-foot"><span class="trip-dates">${t.dates}</span>${statusPill}</div>
+ <div class="trip-foot"><span class="trip-dates">${t.dates}</span>${statusPill}${fresh}</div>
  </a>
  </li>`;
  }).join("");
 }
+
+// A live pulse from any trip that publishes an events feed: count entries
+// added in the last fortnight (matching the trip page's "New" flag) and note
+// them on the card. Quietly does nothing if the feed is missing or offline.
+const freshFinds = {};
+TRIPS.filter(t => t.feed).forEach(t => {
+ fetch(t.feed, { cache: "no-cache" }).then(r => r.ok ? r.json() : null).then(data => {
+  if (!data || !data.events) return;
+  const cutoff = Date.now() - 14 * 86400000;
+  const n = data.events.filter(e => !e.archived && e.added &&
+   new Date(e.added + "T00:00:00").getTime() >= cutoff).length;
+  if (n) { freshFinds[t.href] = n; renderTrips(); }
+ }).catch(() => {});
+});
 
 function toggleSort() {
  newestFirst = !newestFirst;
