@@ -1,11 +1,12 @@
 {
-  "updated": "20 Jul 2026",
-  "note": "Dated events during 23 Oct – 1 Nov 2026. Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. Git history holds every past version of this file.",
+  "updated": "24 Jul 2026",
+  "note": "Dated events during 23 Oct – 1 Nov 2026, pulled from multiple sources (SmartShanghai, Time Out, venue sites, ticketing/gig listings). Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Git history holds every past version of this file.",
   "events": [
     {
       "title": "On Top of the World Tree",
       "when": "to 14 Nov",
       "sortDate": "2026-10-24",
+      "end": "2026-11-14",
       "venue": "Shanghai Museum, People's Square",
       "kind": "art",
       "blurb": "Nearly 3,000 artefacts from Mexico, Peru and China, tracing the Olmec, Maya and Inca alongside their Shang and Zhou counterparts. Walking distance from the hotel, closed Mondays; timed tickets via WeChat.",
@@ -34,8 +35,10 @@
     },
     {
       "title": "Fotografiska Wednesday Jazz",
-      "when": "28 Oct",
+      "when": "evening",
       "sortDate": "2026-10-28",
+      "start": "2026-10-28",
+      "end": "2026-10-28",
       "venue": "Fotografiska · 4F lounge",
       "kind": "music",
       "blurb": "Foto Live jazz-and-cocktails on the 4F lounge stage. The 28th is your Wednesday — sits between the M50 walk and dinner if you'd rather keep the evening on than order in.",
@@ -46,11 +49,34 @@
       "title": "Jota Mombaça: stuck in movement (in the tide)",
       "when": "opens 22 Oct",
       "sortDate": "2026-10-23",
+      "start": "2026-10-22",
       "venue": "Rockbund Art Museum",
       "kind": "art",
       "blurb": "Three shows open together on the 22nd: Mombaça's fragmented, planetary-grief opera anchors the museum alongside Kandis Williams' collage piece A Cave and Wong Kit Yi's karaoke-themed companion work. On the Bund, a short hop from People's Square.",
       "url": "https://www.rockbundartmuseum.org/exhibition/jota-mombaca-stuck-in-movement-in-the-tide",
       "added": "2026-07-20"
+    },
+    {
+      "title": "China Shanghai International Arts Festival",
+      "when": "Oct–Nov",
+      "sortDate": "2026-10-23",
+      "venue": "Venues citywide",
+      "kind": "festival",
+      "blurb": "The 25th edition spreads opera, dance, theatre and music across the city's big stages through October and November. The programme firms up closer in — worth a skim for anything landing in your ten days.",
+      "url": "https://www.artsbird.com/en/about",
+      "added": "2026-07-24"
+    },
+    {
+      "title": "Stratovarius",
+      "when": "Halloween",
+      "sortDate": "2026-10-31",
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "venue": "MAO Livehouse",
+      "kind": "music",
+      "blurb": "Finnish power-metal veterans, in town on Halloween night of all nights. Not remotely jazz — but it's the one dated gig on your Saturday so far, and MAO on a costume night would be a scene.",
+      "url": "https://www.songkick.com/metro-areas/28033-china-shanghai/2026",
+      "added": "2026-07-24"
     }
   ]
 }

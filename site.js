@@ -303,42 +303,74 @@ function renderVoices() {
 }
 
 // "What's on": dated events from a per-trip events.json, refreshed out of band
-// (e.g. by a scheduled agent). Only runs on pages that include the section, and
-// hides itself if the file is missing or empty.
+// (e.g. by a weekly scheduled agent) from multiple listings sources. Only runs
+// on pages that include the section, and hides itself if the file is missing
+// or empty.
 //
-// Nothing is ever dropped. A refresh marks a finished listing {archived: true}
-// rather than deleting it, and archived entries stay on the page behind an
-// "Earlier finds" disclosure — so a refresh can never quietly remove something
-// worth keeping. "Keep" copies an entry into the sandbox, which is yours and
-// which no refresh touches.
+// The model is full-list-then-prune: every find is shown by default, and the ×
+// on a row hides it into a "Hidden" disclosure (localStorage, per trip) where
+// it can be restored — nothing is opt-in, and a hide is never a delete.
+// Listings that run for most of the trip sit together under "Running
+// throughout"; anything on for just a day or two slots into a day-by-day
+// calendar of the trip window, so the empty days stay visible and each weekly
+// refresh has gaps to aim at. An event's place is derived from its `start` /
+// `end` dates (either may be omitted for open-ended runs — no dates at all
+// means it's on the whole time).
+//
+// A refresh never deletes: finished listings arrive {archived: true} and move
+// to "Earlier finds", and git history holds every past version of the file.
 const EVENTS_NEW_DAYS = 14;
+const EV_DAY = 86400000;
+const EV_WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const EV_MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function evDate(s) { return s ? new Date(s + 'T00:00:00').getTime() : NaN; }
+function evISO(ms) {
+ const d = new Date(ms);
+ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function eventKey(ev) { return ev.url || ev.title || ''; }
+
+const EVENTS_HIDDEN_KEY = 'events_hidden_' + (TRIP.meta.slug || TRIP.meta.city.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+function loadHiddenEvents() {
+ try { return JSON.parse(localStorage.getItem(EVENTS_HIDDEN_KEY)) || []; }
+ catch (e) { return []; }
+}
+function saveHiddenEvents(ids) {
+ try { localStorage.setItem(EVENTS_HIDDEN_KEY, JSON.stringify(ids)); } catch (e) {}
+}
 
 function eventRow(ev, opts) {
  const now = Date.now();
- const addedMs = ev.added ? new Date(ev.added + 'T00:00:00').getTime() : NaN;
- const isNew = !opts.archived && !isNaN(addedMs) &&
+ const addedMs = evDate(ev.added);
+ const isNew = opts.mode === 'live' && !isNaN(addedMs) &&
                (now - addedMs) >= 0 && (now - addedMs) <= EVENTS_NEW_DAYS * 86400000;
  const badge = isNew ? '<span class="event-new">New</span>' : '';
  const link = ev.url ? ' <a class="event-link" href="' + ev.url + '" target="_blank" rel="noopener">↗</a>' : '';
- const row = el('div', 'event-row' + (opts.archived ? ' is-archived' : ''));
+ const kind = ev.kind ? '<span class="event-kind">' + ev.kind + '</span>' : '';
+ const row = el('div', 'event-row' +
+  (opts.mode === 'archived' ? ' is-archived' : '') +
+  (opts.onHide ? ' can-hide' : ''));
  row.innerHTML =
   '<div class="event-when">' + (ev.when || '') + '</div>' +
   '<div class="event-body">' +
    '<div class="event-title">' + (ev.title || '') + badge + link + '</div>' +
-   (ev.venue ? '<div class="event-venue">' + ev.venue + '</div>' : '') +
+   ((ev.venue || kind) ? '<div class="event-venue">' + (ev.venue || '') + kind + '</div>' : '') +
    (ev.blurb ? '<div class="event-blurb">' + ev.blurb + '</div>' : '') +
   '</div>';
- if (opts.canKeep) {
-  const keep = el('button', 'event-keep', 'Keep');
-  keep.type = 'button';
-  keep.title = 'Save to the sandbox, where refreshes can\'t touch it';
-  keep.addEventListener('click', () => {
-   const note = [ev.venue, ev.when].filter(Boolean).join(' · ');
-   upsertSandboxItem({ url: ev.url || '', name: ev.title || '', note: note });
-   keep.textContent = 'Kept';
-   keep.disabled = true;
-  });
-  row.appendChild(keep);
+ if (opts.onHide) {
+  const b = el('button', 'event-hide', '×');
+  b.type = 'button';
+  b.title = 'Hide — not for this trip';
+  b.setAttribute('aria-label', 'Hide ' + (ev.title || 'event'));
+  b.addEventListener('click', () => opts.onHide(ev));
+  row.appendChild(b);
+ }
+ if (opts.onRestore) {
+  const b = el('button', 'event-keep', 'Restore');
+  b.type = 'button';
+  b.addEventListener('click', () => opts.onRestore(ev));
+  row.appendChild(b);
  }
  return row;
 }
@@ -354,23 +386,109 @@ async function renderEvents() {
   const data = await r.json();
   const all = (data.events || []).slice();
   if (!all.length) return;
-  all.sort((a, b) => String(a.sortDate || '').localeCompare(String(b.sortDate || '')));
-  const canKeep = !!document.getElementById('site-sandbox-wrap');
-  const live = all.filter(e => !e.archived);
-  const archived = all.filter(e => e.archived);
 
-  wrap.innerHTML = '';
-  live.forEach(ev => wrap.appendChild(eventRow(ev, { archived: false, canKeep: canKeep })));
-  if (!live.length) wrap.appendChild(el('div', 'sandbox-empty', 'Nothing current — see earlier finds below.'));
+  const tripStart = evDate(TRIP.meta.tripStart), tripEnd = evDate(TRIP.meta.tripEnd);
+  const hasWindow = !isNaN(tripStart) && !isNaN(tripEnd) && tripEnd >= tripStart;
+  const tripDays = hasWindow ? Math.round((tripEnd - tripStart) / EV_DAY) + 1 : 0;
+  // "throughout" = on for most of the trip; short runs get a calendar slot
+  const spanMin = Math.max(3, Math.ceil(tripDays * 0.6));
 
-  if (archived.length) {
-   const d = makeDisclosureRow('Earlier finds <span class="sh26-count">' + archived.length + '</span>');
-   d.grp.style.marginTop = '1.2rem';
-   archived.forEach(ev => d.body.appendChild(eventRow(ev, { archived: true, canKeep: canKeep })));
-   wrap.appendChild(d.grp);
+  // null → runs throughout; otherwise the ISO day of its first in-window date
+  function slotOf(ev) {
+   if (!hasWindow) return null;
+   const s = ev.start ? evDate(ev.start) : -Infinity;
+   const e = ev.end ? evDate(ev.end) : Infinity;
+   const os = Math.max(s, tripStart), oe = Math.min(e, tripEnd);
+   if (oe < os) return null; // outside the window — keep it visible up top
+   if (Math.round((oe - os) / EV_DAY) + 1 >= spanMin) return null;
+   return evISO(os);
   }
 
-  if (data.updated) wrap.appendChild(el('div', 'event-updated', 'Refreshed ' + data.updated));
+  const bySort = (a, b) => String(a.sortDate || a.start || '').localeCompare(String(b.sortDate || b.start || ''));
+  const state = { hidden: loadHiddenEvents(), hiddenOpen: false, earlierOpen: false };
+
+  function hide(ev) {
+   const k = eventKey(ev);
+   if (k && state.hidden.indexOf(k) === -1) state.hidden.push(k);
+   saveHiddenEvents(state.hidden);
+   paint();
+  }
+  function restore(ev) {
+   const k = eventKey(ev);
+   state.hidden = state.hidden.filter(x => x !== k);
+   saveHiddenEvents(state.hidden);
+   paint();
+  }
+  // Repaints rebuild the disclosures, so remember whether they were open.
+  function trackOpen(d, key) {
+   const btn = d.grp.querySelector('.sh26-row-btn');
+   btn.addEventListener('click', () => { state[key] = btn.classList.contains('open'); });
+  }
+
+  function paint() {
+   const hiddenSet = {};
+   state.hidden.forEach(k => { hiddenSet[k] = true; });
+   const live = [], hidden = [], archived = [];
+   all.forEach(ev => {
+    if (ev.archived) archived.push(ev);
+    else if (hiddenSet[eventKey(ev)]) hidden.push(ev);
+    else live.push(ev);
+   });
+   live.sort(bySort); hidden.sort(bySort); archived.sort(bySort);
+
+   const spans = live.filter(ev => slotOf(ev) === null);
+   const dayMap = {};
+   live.forEach(ev => {
+    const s = slotOf(ev);
+    if (s) (dayMap[s] = dayMap[s] || []).push(ev);
+   });
+
+   wrap.innerHTML = '';
+
+   if (spans.length) {
+    if (hasWindow) wrap.appendChild(el('div', 'event-group-label', 'Running throughout'));
+    spans.forEach(ev => wrap.appendChild(eventRow(ev, { mode: 'live', onHide: hide })));
+   }
+
+   if (hasWindow) {
+    wrap.appendChild(el('div', 'event-group-label', 'Day by day'));
+    const cal = el('div', 'event-cal');
+    // setDate (not +86400000) so a DST change can't skew the day boundaries
+    for (let d = new Date(tripStart); d.getTime() <= tripEnd; d.setDate(d.getDate() + 1)) {
+     const items = dayMap[evISO(d.getTime())] || [];
+     const day = el('div', 'event-day' + (items.length ? '' : ' is-empty'));
+     day.appendChild(el('div', 'event-day-date', EV_WD[d.getDay()] + ' ' + d.getDate() + ' ' + EV_MO[d.getMonth()]));
+     const body = el('div', 'event-day-body');
+     if (items.length) items.forEach(ev => body.appendChild(eventRow(ev, { mode: 'live', onHide: hide })));
+     else body.appendChild(el('div', 'event-day-none', 'Nothing dated yet'));
+     day.appendChild(body);
+     cal.appendChild(day);
+    }
+    wrap.appendChild(cal);
+   } else if (!live.length) {
+    wrap.appendChild(el('div', 'sandbox-empty', 'Nothing current — see earlier finds below.'));
+   }
+
+   if (hidden.length) {
+    const d = makeDisclosureRow('Hidden <span class="sh26-count">' + hidden.length + '</span>', { open: state.hiddenOpen });
+    trackOpen(d, 'hiddenOpen');
+    d.grp.style.marginTop = '1.2rem';
+    hidden.forEach(ev => d.body.appendChild(eventRow(ev, { mode: 'hidden', onRestore: restore })));
+    wrap.appendChild(d.grp);
+   }
+
+   if (archived.length) {
+    const d = makeDisclosureRow('Earlier finds <span class="sh26-count">' + archived.length + '</span>', { open: state.earlierOpen });
+    trackOpen(d, 'earlierOpen');
+    d.grp.style.marginTop = hidden.length ? '0.4rem' : '1.2rem';
+    archived.forEach(ev => d.body.appendChild(eventRow(ev, { mode: 'archived' })));
+    wrap.appendChild(d.grp);
+   }
+
+   if (data.updated) wrap.appendChild(el('div', 'event-updated', 'Refreshed ' + data.updated));
+  }
+
+  paint();
   section.style.display = '';
 
   // The feed is the page's one refreshing section, so give it a jump chip —

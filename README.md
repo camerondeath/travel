@@ -62,16 +62,31 @@ on the same day so the hub and the page agree.
 ## "What's on" — the events feed
 
 A trip can carry an `events.json` and add a `#site-events` section; the engine
-renders it as a **What's on** list and flags anything whose `added` date is
+renders it as a **What's on** feed and flags anything whose `added` date is
 within the last 14 days as **New**. Shanghai uses this. Shape:
 ```json
-{ "updated": "19 Jul 2026", "events": [
-  { "title": "…", "when": "28 Oct", "sortDate": "2026-10-28",
-    "venue": "…", "kind": "art", "blurb": "…", "url": "…", "added": "2026-07-19" }
+{ "updated": "24 Jul 2026", "events": [
+  { "title": "…", "when": "evening", "sortDate": "2026-10-28",
+    "start": "2026-10-28", "end": "2026-10-28",
+    "venue": "…", "kind": "music", "blurb": "…", "url": "…", "added": "2026-07-19" }
 ]}
 ```
-Refresh it however you like — by hand, or with a scheduled agent that searches
-for new events in the trip window, curates, and commits the file.
+The layout splits on `start`/`end` (ISO dates; either may be omitted for an
+open-ended run — no dates at all means "on the whole time"):
+
+- An event covering **most of the trip** (60%+ of the window) renders under
+  **Running throughout** — exhibitions, permanent shows, festivals.
+- A **short run** slots into a **day-by-day calendar** of the trip window,
+  under its first in-window day. Every trip day gets a row, so the days with
+  nothing found yet stay visible — they're the gaps a refresh should aim at.
+  `when` is the display label; for one-day events use a time-ish label
+  ("evening", "8 pm"), since the calendar already shows the date.
+
+**The list is full-then-pruned, not opt-in.** Every find is shown; the × on a
+row hides it into a "Hidden (N)" disclosure (localStorage, per trip slug) where
+it can be restored. Refresh the file however you like — by hand, or with a
+scheduled agent that searches multiple sources for events in the trip window
+and commits the file.
 
 **Nothing is ever lost to a refresh.** Four layers, deliberately:
 
@@ -79,8 +94,8 @@ for new events in the trip window, curates, and commits the file.
    `"archived": true` (plus `archivedOn`) instead of being removed.
 2. **Archived entries stay on the page**, behind an "Earlier finds (N)"
    disclosure under the live list — muted, but one tap away.
-3. **"Keep" copies an entry into the Sandbox**, which is yours and which no
-   refresh touches. Use it for anything you might want later.
+3. **Hiding is local and reversible** — a hidden entry sits in the "Hidden"
+   disclosure, never leaves the file, and restores with one tap.
 4. **Git history** holds every past version of `events.json`, so even a bad
    write is recoverable with `git log -p -- shanghai/events.json`.
 

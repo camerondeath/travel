@@ -280,6 +280,29 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .event-venue { font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-3); margin-top: 0.15rem; }
 .event-blurb { font-family: var(--serif); font-size: 0.85rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.25rem; max-width: 44em; }
 .event-updated { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-top: 1rem; }
+.event-kind { display: inline-block; font-family: var(--sans); font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); border: 1px solid var(--rule-2); border-radius: 3px; padding: 0.1em 0.4em; vertical-align: 0.1em; }
+.event-venue .event-kind { margin-left: 0.5rem; }
+.event-group-label { font-family: var(--sans); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin: 1.8rem 0 0.4rem; }
+.event-group-label:first-child { margin-top: 0.2rem; }
+.event-group-label + .event-row { border-top: 1px solid var(--rule); }
+/* Day-by-day calendar: every trip day gets a row, so the gaps stay visible. */
+.event-cal { border-top: 1px solid var(--rule); }
+.event-day { display: flex; gap: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid var(--rule); }
+.event-day-date { font-family: var(--sans); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); flex: 0 0 4.6rem; padding-top: 0.2rem; }
+.event-day.is-empty { padding: 0.35rem 0; }
+.event-day.is-empty .event-day-date { color: var(--ink-3); font-weight: 500; }
+.event-day-body { flex: 1; min-width: 0; }
+.event-day-none { font-family: var(--serif); font-style: italic; font-size: 0.8rem; color: var(--ink-3); padding-top: 0.05rem; }
+.event-day-body .event-row { border: 0; padding: 0 0 0.5rem; }
+.event-day-body .event-row:last-child { padding-bottom: 0; }
+.event-day-body .event-when { flex-basis: auto; min-width: 3rem; }
+/* The hide × sits in the row's top-right corner in both layouts. */
+.event-row { position: relative; }
+.event-row.can-hide .event-body { padding-right: 1.5rem; }
+.event-hide { position: absolute; top: 0.5rem; right: 0; font-family: var(--sans); font-size: 0.95rem; line-height: 1; color: var(--ink-3); background: none; border: none; border-radius: 4px; cursor: pointer; padding: 0.2rem 0.4rem; opacity: 0.55; transition: color 0.12s, opacity 0.12s; }
+.event-day-body .event-hide { top: -0.1rem; }
+.event-row:hover .event-hide { opacity: 1; }
+.event-hide:hover { color: var(--accent); }
 /* Narrow screens: the side date-column squeezes the blurb into a sliver a
    few words wide, roughly doubling each row's height. Stack instead. */
 @media (max-width: 640px) {
@@ -373,7 +396,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
  body { background: #fff; color: #000; }
  .fab, .sandbox-capture, .day-index, .day-controls, .chapter-toggle,
  .sh26-panel-btn, .essay-continue, .essay-collapse, .mast-back,
- #site-sandbox, .sandbox-toolbar { display: none !important; }
+ #site-sandbox, .sandbox-toolbar, .event-hide, .event-keep { display: none !important; }
  .mast-leaf { opacity: 0.06; }
  /* Everything collapsible prints open. */
  .chapter .spine, .sh26-row-panel, .sh26-panel-body { display: block !important; }
