@@ -1,80 +1,78 @@
 /* ── FONTS (self-hosted) ──────────────────────────────────────
-   The masthead used to visibly resize on load: a fallback painted first, then
-   the web font swapped in at different proportions.
+   The "Catalogue" type system: three families, one job each.
+   - Bricolage Grotesque (variable, 200–800) — display + UI. A contemporary
+     editorial grotesk; carries the mastheads, titles and labels.
+   - IBM Plex Mono (400/500) — the data voice. Every time, date, weekday,
+     run-label and status caption is set in it, so the page reads down like
+     one ledger.
+   - Newsreader (variable) — kept for long-form essay prose only, so deep
+     reading stays warm inside the hard grid.
 
-   A size-adjust fallback cannot fix that here. Fraunces and Newsreader are
-   variable fonts with an optical-size axis, so their width relative to Georgia
-   is not constant — measured, Fraunces runs 105.6% of Georgia at 16px but
-   87.6% at 88px. No single size-adjust value tracks that, and tuning it for the
-   masthead makes body-scale text worse.
-
-   So the swap is removed instead. The fonts are served from this repo with
-   font-display: block, so text is simply not painted until the real font is
-   ready — nothing is ever drawn in a fallback, so nothing resizes.
-
-   Self-hosting also drops the dependency on Google Fonts, which is blocked in
-   mainland China — where this itinerary actually gets used — and lets the
-   service worker precache the files for genuine offline use. Four variable
-   files, 328KB total, latin subset (as the Google build was). url() is
-   resolved against this stylesheet, so one path works from every folder.
-
-   Inter has no optical axis, so its ratio to Arial is a constant 105.5% at any
-   size; that fallback is exact and worth keeping for the pre-paint layout.  */
+   All served from this repo with font-display: block — text is not painted
+   until the real font is ready, so nothing is drawn in a fallback and nothing
+   resizes on load. Self-hosting drops the dependency on Google Fonts (blocked
+   in mainland China, where this itinerary gets used) and lets the service
+   worker precache the files for offline use. url() resolves against this
+   stylesheet, so one path works from every folder.  */
 @font-face {
- font-family: 'Fraunces'; font-style: normal; font-weight: 300 400; font-display: block;
- src: url('fonts/fraunces.woff2') format('woff2');
- unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+ font-family: 'Bricolage'; font-style: normal; font-weight: 200 800; font-display: block;
+ src: url('fonts/bricolage.woff2') format('woff2');
 }
 @font-face {
- font-family: 'Fraunces'; font-style: italic; font-weight: 300 400; font-display: block;
- src: url('fonts/fraunces-italic.woff2') format('woff2');
- unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+ font-family: 'Plex Mono'; font-style: normal; font-weight: 400; font-display: block;
+ src: url('fonts/plex-mono.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Plex Mono'; font-style: normal; font-weight: 500; font-display: block;
+ src: url('fonts/plex-mono-500.woff2') format('woff2');
 }
 @font-face {
  font-family: 'Newsreader'; font-style: normal; font-weight: 300 500; font-display: block;
  src: url('fonts/newsreader.woff2') format('woff2');
  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-@font-face {
- font-family: 'Inter'; font-style: normal; font-weight: 400 500; font-display: block;
- src: url('fonts/inter.woff2') format('woff2');
- unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face { font-family: 'Inter fallback'; src: local('Arial'), local('Helvetica Neue'); size-adjust: 105.5%; }
 
 :root {
- --ground: #f7f6f3;
- --ground-2: #eeecea;
- --ground-3: #e4e2de;
- --ink: #1a1916;
- --ink-2: #3a3834;
- --ink-3: #6b6860;
- --accent: #2d5a3d;
- --accent-2: #1e3d29;
- --accent-lt: #e8f0eb;
- --rule: #dddbd7;
- --rule-2: #ccc9c4;
- --good: #2d5a3d;
- --open: #4a6fa5;
+ /* Concrete-grey neutrals (the West Bund "concrete that remembers what it was"),
+    biased a hair warm toward the signal so the palette reads chosen. */
+ --ground: #ecedea;
+ --ground-2: #f4f5f2;
+ --ground-3: #e0e1dd;
+ --ink: #17181a;
+ --ink-2: #45484a;
+ --ink-3: #797c7c;
+ /* Signal: persimmon — the low autumn sun on the Huangpu. One token per trip. */
+ --accent: #b8492c;
+ --accent-2: #98371d;
+ --accent-lt: #f6e7e0;
+ --rule: #d4d5d0;
+ --rule-2: #c3c4bf;
+ --good: #4d6152;   /* booked / confirmed — a calm slate-green, kept quiet */
+ --open: #b8492c;   /* to book — the signal draws the eye to what needs action */
  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
- --display: 'Fraunces', Georgia, 'Times New Roman', serif;
- --sans: 'Inter', 'Inter fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
- --col: 960px;
+ --display: 'Bricolage', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+ --sans: 'Bricolage', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+ --mono: 'Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+ --col: 1040px;
  --pad: 1.5rem;
  --measure: 34em;
+ --gutter: 7rem;
 }
 @media (prefers-color-scheme: dark) {
  :root {
-  --ground: #171512;
-  --ground-2: #211e1a;
-  --ground-3: #2b2723;
-  --ink: #ece8e1;
-  --ink-2: #c7c1b6;
-  --ink-3: #8f887c;
-  --accent-2: #4f9470;
-  --accent-lt: #1c2b21;
-  --rule: #34302a;
-  --rule-2: #423d35;
+  --ground: #131513;
+  --ground-2: #1a1c1a;
+  --ground-3: #24261f;
+  --ink: #eceae4;
+  --ink-2: #b4b3ab;
+  --ink-3: #82817a;
+  --accent: #f2794f;
+  --accent-2: #f59872;
+  --accent-lt: #2c1710;
+  --rule: #2b2d29;
+  --rule-2: #3a3c37;
+  --good: #8fae9c;
+  --open: #f2794f;
  }
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
