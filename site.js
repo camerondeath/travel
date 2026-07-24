@@ -170,8 +170,15 @@ function renderChapters() {
  if (full && t) { full.style.display = 'none'; t.style.display = ''; }
  }
  }
- head.addEventListener('click', toggleChapter);
+ // The essay -- with its own Continue reading / Collapse controls and prose
+ // links -- lives inside this clickable head, so a click on any of those would
+ // otherwise bubble up here and re-toggle the day, undoing the control's action.
+ head.addEventListener('click', e => {
+ if (e.target.closest('a, button')) return;
+ toggleChapter();
+ });
  head.addEventListener('keydown', e => {
+ if (e.target.closest('a, button')) return;
  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleChapter(); }
  });
  ch.appendChild(head);
