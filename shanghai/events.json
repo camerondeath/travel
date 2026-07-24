@@ -1,6 +1,6 @@
 {
   "updated": "24 Jul 2026",
-  "note": "Dated events during 23 Oct – 1 Nov 2026, pulled from multiple sources (SmartShanghai, Time Out, venue sites, ticketing/gig listings). Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Git history holds every past version of this file.",
+  "note": "Dated events during 23 Oct – 1 Nov 2026, pulled from multiple sources (SmartShanghai, Time Out, venue sites, ticketing/gig listings). Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Optional `weekdays` (e.g. [\"Wed\",\"Sat\",\"Sun\"]) for recurring patterns, `dates` (ISO list) for specific occurrences, and `closed` (weekday list, e.g. [\"Mon\"]) restrict which trip days the \"Add to a day\" picker offers — so a Wednesday-only night can't be pinned to a Tuesday. Absent all three, eligibility is the run intersected with the trip window. Git history holds every past version of this file.",
   "events": [
     {
       "title": "On Top of the World Tree",
@@ -10,6 +10,7 @@
       "venue": "Shanghai Museum, People's Square",
       "kind": "art",
       "blurb": "Nearly 3,000 artefacts from Mexico, Peru and China, tracing the Olmec, Maya and Inca alongside their Shang and Zhou counterparts. Walking distance from the hotel, closed Mondays; timed tickets via WeChat.",
+      "closed": ["Mon"],
       "url": "https://www.smartshanghai.com/event/on-top-of-the-world-tree-ancient-civilizations-of-the-americas",
       "added": "2026-07-19"
     },
@@ -20,6 +21,7 @@
       "venue": "West Bund Museum",
       "kind": "art",
       "blurb": "Volume IV of the museum's five-year Pompidou collaboration, around 70 works from the French collection. Three minutes' walk from the Long Museum and Tank Shanghai, both already on the Sunday. Closed Mondays.",
+      "closed": ["Mon"],
       "url": "https://www.smartshanghai.com/event/79451",
       "added": "2026-07-19"
     },
@@ -30,6 +32,7 @@
       "venue": "McKinnon Hotel",
       "kind": "theatre",
       "blurb": "Punchdrunk's masked-audience immersive theatre, in its permanent Shanghai run. Daily except Monday and Tuesday, three-plus hours, entirely solo-friendly by design. Book ahead via SmartTicket or the venue.",
+      "weekdays": ["Wed", "Thu", "Fri", "Sat", "Sun"],
       "url": "https://www.smartshanghai.com/event/punchdrunk-sleep-no-more-mckinnon-hotel",
       "added": "2026-07-19"
     },
@@ -53,6 +56,7 @@
       "venue": "Rockbund Art Museum",
       "kind": "art",
       "blurb": "Three shows open together on the 22nd: Mombaça's fragmented, planetary-grief opera anchors the museum alongside Kandis Williams' collage piece A Cave and Wong Kit Yi's karaoke-themed companion work. On the Bund, a short hop from People's Square.",
+      "closed": ["Mon"],
       "url": "https://www.rockbundartmuseum.org/exhibition/jota-mombaca-stuck-in-movement-in-the-tide",
       "added": "2026-07-20"
     },
@@ -95,6 +99,7 @@
       "venue": "Yangpu",
       "kind": "market",
       "blurb": "Old cameras, Mao-era pins, cultural-revolution ephemera and honest junk, traded from dawn to about noon three mornings a week. No English needed and none offered; it sits near the Saturday's Yangpu riverfront, so an early start folds it in.",
+      "weekdays": ["Wed", "Sat", "Sun"],
       "url": "https://www.smartshanghai.com/venue/33954/yangpu_flea_market",
       "added": "2026-07-24"
     },
@@ -105,6 +110,7 @@
       "venue": "French Concession",
       "kind": "comedy",
       "blurb": "China's first stand-up room, English and Chinese acts on rotation, with free open mics on the quieter nights — email a day ahead to get on the list, or just watch. Small, solo-friendly, and the most reliable English-language laugh in town.",
+      "weekdays": ["Wed", "Thu", "Fri", "Sat", "Sun"],
       "url": "https://www.smartshanghai.com/venue/9057/the_kung_fu_komedy_club",
       "added": "2026-07-24"
     },

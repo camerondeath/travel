@@ -1,12 +1,13 @@
 // Shanghai itinerary — offline service worker
 // Bump CACHE_VERSION to force clients to refetch the shell on next load.
-const CACHE_VERSION = 'sh26-v11';
+const CACHE_VERSION = 'sh26-v12';
 const SHELL = './';               // the itinerary page (index.html)
 const WEATHER_HOST = 'api.open-meteo.com';
 // Fonts are served from this repo now (Google Fonts is blocked in mainland
-// China), so they precache like any other same-origin asset.
-const FONTS = ['../fonts/fraunces.woff2', '../fonts/fraunces-italic.woff2',
-               '../fonts/newsreader.woff2', '../fonts/inter.woff2'];
+// China), so they precache like any other same-origin asset. The Catalogue
+// type system: Bricolage Grotesque, IBM Plex Mono (two weights), Newsreader.
+const FONTS = ['../fonts/bricolage.woff2', '../fonts/plex-mono.woff2',
+               '../fonts/plex-mono-500.woff2', '../fonts/newsreader.woff2'];
 
 self.addEventListener('install', event => {
   event.waitUntil(

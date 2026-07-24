@@ -119,8 +119,9 @@ function renderChapters() {
  const todayStr = new Date().toLocaleString('en-CA', { timeZone: TRIP.meta.tz }).slice(0, 10);
  const tripActive = todayStr >= TRIP.meta.tripStart && todayStr <= TRIP.meta.tripEnd;
  const chapters = [];
+ const dayTotal = TRIP.days.length;
 
- TRIP.days.forEach(day => {
+ TRIP.days.forEach((day, dayIdx) => {
  const ch = el('section', 'chapter');
  ch.id = day.id;
  const dayDate = day.iso;
@@ -136,10 +137,25 @@ function renderChapters() {
  }
  if (isToday) ch.classList.add('open');
 
- const head = el('div', 'chapter-head');
- const arcTag = day.arc ? `<div class="chapter-arc">${day.arc}</div>` : '';
- const hoodTag = day.hood ? `<div><span class="chapter-hood">${day.hood}</span></div>` : '';
- head.innerHTML = `<div class="chapter-top"><div><div class="chapter-meta">${day.dow} &nbsp;·&nbsp; <span class="date-accent">${day.date}</span></div>${arcTag}<div class="chapter-title">${day.title}</div>${hoodTag}</div><div class="chapter-top-right"><div class="day-weather" id="wx-${day.id}"></div><div class="chapter-toggle"><em class="chev">\u203a</em></div></div></div>`;
+ // Weekday leads (it is the useful fact); date and ordinal are whispers below.
+ const wdAbbr = (day.dow || '').slice(0, 3);
+ const head = el('div', 'chapter-head lg');
+ const dataBits = [];
+ if (day.hood) dataBits.push(`<span class="hood">${day.hood}</span>`);
+ if (day.arc) dataBits.push(`<span class="arc">${day.arc}</span>`);
+ dataBits.push(`<span class="day-weather" id="wx-${day.id}"></span>`);
+ head.innerHTML =
+  `<div class="daymark">`
+  + `<span class="wd">${wdAbbr}</span>`
+  + `<span class="dt">${day.date}</span>`
+  + `<span class="ord">Day ${dayIdx + 1} / ${dayTotal}</span>`
+  + `</div>`
+  + `<div class="chapter-content">`
+  + `<div class="chapter-top"><div class="chapter-title">${day.title}</div>`
+  + `<div class="chapter-toggle"><em class="chev">\u203a</em></div></div>`
+  + `<div class="chapter-data">${dataBits.join('')}</div>`
+  + `</div>`;
+ const content = head.querySelector('.chapter-content');
  head.setAttribute('role', 'button');
  head.setAttribute('tabindex', '0');
  head.setAttribute('aria-expanded', isToday ? 'true' : 'false');
@@ -189,33 +205,36 @@ function renderChapters() {
  teaserDiv.style.display = 'block';
  });
  }
- ch.appendChild(essayWrap);
+ content.appendChild(essayWrap);
 
- // Spine
+ // Schedule: each stop is a row on the shared gutter grid — the mono time
+ // sits in the gutter, aligned under the weekday, the rest in the content.
  const spine = el('div', 'spine');
  day.events.forEach(ev => {
- const stop = el('div', 'stop');
+ const stop = el('div', 'lg stop');
  stop.dataset.kind = ev.kind;
 
  const tag = ev.state === 'confirmed' ? '<span class="stop-tag confirmed">Booked</span>'
  : ev.state === 'open' ? '<span class="stop-tag open">To book</span>' : '';
- const bibBadge = ev.bib ? (ev.bibUrl ? `<a class="bib-badge" href="${ev.bibUrl}" target="_blank" rel="noopener">Bib Gourmand</a>` : '<span class="bib-badge">Bib Gourmand</span>') : '';
+ const bibBadge = ev.bib ? (ev.bibUrl ? `<a class="bib-badge" href="${ev.bibUrl}" target="_blank" rel="noopener">Bib</a>` : '<span class="bib-badge">Bib</span>') : '';
 
  // Title -- link if url provided
  const titleHtml = ev.url
  ? `<a href="${ev.url}" target="_blank" rel="noopener">${ev.title}</a>`
  : ev.title;
 
- stop.appendChild(el('div', 'stop-time', ev.time));
- stop.appendChild(el('div', 'stop-head', `<span class="stop-title">${titleHtml}</span>${bibBadge}${tag}`));
- if (ev.note) stop.appendChild(el('div', 'stop-note', ev.note));
- if (ev.ref) stop.appendChild(el('div', 'stop-ref', `<span>${ev.ref}</span>`));
+ const body = el('div', 'stop-body');
+ body.appendChild(el('div', 'stop-head', `<span class="stop-title">${titleHtml}</span>${bibBadge}${tag}`));
+ if (ev.note) body.appendChild(el('div', 'stop-note', ev.note));
+ if (ev.ref) body.appendChild(el('div', 'stop-ref', `<span>${ev.ref}</span>`));
  if (ev.map) {
  const ml = el('a', 'stop-map', '↗ Map');
  ml.href = ev.map; ml.target = '_blank'; ml.rel = 'noopener';
- stop.appendChild(ml);
+ body.appendChild(ml);
  }
- if (ev.expand) stop.appendChild(makeExpand(ev.expand.label, ev.expand.body, false));
+ if (ev.expand) body.appendChild(makeExpand(ev.expand.label, ev.expand.body, false));
+ stop.appendChild(el('div', 'stop-time mono', ev.time));
+ stop.appendChild(body);
  spine.appendChild(stop);
  });
 
@@ -236,55 +255,52 @@ function renderChapters() {
 }
 
 function renderBookings() {
- const confirmedList = document.getElementById('ledger-confirmed');
- const openList = document.getElementById('ledger-open');
- if (!confirmedList || !openList) return;
  const section = document.getElementById('bookings-section');
+ if (!section) return;
  const bookings = TRIP.bookings || [];
- if (!bookings.length) { if (section) section.style.display = 'none'; return; }
+ if (!bookings.length) { section.style.display = 'none'; return; }
+
  const total = bookings.length;
  const done = bookings.filter(b => b.state === 'confirmed').length;
- if (section) {
-  const pct = Math.round((done / total) * 100);
-  const prog = el('div', 'ledger-progress');
-  const allDone = done === total;
-  prog.innerHTML = '<div class="ledger-progress-text"><b>' + done + '</b> of ' + total + ' booked'
-   + (allDone ? ' · all set' : ' · <b>' + (total - done) + '</b> still to book') + '</div>'
-   + '<div class="ledger-progress-bar"><div class="ledger-progress-fill" style="width:' + pct + '%"></div></div>';
-  section.insertBefore(prog, section.firstChild);
-  section.insertBefore(el('div', 'section-label', 'Bookings'), prog);
- }
- bookings.forEach(b => {
- const row = el('div', 'ledger-row');
- row.innerHTML = `<span class="ldot ${b.state}"></span>
- <div class="ledger-body">
- <div class="ledger-label">${b.label}</div>
- <div class="ledger-sub">${b.sub}</div>
- ${b.ref ? `<div class="ledger-ref"><span>${b.ref}</span></div>` : ''}
- </div>
- <span class="ledger-state ${b.state}">${b.state === 'confirmed' ? 'Booked' : 'To book'}</span>
- ${b.url ? `<a class="ledger-link" href="${b.url}" target="_blank" rel="noopener">↗</a>` : ''}`;
- (b.state === 'confirmed' ? confirmedList : openList).appendChild(row);
- });
+ const openCount = total - done;
+ const pct = Math.round((done / total) * 100);
 
- // Fold each ledger behind a counted disclosure — the progress line above
- // already tells the story, so eight rows shouldn't cost eight rows of page.
- // The static labels in the page HTML supply the group names.
- [confirmedList, openList].forEach(list => {
-  const label = list.previousElementSibling;
-  const hasLabel = label && label.classList.contains('section-label');
-  const count = list.children.length;
-  if (!count) {
-   list.style.display = 'none';
-   if (hasLabel) label.style.display = 'none';
-   return;
-  }
-  const title = hasLabel ? label.textContent.trim() : '';
-  const d = makeDisclosureRow(title + ' <span class="sh26-count">' + count + '</span>');
-  list.parentNode.insertBefore(d.grp, list);
-  d.body.appendChild(list);
-  if (hasLabel) label.style.display = 'none';
- });
+ // Replace the static scaffold (two labelled empty lists) with one register.
+ section.innerHTML = '';
+ section.appendChild(el('div', 'section-label', 'Bookings'));
+
+ const reg = el('div', 'register');
+ const prog = el('div', 'ledger-progress');
+ prog.innerHTML = '<div class="ledger-progress-text"><b>' + done + '</b> of ' + total + ' booked'
+  + (openCount ? ' · <b>' + openCount + '</b> still to book' : ' · all set') + '</div>'
+  + '<div class="ledger-progress-bar"><div class="ledger-progress-fill" style="width:' + pct + '%"></div></div>';
+ reg.appendChild(prog);
+
+ function bookingRow(b) {
+  const row = el('div', 'ledger-row');
+  row.innerHTML = '<span class="ldot ' + b.state + '"></span>'
+   + '<div class="ledger-body">'
+   + '<div class="ledger-label">' + b.label + '</div>'
+   + '<div class="ledger-sub">' + b.sub + '</div>'
+   + (b.ref ? '<div class="ledger-ref"><span>' + b.ref + '</span></div>' : '')
+   + '</div>'
+   + '<span class="ledger-state ' + b.state + '">' + (b.state === 'confirmed' ? 'Booked' : 'To book') + '</span>'
+   + (b.url ? '<a class="ledger-link" href="' + b.url + '" target="_blank" rel="noopener">↗</a>' : '');
+  return row;
+ }
+
+ // What still needs action sits up top (the signal draws the eye to it).
+ const stillOpen = bookings.filter(b => b.state !== 'confirmed');
+ const confirmed = bookings.filter(b => b.state === 'confirmed');
+ if (stillOpen.length) {
+  reg.appendChild(el('div', 'reg-group-label', 'Still to book'));
+  stillOpen.forEach(b => reg.appendChild(bookingRow(b)));
+ }
+ if (confirmed.length) {
+  reg.appendChild(el('div', 'reg-group-label', 'Booked'));
+  confirmed.forEach(b => reg.appendChild(bookingRow(b)));
+ }
+ section.appendChild(reg);
 }
 
 // "What's on": dated events from a per-trip events.json, refreshed out of band
@@ -354,14 +370,17 @@ function eventRow(ev, opts) {
  const badge = isNew ? '<span class="event-new">New</span>' : '';
  const link = ev.url ? ' <a class="event-link" href="' + ev.url + '" target="_blank" rel="noopener">↗</a>' : '';
  const kind = ev.kind ? '<span class="event-kind">' + ev.kind + '</span>' : '';
+ // Throughout finds ride the shared gutter grid (run-label in the gutter);
+ // calendar/hidden/archived rows stack, the when sitting inline above.
  const row = el('div', 'event-row' +
+  (opts.grid ? ' lg' : '') +
   (opts.mode === 'archived' ? ' is-archived' : '') +
   (opts.onHide ? ' can-hide' : ''));
  row.innerHTML =
-  '<div class="event-when">' + (ev.when || '') + '</div>' +
+  '<div class="event-when mono">' + (ev.when || '') + '</div>' +
   '<div class="event-body">' +
-   '<div class="event-title">' + (ev.title || '') + badge + link + '</div>' +
-   ((ev.venue || kind) ? '<div class="event-venue">' + (ev.venue || '') + kind + '</div>' : '') +
+   '<div class="event-head"><span class="event-title">' + (ev.title || '') + badge + link + '</span>' + kind + '</div>' +
+   (ev.venue ? '<div class="event-venue">' + ev.venue + '</div>' : '') +
    (ev.blurb ? '<div class="event-blurb">' + ev.blurb + '</div>' : '') +
   '</div>';
  if (opts.control) row.querySelector('.event-body').appendChild(opts.control);
@@ -437,33 +456,74 @@ async function renderEvents() {
   function setPin(key, iso) { state.pins[key] = iso; savePinned(state.pins); paint(); }
   function clearPin(key) { delete state.pins[key]; savePinned(state.pins); paint(); }
 
-  // The single trip day a find maps to, if exactly one and it's a real chapter
-  // — used to offer a one-tap "Add to <that day>". Multi-day or open-ended runs
-  // return null and get a day picker instead.
-  function naturalDay(ev) {
-   if (!hasWindow) return null;
-   if (!ev.start && !ev.end) return null;
-   const s = evDate(ev.start || ev.end), e = evDate(ev.end || ev.start);
-   const os = Math.max(s, tripStart), oe = Math.min(e, tripEnd);
-   if (oe < os || Math.round((oe - os) / EV_DAY) !== 0) return null;
-   const iso = evISO(os);
-   return dayByISO[iso] ? iso : null;
+  // The days a find is actually on, restricted to real day chapters. An event
+  // may declare `dates` (specific ISO one-offs) or `weekdays` (a recurring
+  // pattern like "Wed–Sun"); absent both, eligibility is its `start`/`end` run
+  // intersected with the trip. An optional `closed` weekday list (museums shut
+  // on Mondays, say) is always subtracted. This is what stops you pinning a
+  // Wednesday jazz night onto a Tuesday.
+  function wdOf(iso) { const ms = evDate(iso); return isNaN(ms) ? '' : EV_WD[new Date(ms).getDay()]; }
+  function eligibleDays(ev) {
+   let days = tripDayList.map(d => d.iso);
+   if (Array.isArray(ev.dates) && ev.dates.length) {
+    const set = {}; ev.dates.forEach(x => { set[x] = true; });
+    days = days.filter(iso => set[iso]);
+   } else {
+    const s = ev.start ? evDate(ev.start) : -Infinity;
+    const e = ev.end ? evDate(ev.end) : Infinity;
+    days = days.filter(iso => { const ms = evDate(iso); return ms >= s && ms <= e; });
+    if (Array.isArray(ev.weekdays) && ev.weekdays.length) {
+     const wset = {}; ev.weekdays.forEach(w => { wset[String(w).slice(0, 3)] = true; });
+     days = days.filter(iso => wset[wdOf(iso)]);
+    }
+   }
+   if (Array.isArray(ev.closed) && ev.closed.length) {
+    const cset = {}; ev.closed.forEach(w => { cset[String(w).slice(0, 3)] = true; });
+    days = days.filter(iso => !cset[wdOf(iso)]);
+   }
+   return days.filter(iso => dayByISO[iso]);
+  }
+  // A short, human account of when it's on, shown beside a multi-day picker.
+  function eligibleHint(ev) {
+   if (Array.isArray(ev.weekdays) && ev.weekdays.length) {
+    const wd = ev.weekdays.map(w => String(w).slice(0, 3)).join(' · ');
+    return wd + (ev.weekdays.length < 7 ? ' only' : '');
+   }
+   if (Array.isArray(ev.closed) && ev.closed.length) {
+    return 'any day except ' + ev.closed.map(w => String(w).slice(0, 3)).join(' · ');
+   }
+   if (Array.isArray(ev.dates) && ev.dates.length) return 'on set dates';
+   return 'any day';
   }
 
-  // A <select> of trip days: pick to pin/move, "Remove from day" to unpin.
+  // If a find is on exactly one eligible trip day, offer a one-tap "Add to it".
+  function naturalDay(ev) {
+   const elig = eligibleDays(ev);
+   return elig.length === 1 ? elig[0] : null;
+  }
+
+  // A <select> of the eligible days only: pick to pin/move, "Remove" to unpin.
   function daySelect(ev, currentISO) {
    const key = eventKey(ev);
+   const elig = eligibleDays(ev);
    const sel = el('select', 'day-pin-control');
    sel.setAttribute('aria-label', (currentISO ? 'Move ' : 'Add ') + (ev.title || 'event') + ' to a day');
    const ph = el('option', null, currentISO ? 'Move to a different day…' : '＋ Add to a day…');
    ph.value = ''; ph.disabled = true; ph.selected = !currentISO;
    sel.appendChild(ph);
-   tripDayList.forEach(d => {
-    const o = el('option', null, dayLabel(d.iso));
-    o.value = d.iso;
-    if (d.iso === currentISO) o.selected = true;
+   elig.forEach(iso => {
+    const o = el('option', null, dayLabel(iso));
+    o.value = iso;
+    if (iso === currentISO) o.selected = true;
     sel.appendChild(o);
    });
+   // A day pinned before its pattern was tightened may no longer be eligible;
+   // keep it selectable so the user can still see and move it.
+   if (currentISO && elig.indexOf(currentISO) === -1 && dayByISO[currentISO]) {
+    const o = el('option', null, dayLabel(currentISO));
+    o.value = currentISO; o.selected = true;
+    sel.appendChild(o);
+   }
    if (currentISO) {
     const rm = el('option', null, 'Remove from day');
     rm.value = '__remove__';
@@ -487,16 +547,18 @@ async function renderEvents() {
    if (currentISO) {
     w.appendChild(el('span', 'day-pin-on', 'On ' + dayLabel(currentISO)));
     w.appendChild(daySelect(ev, currentISO));
+    return w;
+   }
+   const elig = eligibleDays(ev);
+   if (!elig.length) return null; // not on during the trip — nothing to pin to
+   if (elig.length === 1) {
+    const b = el('button', 'day-pin-add', '＋ Add to ' + dayLabel(elig[0]));
+    b.type = 'button';
+    b.addEventListener('click', () => setPin(key, elig[0]));
+    w.appendChild(b);
    } else {
-    const nat = naturalDay(ev);
-    if (nat) {
-     const b = el('button', 'day-pin-add', '＋ Add to ' + dayLabel(nat));
-     b.type = 'button';
-     b.addEventListener('click', () => setPin(key, nat));
-     w.appendChild(b);
-    } else {
-     w.appendChild(daySelect(ev, ''));
-    }
+    w.appendChild(daySelect(ev, ''));
+    w.appendChild(el('span', 'day-pin-eligible', eligibleHint(ev)));
    }
    return w;
   }
@@ -506,12 +568,12 @@ async function renderEvents() {
   function suggestionRow(ev, dayISO) {
    const link = ev.url ? ' <a class="event-link" href="' + ev.url + '" target="_blank" rel="noopener">↗</a>' : '';
    const kind = ev.kind ? '<span class="event-kind">' + ev.kind + '</span>' : '';
-   const row = el('div', 'day-suggestion');
+   const row = el('div', 'day-suggestion lg');
    row.innerHTML =
+    '<div class="day-suggestion-when mono">' + (ev.when || 'All day') + '</div>' +
     '<div class="day-suggestion-body">' +
-     '<div class="day-suggestion-title">' + (ev.title || '') + link + '</div>' +
-     ((ev.venue || kind) ? '<div class="event-venue">' + (ev.venue || '') + kind + '</div>' : '') +
-     (ev.when ? '<div class="day-suggestion-when">' + ev.when + '</div>' : '') +
+     '<div class="day-suggestion-head"><span class="day-suggestion-title">' + (ev.title || '') + link + '</span>' + kind + '</div>' +
+     (ev.venue ? '<div class="event-venue">' + ev.venue + '</div>' : '') +
     '</div>';
    row.querySelector('.day-suggestion-body').appendChild(daySelect(ev, dayISO));
    return row;
@@ -568,7 +630,7 @@ async function renderEvents() {
 
    if (spans.length) {
     if (hasWindow) wrap.appendChild(el('div', 'event-group-label', 'Running throughout'));
-    spans.forEach(ev => wrap.appendChild(eventRow(ev, { mode: 'live', onHide: hide, control: pinControl(ev) })));
+    spans.forEach(ev => wrap.appendChild(eventRow(ev, { mode: 'live', grid: true, onHide: hide, control: pinControl(ev) })));
    }
 
    if (hasWindow) {
@@ -577,8 +639,8 @@ async function renderEvents() {
     // setDate (not +86400000) so a DST change can't skew the day boundaries
     for (let d = new Date(tripStart); d.getTime() <= tripEnd; d.setDate(d.getDate() + 1)) {
      const items = dayMap[evISO(d.getTime())] || [];
-     const day = el('div', 'event-day' + (items.length ? '' : ' is-empty'));
-     day.appendChild(el('div', 'event-day-date', EV_WD[d.getDay()] + ' ' + d.getDate() + ' ' + EV_MO[d.getMonth()]));
+     const day = el('div', 'event-day lg' + (items.length ? '' : ' is-empty'));
+     day.appendChild(el('div', 'event-day-date mono', EV_WD[d.getDay()] + ' ' + d.getDate() + ' ' + EV_MO[d.getMonth()]));
      const body = el('div', 'event-day-body');
      if (items.length) items.forEach(ev => body.appendChild(eventRow(ev, { mode: 'live', onHide: hide, control: pinControl(ev) })));
      else body.appendChild(el('div', 'event-day-none', 'Nothing dated yet'));
@@ -1011,10 +1073,12 @@ function renderChips(wrap) {
  TRIP.days.forEach(function (day, i) {
   const chip = el('a', 'day-chip');
   chip.href = '#' + day.id;
+  // Uppercasing is left to CSS (text-transform) so HTML entities in the date
+  // string — china-april's "5 April &middot; v2" — aren't broken into &MIDDOT;.
   const shortDate = day.date.replace(/(\d+)\s+(\w{3})\w*/, '$1 $2');
   chip.innerHTML =
-   '<span class="dc-num">Ch. ' + (day.chapter || i) + '</span>' +
-   '<span class="dc-date">' + shortDate + '</span>' +
+   '<span class="dc-dt">' + shortDate + '</span>' +
+   '<span class="dc-wd">' + (day.dow || '').slice(0, 3) + '</span>' +
    '<span class="dc-hood">' + (day.hoodShort || '') + '</span>';
   chip.addEventListener('click', function (e) {
    e.preventDefault();
