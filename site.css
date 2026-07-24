@@ -102,18 +102,12 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
 .gut { align-self: start; }   /* things that live in the gutter column */
 
-/* Heavy structural rules read as the black ink of a printed catalogue; in the
-   dark theme --ink flips to near-white and they carry the same weight. */
-.rule-heavy { height: 4px; background: var(--ink); }
-.rule-mid { height: 2px; background: var(--ink); }
-
 /* ── MASTHEAD → SPECIMEN ──────────────────────────────────── */
-.masthead { padding: 1.3rem 0 0; position: relative; border-top: 4px solid var(--ink); }
-.mast-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; margin-bottom: 1.6rem; transition: color 0.12s; position: relative; z-index: 1; }
+.masthead { padding: 1.3rem 0 0; border-top: 4px solid var(--ink); }
+.mast-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; margin-bottom: 1.6rem; transition: color 0.12s; }
 .mast-back:hover { color: var(--accent); }
 .mast-back .mb-arrow { transition: transform 0.15s; }
 .mast-back:hover .mb-arrow { transform: translateX(-3px); }
-.mast-leaf { display: none; }   /* the specimen carries no ornament — the type is the mark */
 .mast-city { font-family: var(--display); font-size: clamp(3rem, 10vw, 6.4rem); font-weight: 800; line-height: 0.9; letter-spacing: -0.045em; text-transform: uppercase; color: var(--ink); margin-left: -0.045em; /* optical left-nudge so the caps meet the rule */ }
 /* The single outline moment (the month), the one stroke effect on the page.
    Solid colour is the fallback, and the month repeats in the mono date line. */
@@ -124,7 +118,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .mast-bar { display: flex; align-items: center; gap: 0.9rem 1.4rem; margin-top: 1.6rem; padding: 0.85rem 0 0; border-top: 2px solid var(--ink); flex-wrap: wrap; }
 .mast-dates { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .mast-status { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.02em; text-transform: uppercase; padding: 0.32em 0.7em; line-height: 1.4; }
-.mast-status.next { color: var(--on-accent, var(--ground)); background: var(--accent); }
+.mast-status.next { color: var(--ground); background: var(--accent); }
 .mast-status.now { color: var(--ground); background: var(--accent); }
 .mast-status.past { color: var(--ink-3); border: 1px solid var(--rule-2); }
 .mast-weather { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.66rem; color: var(--ink-3); margin-left: auto; font-variant-numeric: tabular-nums; }
@@ -206,11 +200,6 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .day-weather-icon { font-size: 0.9rem; line-height: 1; }
 .day-weather-temps { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; }
 .day-weather-temps .hi { color: var(--ink-2); }
-/* Legacy chapter fields still emitted by some pages, folded into the data line. */
-.chapter-meta { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.02em; color: var(--ink-3); }
-.chapter-meta .date-accent { color: var(--accent); }
-.chapter-arc { display: none; }
-.chapter-hood { display: none; }
 
 .chapter:not(.open) .essay-teaser { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 
@@ -334,8 +323,6 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .sh26-item .d { font-family: var(--sans); font-size: 0.82rem; color: var(--ink-3); line-height: 1.55; margin-top: 0.15rem; }
 .sh26-item-link { font-family: var(--mono); font-size: 0.62rem; color: var(--accent); text-decoration: none; }
 .sh26-item-link:hover { text-decoration: underline; }
-.sh26-item-link-block { display: block; text-decoration: none; cursor: pointer; }
-.sh26-item-link-block:hover .n { color: var(--accent); }
 .pocket-tag { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--good); border: 1px solid color-mix(in srgb, var(--good) 40%, transparent); padding: 0.12em 0.4em; vertical-align: 0.1em; }
 
 /* ── DISCLOSURE ROW (folded groups: bookings spillover, pocket, hidden/earlier) ─ */
@@ -375,13 +362,12 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .expand-all-btn:hover { color: var(--accent-2); }
 
 /* ── SANDBOX ──────────────────────────────────────────────── */
-.sandbox-item-text { font-family: var(--sans); font-size: 0.9rem; color: var(--ink-2); line-height: 1.5; }
 .sandbox-item-date { font-family: var(--mono); font-size: 0.56rem; color: var(--ink-3); letter-spacing: 0.03em; margin-top: 0.25rem; }
 .sandbox-empty { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); letter-spacing: 0.02em; padding: 0.5rem 0; }
 .sandbox-item { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.55rem 0; border-bottom: 1px solid var(--rule); }
 .sandbox-item:last-child { border-bottom: none; }
 .sandbox-item-body { flex: 1 1 auto; min-width: 0; }
-.sandbox-item.done .sandbox-item-text, .sandbox-item.done .sandbox-item-title { text-decoration: line-through; color: var(--ink-3); }
+.sandbox-item.done .sandbox-item-title { text-decoration: line-through; color: var(--ink-3); }
 .sandbox-item-actions { flex: 0 0 auto; display: flex; gap: 0.35rem; opacity: 0.5; transition: opacity 0.12s; }
 .sandbox-item:hover .sandbox-item-actions { opacity: 1; }
 @media (hover: none) { .sandbox-item-actions { opacity: 1; } }

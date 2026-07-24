@@ -3,303 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Travel</title>
+<title>Trip notes</title>
 <meta name="description" content="Working itineraries for Cameron's trips — Shanghai, Melbourne, and China April 2026.">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/fraunces.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/fraunces-italic.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/newsreader.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/inter.woff2">
-<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#171512" media="(prefers-color-scheme: dark)">
+<!-- The hub runs on the shared Catalogue engine (site.css) so its look tracks the
+     trip pages exactly. Only the trip register below is hub-specific. Grotesk +
+     mono, no serif — the hub carries data, not essays, so Newsreader is not loaded. -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/bricolage.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/plex-mono.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/plex-mono-500.woff2">
+<meta name="theme-color" content="#ecedea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131513" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="site.css">
 <style>
-/* Self-hosted fonts with font-display: block — text isn't painted until the real
-   font is ready, so no fallback is drawn and nothing resizes on load. Fraunces
-   and Newsreader are optically-sized variable fonts, so a size-adjust fallback
-   can't match them across sizes; see the full note in site.css. Inter has no
-   optical axis, so its fallback is exact. */
-@font-face {
- font-family: 'Fraunces'; font-style: normal; font-weight: 300 400; font-display: block;
- src: url('fonts/fraunces.woff2') format('woff2');
-}
-@font-face {
- font-family: 'Fraunces'; font-style: italic; font-weight: 300 400; font-display: block;
- src: url('fonts/fraunces-italic.woff2') format('woff2');
-}
-@font-face {
- font-family: 'Newsreader'; font-style: normal; font-weight: 300 500; font-display: block;
- src: url('fonts/newsreader.woff2') format('woff2');
-}
-@font-face {
- font-family: 'Inter'; font-style: normal; font-weight: 400 500; font-display: block;
- src: url('fonts/inter.woff2') format('woff2');
-}
-@font-face { font-family: 'Inter fallback'; src: local('Arial'), local('Helvetica Neue'); size-adjust: 105.5%; }
-:root {
- --ground: #f7f6f3;
- --ground-2: #eeecea;
- --ground-3: #e4e2de;
- --ink: #1a1916;
- --ink-2: #3a3834;
- --ink-3: #6b6860;
- --accent: #2d5a3d;
- --accent-2: #1e3d29;
- --accent-lt:#e8f0eb;
- --rule: #dddbd7;
- --rule-2: #ccc9c4;
- --serif: 'Newsreader', Georgia, serif;
- --display: 'Fraunces', Georgia, serif;
- --sans: 'Inter', 'Inter fallback', -apple-system, system-ui, sans-serif;
- --col: 680px;
- --pad: 1.5rem;
-}
-@media (prefers-color-scheme: dark) {
- :root {
-  --ground: #171512;
-  --ground-2: #211e1a;
-  --ground-3: #2b2723;
-  --ink: #ece8e1;
-  --ink-2: #c7c1b6;
-  --ink-3: #8f887c;
-  --accent-2: #4f9470;
-  --accent-lt: #1c2b21;
-  --rule: #34302a;
-  --rule-2: #423d35;
- }
-}
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; font-size: 17px; }
-body { background: var(--ground); color: var(--ink); font-family: var(--serif); line-height: 1.72; min-height: 100vh; }
-.wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--pad); }
+/* ── HUB (index) ───────────────────────────────────────────────
+   The catalogue's cover and its register of trips. Everything shared —
+   tokens, fonts, the .lg gutter grid, the specimen masthead, the mono data
+   voice, the footer — comes from site.css; only the trip register is defined
+   here so it never ships to the trip pages. One idea, same as the itineraries:
+   a left DATA GUTTER carrying the live fact (how close the trip is), the
+   content column carrying the specimen title. */
 
-/* ── MASTHEAD ─────────────────────────────────────────────── */
-.masthead {
- padding: 3.5rem 0 2.5rem;
- border-bottom: 1px solid var(--rule);
-}
-.mast-kicker {
- font-family: var(--sans);
- font-size: 0.65rem;
- font-weight: 500;
- letter-spacing: 0.22em;
- text-transform: uppercase;
- color: var(--ink-3);
- margin-bottom: 1rem;
-}
-.mast-title {
- font-family: var(--display);
- font-size: clamp(3rem, 9vw, 5.5rem);
- font-weight: 400;
- line-height: 0.88;
- letter-spacing: -0.03em;
- font-optical-sizing: auto;
- color: var(--ink);
-}
-.mast-title em {
- font-style: italic;
- color: var(--accent);
- font-weight: 300;
-}
-.mast-intro {
- font-family: var(--serif);
- font-size: 1rem;
- color: var(--ink-3);
- line-height: 1.65;
- margin-top: 1.1rem;
- max-width: 46ch;
-}
+/* Masthead — a specimen cover. Reuses .masthead / .mast-city / .mast-bar. */
+.mast-kicker { font-family: var(--mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 1.5rem; }
+.mast-city .lede { display: block; }
+.mast-intro { font-family: var(--sans); font-size: 1.06rem; font-weight: 400; color: var(--ink-2); line-height: 1.5; margin-top: 1.5rem; max-width: 42ch; }
+.mast-meta { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.mast-meta b { color: var(--accent); font-weight: 500; }
+#m-next { margin-left: auto; text-align: right; }
 
-/* ── TRIPS SECTION ────────────────────────────────────────── */
-.trips-section { padding: 3rem 0 4rem; }
-
-.section-row {
- display: flex;
- align-items: baseline;
- justify-content: space-between;
- margin-bottom: 2rem;
-}
-.section-label {
- font-family: var(--sans);
- font-size: 0.65rem;
- font-weight: 500;
- letter-spacing: 0.2em;
- text-transform: uppercase;
- color: var(--ink-3);
-}
-.sort-btn {
- font-family: var(--sans);
- font-size: 0.62rem;
- font-weight: 500;
- letter-spacing: 0.12em;
- text-transform: uppercase;
- color: var(--accent);
- background: none;
- border: none;
- cursor: pointer;
- padding: 0;
- display: flex;
- align-items: center;
- gap: 0.4rem;
- transition: color 0.12s;
-}
+/* Register header: label + sort control, on the trip list's 4px rule. */
+.index-bar { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 2.6rem; }
+.sort-btn { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.12s; }
 .sort-btn:hover { color: var(--accent-2); }
 .sort-arrow { display: inline-block; transition: transform 0.2s; }
 .sort-arrow.flipped { transform: rotate(180deg); }
 
-/* ── TRIP CARDS ───────────────────────────────────────────── */
+/* Trip register — each row is a .lg grid; the gutter carries the live status. */
 .trip-list { list-style: none; }
-
-.trip {
- display: block;
- text-decoration: none;
- padding: 2rem 0;
- border-bottom: 1px solid var(--rule);
- position: relative;
-}
-.trip:first-child { border-top: 1px solid var(--rule); }
+.trip { text-decoration: none; color: inherit; border-top: 4px solid var(--ink); padding: 1.4rem 0 1.6rem; }
+/* The next (or on-now) trip carries a persimmon rule — the same signal the trip
+   pages give today's chapter (.chapter.is-today). It marks the live entry. */
+.trip.is-next { border-top-color: var(--accent); }
+.trip-mark { align-self: start; }
+.tstatus { display: block; font-family: var(--mono); font-weight: 500; font-size: 0.7rem; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.tstatus.next, .tstatus.now { color: var(--accent); }
+.tstatus.past, .tstatus.soon { color: var(--ink-3); }
+.tdates-sm { display: block; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--ink-3); margin-top: 0.45rem; font-variant-numeric: tabular-nums; }
+.trip-body { min-width: 0; }
+.trip-kicker { font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
+.trip-title { font-family: var(--display); font-size: clamp(1.75rem, 4.6vw, 2.6rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.035em; color: var(--ink); text-wrap: balance; margin-left: -0.02em; transition: color 0.12s; }
+.trip-title em { font-style: normal; font-weight: 800; color: var(--ink-2); }
 .trip:hover .trip-title { color: var(--accent); }
-.trip:hover .trip-arrow { transform: translateX(4px); color: var(--accent); }
-.trip.placeholder { pointer-events: none; opacity: 0.45; }
-
-.trip-meta {
- font-family: var(--sans);
- font-size: 0.62rem;
- font-weight: 500;
- letter-spacing: 0.16em;
- text-transform: uppercase;
- color: var(--accent);
- margin-bottom: 0.5rem;
-}
-.trip.placeholder .trip-meta { color: var(--ink-3); }
-
-.trip-row {
- display: flex;
- align-items: baseline;
- justify-content: space-between;
- gap: 1rem;
-}
-.trip-title {
- font-family: var(--display);
- font-size: clamp(1.7rem, 4.5vw, 2.4rem);
- font-weight: 400;
- line-height: 1.04;
- letter-spacing: -0.02em;
- font-optical-sizing: auto;
- color: var(--ink);
- transition: color 0.12s;
-}
-.trip-title em { font-style: italic; font-weight: 300; }
-.trip-arrow {
- font-family: var(--sans);
- font-size: 1.1rem;
- color: var(--rule-2);
- flex-shrink: 0;
- transition: transform 0.15s, color 0.12s;
-}
-.trip-desc {
- font-family: var(--serif);
- font-size: 0.95rem;
- color: var(--ink-3);
- line-height: 1.7;
- margin-top: 0.6rem;
- max-width: 44ch;
-}
-.trip-foot {
- display: flex;
- align-items: center;
- gap: 0.75rem;
- margin-top: 0.6rem;
- flex-wrap: wrap;
-}
-.trip-dates {
- font-family: var(--sans);
- font-size: 0.62rem;
- color: var(--ink-3);
- letter-spacing: 0.04em;
-}
-.trip-status {
- display: inline-block;
- font-family: var(--sans);
- font-size: 0.55rem;
- font-weight: 500;
- letter-spacing: 0.11em;
- text-transform: uppercase;
- border-radius: 2px;
- padding: 0.2em 0.6em;
- line-height: 1.4;
-}
-.trip-status.next { color: var(--accent); background: var(--accent-lt); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
-.trip-status.now { color: var(--ground); background: var(--accent); border: 1px solid var(--accent); }
-.trip-status.past { color: var(--ink-3); border: 1px solid var(--rule-2); }
-.trip-status.soon { color: var(--ink-3); border: 1px solid var(--rule-2); }
-/* Past trips recede so the next trip reads first; they lift back on interaction. */
-.trip.is-past { opacity: 0.58; transition: opacity 0.15s; }
+.trip:hover .trip-title em { color: var(--accent); }
+.trip-desc { font-family: var(--sans); font-size: 0.95rem; color: var(--ink-2); line-height: 1.55; margin-top: 0.7rem; max-width: 54ch; }
+.trip-foot { display: flex; align-items: center; gap: 0.7rem 1.1rem; margin-top: 0.95rem; flex-wrap: wrap; }
+.trip-fresh { font-family: var(--mono); font-size: 0.56rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ground); background: var(--accent); padding: 0.24em 0.55em; }
+.trip-go { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); display: inline-flex; align-items: center; gap: 0.35rem; transition: transform 0.15s, color 0.12s; }
+.trip:hover .trip-go { color: var(--accent-2); transform: translateX(3px); }
+/* Past trips recede so the next trip reads first; they lift on interaction. */
+.trip.is-past { opacity: 0.56; transition: opacity 0.15s; }
 .trip.is-past:hover, .trip.is-past:focus-visible { opacity: 1; }
+.trip.placeholder { opacity: 0.42; pointer-events: none; }
 
-/* ── ADD A TRIP ───────────────────────────────────────────── */
-.add-trip {
- display: flex;
- align-items: center;
- gap: 0.9rem;
- padding: 1.6rem 0;
- text-decoration: none;
- border-bottom: 1px solid var(--rule);
- color: var(--ink-3);
- transition: color 0.12s;
-}
+/* Add a trip — an action row, dashed to read as secondary. */
+.add-trip { text-decoration: none; border-top: 2px dashed var(--rule-2); padding: 1.3rem 0; color: var(--ink-3); transition: color 0.12s; align-items: baseline; }
 .add-trip:hover { color: var(--accent); }
-.add-trip-plus {
- display: flex;
- align-items: center;
- justify-content: center;
- width: 34px;
- height: 34px;
- flex-shrink: 0;
- border: 1px dashed var(--rule-2);
- border-radius: 50%;
- font-family: var(--sans);
- font-size: 1.2rem;
- line-height: 1;
- color: var(--ink-3);
- transition: border-color 0.12s, color 0.12s;
-}
-.add-trip:hover .add-trip-plus { border-color: var(--accent); color: var(--accent); }
-.add-trip-label {
- font-family: var(--sans);
- font-size: 0.7rem;
- font-weight: 500;
- letter-spacing: 0.14em;
- text-transform: uppercase;
-}
+.add-mark { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); align-self: start; transition: color 0.12s; }
+.add-trip:hover .add-mark { color: var(--accent); }
+.add-label { font-family: var(--display); font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em; color: var(--ink-2); transition: color 0.12s; }
+.add-trip:hover .add-label { color: var(--accent); }
 
-/* ── FOOTER ───────────────────────────────────────────────── */
-footer {
- padding: 2rem 0 4rem;
- font-family: var(--sans);
- font-size: 0.62rem;
- color: var(--rule-2);
- letter-spacing: 0.12em;
- text-transform: uppercase;
-}
-a:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+/* Footer line reused from the engine; split left/right. */
+.foot-line { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
-@media (max-width: 600px) {
- .masthead { padding: 2rem 0 1.8rem; }
- .trips-section { padding: 2rem 0 3rem; }
- .trip-title { font-size: 1.8rem; }
+@media (max-width: 640px) {
+ /* Gutter collapses (engine): let the status + dates sit on one line above. */
+ .trip-mark { display: flex; align-items: baseline; gap: 0.6rem 0.9rem; flex-wrap: wrap; margin-bottom: 0.15rem; }
+ .tdates-sm { margin-top: 0; }
+ #m-next { margin-left: 0; text-align: left; }
+ .mast-bar { gap: 0.4rem 1.2rem; }
 }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="content"><div class="wrap">
 
  <header class="masthead">
- <div class="mast-kicker">Cameron Death</div>
- <div class="mast-title">Trip <em>notes</em></div>
+ <div class="mast-kicker">Cameron Death · Personal itineraries</div>
+ <h1 class="mast-city"><span class="lede">Trip</span><em>notes</em></h1>
  <p class="mast-intro">Working itineraries, not brochures — built to be walked, edited as they're used, and kept honest about what's confirmed and what's still just a plan.</p>
+ <div class="mast-bar">
+ <span class="mast-meta" id="m-count"></span>
+ <span class="mast-meta" id="m-next"></span>
+ </div>
  </header>
 
- <section class="trips-section">
- <div class="section-row">
+ <section>
+ <div class="index-bar">
  <div class="section-label">Trips</div>
  <button class="sort-btn" id="sort-btn" onclick="toggleSort()" aria-label="Change trip order">
  <span id="sort-label">Newest first</span> <span class="sort-arrow" id="sort-arrow">↓</span>
@@ -308,15 +108,20 @@ a:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
 
  <ul class="trip-list" id="trip-list"></ul>
 
- <a class="add-trip" href="./new/">
- <span class="add-trip-plus">+</span>
- <span class="add-trip-label">Add a trip</span>
+ <a class="add-trip lg" href="./new/">
+ <span class="add-mark gut">＋ New</span>
+ <span class="add-label">Add a trip</span>
  </a>
  </section>
 
- <footer>Personal use only</footer>
+ <footer>
+ <div class="foot-line">
+ <span>Personal use only</span>
+ <span>Catalogue · a field dossier</span>
+ </div>
+ </footer>
 
-</div>
+</div></div>
 
 <script>
 const TRIPS = [
@@ -374,10 +179,24 @@ function tripStatus(t) {
  return { kind: "past", label: "Past" };
 }
 
+const plain = s => s.replace(/<[^>]+>/g, "");
+
+// The one "live" trip — on now, else the soonest upcoming. The masthead names
+// it and its register row gets the persimmon rule, so both always agree.
+function heroTrip() {
+ const scored = TRIPS.filter(t => !t.placeholder).map(t => ({ t, s: tripStatus(t) }));
+ const now = scored.find(x => x.s.kind === "now");
+ if (now) return now;
+ return scored.filter(x => x.s.kind === "next")
+  .sort((a, b) => a.t.date.localeCompare(b.t.date))[0] || null;
+}
+
 let newestFirst = true;
 
 function renderTrips() {
  const list = document.getElementById("trip-list");
+ const hero = heroTrip();
+ const heroHref = hero ? hero.t.href : null;
  const sorted = [...TRIPS].sort((a, b) => {
  return newestFirst
  ? b.date.localeCompare(a.date)
@@ -386,31 +205,48 @@ function renderTrips() {
 
  list.innerHTML = sorted.map(t => {
  const s = tripStatus(t);
- const statusPill = `<span class="trip-status ${s.kind}">${s.label}</span>`;
+ const mark = `<div class="trip-mark gut">
+ <span class="tstatus ${s.kind}">${s.label}</span>
+ <span class="tdates-sm">${t.dates}</span>
+ </div>`;
  if (t.placeholder) {
- return `<li class="trip placeholder">
- <div class="trip-meta">${t.meta}</div>
- <div class="trip-row">
- <div class="trip-title">${t.title}</div>
- </div>
+ return `<li class="trip lg placeholder">
+ ${mark}
+ <div class="trip-body">
+ <div class="trip-kicker">${t.meta}</div>
+ <h2 class="trip-title">${t.title}</h2>
  <p class="trip-desc">${t.desc}</p>
- <div class="trip-foot"><span class="trip-dates">${t.dates}</span>${statusPill}</div>
+ </div>
  </li>`;
  }
  const fresh = freshFinds[t.href]
- ? `<span class="trip-status next">${freshFinds[t.href]} new in What&rsquo;s on</span>` : "";
+ ? `<span class="trip-fresh">${freshFinds[t.href]} new in What&rsquo;s on</span>` : "";
  return `<li>
- <a class="trip ${s.kind === 'past' ? 'is-past' : ''}${s.kind === 'now' ? ' is-now' : ''}" href="${t.href}">
- <div class="trip-meta">${t.meta}</div>
- <div class="trip-row">
- <div class="trip-title">${t.title}</div>
- <span class="trip-arrow">›</span>
- </div>
+ <a class="trip lg ${s.kind === 'past' ? 'is-past' : ''}${t.href === heroHref ? ' is-next' : ''}" href="${t.href}">
+ ${mark}
+ <div class="trip-body">
+ <div class="trip-kicker">${t.meta}</div>
+ <h2 class="trip-title">${t.title}</h2>
  <p class="trip-desc">${t.desc}</p>
- <div class="trip-foot"><span class="trip-dates">${t.dates}</span>${statusPill}${fresh}</div>
+ <div class="trip-foot">${fresh}<span class="trip-go">View itinerary →</span></div>
+ </div>
  </a>
  </li>`;
  }).join("");
+}
+
+// The masthead states the single most useful live fact: the next trip and how
+// close it is. Recomputed from today's date whenever the list re-renders.
+function renderMastMeta() {
+ const real = TRIPS.filter(t => !t.placeholder);
+ document.getElementById("m-count").textContent =
+  real.length + (real.length === 1 ? " trip logged" : " trips logged");
+ const hero = heroTrip();
+ const el = document.getElementById("m-next");
+ if (!hero) { el.textContent = "All trips complete"; return; }
+ el.innerHTML = hero.s.kind === "now"
+  ? "On now — " + plain(hero.t.title) + " · <b>day " + hero.s.label.split("day ")[1] + "</b>"
+  : "Next — " + plain(hero.t.title) + " · <b>" + hero.s.label + "</b>";
 }
 
 // A live pulse from any trip that publishes an events feed: count entries
@@ -434,6 +270,7 @@ function toggleSort() {
  renderTrips();
 }
 
+renderMastMeta();
 renderTrips();
 </script>
 </body>
