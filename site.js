@@ -287,21 +287,6 @@ function renderBookings() {
  });
 }
 
-function renderVoices() {
- const wrap = document.getElementById('site-voices-wrap');
- const section = document.getElementById('site-voices');
- if (!wrap) return;                       // page opted out of this section
- if (!TRIP.voices || !TRIP.voices.length) {
- if (section) section.style.display = 'none';
- return;
- }
- TRIP.voices.forEach(v => {
- const d = makeDisclosureRow(`${v.author} &middot; <em style="font-style:italic;">${v.title}</em>`);
- d.body.innerHTML = `<div class="prose prose-drop" style="padding-top:0.6rem;">${v.body}</div>`;
- wrap.appendChild(d.grp);
- });
-}
-
 // "What's on": dated events from a per-trip events.json, refreshed out of band
 // (e.g. by a weekly scheduled agent) from multiple listings sources. Only runs
 // on pages that include the section, and hides itself if the file is missing
@@ -340,6 +325,27 @@ function saveHiddenEvents(ids) {
  try { localStorage.setItem(EVENTS_HIDDEN_KEY, JSON.stringify(ids)); } catch (e) {}
 }
 
+// "Pins" promote a find into a specific day chapter as a suggestion. Stored as
+// { eventKey: dayISO } — one event pins to at most one day. Local and per-trip,
+// like the hides; no refresh ever touches them. The find still shows in
+// What's on (with an "On <day>" marker); the day chapter echoes it as a
+// clearly second-class "suggested" row that can be moved or removed.
+const EVENTS_PINNED_KEY = 'events_pinned_' + (TRIP.meta.slug || TRIP.meta.city.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+function loadPinned() {
+ try { return JSON.parse(localStorage.getItem(EVENTS_PINNED_KEY)) || {}; }
+ catch (e) { return {}; }
+}
+function savePinned(map) {
+ try { localStorage.setItem(EVENTS_PINNED_KEY, JSON.stringify(map)); } catch (e) {}
+}
+// "Sat 24 Oct" from an ISO date, matching the calendar's day labels.
+function dayLabel(iso) {
+ const ms = evDate(iso);
+ if (isNaN(ms)) return iso || '';
+ const d = new Date(ms);
+ return EV_WD[d.getDay()] + ' ' + d.getDate() + ' ' + EV_MO[d.getMonth()];
+}
+
 function eventRow(ev, opts) {
  const now = Date.now();
  const addedMs = evDate(ev.added);
@@ -358,6 +364,7 @@ function eventRow(ev, opts) {
    ((ev.venue || kind) ? '<div class="event-venue">' + (ev.venue || '') + kind + '</div>' : '') +
    (ev.blurb ? '<div class="event-blurb">' + ev.blurb + '</div>' : '') +
   '</div>';
+ if (opts.control) row.querySelector('.event-body').appendChild(opts.control);
  if (opts.onHide) {
   const b = el('button', 'event-hide', '×');
   b.type = 'button';
@@ -405,7 +412,15 @@ async function renderEvents() {
   }
 
   const bySort = (a, b) => String(a.sortDate || a.start || '').localeCompare(String(b.sortDate || b.start || ''));
-  const state = { hidden: loadHiddenEvents(), hiddenOpen: false, earlierOpen: false };
+  const state = { hidden: loadHiddenEvents(), pins: loadPinned(), hiddenOpen: false, earlierOpen: false };
+
+  // Every find keyed for lookup, and the trip's real day chapters (the only
+  // days a find can be pinned into — one option per chapter that exists).
+  const eventByKey = {};
+  all.forEach(ev => { eventByKey[eventKey(ev)] = ev; });
+  const tripDayList = (TRIP.days || []).filter(d => d.iso);
+  const dayByISO = {};
+  tripDayList.forEach(d => { dayByISO[d.iso] = d; });
 
   function hide(ev) {
    const k = eventKey(ev);
@@ -419,6 +434,112 @@ async function renderEvents() {
    saveHiddenEvents(state.hidden);
    paint();
   }
+  function setPin(key, iso) { state.pins[key] = iso; savePinned(state.pins); paint(); }
+  function clearPin(key) { delete state.pins[key]; savePinned(state.pins); paint(); }
+
+  // The single trip day a find maps to, if exactly one and it's a real chapter
+  // — used to offer a one-tap "Add to <that day>". Multi-day or open-ended runs
+  // return null and get a day picker instead.
+  function naturalDay(ev) {
+   if (!hasWindow) return null;
+   if (!ev.start && !ev.end) return null;
+   const s = evDate(ev.start || ev.end), e = evDate(ev.end || ev.start);
+   const os = Math.max(s, tripStart), oe = Math.min(e, tripEnd);
+   if (oe < os || Math.round((oe - os) / EV_DAY) !== 0) return null;
+   const iso = evISO(os);
+   return dayByISO[iso] ? iso : null;
+  }
+
+  // A <select> of trip days: pick to pin/move, "Remove from day" to unpin.
+  function daySelect(ev, currentISO) {
+   const key = eventKey(ev);
+   const sel = el('select', 'day-pin-control');
+   sel.setAttribute('aria-label', (currentISO ? 'Move ' : 'Add ') + (ev.title || 'event') + ' to a day');
+   const ph = el('option', null, currentISO ? 'Move to a different day…' : '＋ Add to a day…');
+   ph.value = ''; ph.disabled = true; ph.selected = !currentISO;
+   sel.appendChild(ph);
+   tripDayList.forEach(d => {
+    const o = el('option', null, dayLabel(d.iso));
+    o.value = d.iso;
+    if (d.iso === currentISO) o.selected = true;
+    sel.appendChild(o);
+   });
+   if (currentISO) {
+    const rm = el('option', null, 'Remove from day');
+    rm.value = '__remove__';
+    sel.appendChild(rm);
+   }
+   sel.addEventListener('change', () => {
+    const v = sel.value;
+    if (v === '__remove__') clearPin(key);
+    else if (v) setPin(key, v);
+   });
+   return sel;
+  }
+
+  // The pin control shown on a live find in the section: a marker + mover once
+  // pinned, a one-tap add for single-day finds, a picker otherwise.
+  function pinControl(ev) {
+   if (!tripDayList.length) return null;
+   const key = eventKey(ev);
+   const currentISO = state.pins[key];
+   const w = el('div', 'day-pin');
+   if (currentISO) {
+    w.appendChild(el('span', 'day-pin-on', 'On ' + dayLabel(currentISO)));
+    w.appendChild(daySelect(ev, currentISO));
+   } else {
+    const nat = naturalDay(ev);
+    if (nat) {
+     const b = el('button', 'day-pin-add', '＋ Add to ' + dayLabel(nat));
+     b.type = 'button';
+     b.addEventListener('click', () => setPin(key, nat));
+     w.appendChild(b);
+    } else {
+     w.appendChild(daySelect(ev, ''));
+    }
+   }
+   return w;
+  }
+
+  // The echo of a pinned find inside its day chapter — deliberately lighter
+  // than an itinerary stop, with its own mover/remover.
+  function suggestionRow(ev, dayISO) {
+   const link = ev.url ? ' <a class="event-link" href="' + ev.url + '" target="_blank" rel="noopener">↗</a>' : '';
+   const kind = ev.kind ? '<span class="event-kind">' + ev.kind + '</span>' : '';
+   const row = el('div', 'day-suggestion');
+   row.innerHTML =
+    '<div class="day-suggestion-body">' +
+     '<div class="day-suggestion-title">' + (ev.title || '') + link + '</div>' +
+     ((ev.venue || kind) ? '<div class="event-venue">' + (ev.venue || '') + kind + '</div>' : '') +
+     (ev.when ? '<div class="day-suggestion-when">' + ev.when + '</div>' : '') +
+    '</div>';
+   row.querySelector('.day-suggestion-body').appendChild(daySelect(ev, dayISO));
+   return row;
+  }
+
+  // Rebuild the "Suggested" block inside each day chapter from the pins.
+  function paintDayPins(hiddenSet) {
+   tripDayList.forEach(d => {
+    const ch = document.getElementById(d.id);
+    if (!ch) return;
+    const prev = ch.querySelector('.day-suggested');
+    if (prev) prev.remove();
+    const items = [];
+    Object.keys(state.pins).forEach(k => {
+     if (state.pins[k] !== d.iso) return;
+     const ev = eventByKey[k];
+     if (!ev || ev.archived || hiddenSet[k]) return; // ended or hidden → no echo
+     items.push(ev);
+    });
+    if (!items.length) return;
+    items.sort(bySort);
+    const block = el('div', 'day-suggested');
+    block.appendChild(el('div', 'day-suggested-label', 'Suggested · from What’s on'));
+    items.forEach(ev => block.appendChild(suggestionRow(ev, d.iso)));
+    ch.appendChild(block);
+   });
+  }
+
   // Repaints rebuild the disclosures, so remember whether they were open.
   function trackOpen(d, key) {
    const btn = d.grp.querySelector('.sh26-row-btn');
@@ -447,7 +568,7 @@ async function renderEvents() {
 
    if (spans.length) {
     if (hasWindow) wrap.appendChild(el('div', 'event-group-label', 'Running throughout'));
-    spans.forEach(ev => wrap.appendChild(eventRow(ev, { mode: 'live', onHide: hide })));
+    spans.forEach(ev => wrap.appendChild(eventRow(ev, { mode: 'live', onHide: hide, control: pinControl(ev) })));
    }
 
    if (hasWindow) {
@@ -459,7 +580,7 @@ async function renderEvents() {
      const day = el('div', 'event-day' + (items.length ? '' : ' is-empty'));
      day.appendChild(el('div', 'event-day-date', EV_WD[d.getDay()] + ' ' + d.getDate() + ' ' + EV_MO[d.getMonth()]));
      const body = el('div', 'event-day-body');
-     if (items.length) items.forEach(ev => body.appendChild(eventRow(ev, { mode: 'live', onHide: hide })));
+     if (items.length) items.forEach(ev => body.appendChild(eventRow(ev, { mode: 'live', onHide: hide, control: pinControl(ev) })));
      else body.appendChild(el('div', 'event-day-none', 'Nothing dated yet'));
      day.appendChild(body);
      cal.appendChild(day);
@@ -486,6 +607,8 @@ async function renderEvents() {
    }
 
    if (data.updated) wrap.appendChild(el('div', 'event-updated', 'Refreshed ' + data.updated));
+
+   paintDayPins(hiddenSet);
   }
 
   paint();
@@ -1013,7 +1136,6 @@ async function fetchWeather() {
 document.addEventListener('DOMContentLoaded', () => {
  renderMasthead();
  renderPlanePiece();
- renderVoices();
  renderChapters();
  renderBookings();
  renderDayIndex();

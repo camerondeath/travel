@@ -88,6 +88,18 @@ it can be restored. Refresh the file however you like — by hand, or with a
 scheduled agent that searches multiple sources for events in the trip window
 and commits the file.
 
+**Pin a find into a day.** Each live find carries an "Add to a day" control: a
+one-tap button for a single-day event (defaults to its own date), a day picker
+for a multi-day or open-ended run. Pinning echoes the find into that day's
+chapter as a lighter *"Suggested · from What's on"* row — the itinerary is the
+plan, the feed is the possibilities, and a pin is how one graduates. The find
+**stays in the feed too**, marked "On <day>", so the section remains the full
+record; the day picker also moves it or removes it. Pins are localStorage
+(`events_pinned_<slug>`, `{eventKey: dayISO}`), so they're the reader's own
+state — no refresh touches them, and a pinned event that later gets hidden or
+archived quietly drops out of the day until it's back. Only real day chapters
+(`TRIP.days[].id` / `.iso`) are offered as targets.
+
 **Nothing is ever lost to a refresh.** Four layers, deliberately:
 
 1. **Entries are never deleted, only archived.** A listing that has ended gets

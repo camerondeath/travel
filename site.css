@@ -316,6 +316,25 @@ body { background: var(--ground); color: var(--ink); font-family: var(--serif); 
 .event-keep:hover { color: var(--accent); border-color: var(--accent); }
 .event-keep:disabled { color: var(--accent); border-color: var(--accent); cursor: default; }
 
+/* Pin-to-day control on a find: add / marker + mover. */
+.day-pin { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.day-pin-add { font-family: var(--sans); font-size: 0.58rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); background: none; border: 1px solid var(--rule-2); border-radius: 4px; cursor: pointer; padding: 0.25rem 0.55rem; transition: color 0.12s, border-color 0.12s; }
+.day-pin-add:hover { color: var(--accent); border-color: var(--accent); }
+.day-pin-on { font-family: var(--sans); font-size: 0.55rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ground); background: var(--accent); border-radius: 3px; padding: 0.2em 0.5em; }
+.day-pin-control { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.04em; color: var(--ink-3); background: var(--ground); border: 1px solid var(--rule-2); border-radius: 4px; padding: 0.22rem 0.4rem; cursor: pointer; max-width: 100%; }
+.day-pin-control:hover { color: var(--accent); border-color: var(--accent); }
+
+/* "Suggested — from What's on" echo inside a day chapter. Sits below the
+   spine, clearly lighter than a committed stop. */
+.day-suggested { margin-top: 1.1rem; padding-top: 0.7rem; border-top: 1px dashed var(--rule-2); }
+.day-suggested-label { font-family: var(--sans); font-size: 0.55rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.day-suggestion { display: flex; align-items: flex-start; gap: 0.9rem; flex-wrap: wrap; padding: 0.4rem 0; }
+.day-suggestion + .day-suggestion { border-top: 1px solid var(--rule); }
+.day-suggestion-body { flex: 1; min-width: 60%; }
+.day-suggestion-title { font-family: var(--display); font-size: 0.95rem; font-weight: 400; color: var(--ink); font-optical-sizing: auto; line-height: 1.25; }
+.day-suggestion-when { font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-top: 0.2rem; }
+.day-suggestion .day-pin-control { align-self: center; }
+
 /* ── SECTION LABEL ────────────────────────────────────────── */
 .section-label { font-family: var(--sans); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0; }
 .section-sub { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: var(--ink-3); margin: 0.5rem 0 1rem; max-width: 40em; }
@@ -396,7 +415,8 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--accent); outlin
  body { background: #fff; color: #000; }
  .fab, .sandbox-capture, .day-index, .day-controls, .chapter-toggle,
  .sh26-panel-btn, .essay-continue, .essay-collapse, .mast-back,
- #site-sandbox, .sandbox-toolbar, .event-hide, .event-keep { display: none !important; }
+ #site-sandbox, .sandbox-toolbar, .event-hide, .event-keep,
+ .day-pin, .day-pin-control, .day-pin-add { display: none !important; }
  .mast-leaf { opacity: 0.06; }
  /* Everything collapsible prints open. */
  .chapter .spine, .sh26-row-panel, .sh26-panel-body { display: block !important; }

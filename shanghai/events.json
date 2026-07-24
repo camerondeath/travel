@@ -77,6 +77,46 @@
       "blurb": "Finnish power-metal veterans, in town on Halloween night of all nights. Not remotely jazz — but it's the one dated gig on your Saturday so far, and MAO on a costume night would be a scene.",
       "url": "https://www.songkick.com/metro-areas/28033-china-shanghai/2026",
       "added": "2026-07-24"
+    },
+    {
+      "title": "French Concession, on foot",
+      "when": "morning or afternoon",
+      "sortDate": "2026-10-23",
+      "venue": "Former French Concession",
+      "kind": "walk",
+      "blurb": "English-guided walks through the plane-tree streets — the Wukang Building, the shikumen lanes, the Art Deco that Shanghai wears more casually than anywhere else. Historic Shanghai and several operators run them, with private departures bookable for any morning or afternoon, so pin it to a day with a gap.",
+      "url": "https://www.historic-shanghai.com/historic-shanghai-tours/",
+      "added": "2026-07-24"
+    },
+    {
+      "title": "Yangpu Flea Market",
+      "when": "Wed · Sat · Sun, from 6am",
+      "sortDate": "2026-10-24",
+      "venue": "Yangpu",
+      "kind": "market",
+      "blurb": "Old cameras, Mao-era pins, cultural-revolution ephemera and honest junk, traded from dawn to about noon three mornings a week. No English needed and none offered; it sits near the Saturday's Yangpu riverfront, so an early start folds it in.",
+      "url": "https://www.smartshanghai.com/venue/33954/yangpu_flea_market",
+      "added": "2026-07-24"
+    },
+    {
+      "title": "Kung Fu Komedy",
+      "when": "Wed–Sun, evenings",
+      "sortDate": "2026-10-24",
+      "venue": "French Concession",
+      "kind": "comedy",
+      "blurb": "China's first stand-up room, English and Chinese acts on rotation, with free open mics on the quieter nights — email a day ahead to get on the list, or just watch. Small, solo-friendly, and the most reliable English-language laugh in town.",
+      "url": "https://www.smartshanghai.com/venue/9057/the_kung_fu_komedy_club",
+      "added": "2026-07-24"
+    },
+    {
+      "title": "JZ Club",
+      "when": "nightly · 7:30 & 9:30",
+      "sortDate": "2026-10-25",
+      "venue": "Hengshan Lu, Xuhui",
+      "kind": "music",
+      "blurb": "The city's serious jazz room, two sets most nights, touring names dropped in among the residents. No language barrier and no need to give up a whole evening — a late set after dinner does it.",
+      "url": "https://www.smartshanghai.com/venue/31267/jz_club",
+      "added": "2026-07-24"
     }
   ]
 }
