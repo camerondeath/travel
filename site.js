@@ -143,11 +143,14 @@ function renderChapters() {
  const dataBits = [];
  if (day.hood) dataBits.push(`<span class="hood">${day.hood}</span>`);
  if (day.arc) dataBits.push(`<span class="arc">${day.arc}</span>`);
+ // Seasonal average, shown until the live forecast comes into range (fetchWeather).
+ const cn = TRIP.meta.climate && TRIP.meta.climate.byId && TRIP.meta.climate.byId[day.id];
+ const wxInit = cn ? `<span class="day-weather-temps"><span class="hi">${cn[0]}°</span> / ${cn[1]}°</span><span class="wx-avg">avg</span>` : '';
  head.innerHTML =
   `<div class="daymark">`
   + `<span class="wd">${wdAbbr}</span>`
   + `<span class="dt">${day.date}</span>`
-  + `<span class="day-weather" id="wx-${day.id}"></span>`
+  + `<span class="day-weather" id="wx-${day.id}">${wxInit}</span>`
   + `<span class="ord">Day ${dayIdx + 1} / ${dayTotal}</span>`
   + `</div>`
   + `<div class="chapter-content">`
@@ -1196,10 +1199,12 @@ async function fetchWeather() {
  if (!id) return;
  const slot = document.getElementById('wx-' + id);
  if (!slot) return;
+ const hiRaw = d.daily.temperature_2m_max[i];
+ const loRaw = d.daily.temperature_2m_min[i];
+ // Days past the ~16-day horizon come back null -- keep their seasonal average.
+ if (hiRaw == null || loRaw == null) return;
  const icon = wmoIcon(d.daily.weather_code[i]);
- const hi = Math.round(d.daily.temperature_2m_max[i]);
- const lo = Math.round(d.daily.temperature_2m_min[i]);
- slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${hi}°</span> / ${lo}°</span>`;
+ slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${Math.round(hiRaw)}°</span> / ${Math.round(loRaw)}°</span>`;
  });
  } catch(e) {}
 }
