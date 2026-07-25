@@ -162,8 +162,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 /* ── ESSAY TEASER (closed-day caption, grotesk) ───────────── */
 .essay-teaser { margin-top: 1rem; max-width: 60ch; }
 .essay-teaser p { font-family: var(--sans); font-size: 0.98rem; color: var(--ink-2); line-height: 1.6; margin: 0; display: inline; }
-.essay-continue { display: inline; }
-.essay-continue::before { content: '\00a0'; }
+.essay-continue { display: inline-block; margin-top: 0.5rem; }
 .essay-continue a, .essay-continue-btn, .essay-collapse-btn {
  display: inline-block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em;
  text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer;
@@ -251,10 +250,9 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .ledger-progress-text b { color: var(--accent); font-weight: 500; }
 .ledger-progress-bar { margin-top: 0.55rem; height: 8px; border: 1.5px solid var(--ink); overflow: hidden; }
 .ledger-progress-fill { height: 100%; background: var(--accent); transition: width 0.4s ease; }
-.reg-group-label { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin: 1.2rem 0 0.1rem; }
-.reg-group-label:first-child { margin-top: 0; }
 .ledger-row { display: flex; align-items: baseline; gap: 0.9rem; padding: 0.6rem 0; border-top: 1px solid var(--rule); }
-.reg-group-label + .ledger-row { border-top: none; }
+.ledger-row:first-child { border-top: none; }
+.register .sh26-row:last-child { margin-bottom: 0; }
 .ldot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; align-self: center; }
 .ldot.confirmed { background: var(--good); }
 .ldot.open { background: var(--open); }

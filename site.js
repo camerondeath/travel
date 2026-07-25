@@ -195,7 +195,11 @@ function renderChapters() {
  if (day.essay) {
  const continueSpan = el('span', 'essay-continue');
  continueSpan.innerHTML = `<button type="button" class="essay-continue-btn">Continue reading</button>`;
- teaserDiv.appendChild(continueSpan);
+ // A sibling of the teaser, not a child -- the teaser clamps to 2 lines when
+ // the day is closed, and a button living inside that clamp only survives
+ // truncation by luck (visible for a short teaser, clipped away for a long
+ // one). Kept outside, it always renders.
+ essayWrap.appendChild(continueSpan);
  const fullBody = el('div', null);
  fullBody.id = 'essay-' + day.id;
  fullBody.style.display = 'none';
@@ -299,16 +303,21 @@ function renderBookings() {
   return row;
  }
 
- // What still needs action sits up top (the signal draws the eye to it).
+ // Each group folds behind a disclosure, closed by default -- the progress
+ // line above already gives the at-a-glance status, so the itemised ledger
+ // (logistics reference, not something to scan on every visit) stays out of
+ // the way until asked for. What still needs action lists first.
  const stillOpen = bookings.filter(b => b.state !== 'confirmed');
  const confirmed = bookings.filter(b => b.state === 'confirmed');
  if (stillOpen.length) {
-  reg.appendChild(el('div', 'reg-group-label', 'Still to book'));
-  stillOpen.forEach(b => reg.appendChild(bookingRow(b)));
+  const d = makeDisclosureRow('Still to book <span class="sh26-count">' + stillOpen.length + '</span>');
+  stillOpen.forEach(b => d.body.appendChild(bookingRow(b)));
+  reg.appendChild(d.grp);
  }
  if (confirmed.length) {
-  reg.appendChild(el('div', 'reg-group-label', 'Booked'));
-  confirmed.forEach(b => reg.appendChild(bookingRow(b)));
+  const d = makeDisclosureRow('Booked <span class="sh26-count">' + confirmed.length + '</span>');
+  confirmed.forEach(b => d.body.appendChild(bookingRow(b)));
+  reg.appendChild(d.grp);
  }
  section.appendChild(reg);
 }
