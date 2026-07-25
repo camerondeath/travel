@@ -5,6 +5,39 @@ function el(tag, cls, html) {
  return e;
 }
 
+// Anything that did not come out of a trip page's own TRIP object goes through
+// here before it meets innerHTML. Authored trip copy is deliberate HTML and
+// stays raw; the events feed and the scratchpad are plain text written by an
+// agent or pasted by hand, and are not trusted to be markup-free.
+function esc(s) {
+ return String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+// ...and only ever put a real web link in an href.
+function safeUrl(u) { return /^https?:\/\//i.test(String(u || '')) ? String(u) : ''; }
+
+// Jumps honour prefers-reduced-motion. The stylesheet already switches
+// scroll-behavior off for those users, but an explicit behavior:'smooth' here
+// overrides the CSS, so the preference has to be read again in script.
+function scrollToEl(target, open) {
+ if (!target) return;
+ if (open) target.classList.add('open');
+ const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ target.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
+}
+
+// One localStorage namespace per trip (hides, pins, scratchpad), and one place
+// where a read or write can fail quietly — Safari in private mode throws on
+// both, and a full disk throws on write.
+const TRIP_SLUG = TRIP.meta.slug || TRIP.meta.city.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+function lsGet(key, fallback) {
+ try { const v = JSON.parse(localStorage.getItem(key)); return v == null ? fallback : v; }
+ catch (e) { return fallback; }
+}
+function lsSet(key, value) {
+ try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+}
+
 // Names of stops actually scheduled in the week, derived from day events.
 // Used to mark Back-pocket entries that are already committed vs genuine spares.
 const SCHEDULED_NAMES = (function () {
@@ -351,28 +384,18 @@ function evISO(ms) {
 }
 function eventKey(ev) { return ev.url || ev.title || ''; }
 
-const EVENTS_HIDDEN_KEY = 'events_hidden_' + (TRIP.meta.slug || TRIP.meta.city.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
-function loadHiddenEvents() {
- try { return JSON.parse(localStorage.getItem(EVENTS_HIDDEN_KEY)) || []; }
- catch (e) { return []; }
-}
-function saveHiddenEvents(ids) {
- try { localStorage.setItem(EVENTS_HIDDEN_KEY, JSON.stringify(ids)); } catch (e) {}
-}
+const EVENTS_HIDDEN_KEY = 'events_hidden_' + TRIP_SLUG;
+function loadHiddenEvents() { return lsGet(EVENTS_HIDDEN_KEY, []); }
+function saveHiddenEvents(ids) { lsSet(EVENTS_HIDDEN_KEY, ids); }
 
 // "Pins" promote a find into a specific day chapter as a suggestion. Stored as
 // { eventKey: dayISO } — one event pins to at most one day. Local and per-trip,
 // like the hides; no refresh ever touches them. The find still shows in
 // What's on (with an "On <day>" marker); the day chapter echoes it as a
 // clearly second-class "suggested" row that can be moved or removed.
-const EVENTS_PINNED_KEY = 'events_pinned_' + (TRIP.meta.slug || TRIP.meta.city.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
-function loadPinned() {
- try { return JSON.parse(localStorage.getItem(EVENTS_PINNED_KEY)) || {}; }
- catch (e) { return {}; }
-}
-function savePinned(map) {
- try { localStorage.setItem(EVENTS_PINNED_KEY, JSON.stringify(map)); } catch (e) {}
-}
+const EVENTS_PINNED_KEY = 'events_pinned_' + TRIP_SLUG;
+function loadPinned() { return lsGet(EVENTS_PINNED_KEY, {}); }
+function savePinned(map) { lsSet(EVENTS_PINNED_KEY, map); }
 // "Sat 24 Oct" from an ISO date, matching the calendar's day labels.
 function dayLabel(iso) {
  const ms = evDate(iso);
@@ -387,20 +410,24 @@ function eventRow(ev, opts) {
  const isNew = opts.mode === 'live' && !isNaN(addedMs) &&
                (now - addedMs) >= 0 && (now - addedMs) <= EVENTS_NEW_DAYS * 86400000;
  const badge = isNew ? '<span class="event-new">New</span>' : '';
- const link = ev.url ? ' <a class="event-link" href="' + ev.url + '" target="_blank" rel="noopener">↗</a>' : '';
- const kind = ev.kind ? '<span class="event-kind">' + ev.kind + '</span>' : '';
+ const safeHref = safeUrl(ev.url);
+ const link = safeHref ? ' <a class="event-link" href="' + safeHref + '" target="_blank" rel="noopener">↗</a>' : '';
+ const kind = ev.kind ? '<span class="event-kind">' + esc(ev.kind) + '</span>' : '';
  // Throughout finds ride the shared gutter grid (run-label in the gutter);
  // calendar/hidden/archived rows stack, the when sitting inline above.
  const row = el('div', 'event-row' +
   (opts.grid ? ' lg' : '') +
   (opts.mode === 'archived' ? ' is-archived' : '') +
   (opts.onHide ? ' can-hide' : ''));
+ // Everything here comes from events.json, refreshed by an out-of-band agent
+ // rather than authored in this page's TRIP object, so it's escaped like any
+ // other untrusted text before it meets innerHTML.
  row.innerHTML =
-  '<div class="event-when mono">' + (ev.when || '') + '</div>' +
+  '<div class="event-when mono">' + esc(ev.when) + '</div>' +
   '<div class="event-body">' +
-   '<div class="event-head"><span class="event-title">' + (ev.title || '') + badge + link + '</span>' + kind + '</div>' +
-   (ev.venue ? '<div class="event-venue">' + ev.venue + '</div>' : '') +
-   (ev.blurb ? '<div class="event-blurb">' + ev.blurb + '</div>' : '') +
+   '<div class="event-head"><span class="event-title">' + esc(ev.title) + badge + link + '</span>' + kind + '</div>' +
+   (ev.venue ? '<div class="event-venue">' + esc(ev.venue) + '</div>' : '') +
+   (ev.blurb ? '<div class="event-blurb">' + esc(ev.blurb) + '</div>' : '') +
   '</div>';
  if (opts.control) row.querySelector('.event-body').appendChild(opts.control);
  if (opts.onHide) {
@@ -515,12 +542,6 @@ async function renderEvents() {
    return 'any day';
   }
 
-  // If a find is on exactly one eligible trip day, offer a one-tap "Add to it".
-  function naturalDay(ev) {
-   const elig = eligibleDays(ev);
-   return elig.length === 1 ? elig[0] : null;
-  }
-
   // A <select> of the eligible days only: pick to pin/move, "Remove" to unpin.
   function daySelect(ev, currentISO) {
    const key = eventKey(ev);
@@ -585,14 +606,15 @@ async function renderEvents() {
   // The echo of a pinned find inside its day chapter — deliberately lighter
   // than an itinerary stop, with its own mover/remover.
   function suggestionRow(ev, dayISO) {
-   const link = ev.url ? ' <a class="event-link" href="' + ev.url + '" target="_blank" rel="noopener">↗</a>' : '';
-   const kind = ev.kind ? '<span class="event-kind">' + ev.kind + '</span>' : '';
+   const safeHref = safeUrl(ev.url);
+   const link = safeHref ? ' <a class="event-link" href="' + safeHref + '" target="_blank" rel="noopener">↗</a>' : '';
+   const kind = ev.kind ? '<span class="event-kind">' + esc(ev.kind) + '</span>' : '';
    const row = el('div', 'day-suggestion lg');
    row.innerHTML =
-    '<div class="day-suggestion-when mono">' + (ev.when || 'All day') + '</div>' +
+    '<div class="day-suggestion-when mono">' + esc(ev.when || 'All day') + '</div>' +
     '<div class="day-suggestion-body">' +
-     '<div class="day-suggestion-head"><span class="day-suggestion-title">' + (ev.title || '') + link + '</span>' + kind + '</div>' +
-     (ev.venue ? '<div class="event-venue">' + ev.venue + '</div>' : '') +
+     '<div class="day-suggestion-head"><span class="day-suggestion-title">' + esc(ev.title) + link + '</span>' + kind + '</div>' +
+     (ev.venue ? '<div class="event-venue">' + esc(ev.venue) + '</div>' : '') +
     '</div>';
    row.querySelector('.day-suggestion-body').appendChild(daySelect(ev, dayISO));
    return row;
@@ -705,7 +727,7 @@ async function renderEvents() {
    chip.innerHTML = '<span class="dc-jump">What’s on</span>';
    chip.addEventListener('click', e => {
     e.preventDefault();
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToEl(section, false);
    });
    idx.appendChild(chip);
   }
@@ -727,15 +749,10 @@ function renderPocket() {
  });
 }
 
-const SANDBOX_KEY = 'sandbox_' + (TRIP.meta.slug || TRIP.meta.city.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+const SANDBOX_KEY = 'sandbox_' + TRIP_SLUG;
 
-function loadSandbox() {
- try { return JSON.parse(localStorage.getItem(SANDBOX_KEY)) || []; }
- catch (e) { return []; }
-}
-function saveSandbox(items) {
- try { localStorage.setItem(SANDBOX_KEY, JSON.stringify(items)); } catch (e) {}
-}
+function loadSandbox() { return lsGet(SANDBOX_KEY, []); }
+function saveSandbox(items) { lsSet(SANDBOX_KEY, items); }
 
 // Sandbox notes used to live under a per-page key, before the shared engine
 // namespaced them by slug. Anything still sitting under an old key is imported
@@ -777,10 +794,6 @@ function migrateLegacySandbox() {
 
 var SandboxUI = { open: null, openEdit: null, close: null };
 
-function sbEsc(s) {
- return String(s == null ? '' : s)
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
 function sbNormalizeUrl(u) {
  u = (u || '').trim();
  if (!u) return '';
@@ -894,10 +907,10 @@ function sbTitleHtml(it) {
  if (url) {
   var label = (it.name || '').trim();
   if (!label) label = sbDeriveName(url) || url;
-  return '<a class="sandbox-item-link" href="' + sbEsc(url) + '" target="_blank" rel="noopener noreferrer">' + sbEsc(label) + '</a>';
+  return '<a class="sandbox-item-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(label) + '</a>';
  }
  var t = (it.name || it.text || '').trim();
- return '<span class="sandbox-item-title">' + sbEsc(t) + '</span>';
+ return '<span class="sandbox-item-title">' + esc(t) + '</span>';
 }
 
 function renderSandbox() {
@@ -914,7 +927,7 @@ function renderSandbox() {
   var when = new Date(it.created).toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' });
   var note = (it.note || '').trim();
   var html = sbTitleHtml(it)
-   + (note ? '<div class="sandbox-item-note">' + sbEsc(note) + '</div>' : '')
+   + (note ? '<div class="sandbox-item-note">' + esc(note) + '</div>' : '')
    + '<div class="sandbox-item-date">' + when + '</div>';
   var body = el('div', 'sandbox-item-body', html);
   var actions = el('div', 'sandbox-item-actions');
@@ -1081,8 +1094,7 @@ function renderNowStrip(wrap, now) {
   '<span class="now-title">' + show.ev.title + '</span>' +
   '<span class="now-day">' + show.day.dow + '</span>';
  strip.addEventListener('click', function () {
-  const target = document.getElementById(show.day.id);
-  if (target) { target.classList.add('open'); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  scrollToEl(document.getElementById(show.day.id), true);
  });
  wrap.appendChild(strip);
  return true;
@@ -1101,8 +1113,7 @@ function renderChips(wrap) {
    '<span class="dc-hood">' + (day.hoodShort || '') + '</span>';
   chip.addEventListener('click', function (e) {
    e.preventDefault();
-   const target = document.getElementById(day.id);
-   if (target) { target.classList.add('open'); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+   scrollToEl(document.getElementById(day.id), true);
   });
   wrap.appendChild(chip);
  });
@@ -1113,8 +1124,7 @@ function renderChips(wrap) {
   chip.innerHTML = '<span class="dc-jump">' + pair[0] + '</span>';
   chip.addEventListener('click', function (e) {
    e.preventDefault();
-   const target = document.getElementById(pair[1]);
-   if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   scrollToEl(document.getElementById(pair[1]), false);
   });
   wrap.appendChild(chip);
  });
