@@ -143,11 +143,11 @@ function renderChapters() {
  const dataBits = [];
  if (day.hood) dataBits.push(`<span class="hood">${day.hood}</span>`);
  if (day.arc) dataBits.push(`<span class="arc">${day.arc}</span>`);
- dataBits.push(`<span class="day-weather" id="wx-${day.id}"></span>`);
  head.innerHTML =
   `<div class="daymark">`
   + `<span class="wd">${wdAbbr}</span>`
   + `<span class="dt">${day.date}</span>`
+  + `<span class="day-weather" id="wx-${day.id}"></span>`
   + `<span class="ord">Day ${dayIdx + 1} / ${dayTotal}</span>`
   + `</div>`
   + `<div class="chapter-content">`

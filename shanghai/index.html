@@ -136,7 +136,6 @@ const TRIP = {
     { label: "Wang Bao He, whole hairy crab", sub: "Mon 26 Oct · 6:30pm · concierge to confirm they will seat one, and the per-crab price", state: "open", url: "https://maps.apple.com/?q=603+Fuzhou+Road+Shanghai" },
     { label: "Cejerdary, crab roe noodles", sub: "Sat 31 Oct · 6:30pm · walk-in queue after 6, or ask concierge to call ahead", state: "open" },
     { label: "Shanghai Museum East, timed entry", sub: "Thu 29 Oct · book via WeChat mini-program a day ahead, or ask concierge", state: "open" },
-    { label: "Shanghai Mama, private cooking class", sub: "Thu 29 Oct · 6:00pm · solo booking, confirm 3+ weeks ahead", state: "open", url: "https://www.tripadvisor.com/AttractionProductReview-g308272-d15658232-Private_Home_Cooking_Class_with_Shanghai_Mama-Shanghai.html" },
     { label: "Capsule Shanghai, studio-visit request", sub: "Tue 27 Oct · write 3 weeks ahead, name two artists", state: "open", url: "mailto:info@capsuleshanghai.com" },
     { label: "Rockbund Art Museum, timed entry if required", sub: "Fri 30 Oct · check nearer the date", state: "open", url: "https://www.rockbundartmuseum.org" }
   ],
@@ -376,10 +375,7 @@ const TRIP = {
             label: "About the shop",
             body: `<p>Rongjia is the casual sibling of Xin Rong Ji, the one-Michelin-star Taizhou seafood house, and draws its yellow croaker from the same supplier network, which is the reason a shop this modest can serve fish this good. The signature bowl comes two ways: a limited version using small wild croaker from the East China Sea, more expensive and more delicately flavoured, and a standard version using farmed croaker from Dachen Island, which is the one most people order and is entirely satisfying on its own. The broth is a thick, milky fish stock, finished with a sheet of egg and a few pickled vegetables on the side. The room is clean and a little more formal-looking than the week's other counters, but the seating includes small two-tops that work fine solo, and it's a single bowl ordered per person, not a shared-plate kitchen.</p>`
           }
-        },
-        { time: "8:30pm", title: "Black Note, if you want it", kind: "rest",
-          note: "Changhua Rd, DiDi ~10 min north. A jazz loft above an unrelated bar, turquoise door on the right, very dark, real musicians, goes late. Noted in April and skipped. Optional, and the only live music on this itinerary.",
-          map: "https://maps.apple.com/?q=Black+Note+Changhua+Road+Shanghai" }
+        }
       ]
     },
     {
@@ -445,12 +441,12 @@ const TRIP = {
     {
       id: "d6", iso: "2026-10-29", hood: 'Pudong', hoodShort: 'Pudong', dow: "Thursday", date: "29 October", chapter: "VI",
       arc: "A slower day",
-      title: "Someone Else Doing the Cooking",
+      title: "The Kitchen You Can't Book",
       teaser: "Shanghainese home cooking is a genre almost impossible to eat in a restaurant.",
       essay: `<p>Shanghainese home cooking is a genre almost impossible to eat in a restaurant.</p>
-<p>Restaurants require dishes that hold at temperature and travel from the pass to the table, which optimises out most of the classic ben bang preparations: the slow-simmered pork belly, the drunken chicken steeped overnight, the river shrimp stir-fried in ninety seconds and served immediately. What people actually cook at home requires a home, and someone to cook it, and a small enough gathering that the timing can be controlled by one person.</p>
-<p>There is a version of this sold to visitors as a private chef, or a dinner in a local family's apartment, and it mostly does not exist as an off-the-shelf product in Shanghai, whatever the listings imply. What does exist is a cooking class held in an actual apartment rather than a commercial teaching kitchen, and that is a substitution, and it should be named as one rather than dressed up. It is not a home-cooked dinner arranged for you. It is a few hours in someone's kitchen with your hands in the dough. As it happens the substitution suits a man travelling alone better than the thing it substitutes for, because there is something to do with your hands and no table of strangers to negotiate.</p>
-<p>The rest of the day stays light on purpose. A late-morning museum, a long lunch break, nothing scheduled between two and five. After five days of walking, the trip can afford an afternoon that goes nowhere at all.</p>`,
+<p>Restaurants require dishes that hold at temperature and travel from the pass to the table, which optimises out most of the classic ben bang preparations: the slow-simmered pork belly, the drunken chicken steeped overnight, the river shrimp stir-fried in ninety seconds and served immediately. What people actually cook at home requires a home, and someone to cook it, and a small enough gathering that one person can control the timing. There is a version of this sold to visitors, the private chef, the dinner in a local family's apartment, and it mostly does not exist as an off-the-shelf product in Shanghai, whatever the listings imply.</p>
+<p>The closest a stranger gets is a room like Lan Xin, which is tomorrow's dinner rather than tonight's: ben bang cooked to order in a space barely larger than the kitchen it comes out of. It is a restaurant, which makes it already a compromise with the thing it imitates, but it is the honest end of the compromise, and worth more than any staged version of the real thing. Naming the gap is more useful than pretending it can be closed to a schedule.</p>
+<p>Which leaves the evening open, and the day light around it on purpose: a late-morning museum, a long lunch, nothing between two and five, and nothing after. After five days on foot, the trip can afford one night that goes nowhere and asks for nothing, the kind that does not photograph and is not meant to. Tomorrow ends at Lan Xin. Tonight is the chair by the window and an early light off.</p>`,
       events: [
         { time: "9:30am", title: "In the room, no alarm", kind: "rest",
           note: "Coffee, whatever's in the kitchen, taken slowly. This is the only unstructured morning in the week and it is deliberate; the museum can wait until eleven." },
@@ -464,17 +460,11 @@ const TRIP = {
           }
         },
         { time: "1:30pm", title: "Lunch near the museum", kind: "food",
-          note: "Counters in the Century Ave underground mall, five minutes' walk. This is a mall lunch and there is no way around it: Pudong does not do the thing the rest of this week does, and pretending otherwise would mean a forty-minute round trip for a bowl of noodles. Eat lightly. Dinner is a class." },
+          note: "Counters in the Century Ave underground mall, five minutes' walk. This is a mall lunch and there is no way around it: Pudong does not do the thing the rest of this week does, and pretending otherwise would mean a forty-minute round trip for a bowl of noodles. Eat properly; nothing tonight is waiting on your appetite." },
         { time: "3:00pm", title: "Open afternoon", kind: "rest",
-          note: "Nothing planned. Back to the hotel by DiDi, ~30 min. Rest before this evening." },
-        { time: "6:00pm", title: "Shanghai Mama, private cooking class", kind: "food", state: "open",
-          url: "https://www.tripadvisor.com/AttractionProductReview-g308272-d15658232-Private_Home_Cooking_Class_with_Shanghai_Mama-Shanghai.html",
-          note: "In a family apartment, French Concession area, exact address sent after booking. DiDi from the hotel, ~20 min. This is dinner as well as the activity.",
-          expand: {
-            label: "The practical side",
-            body: `<p>It typically includes a wet-market stop, a hands-on dumpling-folding session, and a shared meal of what gets made. Solo bookings are accepted, but some operators ask you to confirm ahead if you're travelling alone rather than as a pair, since the class is priced and staffed per group. Book at least three weeks out and confirm the solo rate at the same time rather than discovering it at the door. Once you have landed, the concierge can re-confirm by phone, which local operators often prefer to an email from a foreign address.</p>`
-          }
-        }
+          note: "Nothing planned. Back to the hotel by DiDi, ~30 min. The afternoon and the evening are both yours." },
+        { time: "6:30pm", title: "A quiet evening in", kind: "rest",
+          note: "Delivery through Ele.me or Meituan, or the nearest counter, eaten in the room. The one home-style dinner worth sitting down for is Lan Xin tomorrow; tonight is for resting the legs before the back half of the week." }
       ]
     },
 
@@ -618,7 +608,6 @@ const TRIP = {
     { group: "Somewhere to sit in the evening", items: [
       ["Bar Leone", "527 Middle Fuxing Rd. Hong Kong's aperitivo bar, now here. Simple drinks done exactly. A man alone at the bar is the most ordinary thing in the room.", "https://maps.apple.com/?q=527+Middle+Fuxing+Road+Shanghai"],
       ["Long Bar, Waldorf Astoria", "2 The Bund. The Shanghai Club's 34-metre bar, rebuilt. Strong martinis, 1920s banking-hall proportions, and a legitimate place to read for two hours.", "https://maps.apple.com/?q=Waldorf+Astoria+Shanghai+on+the+Bund"],
-      ["Black Note", "Changhua Rd. Jazz loft above an unrelated bar, turquoise door on the right. Very dark, very good, goes late.", "https://maps.apple.com/?q=Black+Note+Changhua+Road+Shanghai"],
       ["JZ Club", "Hengshan Rd. Shanghai's serious jazz institution. Intimate, real musicians, real crowd, cover at the door.", "https://maps.apple.com/?q=JZ+Club+Hengshan+Road+Shanghai"],
       ["Root Down", "145 Nanchang Rd. Japanese-style listening bar. Absinthe cocktails, old-school funk on the decks.", "https://maps.apple.com/?q=145+Nanchang+Road+Shanghai"],
       ["Paal", "94 Nanchang Rd. A cocktail bar that feels like a friend's dining room, built around one communal table. Five minutes from Root Down.", "https://maps.apple.com/?q=94+Nanchang+Road+Shanghai"]
