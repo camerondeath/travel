@@ -16,14 +16,18 @@
     },
     {
       "title": "Reinventing Landscape",
-      "when": "during trip",
+      "when": "closed 18 Oct, six days before you land",
       "sortDate": "2026-10-25",
+      "end": "2026-10-18",
       "venue": "West Bund Museum",
       "kind": "art",
       "blurb": "Volume IV of the museum's five-year Pompidou collaboration, around 70 works from the French collection. Three minutes' walk from the Long Museum and Tank Shanghai, both already on the Sunday. Closed Mondays.",
       "closed": ["Mon"],
       "url": "https://www.smartshanghai.com/event/79451",
-      "added": "2026-07-19"
+      "added": "2026-07-19",
+      "archived": true,
+      "archivedOn": "2026-07-26",
+      "archiveNote": "Run confirmed as 28 Apr 2025 – 18 Oct 2026 against the museum and ticketing listings. It was logged with no end date, so it rendered as running throughout the trip when in fact it shuts six days before arrival. Whatever replaces it in Gallery 1 & 2 is worth a look closer to the date."
     },
     {
       "title": "Sleep No More",
