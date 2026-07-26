@@ -386,6 +386,12 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; background: var(--accent); color: var(--ground); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.2); transition: transform 0.12s; }
 .fab svg { pointer-events: none; }
 .fab:hover { transform: scale(1.06); }
+/* Tucked away while the reader is scrolling down through prose -- see
+   initSandboxCapture in site.js. Restored on any upward scroll or pause. */
+.fab { transition: transform 0.18s ease, opacity 0.18s ease; }
+.fab-tucked { transform: translateY(calc(100% + 1.4rem)); opacity: 0; pointer-events: none; }
+.fab-tucked:hover { transform: translateY(calc(100% + 1.4rem)); }
+@media (prefers-reduced-motion: reduce) { .fab { transition: none; } }
 .sandbox-capture { position: fixed; bottom: 4.6rem; right: 1.4rem; z-index: 49; width: min(320px, calc(100vw - 2.8rem)); background: var(--ground); border: 1.5px solid var(--ink); box-shadow: 0 6px 24px rgba(0,0,0,0.16); padding: 0.7rem; display: none; }
 .sandbox-capture.open { display: block; }
 @media (max-width: 640px) {

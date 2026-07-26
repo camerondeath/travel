@@ -1014,6 +1014,22 @@ function initSandboxCapture() {
  document.addEventListener('click', function (e) {
   if (box.classList.contains('open') && !box.contains(e.target) && e.target !== fab && !fab.contains(e.target)) { close(); }
  });
+
+ // The pages are mostly long-form prose, and a fixed button in the bottom
+ // corner sits on top of a word or two of every screen on a narrow viewport.
+ // Reading scrolls down, so hide it on the way down and bring it back the
+ // moment the reader scrolls up (or stops), which is when they'd reach for it.
+ var lastY = window.scrollY;
+ var idle;
+ window.addEventListener('scroll', function () {
+  if (box.classList.contains('open')) return;
+  var y = window.scrollY;
+  if (y > lastY && y > 240) { fab.classList.add('fab-tucked'); }
+  else if (y < lastY) { fab.classList.remove('fab-tucked'); }
+  lastY = y;
+  clearTimeout(idle);
+  idle = setTimeout(function () { fab.classList.remove('fab-tucked'); }, 900);
+ }, { passive: true });
 }
 
 // --- Time helpers (used by the Now strip) ---
