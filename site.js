@@ -581,6 +581,17 @@ async function renderEvents() {
   // pinned, a one-tap add for single-day finds, a picker otherwise.
   function pinControl(ev) {
    if (!tripDayList.length) return null;
+   // Some finds are already in the itinerary proper (the feed keeps scouring
+   // whether or not a thing has been planned, so the two overlap). Say so,
+   // rather than offering to add what is already on the page.
+   if (ev.planned) {
+    const d = tripDayList.filter(x => x.id === ev.planned || x.iso === ev.planned)[0];
+    if (d) {
+     const w = el('div', 'day-pin');
+     w.appendChild(el('span', 'day-pin-on', 'Already on ' + dayLabel(d.iso)));
+     return w;
+    }
+   }
    const key = eventKey(ev);
    const currentISO = state.pins[key];
    const w = el('div', 'day-pin');
