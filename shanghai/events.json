@@ -1,5 +1,5 @@
 {
-  "updated": "24 Jul 2026",
+  "updated": "01 Aug 2026",
   "note": "Dated events during 23 Oct – 1 Nov 2026, pulled from multiple sources (SmartShanghai, Time Out, venue sites, ticketing/gig listings). Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Optional `weekdays` (e.g. [\"Wed\",\"Sat\",\"Sun\"]) for recurring patterns, `dates` (ISO list) for specific occurrences, and `closed` (weekday list, e.g. [\"Mon\"]) restrict which trip days the \"Add to a day\" picker offers — so a Wednesday-only night can't be pinned to a Tuesday. Absent all three, eligibility is the run intersected with the trip window. Optional `planned` (a day id like \"d7\") marks a find that is already an itinerary stop on that day: the page then shows \"Already on <day>\" in place of the picker, since there is nothing to add. Git history holds every past version of this file.",
   "events": [
     {
@@ -117,7 +117,10 @@
       "blurb": "China's first stand-up room, English and Chinese acts on rotation, with free open mics on the quieter nights — email a day ahead to get on the list, or just watch. Small, solo-friendly, and the most reliable English-language laugh in town.",
       "weekdays": ["Wed", "Thu", "Fri", "Sat", "Sun"],
       "url": "https://www.smartshanghai.com/venue/9057/the_kung_fu_komedy_club",
-      "added": "2026-07-24"
+      "added": "2026-07-24",
+      "archived": true,
+      "archivedOn": "2026-08-01",
+      "archiveNote": "The venue's own SmartShanghai listing now reads \"This venue has closed.\" No replacement English-language stand-up room has been confirmed yet — Comedy UN (a Kung Fu Komedy alum's newer club) turned up several conflicting/stale addresses across sources, so nothing solid enough to add in its place this run."
     },
     {
       "title": "JZ Club",
@@ -128,6 +131,30 @@
       "blurb": "The city's serious jazz room, two sets most nights, touring names dropped in among the residents. No language barrier and no need to give up a whole evening — a late set after dinner does it.",
       "url": "https://www.smartshanghai.com/venue/31267/jz_club",
       "added": "2026-07-24"
+    },
+    {
+      "title": "Tosca — Teatro La Fenice",
+      "when": "evening",
+      "sortDate": "2026-10-24",
+      "start": "2026-10-24",
+      "end": "2026-10-24",
+      "venue": "Shanghai Grand Opera House · Harmony Hall",
+      "kind": "music",
+      "blurb": "Teatro La Fenice's own production, its Asian premiere, in the new opera house's 2,000-seat Harmony Hall — part of the venue's opening season, on your Saturday. Sung in Italian; the other of its two Shanghai dates is the 22nd, before you land.",
+      "url": "https://operawire.com/shanghai-grand-opera-house-opens-its-doors-to-a-western-dominated-season/",
+      "added": "2026-08-01"
+    },
+    {
+      "title": "Aida — Mariinsky Theatre",
+      "when": "Fri–Sun",
+      "sortDate": "2026-10-30",
+      "start": "2026-10-30",
+      "end": "2026-11-01",
+      "venue": "Shanghai Grand Opera House · Harmony Hall",
+      "kind": "music",
+      "blurb": "Valery Gergiev conducts the Mariinsky's own production — nearly 300 cast and crew touring in for the new house's opening season, running your last Friday through the day you fly out. Sung in Italian.",
+      "url": "https://operawire.com/shanghai-grand-opera-house-opens-its-doors-to-a-western-dominated-season/",
+      "added": "2026-08-01"
     }
   ]
 }
