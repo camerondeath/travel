@@ -1,5 +1,5 @@
 {
-  "updated": "01 Aug 2026",
+  "updated": "31 Aug 2026",
   "note": "Dated events during 23 Oct – 1 Nov 2026, pulled from multiple sources (SmartShanghai, Time Out, venue sites, ticketing/gig listings). Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Optional `weekdays` (e.g. [\"Wed\",\"Sat\",\"Sun\"]) for recurring patterns, `dates` (ISO list) for specific occurrences, and `closed` (weekday list, e.g. [\"Mon\"]) restrict which trip days the \"Add to a day\" picker offers — so a Wednesday-only night can't be pinned to a Tuesday. Absent all three, eligibility is the run intersected with the trip window. Optional `planned` (a day id like \"d7\") marks a find that is already an itinerary stop on that day: the page then shows \"Already on <day>\" in place of the picker, since there is nothing to add. Git history holds every past version of this file.",
   "events": [
     {
@@ -12,7 +12,21 @@
       "blurb": "Nearly 3,000 artefacts from Mexico, Peru and China, tracing the Olmec, Maya and Inca alongside their Shang and Zhou counterparts. Walking distance from the hotel, closed Mondays; timed tickets via WeChat.",
       "closed": ["Mon"],
       "url": "https://www.smartshanghai.com/event/on-top-of-the-world-tree-ancient-civilizations-of-the-americas",
-      "added": "2026-07-19"
+      "added": "2026-07-19",
+      "archived": true,
+      "archivedOn": "2026-08-31",
+      "archiveNote": "End date was off by a year: official sources (Shanghai Museum, Xinhua, PR Newswire) confirm the run is 9 Jul 2026 – 14 Nov 2027, a 16-month show, not closing 14 Nov 2026. Replaced below with a corrected entry — it's open for the whole trip either way."
+    },
+    {
+      "title": "On Top of the World Tree",
+      "when": "on throughout your stay",
+      "sortDate": "2026-10-24",
+      "venue": "Shanghai Museum, People's Square",
+      "kind": "art",
+      "blurb": "Nearly 3,000 artefacts from Mexico, Peru and China, tracing the Olmec, Maya and Inca alongside their Shang and Zhou counterparts. Walking distance from the hotel, closed Mondays; timed tickets via WeChat. It's a 16-month run through Nov 2027, so it covers the entire trip.",
+      "closed": ["Mon"],
+      "url": "https://www.smartshanghai.com/event/on-top-of-the-world-tree-ancient-civilizations-of-the-americas",
+      "added": "2026-08-31"
     },
     {
       "title": "Reinventing Landscape",
@@ -155,6 +169,54 @@
       "blurb": "Valery Gergiev conducts the Mariinsky's own production — nearly 300 cast and crew touring in for the new house's opening season, running your last Friday through the day you fly out. Sung in Italian.",
       "url": "https://operawire.com/shanghai-grand-opera-house-opens-its-doors-to-a-western-dominated-season/",
       "added": "2026-08-01"
+    },
+    {
+      "title": "Shostakovich Symphony Cycle — Mariinsky Orchestra",
+      "when": "23–28 Oct, evenings",
+      "sortDate": "2026-10-23",
+      "start": "2026-10-23",
+      "end": "2026-10-28",
+      "venue": "Shanghai Grand Opera House",
+      "kind": "music",
+      "blurb": "Valery Gergiev leads the Mariinsky Orchestra through all fifteen Shostakovich symphonies over six nights, marking the composer's 120th birthday and part of the new opera house's opening season alongside Tosca and Aida down the hall. Purely orchestral — nothing to translate.",
+      "url": "https://english.shanghai.gov.cn/en-Latest-WhatsNew/20260708/96b17cf9f65e4854bd34b0309d3b884c.html",
+      "added": "2026-08-31"
+    },
+    {
+      "title": "Ballet Essentials — Moscow Grand Theatre Ballet",
+      "when": "matinee or evening",
+      "sortDate": "2026-10-24",
+      "start": "2026-10-24",
+      "end": "2026-10-25",
+      "venue": "Shanghai Culture Square",
+      "kind": "theatre",
+      "blurb": "Two performances of highlights from the touring company's ballet repertoire; one date carries an afternoon matinee slot, though the venue listing doesn't specify which. Visual storytelling, nothing to translate.",
+      "url": "https://www.shcstheatre.com/Program/ProgramDetails.aspx?headtype=YanChu&ARTICLE_ID=42036&id=42036",
+      "added": "2026-08-31"
+    },
+    {
+      "title": "Andrea Bocelli — Romanza 30th Anniversary Tour",
+      "when": "Halloween evening",
+      "sortDate": "2026-10-31",
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "venue": "Mercedes-Benz Arena",
+      "kind": "music",
+      "blurb": "Bocelli's 30th-anniversary tour lands on Halloween night — the arena option if Stratovarius at MAO Livehouse isn't your thing. Sung mostly in Italian; a concert, not a conversation, so language isn't really the point either way.",
+      "url": "https://asia.aegpresents.com/andrea-bocelli-2026-romanza-30th-anniversary/",
+      "added": "2026-08-31"
+    },
+    {
+      "title": "JOYCE — \"Talent for Peach Blossoms\" Tour",
+      "when": "evening",
+      "sortDate": "2026-10-24",
+      "start": "2026-10-24",
+      "end": "2026-10-24",
+      "venue": "MAO Livehouse",
+      "kind": "music",
+      "blurb": "Taiwanese singer-songwriter JOYCE plays a solo date on her 2026 tour, the same evening as Tosca across town. Mandarin-language pop — fine as a gig, but don't expect to follow the lyrics.",
+      "url": "https://www.showstart.com/event/303565",
+      "added": "2026-08-31"
     }
   ]
 }
