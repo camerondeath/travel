@@ -1,6 +1,6 @@
 // Shanghai itinerary — offline service worker
 // Bump CACHE_VERSION to force clients to refetch the shell on next load.
-const CACHE_VERSION = 'sh26-v27';
+const CACHE_VERSION = 'sh26-v29';
 const SHELL = './';               // the itinerary page (index.html)
 const WEATHER_HOST = 'api.open-meteo.com';
 // Fonts are served from this repo now (Google Fonts is blocked in mainland
@@ -11,7 +11,7 @@ const FONTS = ['../fonts/bricolage.woff2', '../fonts/plex-mono.woff2',
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then(cache => cache.addAll([SHELL, './index.html', './manifest.json', './icon-192.png', './icon-512.png', './events.json', '../site.css', '../site.js'].concat(FONTS)))
+    caches.open(CACHE_VERSION).then(cache => cache.addAll([SHELL, './index.html', './manifest.json', './icon-192.png', './icon-512.png', './events.json', '../site.css', '../site.js', '../gate.js'].concat(FONTS)))
       .catch(() => {})
   );
   self.skipWaiting();

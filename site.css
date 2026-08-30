@@ -385,6 +385,19 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .sandbox-item-title { font-family: var(--sans); font-size: 0.9rem; color: var(--ink-2); line-height: 1.5; }
 .sandbox-item-note { font-family: var(--sans); font-size: 0.8rem; color: var(--ink-3); line-height: 1.5; margin-top: 0.15rem; }
 
+/* ── GATE ─────────────────────────────────────────────────────
+   Deliberately quiet: the same specimen voice as the mastheads, nothing that
+   advertises what is behind it. Print drops it along with the other chrome. */
+.gate { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; background: var(--ground); padding: var(--pad); }
+.gate-card { width: min(320px, 100%); border-top: 4px solid var(--ink); padding-top: 1.2rem; }
+.gate-mark { font-family: var(--display); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; text-transform: uppercase; color: var(--ink); margin-bottom: 1.6rem; }
+.gate-label { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
+.gate-input { width: 100%; box-sizing: border-box; font-family: var(--mono); font-size: 0.95rem; color: var(--ink); background: transparent; border: none; border-bottom: 2px solid var(--ink); padding: 0.45rem 0.1rem; outline: none; }
+.gate-input:focus-visible { border-bottom-color: var(--accent); outline: none; }
+.gate-btn { margin-top: 1.2rem; width: 100%; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ground); background: var(--accent); border: none; padding: 0.7rem; cursor: pointer; }
+.gate-btn:hover { background: var(--accent-2); }
+.gate-msg { min-height: 1.2rem; margin-top: 0.7rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.02em; color: var(--accent); }
+
 /* ── FAB / CAPTURE ────────────────────────────────────────── */
 .fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; background: var(--accent); color: var(--ground); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.2); transition: transform 0.12s; }
 .fab svg { pointer-events: none; }
@@ -437,6 +450,7 @@ a:focus-visible, button:focus-visible, .day-chip:focus-visible, .day-pin-control
  @page { margin: 16mm; }
  html { font-size: 11pt; }
  body { background: #fff; color: #000; }
+ .gate,
  .fab, .sandbox-capture, .day-index, .day-controls, .chapter-toggle,
  .sh26-panel-btn, .essay-continue, .essay-collapse, .mast-back,
  #site-sandbox, .sandbox-toolbar, .event-hide, .event-keep,
