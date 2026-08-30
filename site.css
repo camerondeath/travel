@@ -40,15 +40,15 @@
  --ground-3: #e0e1dd;
  --ink: #17181a;
  --ink-2: #45484a;
- --ink-3: #797c7c;
+ --ink-3: #696c6c;
  /* Signal: persimmon — the low autumn sun on the Huangpu. One token per trip. */
- --accent: #b8492c;
+ --accent: #b6482c;
  --accent-2: #98371d;
  --accent-lt: #f6e7e0;
  --rule: #d4d5d0;
  --rule-2: #c3c4bf;
  --good: #4d6152;   /* booked / confirmed — a calm slate-green, kept quiet */
- --open: #b8492c;   /* to book — the signal draws the eye to what needs action */
+ --open: #b6482c;   /* to book — the signal draws the eye to what needs action */
  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
  --display: 'Bricolage', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
  --sans: 'Bricolage', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
@@ -202,6 +202,9 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .day-weather-temps { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; }
 .day-weather-temps .hi { color: var(--ink-2); }
 .wx-avg { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); opacity: 0.8; }
+/* Sunset, computed per day. Sits under the temperatures in the data gutter,
+   in the same mono voice as every other true number on the page. */
+.day-sun { display: block; margin-top: 0.28rem; font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 .chapter:not(.open) .essay-teaser { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 
@@ -407,7 +410,11 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 
 /* ── FOOTER ───────────────────────────────────────────────── */
 footer { margin-top: 2.4rem; border-top: 2px solid var(--ink); padding: 0.85rem 0 5rem; font-family: var(--mono); font-size: 0.6rem; color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; }
-a:focus-visible, button:focus-visible, .day-chip:focus-visible, .day-pin-control:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Available to assistive tech and reader modes, out of the visual design.
+   Used for the per-chapter headings, whose visible counterparts sit inside a
+   role=button and so cannot carry heading semantics themselves. */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+a:focus-visible, button:focus-visible, .day-chip:focus-visible, .day-pin-control:focus-visible, select:focus-visible, .chapter-head:focus-visible, [role="button"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* ── RESPONSIVE ───────────────────────────────────────────── */
 @media (max-width: 640px) {

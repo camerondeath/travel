@@ -81,7 +81,7 @@ pre.box {
 
 <header class="masthead">
  <a class="mast-back" href="../"><span class="mb-arrow">&larr;</span> Trip notes</a>
- <div class="mast-city">New <em>trip</em></div>
+ <h1 class="mast-city">New <em>trip</em></h1>
 </header>
 
 <p class="form-intro">Search for the cities and pick the dates. Everything else — country, timezone, coordinates, folder name, the hub card — is worked out for you. This builds a ready-to-edit trip page on the shared design system, plus the one line to paste into the hub.</p>
@@ -350,7 +350,7 @@ function buildTripFile(v) {
 '',
 '<header class="masthead">',
 ' <a class="mast-back" href="../"><span class="mb-arrow">&larr;</span> Trip notes</a>',
-' <div class="mast-city" id="m-title"></div>',
+' <h1 class="mast-city" id="m-title"></h1>',
 ' <div class="mast-bar">',
 ' <span class="mast-dates" id="m-dates"></span>',
 ' <span class="mast-status" id="m-status"></span>',
@@ -368,18 +368,18 @@ function buildTripFile(v) {
 '<section class="bookings-section" id="bookings-section"></section>',
 '',
 '<section class="sh26-section" id="site-events">',
-' <div class="section-label">What\'s on</div>',
+' <h2 class="section-label">What\'s on</h2>',
 ' <div class="section-sub">Dated events falling in the trip window. Add an events.json beside this file to fill it; it hides itself until then.</div>',
 ' <div id="site-events-wrap"></div>',
 '</section>',
 '',
 '<section class="sh26-section" id="site-pocket">',
-' <div class="section-label">Back pocket</div>',
+' <h2 class="section-label">Back pocket</h2>',
 ' <div id="site-pocket-wrap"></div>',
 '</section>',
 '',
 '<section class="sh26-section" id="site-sandbox">',
-' <div class="section-label">Sandbox</div>',
+' <h2 class="section-label">Sandbox</h2>',
 ' <div class="section-sub">A scratchpad for things spotted along the way. Hit the + button, bottom right, drop a line, review later. Saved in this browser only, nothing leaves the page.</div>',
 ' <div id="site-sandbox-wrap"></div>',
 '</section>',

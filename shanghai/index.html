@@ -22,7 +22,7 @@
 
 <header class="masthead">
  <a class="mast-back" href="../"><span class="mb-arrow">←</span> Trip notes</a>
- <div class="mast-city" id="m-title"></div>
+ <h1 class="mast-city" id="m-title"></h1>
  <div class="mast-bar">
  <span class="mast-dates" id="m-dates"></span>
  <span class="mast-status" id="m-status"></span>
@@ -40,18 +40,18 @@
 <section class="bookings-section" id="bookings-section"></section>
 
 <section class="sh26-section" id="site-events">
- <div class="section-label">What's on</div>
+ <h2 class="section-label">What's on</h2>
  <div class="section-sub">Everything found so far for the trip window, from several listings sources, refreshed weekly. Long runs sit up top; one-night things drop into the day they happen. The list is meant to be pruned — hide (×) whatever doesn't appeal.</div>
  <div id="site-events-wrap"></div>
 </section>
 
 <section class="sh26-section" id="site-pocket">
- <div class="section-label">Back pocket</div>
+ <h2 class="section-label">Back pocket</h2>
  <div id="site-pocket-wrap"></div>
 </section>
 
 <section class="sh26-section" id="site-sandbox">
- <div class="section-label">Sandbox</div>
+ <h2 class="section-label">Sandbox</h2>
  <div class="section-sub">A scratchpad for things spotted along the way. Hit the + button, bottom right, drop a line, review later. Saved in this browser only, nothing leaves the page.</div>
  <div id="site-sandbox-wrap"></div>
 </section>
@@ -351,7 +351,7 @@ const TRIP = {
           }
         },
         { time: "12:15pm", title: "The walk to lunch", kind: "explore",
-          note: "On foot, ~20 min northwest: Anfu, across Wulumuqi, onto Changshu. A DiDi is about seven if the morning has run long, though you come out of Capsule onto Anfu Road anyway, so this is a walk rather than a stop. It deliberately does not go to the Wukang Mansion corner, which is four minutes the other way and is the single most photographed junction in the old Concession, which is reason enough on this trip.",
+          note: "On foot, ~20 min northwest: Anfu, across Wulumuqi, onto Changshu. A DiDi is about seven if the morning has run long, though you come out of Capsule onto Anfu Road anyway, so this is a walk rather than a stop. Wuzhong Market sits on the Wulumuqi crossing at number 318, two floors of vegetables and fish and flowers; ten minutes inside costs nothing and it is the only market this week puts in front of you. It deliberately does not go to the Wukang Mansion corner, which is four minutes the other way and is the single most photographed junction in the old Concession, which is reason enough on this trip.",
           map: "https://maps.apple.com/?q=Anfu+Road+Changshu+Road+Shanghai" },
         { time: "12:45pm", title: "Xibo", kind: "food",
           note: "83 Changshu Rd, Jing'an. Lunch 12:00–2:30, dinner 6:00–11:00, daily. Xinjiang: cumin lamb over charcoal, hand-torn flatbread, lamb chops, the fried pie stuffed with lamb and onion, marinated wild chives. Salty milk tea if it is on. The owner is from the region. This is the one meal of the week that is not Jiangnan, and after four days of wheat and river fish it is the only correction on the page.",
@@ -606,6 +606,7 @@ const TRIP = {
       ["Space 185, Bund Art Center", "185 Sichuan Middle Rd. Free. Renaissance-style 1903 building, international and Chinese contemporary.", "https://maps.apple.com/?q=185+Sichuan+Middle+Road+Shanghai"],
       ["Shanghai Museum, People's Square", "201 Renmin Ave. Closed Mondays. Bronze and ceramic galleries alone are a half-day. Free timed tickets via WeChat, released 12 days out at 12:10pm sharp and gone in twenty minutes.", "https://www.shanghaimuseum.net/en/"],
       ["Sinan Books", "517 Fuxing Middle Rd. Bookshop in a heritage villa. An hour, a coffee, a chair by the window.", "https://maps.apple.com/?q=517+Fuxing+Middle+Road+Shanghai"],
+      ["Wuzhong Market", "318 Wulumuqi Middle Rd, Xuhui. Open 7am to 6:30pm, two floors, fifty-odd stalls: vegetables, fish, meat, flowers, and a few counters cooking at the back. Be straight about what it is — it was renovated in 2019 and is the tidied version, not an unreconstructed one. It is also the one you will actually walk past, on Tuesday's way to lunch, and it opens at seven if you want it before the day starts.", "https://maps.apple.com/?q=318+Wulumuqi+Middle+Road+Shanghai"],
       ["The Bund Sightseeing Tunnel", "Genuine mid-1990s municipal camp. Six minutes of animated lights under the Huangpu. Absurd. Recommended.", "https://maps.apple.com/?q=Bund+Sightseeing+Tunnel+Shanghai"]
     ]},
     { group: "Practical, near the hotel", items: [

@@ -170,6 +170,12 @@ function renderChapters() {
  }
  if (isToday) ch.classList.add('open');
 
+ // Real document outline. The visible title sits inside the role=button head,
+ // where its heading semantics would be stripped, so the chapter carries its
+ // own heading for assistive tech and reader modes.
+ const srHead = el('h2', 'sr-only', [day.title, day.dow, day.date].filter(Boolean).join(' \u00b7 '));
+ ch.appendChild(srHead);
+
  // Weekday leads (it is the useful fact); date and ordinal are whispers below.
  const wdAbbr = (day.dow || '').slice(0, 3);
  const head = el('div', 'chapter-head lg');
@@ -178,12 +184,16 @@ function renderChapters() {
  if (day.arc) dataBits.push(`<span class="arc">${day.arc}</span>`);
  // Seasonal average, shown until the live forecast comes into range (fetchWeather).
  const cn = TRIP.meta.climate && TRIP.meta.climate.byId && TRIP.meta.climate.byId[day.id];
+ // Sunset, computed per day — dark by ~5:15 this week, and several days
+ // are planned backwards from it.
+ const sunset = day.iso ? sunTime(day.iso, false) : null;
  const wxInit = cn ? `<span class="day-weather-temps"><span class="hi">${cn[0]}°</span> / ${cn[1]}°</span><span class="wx-avg">avg</span>` : '';
  head.innerHTML =
   `<div class="daymark">`
   + `<span class="wd">${wdAbbr}</span>`
   + `<span class="dt">${day.date}</span>`
   + `<span class="day-weather" id="wx-${day.id}">${wxInit}</span>`
+  + (sunset ? `<span class="day-sun" title="Sunset in ${TRIP.meta.city}">\u2193 ${sunset}</span>` : '')
   + `<span class="ord">Day ${dayIdx + 1} / ${dayTotal}</span>`
   + `</div>`
   + `<div class="chapter-content">`
@@ -314,7 +324,7 @@ function renderBookings() {
 
  // Replace the static scaffold (two labelled empty lists) with one register.
  section.innerHTML = '';
- section.appendChild(el('div', 'section-label', 'Bookings'));
+ section.appendChild(el('h2', 'section-label', 'Bookings'));
 
  const reg = el('div', 'register');
  const prog = el('div', 'ledger-progress');
@@ -397,6 +407,55 @@ const EVENTS_PINNED_KEY = 'events_pinned_' + TRIP_SLUG;
 function loadPinned() { return lsGet(EVENTS_PINNED_KEY, {}); }
 function savePinned(map) { lsSet(EVENTS_PINNED_KEY, map); }
 // "Sat 24 Oct" from an ISO date, matching the calendar's day labels.
+// --- Sun times -------------------------------------------------------------
+// Late-October Shanghai is dark by a quarter past five, and this itinerary
+// treats that as a hard constraint on several days ("work the afternoon back
+// from it"). The times had been hand-written into three notes, where nothing
+// stops them drifting. Compute them instead, from the trip's own coordinates,
+// so every day carries its own and none of them can go stale.
+// Standard sunrise/sunset almanac algorithm, official zenith 90deg 50'.
+function tzOffsetHours(iso, tz) {
+ try {
+  const d = new Date(iso + 'T12:00:00Z');
+  const s = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'longOffset' }).format(d);
+  const m = s.match(/GMT([+-])(\d{1,2})(?::(\d{2}))?/);
+  if (!m) return 0;
+  return (m[1] === '-' ? -1 : 1) * (Number(m[2]) + Number(m[3] || 0) / 60);
+ } catch (e) { return 0; }
+}
+function sunTime(iso, rising) {
+ const geo = TRIP.meta && TRIP.meta.geo;
+ if (!geo || typeof geo.lat !== 'number' || typeof geo.lon !== 'number') return null;
+ // The template ships geo 0,0 as a placeholder. Null Island returns a real but
+ // meaningless time, so treat it as "not filled in yet" and render nothing.
+ if (geo.lat === 0 && geo.lon === 0) return null;
+ const parts = iso.split('-').map(Number);
+ if (parts.length !== 3 || parts.some(isNaN)) return null;
+ const D = Math.PI / 180;
+ const start = Date.UTC(parts[0], 0, 0);
+ const N = Math.floor((Date.UTC(parts[0], parts[1] - 1, parts[2]) - start) / 86400000);
+ const lat = geo.lat * D, lngHour = geo.lon / 15;
+ const t = N + ((rising ? 6 : 18) - lngHour) / 24;
+ const M = (0.9856 * t) - 3.289;
+ let L = M + (1.916 * Math.sin(M * D)) + (0.020 * Math.sin(2 * M * D)) + 282.634;
+ L = ((L % 360) + 360) % 360;
+ let RA = Math.atan(0.91764 * Math.tan(L * D)) / D;
+ RA = ((RA % 360) + 360) % 360;
+ RA = (RA + (Math.floor(L / 90) * 90 - Math.floor(RA / 90) * 90)) / 15;
+ const sinDec = 0.39782 * Math.sin(L * D), cosDec = Math.cos(Math.asin(sinDec));
+ const cosH = (Math.cos(90.8333 * D) - (sinDec * Math.sin(lat))) / (cosDec * Math.cos(lat));
+ if (cosH > 1 || cosH < -1) return null;   // sun never rises/sets that day
+ const H = (rising ? 360 - Math.acos(cosH) / D : Math.acos(cosH) / D) / 15;
+ const UT = (((H + RA - (0.06571 * t) - 6.622) - lngHour) % 24 + 24) % 24;
+ let local = (UT + tzOffsetHours(iso, TRIP.meta.tz)) % 24;
+ if (local < 0) local += 24;
+ let h = Math.floor(local), m = Math.round((local - h) * 60);
+ if (m === 60) { m = 0; h = (h + 1) % 24; }
+ const ampm = h >= 12 ? 'pm' : 'am';
+ const h12 = h % 12 === 0 ? 12 : h % 12;
+ return h12 + ':' + String(m).padStart(2, '0') + ampm;
+}
+
 function dayLabel(iso) {
  const ms = evDate(iso);
  if (isNaN(ms)) return iso || '';
