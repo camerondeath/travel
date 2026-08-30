@@ -10,7 +10,7 @@
 // PASSPHRASE_HASH is SHA-256 of the passphrase, trimmed and lower-cased, so the
 // word itself is not in the source. Set it with: python3 tools/passphrase.py "…"
 (function () {
- var PASSPHRASE_HASH = '3ccd11995ea07815d1f44e4222eba604c3e8cfdd3ff33b6c6116133363e95e43';
+ var PASSPHRASE_HASH = '0209442e115ad7bc79fd281d91423a86b619e3c711fe574b7cc198d2e3c461c4';
  var KEY = 'trip_unlocked_v1';
  if (!PASSPHRASE_HASH) return;
  try { if (localStorage.getItem(KEY) === PASSPHRASE_HASH) return; } catch (e) {}
