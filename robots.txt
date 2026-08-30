@@ -1,0 +1,3 @@
+# Personal trip notes. Not for indexing.
+User-agent: *
+Disallow: /

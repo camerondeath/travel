@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <title>Melbourne · July 2026</title>
 <link rel="stylesheet" href="../site.css">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/bricolage.woff2">
@@ -74,7 +75,7 @@ const TRIP = {
     tripStart: "2026-07-08",
     tripEnd: "2026-07-12",
     tripStartISO: "2026-07-08T00:00:00+10:00",
-    flights: { out: "QF170 · CHC 3:45pm → MEL 5:35pm", ret: "QF167 · MEL 9:15am → CHC 2:45pm · check-in closes 8:15am", ref: "E8GW8J" },
+    flights: { out: "QF170 · CHC 3:45pm → MEL 5:35pm", ret: "QF167 · MEL 9:15am → CHC 2:45pm · check-in closes 8:15am", ref: "Qantas app" },
     base: { name: "192 Little Collins Street", airbnb: "https://www.airbnb.co.nz/rooms/1832876", map: "https://maps.apple.com/?q=192+Little+Collins+Street+Melbourne" },
     plane: {
       kicker: "Read on the plane",
@@ -114,14 +115,14 @@ const TRIP = {
   },
 
   bookings: [
-    { label: "Hamlet, Fairfax Studio", sub: "Thu 9 Jul · 7:00pm · F15 Stalls Premium", state: "confirmed", ref: "#10678334" },
-    { label: "Cartier, NGV International", sub: "Fri 10 Jul · 2:00pm entry", state: "confirmed", ref: "#5704410" },
+    { label: "Hamlet, Fairfax Studio", sub: "Thu 9 Jul · 7:00pm · F15 Stalls Premium", state: "confirmed", ref: "In email" },
+    { label: "Cartier, NGV International", sub: "Fri 10 Jul · 2:00pm entry", state: "confirmed", ref: "In email" },
     { label: "Bar Lourinhã", sub: "Wed 8 Jul · 7:30pm · bar seat", state: "confirmed", url: "https://barlourinha.com.au" },
-    { label: "Saadi", sub: "Fri 10 Jul · 6:30pm · downstairs", state: "confirmed", ref: "Ref 7V9NFNX4NPW7 · $50/head within 24hrs", url: "https://saadi.com.au" },
-    { label: "Lee Ho Fook", sub: "Sat 11 Jul · 6:30pm · chef's counter", state: "confirmed", ref: "#11936 · $88/head within 24hrs" },
+    { label: "Saadi", sub: "Fri 10 Jul · 6:30pm · downstairs", state: "confirmed", ref: "$50/head cancellation within 24hrs", url: "https://saadi.com.au" },
+    { label: "Lee Ho Fook", sub: "Sat 11 Jul · 6:30pm · chef's counter", state: "confirmed", ref: "$88/head cancellation within 24hrs" },
     { label: "Tipo 00", sub: "Thu 9 Jul · 5:15pm · bar seat", state: "confirmed", url: "https://www.tipo00.com.au" },
     { label: "Airport Uber", sub: "Sun 12 Jul · 6:30am · book Sat night", state: "open" },
-    { label: "Flights, Qantas", sub: "QF170 / QF167 · E8GW8J", state: "confirmed" },
+    { label: "Flights, Qantas", sub: "QF170 / QF167 · ref in Qantas app", state: "confirmed" },
     { label: "Apartment, Little Collins", sub: "8–12 Jul · check-in 3pm", state: "confirmed", url: "https://www.airbnb.co.nz/rooms/1832876" },
   ],
 
@@ -182,7 +183,7 @@ const TRIP = {
         { time: "7:00pm", title: "Suzy Izzard, Hamlet", kind: "culture", state: "confirmed",
           url: "https://www.artscentremelbourne.com.au",
           note: "Fairfax Studio, Arts Centre Melbourne. Seat F15, Stalls Premium, Door 1. Mobile ticket open before arrival. About 2 hours 20 minutes with interval.",
-          ref: "#10678334",
+          ref: "In email",
           map: "https://maps.apple.com/?q=Arts+Centre+Melbourne+St+Kilda+Road",
           expand: {
             label: "About the show",
@@ -219,7 +220,7 @@ const TRIP = {
         { time: "2:00pm", title: "Cartier, NGV International", kind: "culture", state: "confirmed",
           url: "https://www.ngv.vic.gov.au",
           note: "180 St Kilda Road, 15-minute walk south. Free guided tour at 2:30pm -- register at the info desk on arrival. Allow 2 hours minimum.",
-          ref: "#5704410",
+          ref: "In email",
           map: "https://maps.apple.com/?q=NGV+International+180+St+Kilda+Road+Melbourne",
           expand: {
             label: "About the exhibition",
@@ -234,7 +235,7 @@ const TRIP = {
         { time: "6:30pm", title: "Saadi", kind: "food", state: "confirmed",
           url: "https://saadi.com.au",
           note: "18 Punch Lane, downstairs. Arrive on time, no waiting area. $85 four-course set menu on Friday.",
-          ref: "7V9NFNX4NPW7 · $50/head cancellation within 24hrs",
+          ref: "$50/head cancellation within 24hrs",
           map: "https://maps.apple.com/?q=18+Punch+Lane+Melbourne",
           expand: {
             label: "About Saadi",
@@ -277,7 +278,7 @@ const TRIP = {
         { time: "6:30pm", title: "Lee Ho Fook", kind: "food", state: "confirmed",
           url: "https://www.leehofook.com.au",
           note: "11-15 Duckboard Place, off Flinders Lane. 5-minute walk. Smart business casual. 15-minute grace period.",
-          ref: "#11936 · $88/head cancellation within 24hrs",
+          ref: "$88/head cancellation within 24hrs",
           map: "https://maps.apple.com/?q=11+Duckboard+Place+Melbourne",
           expand: {
             label: "About Lee Ho Fook",
