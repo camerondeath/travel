@@ -1,6 +1,6 @@
 // Shanghai itinerary — offline service worker
 // Bump CACHE_VERSION to force clients to refetch the shell on next load.
-const CACHE_VERSION = 'sh26-v26';
+const CACHE_VERSION = 'sh26-v27';
 const SHELL = './';               // the itinerary page (index.html)
 const WEATHER_HOST = 'api.open-meteo.com';
 // Fonts are served from this repo now (Google Fonts is blocked in mainland
@@ -25,6 +25,26 @@ self.addEventListener('activate', event => {
   );
 });
 
+// A captive portal (hotel wifi, airport wifi) or an auth gate in front of the
+// site answers EVERY request with its own 200 HTML login page. Cached blindly,
+// that replaces the itinerary, the engine and the events feed with a login
+// screen for as long as the cache lives -- which is exactly when the itinerary
+// is needed offline and least fixable. So: never store a redirect, an error,
+// a cross-origin opaque response, or a body whose content-type is not what the
+// URL asked for.
+function storable(res, url) {
+  if (!res || !res.ok || res.status !== 200 || res.redirected) return false;
+  if (res.type !== 'basic' && res.type !== 'default' && res.type !== 'cors') return false;
+  const ct = (res.headers.get('content-type') || '').toLowerCase();
+  const p = url.pathname.toLowerCase();
+  if (p.endsWith('.json')) return ct.includes('json');
+  if (p.endsWith('.js')) return ct.includes('javascript') || ct.includes('ecmascript');
+  if (p.endsWith('.css')) return ct.includes('css');
+  if (p.endsWith('.woff2')) return ct.includes('font') || ct.includes('woff');
+  if (p.endsWith('.png')) return ct.includes('image');
+  return true;
+}
+
 self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET') return;
@@ -34,8 +54,10 @@ self.addEventListener('fetch', event => {
   if (url.hostname === WEATHER_HOST) {
     event.respondWith(
       fetch(req).then(res => {
-        const copy = res.clone();
-        caches.open(CACHE_VERSION).then(c => c.put(req, copy)).catch(() => {});
+        if (storable(res, url)) {
+          const copy = res.clone();
+          caches.open(CACHE_VERSION).then(c => c.put(req, copy)).catch(() => {});
+        }
         return res;
       }).catch(() => caches.match(req))
     );
@@ -47,8 +69,10 @@ self.addEventListener('fetch', event => {
   if (url.origin === self.location.origin && url.pathname.endsWith('/events.json')) {
     event.respondWith(
       fetch(req).then(res => {
-        const copy = res.clone();
-        caches.open(CACHE_VERSION).then(c => c.put(req, copy)).catch(() => {});
+        if (storable(res, url)) {
+          const copy = res.clone();
+          caches.open(CACHE_VERSION).then(c => c.put(req, copy)).catch(() => {});
+        }
         return res;
       }).catch(() => caches.match(req))
     );
@@ -62,8 +86,10 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       caches.match(req).then(cached => {
         const network = fetch(req).then(res => {
-          const copy = res.clone();
-          caches.open(CACHE_VERSION).then(c => c.put(req, copy)).catch(() => {});
+          if (storable(res, url)) {
+            const copy = res.clone();
+            caches.open(CACHE_VERSION).then(c => c.put(req, copy)).catch(() => {});
+          }
           return res;
         }).catch(() => cached);
         return cached || network;
