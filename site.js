@@ -137,13 +137,47 @@ function renderPlanePiece() {
  const p = TRIP.meta.plane;
  const sec = document.getElementById('plane');
  if (!sec || !p) return;
- const previewDiv = el('div', 'prose prose-drop', p.preview);
- sec.appendChild(el('div', 'kicker', p.kicker));
- sec.appendChild(el('h2', null, p.title));
- const sf = el('p', 'standfirst', p.standfirst);
- sec.appendChild(sf);
- sec.appendChild(previewDiv);
- sec.appendChild(makeExpand('Continue reading', p.full, false));
+ // Prose sits at a reading measure, which on a wide screen leaves the right
+ // third of the opening empty. A dossier's answer is a facts column, so the
+ // essay runs left and the trip's hard data runs beside it.
+ const main = el('div', 'plane-main');
+ main.appendChild(el('div', 'kicker', p.kicker));
+ main.appendChild(el('h2', null, p.title));
+ main.appendChild(el('p', 'standfirst', p.standfirst));
+ main.appendChild(el('div', 'prose prose-drop', p.preview));
+ main.appendChild(makeExpand('Continue reading', p.full, false));
+ sec.appendChild(main);
+ const rail = buildPlaneRail();
+ if (rail) sec.appendChild(rail);
+}
+
+// The trip's hard facts, in the mono data voice. Every field is optional: a
+// trip that omits flights or a base simply renders fewer rows, and a trip with
+// neither renders no rail at all, so the opening falls back to one column.
+function buildPlaneRail() {
+ const m = TRIP.meta;
+ // Deliberately not the dates: the masthead states them directly above this.
+ // The rail carries only what is not already on screen.
+ const rows = [];
+ if (m.flights && m.flights.out) rows.push(['Out', esc(m.flights.out)]);
+ if (m.flights && m.flights.ret) rows.push(['Back', esc(m.flights.ret)]);
+ if (m.base && m.base.name) {
+  const href = safeUrl(m.base.url);
+  const label = esc(m.base.name);
+  rows.push(['Base', href ? '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>' : label]);
+ }
+ const bk = TRIP.bookings || [];
+ if (bk.length) {
+  const done = bk.filter(b => b.state === 'confirmed').length;
+  rows.push(['Booked', done + ' of ' + bk.length + (done < bk.length ? '<br><span class="rail-sub">' + (bk.length - done) + ' still to book</span>' : '')]);
+ }
+ if (!rows.length) return null;
+ const rail = el('aside', 'plane-rail');
+ rail.setAttribute('aria-label', 'Trip at a glance');
+ rail.innerHTML = rows.map(function (r) {
+  return '<div class="rail-row"><div class="rail-k">' + r[0] + '</div><div class="rail-v">' + r[1] + '</div></div>';
+ }).join('');
+ return rail;
 }
 
 function renderChapters() {
