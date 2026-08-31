@@ -158,8 +158,10 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .sh26-panel-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--accent); }
 
 /* ── ESSAY TEASER (closed-day caption, grotesk) ───────────── */
-.essay-teaser { margin-top: 1rem; max-width: 60ch; }
-.essay-teaser p { font-family: var(--sans); font-size: 0.98rem; color: var(--ink-2); line-height: 1.6; margin: 0; display: inline; }
+.essay-teaser { margin-top: 1rem; max-width: var(--measure); }
+/* Set exactly like .prose p: this is the essay's opening sentence, and
+   Continue reading should carry on in the same voice, not switch face. */
+.essay-teaser p { font-family: var(--serif); font-size: 1.06rem; color: var(--ink-2); line-height: 1.72; margin: 0; display: inline; }
 .essay-continue { display: inline-block; margin-top: 0.5rem; }
 .essay-continue a, .essay-continue-btn, .essay-collapse-btn {
  display: inline-block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em;
@@ -183,7 +185,9 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .daymark .wd { display: block; font-family: var(--display); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; color: var(--ink); }
 .chapter.is-today .daymark .wd { color: var(--accent); }
 .daymark .dt { display: block; font-family: var(--mono); font-size: 0.64rem; color: var(--ink-2); letter-spacing: 0.02em; margin-top: 0.35rem; }
-.daymark .ord { display: block; font-family: var(--mono); font-size: 0.55rem; color: var(--ink-3); letter-spacing: 0.05em; margin-top: 0.5rem; white-space: nowrap; }
+/* Data gutter, two tiers only: .dt/.day-weather-temps/.day-sun are readings
+   at 0.64rem/0.02em; .wx-avg/.ord are captions at 0.55rem/0.08em uppercase. */
+.daymark .ord { display: block; font-family: var(--mono); font-size: 0.55rem; color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.5rem; white-space: nowrap; }
 .chapter-title { font-family: var(--display); font-size: clamp(1.6rem, 4vw, 2.35rem); font-weight: 800; line-height: 1.03; letter-spacing: -0.035em; color: var(--ink); text-wrap: balance; max-width: 24ch; margin-left: -0.02em; }
 .chapter-toggle { flex-shrink: 0; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; color: var(--ink-3); transition: color 0.12s; }
 .chapter-head:hover .chapter-toggle { color: var(--accent); }
@@ -197,12 +201,12 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .day-weather:empty { display: none; }
 .daymark .day-weather { margin-top: 0.5rem; }
 .day-weather-icon { font-size: 0.9rem; line-height: 1; }
-.day-weather-temps { font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; }
+.day-weather-temps { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.02em; color: var(--ink-3); white-space: nowrap; }
 .day-weather-temps .hi { color: var(--ink-2); }
-.wx-avg { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); opacity: 0.8; }
+.wx-avg { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); opacity: 0.8; }
 /* Sunset, computed per day. Sits under the temperatures in the data gutter,
    in the same mono voice as every other true number on the page. */
-.day-sun { display: block; margin-top: 0.28rem; font-family: var(--mono); font-size: 0.62rem; color: var(--ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.day-sun { display: block; margin-top: 0.28rem; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.02em; color: var(--ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 .chapter:not(.open) .essay-teaser { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 
