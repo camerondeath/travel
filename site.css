@@ -37,7 +37,6 @@
     biased a hair warm toward the signal so the palette reads chosen. */
  --ground: #ecedea;
  --ground-2: #f4f5f2;
- --ground-3: #e0e1dd;
  --ink: #17181a;
  --ink-2: #45484a;
  --ink-3: #696c6c;
@@ -62,7 +61,6 @@
  :root {
   --ground: #131513;
   --ground-2: #1a1c1a;
-  --ground-3: #24261f;
   --ink: #eceae4;
   --ink-2: #b4b3ab;
   --ink-3: #82817a;
@@ -399,12 +397,11 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .gate-msg { min-height: 1.2rem; margin-top: 0.7rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.02em; color: var(--accent); }
 
 /* ── FAB / CAPTURE ────────────────────────────────────────── */
-.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; background: var(--accent); color: var(--ground); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.2); transition: transform 0.12s; }
+.fab { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 50; width: 46px; height: 46px; background: var(--accent); color: var(--ground); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.2); transition: transform 0.18s ease, opacity 0.18s ease; }
 .fab svg { pointer-events: none; }
 .fab:hover { transform: scale(1.06); }
-/* Tucked away while the reader is scrolling down through prose -- see
-   initSandboxCapture in site.js. Restored on any upward scroll or pause. */
-.fab { transition: transform 0.18s ease, opacity 0.18s ease; }
+/* Tucked away while the reader scrolls down through prose. See
+   initSandboxCapture in site.js; restored on any upward scroll or pause. */
 .fab-tucked { transform: translateY(calc(100% + 1.4rem)); opacity: 0; pointer-events: none; }
 .fab-tucked:hover { transform: translateY(calc(100% + 1.4rem)); }
 @media (prefers-reduced-motion: reduce) { .fab { transition: none; } }
