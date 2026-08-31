@@ -13,6 +13,21 @@ architecture; the short version:
 - `shanghai/` is a PWA. **Any change to `site.css`, `site.js` or the shanghai
   page requires bumping `CACHE_VERSION` in `shanghai/sw.js`**, or returning
   visitors keep the old shell.
+- **Changing a day's events means re-reading that day's essay.** The `essay`,
+  `teaser`, `title` and `arc` are prose written *about a specific plan*. Move a
+  stop, cut one, or add one, and the intro copy above it is now describing a day
+  that no longer exists. This has bitten repeatedly: Thursday ran for months with
+  an essay about home cooking and Lan Xin, a restaurant that had been cut from the
+  day; Wednesday's essay pitched M50 galleries after they were removed. After any
+  schedule change, check the day's essay AND both neighbours for cross-references
+  ("tomorrow ends at…", "unlike yesterday…"), then check the back pocket and
+  `events.json` blurbs for the same. If the essay's argument was built on the thing
+  you removed, rewrite the essay; do not just delete the event.
+- **Essays and notes are different registers.** The `essay`/`teaser`/`plane` prose
+  follows the long-form voice spec (no em dashes there, despite the general
+  convention below). A `note` on an event is logistics with a reason attached:
+  address, how to get there, hours that matter. Notes must not reach for aphorism;
+  the thinking belongs in the essay.
 - `shanghai/events.json` is append/archive only — entries are never deleted,
   only `"archived": true`. Don't "clean it up".
 

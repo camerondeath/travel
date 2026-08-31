@@ -141,4 +141,6 @@ paper without losing the addresses.
   top of `site.css` before changing any of that.
 - Colour + type are CSS variables at the top of `site.css`; light and dark are
   both defined there. Change a token once, it lands everywhere.
-- Use em dashes (—), not hyphens, in prose.
+- Use em dashes (—), not hyphens, in UI copy and event notes. **Essay prose is
+  the exception: the long-form voice spec forbids em dashes outright**, so the
+  `essay`/`teaser`/`plane` fields use commas, colons and full stops instead.
