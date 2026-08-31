@@ -27,16 +27,16 @@
    content column carrying the specimen title. */
 
 /* Masthead — a specimen cover. Reuses .masthead / .mast-city / .mast-bar. */
-.mast-kicker { font-family: var(--mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 1.5rem; }
+.mast-kicker { font-family: var(--mono); font-size: 0.55rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 1.5rem; }
 .mast-city .lede { display: block; }
-.mast-intro { font-family: var(--sans); font-size: 1.06rem; font-weight: 400; color: var(--ink-2); line-height: 1.5; margin-top: 1.5rem; max-width: 42ch; }
-.mast-meta { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.mast-intro { font-family: var(--serif); font-size: 1.12rem; font-weight: 400; color: var(--ink-2); line-height: 1.6; margin-top: 1.5rem; max-width: 42ch; }
+.mast-meta { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .mast-meta b { color: var(--accent); font-weight: 500; }
 #m-next { margin-left: auto; text-align: right; }
 
 /* Register header: label + sort control, on the trip list's 4px rule. */
 .index-bar { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 2.6rem; }
-.sort-btn { font-family: var(--mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.12s; }
+.sort-btn { font-family: var(--mono); font-size: 0.64rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.12s; }
 .sort-btn:hover { color: var(--accent-2); }
 .sort-arrow { display: inline-block; transition: transform 0.2s; }
 .sort-arrow.flipped { transform: rotate(180deg); }
@@ -48,17 +48,17 @@
    pages give today's chapter (.chapter.is-today). It marks the live entry. */
 .trip.is-next { border-top-color: var(--accent); }
 .trip-mark { align-self: start; }
-.tstatus { display: block; font-family: var(--mono); font-weight: 500; font-size: 0.7rem; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.tstatus { display: block; font-family: var(--mono); font-weight: 500; font-size: 0.64rem; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.25; font-variant-numeric: tabular-nums; }
 .tstatus.next, .tstatus.now { color: var(--accent); }
 .tstatus.past, .tstatus.soon { color: var(--ink-3); }
-.tdates-sm { display: block; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--ink-3); margin-top: 0.45rem; font-variant-numeric: tabular-nums; }
+.tdates-sm { display: block; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.02em; color: var(--ink-3); margin-top: 0.45rem; font-variant-numeric: tabular-nums; }
 .trip-body { min-width: 0; }
 .trip-kicker { font-family: var(--mono); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.5rem; }
 .trip-title { font-family: var(--display); font-size: clamp(1.75rem, 4.6vw, 2.6rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.035em; color: var(--ink); text-wrap: balance; margin-left: -0.02em; transition: color 0.12s; }
 .trip-title em { font-style: normal; font-weight: 800; color: var(--ink-2); }
 .trip:hover .trip-title { color: var(--accent); }
 .trip:hover .trip-title em { color: var(--accent); }
-.trip-desc { font-family: var(--sans); font-size: 0.95rem; color: var(--ink-2); line-height: 1.55; margin-top: 0.7rem; max-width: 54ch; }
+.trip-desc { font-family: var(--serif); font-size: 1.06rem; color: var(--ink-2); line-height: 1.72; margin-top: 0.7rem; max-width: var(--measure); }
 .trip-foot { display: flex; align-items: center; gap: 0.7rem 1.1rem; margin-top: 0.95rem; flex-wrap: wrap; }
 .trip-fresh { font-family: var(--mono); font-size: 0.56rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ground); background: var(--accent); padding: 0.24em 0.55em; }
 .trip-go { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); display: inline-flex; align-items: center; gap: 0.35rem; transition: transform 0.15s, color 0.12s; }
