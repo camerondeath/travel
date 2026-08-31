@@ -52,9 +52,9 @@
  --display: 'Bricolage', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
  --sans: 'Bricolage', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
  --mono: 'Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
- --col: 1040px;
+ --col: 940px;
  --pad: 1.5rem;
- --measure: 34em;
+ --measure: 40em;
  --gutter: 7rem;
 }
 @media (prefers-color-scheme: dark) {
