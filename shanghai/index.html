@@ -134,7 +134,7 @@ const TRIP = {
   bookings: [
     { label: "OPARTMENT The Far Eastern", sub: "24 Oct – 1 Nov · 8 nights · check-in 3pm · checkout before noon", state: "confirmed", ref: "In Trip.com app", url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334" },
     { label: "Flights, Air New Zealand", sub: "NZ570 / NZ289 / NZ288 / NZ527 · NZ288 bag drop closes 12:45pm", state: "confirmed" },
-    { label: "Lost Plate evening food tour", sub: "Sun 25 Oct · 6:30pm, 3.5 hours · $69 · book online ahead; small group. Meets Jiashan Rd station, exact corner emailed on booking", state: "open", url: "https://lostplate.com/shanghai-food-tours/" },
+    { label: "Lost Plate evening food tour", sub: "Sun 25 Oct · 6:30–10pm · paid $67.84 · meet Jiashan Rd station Exit 5, street level, by 6:20. Free cancellation until 6:30pm Saturday", state: "confirmed", ref: "Booking #376821731 · order GFQLGZ", url: "https://lostplate.com/shanghai-food-tours/" },
     { label: "Wang Bao He, whole hairy crab", sub: "Mon 26 Oct · 6:30pm · concierge to confirm they will seat one, and the per-crab price", state: "open", url: "https://maps.apple.com/?q=603+Fuzhou+Road+Shanghai" },
     { label: "Cejerdary, crab roe noodles", sub: "Sat 31 Oct · 6:30pm · walk-in queue after 6, or ask concierge to call ahead", state: "open" },
     { label: "Shanghai Museum East, timed entry", sub: "Thu 29 Oct · book via WeChat mini-program a day ahead, or ask concierge", state: "open" },
@@ -253,15 +253,20 @@ const TRIP = {
           }
         },
         { time: "4:00pm", title: "Back to the hotel", kind: "rest",
-          note: "DiDi (~15 min). Two full museum visits and eleven kilometres is a full day, and there is a food tour at half six. Shower, lie down, don't nap past five." },
-        { time: "6:30pm", title: "Lost Plate evening food tour", kind: "food", state: "open",
+          note: "DiDi (~15 min). Two full museum visits and eleven kilometres is a full day, and the tour will not wait. Shower, lie down, don't nap past five, out the door by ten past six." },
+        { time: "6:20pm", title: "Arrive at Jiashan Rd, Exit 5", kind: "travel",
+          note: "Ten minutes early is a requirement, not a courtesy: they depart on time and will not come back for you. Show the driver 嘉善路地铁站5出口. DiDi is ~15 min but the confirmation warns traffic is heavy here at this hour, so the metro is the safer call: Line 1 south two stops to South Shaanxi Rd, change to Line 12, one stop. Exit 5, up to street level, guide is waiting outside the exit.",
+          map: "https://maps.apple.com/?q=Jiashan+Road+Station+Shanghai" },
+        { time: "6:30pm", title: "Lost Plate evening food tour", kind: "food", state: "confirmed",
+          ref: "Booking #376821731 · order GFQLGZ",
           url: "https://lostplate.com/shanghai-food-tours/",
-          note: "Meets at Jiashan Rd station, Line 9 — ~15 min DiDi from the hotel; they email the exact corner when you book. Runs daily at 6:30, 3.5 hours, $69. Four sit-down restaurants through the French Concession plus a craft beer bar to close, local beer and soft drinks included, so it is the night's dinner and the night's drink both. Ends around ten, ten minutes' walk from South Shaanxi Rd: two stops home on Line 1, or a ten-minute car.",
+          note: "6:30 to 10:00, booked and paid, $67.84 with the promo code. Four sit-down restaurants through the French Concession plus a craft beer bar to close, local beer and soft drinks included, so it is the night's dinner and the night's drink both. Ends ten minutes' walk from South Shaanxi Rd: two stops home on Line 1, or a ten-minute car.",
           map: "https://maps.apple.com/?q=Jiashan+Road+Station+Shanghai",
           expand: {
             label: "Why this one, and why this early",
             body: `<p>It sits on the second night on purpose. A food tour is worth most at the front of a trip, when it is still teaching you things you get to use: how a counter actually works, what to point at, which of the week's eight noodle shops you are going to be glad you know how to order in. Run it on day six and it is a nice dinner that arrives after you have already worked all that out for yourself.</p>
-<p>The cost of putting it here is honest: ten at night on your second evening is three in the morning at home, and you will have done eleven kilometres and two museums before it starts. Saturday's eight o'clock bedtime is what pays for it, and Monday is forgiving — nothing before the walk south at quarter past nine, and the Nanxiang counter at a quarter to ten is deliberately a Monday because the queue is a fraction of the weekend's.</p>`
+<p>The cost of putting it here is honest: ten at night on your second evening is three in the morning at home, and you will have done eleven kilometres and two museums before it starts. Saturday's eight o'clock bedtime is what pays for it, and Monday is forgiving — nothing before the walk south at quarter past nine, and the Nanxiang counter at a quarter to ten is deliberately a Monday because the queue is a fraction of the weekend's.</p>
+<p>Two practical things from the confirmation. A reminder email with the guide's name and phone number arrives 48 hours out, so around the Friday you fly — check spam if it doesn't. And cancellation is free up to 24 hours before, which means the decision point is Saturday evening: if the landing has flattened you, you can pull out that night for a full refund. After that it is non-refundable, and rescheduling inside 24 hours costs another half of what you paid.</p>`
           } }
       ]
     },
