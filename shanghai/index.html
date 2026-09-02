@@ -134,6 +134,7 @@ const TRIP = {
   bookings: [
     { label: "OPARTMENT The Far Eastern", sub: "24 Oct – 1 Nov · 8 nights · check-in 3pm · checkout before noon", state: "confirmed", ref: "In Trip.com app", url: "https://www.trip.com/hotels/shanghai-hotel-detail-8378334" },
     { label: "Flights, Air New Zealand", sub: "NZ570 / NZ289 / NZ288 / NZ527 · NZ288 bag drop closes 12:45pm", state: "confirmed" },
+    { label: "Lost Plate evening food tour", sub: "Sun 25 Oct · 6:30pm, 3.5 hours · $69 · book online ahead; small group. Meets Jiashan Rd station, exact corner emailed on booking", state: "open", url: "https://lostplate.com/shanghai-food-tours/" },
     { label: "Wang Bao He, whole hairy crab", sub: "Mon 26 Oct · 6:30pm · concierge to confirm they will seat one, and the per-crab price", state: "open", url: "https://maps.apple.com/?q=603+Fuzhou+Road+Shanghai" },
     { label: "Cejerdary, crab roe noodles", sub: "Sat 31 Oct · 6:30pm · walk-in queue after 6, or ask concierge to call ahead", state: "open" },
     { label: "Shanghai Museum East, timed entry", sub: "Thu 29 Oct · book via WeChat mini-program a day ahead, or ask concierge", state: "open" },
@@ -251,10 +252,17 @@ const TRIP = {
             body: `<p>Wei Xiang Zhai has been on Yandang Road, a short pedestrian street tucked behind Huaihai Road near Fuxing Park, since the early 1990s, and the shop still runs the same single dish it opened with: dry-tossed noodles in a toasted sesame and peanut paste, served either with a clear beef broth on the side or with wontons stirred through the same sauce. It's a small, plain room, closer to a canteen than a restaurant, and the appeal is entirely in the paste itself, nuttier and less sweet than most sesame noodle preparations sold to tourists elsewhere in the city. No English menu, but the two options, noodles with broth, or wontons in sauce, cover almost everything anyone orders.</p>`
           }
         },
-        { time: "4:00pm", title: "Slow afternoon, no plan", kind: "rest",
-          note: "Back to the hotel by DiDi (~15 min) or however the afternoon runs out. Two full museum visits and eleven kilometres is a full day. There is no reason to add a third stop." },
-        { time: "6:30pm", title: "Delivery night", kind: "rest",
-          note: "Order in through Ele.me or Meituan; the hotel can set this up for you if it isn't running yet. An early, low-effort evening after a day on your feet. This is also the slot the Lost Plate food tour would take, 6:30 to 10, if you'd rather trade the quiet night for it — it's in the back pocket under Tours." }
+        { time: "4:00pm", title: "Back to the hotel", kind: "rest",
+          note: "DiDi (~15 min). Two full museum visits and eleven kilometres is a full day, and there is a food tour at half six. Shower, lie down, don't nap past five." },
+        { time: "6:30pm", title: "Lost Plate evening food tour", kind: "food", state: "open",
+          url: "https://lostplate.com/shanghai-food-tours/",
+          note: "Meets at Jiashan Rd station, Line 9 — ~15 min DiDi from the hotel; they email the exact corner when you book. Runs daily at 6:30, 3.5 hours, $69. Four sit-down restaurants through the French Concession plus a craft beer bar to close, local beer and soft drinks included, so it is the night's dinner and the night's drink both. Ends around ten, ten minutes' walk from South Shaanxi Rd: two stops home on Line 1, or a ten-minute car.",
+          map: "https://maps.apple.com/?q=Jiashan+Road+Station+Shanghai",
+          expand: {
+            label: "Why this one, and why this early",
+            body: `<p>It sits on the second night on purpose. A food tour is worth most at the front of a trip, when it is still teaching you things you get to use: how a counter actually works, what to point at, which of the week's eight noodle shops you are going to be glad you know how to order in. Run it on day six and it is a nice dinner that arrives after you have already worked all that out for yourself.</p>
+<p>The cost of putting it here is honest: ten at night on your second evening is three in the morning at home, and you will have done eleven kilometres and two museums before it starts. Saturday's eight o'clock bedtime is what pays for it, and Monday is forgiving — nothing before the walk south at quarter past nine, and the Nanxiang counter at a quarter to ten is deliberately a Monday because the queue is a fraction of the weekend's.</p>`
+          } }
       ]
     },
 
@@ -610,9 +618,7 @@ const TRIP = {
       ["Any lane in the old city on a wet morning", "Rain makes Nanshi look like a different city, and it empties the bazaar completely. The alleys south of Fangbang Middle are the ones to take.", "https://maps.apple.com/?q=Fangbang+Middle+Road+Shanghai"]
     ]},
     { group: "Tours worth booking ahead", items: [
-      ["Lost Plate — Evening Food Tour", "3.5 hours through the French Concession, starting 6:30pm. Deliberately more food than one sitting finishes, at addresses picked because they're hard to find twice without the guide who found them first. $69. Sunday evening, in place of a delivery night.", "https://lostplate.com/shanghai-food-tours/"],
-      ["French Concession Guided Walking Tour", "Three hours through the lane houses, Sinan Mansions and Tianzifang — pay-what-you-want, $20–25 a head is fair for the ground covered. This is French Concession ground, not Nanshi: taking the 10am–1pm slot on Monday means starting the day across town from the old city, then a DiDi south (~15–20 min) to be at City God Temple by 2pm. Tan's lunch is the casualty, dropped or eaten near Tianzifang instead; Wang Bao He at 6:30 still stands.", "https://www.viator.com/tours/Shanghai/French-Concession-Free-Walking-Tour-Pay-What-You-Want/d325-122769P3"],
-      ["Foodie Shanghai — Authentic Local Food Tour", "Three hours with guides who grew up here (they go by Jim, TJ, Jade), through mum-and-pop counters in neighbourhoods a normal walking tour has no reason to enter. $78, fixed daily departures at 9am, 1pm and 6:30pm from South Huangpi Rd — that's the French Concession/Xintiandi border. No day left with clean room for it: Thursday's afternoon went to Century Park instead. Worth keeping in mind if a slot opens up, or in place of Century Park if you'd rather have it.", "https://www.foodieshanghai.com/"]
+      ["French Concession Guided Walking Tour", "Three hours through the lane houses, Sinan Mansions and Tianzifang — pay-what-you-want, $20–25 a head is fair for the ground covered. This is French Concession ground, not Nanshi: taking the 10am–1pm slot on Monday means starting the day across town from the old city, then a DiDi south (~15–20 min) to be at City God Temple by 2pm. Tan's lunch is the casualty, dropped or eaten near Tianzifang instead; Wang Bao He at 6:30 still stands.", "https://www.viator.com/tours/Shanghai/French-Concession-Free-Walking-Tour-Pay-What-You-Want/d325-122769P3"]
     ]},
     { group: "Worth arranging yourself, if you want more than the itinerary", items: [
       ["A bespoke Historic Shanghai walk", "Not a standard bookable tour. historic-shanghai.com is a small heritage society running mostly member events plus occasional private walks by request. Email a few weeks out and ask, but don't count on it landing on a specific day.", "https://www.historic-shanghai.com/"],
