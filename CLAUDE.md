@@ -45,3 +45,18 @@ Consequences:
 - If a pull conflicts on `shanghai/events.json`, merge both sides. The file is
   append/archive only (see above), so a conflict means combining entries —
   never resolve it by picking one version wholesale.
+
+## Committing and pushing
+
+Cameron has given standing authorisation to commit and push without asking.
+When a change is complete and coherent, land it — do not leave finished work
+sitting uncommitted, and do not ask permission first.
+
+- **Push means deploy** (GitHub Pages, ~1 min). "Complete" therefore means the
+  affected pages still render, and `CACHE_VERSION` in `shanghai/sw.js` is
+  bumped if `site.css`, `site.js` or the shanghai page was touched.
+- Pull before starting work; the events agent pushes on Mondays.
+- Stage specific files. Never `git add -A`, and never destroy work you did not
+  make.
+- Still stop and ask before anything irreversible: history rewrites, force
+  pushes, deleting files or events, or anything that would lose data.
