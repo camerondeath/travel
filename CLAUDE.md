@@ -60,3 +60,19 @@ sitting uncommitted, and do not ask permission first.
   make.
 - Still stop and ask before anything irreversible: history rewrites, force
   pushes, deleting files or events, or anything that would lose data.
+
+## A UX or structural change lands on every trip page
+
+Editorial copy is per-trip and stays that way: rewriting a Shanghai essay does not
+oblige you to touch Melbourne. **Anything structural or interactional does.** If a
+change alters how a page is used or read rather than what it says, apply it across
+`shanghai/`, `melbourne/`, `china-april-2026.html` and `_template/` in the same
+commit, so the site stays one thing.
+
+That includes: a new or renamed section, a change to how a section is ordered or
+labelled, a new control or affordance, a change to what a field means, and any
+markup a page must carry for an engine feature to appear.
+
+The template is the one people forget. A structural change that never reaches
+`_template/` means the next trip is born already inconsistent, and the generator in
+`new/` emits the same stale shape.
