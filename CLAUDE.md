@@ -31,14 +31,17 @@ architecture; the short version:
 - `shanghai/events.json` is append/archive only — entries are never deleted,
   only `"archived": true`. Don't "clean it up".
 
-## This checkout is shared
+## The remote is shared; this checkout is not
 
-A scheduled agent (`shanghai-events-refresh`, Mondays) commits
-`shanghai/events.json` in this same working copy. Consequences:
+A scheduled agent (`shanghai-events-refresh`, Mondays 08:06) refreshes
+`shanghai/events.json`. It works in its own clone (`../travel-events-agent`)
+and never touches this checkout — but it pushes to the same `origin/main`.
+Consequences:
 
-- Don't leave large uncommitted diffs sitting in the tree; commit early or
-  branch. If files revert unexpectedly mid-session, check `git log` /
-  `git stash list` for the agent's activity before assuming user action.
-- Never run `git stash`, `git reset`, `git checkout --`/`git restore`, or
-  `git clean` over changes you didn't make. Stage specific files, never
-  `git add -A`.
+- This checkout falls behind on Mondays. `git pull` before starting work, or
+  the first push will be rejected as behind.
+- After a pull its commits appear in `git log` here as "Refresh Shanghai events
+  feed (<date>)". That is the agent, not lost work of yours.
+- If a pull conflicts on `shanghai/events.json`, merge both sides. The file is
+  append/archive only (see above), so a conflict means combining entries —
+  never resolve it by picking one version wholesale.
