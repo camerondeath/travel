@@ -86,6 +86,7 @@ function makeDisclosureRow(labelHtml, opts) {
 function makeExpand(label, bodyHtml, dropCap) {
  const wrap = el('div', 'sh26-panel');
  const btn = el('button', 'sh26-panel-btn', `<em class="sh26-chevron">›</em>&nbsp;${label}`);
+ btn.type = 'button';
  const body = el('div', 'sh26-panel-body');
  body.innerHTML = `<div class="prose${dropCap ? ' prose-drop' : ''}">${bodyHtml}</div>`;
  const pid = 'x-' + Math.random().toString(36).slice(2, 8);
@@ -392,7 +393,17 @@ function evISO(ms) {
  const d = new Date(ms);
  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 }
-function eventKey(ev) { return ev.url || ev.title || ''; }
+// A find's identity, used for hides and pins. The URL alone is not enough: a
+// single listing article can carry two different events (the opera season page
+// announces both Tosca on 24 Oct and Aida on 30 Oct), and an entry that was
+// archived and later re-found shares its URL with its own replacement. Sharing
+// a key means sharing a hide and a pin, so pinning Tosca to the 24th put Aida
+// on the day instead. Title and `added` disambiguate both cases, and `added`
+// is the one field the refresh agent is forbidden to rewrite, so the key stays
+// stable across every later edit to an entry's dates or blurb.
+function eventKey(ev) {
+ return ev.id || [ev.url || '', ev.title || '', ev.added || ''].join('|');
+}
 
 const EVENTS_HIDDEN_KEY = 'events_hidden_' + TRIP_SLUG;
 function loadHiddenEvents() { return lsGet(EVENTS_HIDDEN_KEY, []); }

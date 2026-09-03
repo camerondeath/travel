@@ -1,6 +1,6 @@
 // Shanghai itinerary — offline service worker
 // Bump CACHE_VERSION to force clients to refetch the shell on next load.
-const CACHE_VERSION = 'sh26-v45';
+const CACHE_VERSION = 'sh26-v46';
 const SHELL = './';               // the itinerary page (index.html)
 const WEATHER_HOST = 'api.open-meteo.com';
 // Fonts are served from this repo now (Google Fonts is blocked in mainland
@@ -9,10 +9,24 @@ const WEATHER_HOST = 'api.open-meteo.com';
 const FONTS = ['../fonts/bricolage.woff2', '../fonts/plex-mono.woff2',
                '../fonts/plex-mono-500.woff2', '../fonts/newsreader.woff2'];
 
+const PRECACHE = [SHELL, './index.html', './manifest.json', './icon-192.png',
+                 './icon-512.png', './events.json', '../site.css', '../site.js',
+                 '../gate.js'].concat(FONTS);
+
+// Deliberately not cache.addAll(): addAll is atomic, so a single asset that
+// 404s or is intercepted by a captive portal throws the whole precache away
+// and the itinerary silently has no offline copy at all -- discovered only
+// once offline, which is the one moment it cannot be fixed. Fetch each entry
+// on its own instead and keep whatever succeeded; a missing font is worth far
+// less than a missing itinerary.
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then(cache => cache.addAll([SHELL, './index.html', './manifest.json', './icon-192.png', './icon-512.png', './events.json', '../site.css', '../site.js', '../gate.js'].concat(FONTS)))
-      .catch(() => {})
+    caches.open(CACHE_VERSION).then(cache => Promise.allSettled(
+      PRECACHE.map(path => fetch(new Request(path, { cache: 'reload' })).then(res => {
+        if (!storable(res, new URL(res.url, self.location.href))) throw new Error('unstorable');
+        return cache.put(path, res);
+      }))
+    )).catch(() => {})
   );
   self.skipWaiting();
 });

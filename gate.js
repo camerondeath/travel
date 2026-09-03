@@ -1,11 +1,26 @@
 // Gate — loaded by every page, including the hub, which does not use the engine.
 //
-// A doormat, not a lock. It stops someone who comes across the link from
-// reading the trips; it does not stop anyone who opens the page source, since
-// the content still ships with the page. That trade is deliberate: the booking
-// references, PINs and phone numbers have been stripped out, so what sits
-// behind this is an itinerary rather than anything usable. The repo being
-// private is what actually keeps this off the open web.
+// A doormat, not a lock, and weaker than it looks. It stops someone who comes
+// across the link from reading the trips. It stops nobody else:
+//
+//   - The content ships inside the page, so View Source reads it unlocked.
+//   - PASSPHRASE_HASH below is the literal value compared against localStorage,
+//     so setting that key to this string walks straight in. No guessing needed.
+//   - The hash is unsalted SHA-256 of a single passphrase, published here, so a
+//     wordlist recovers a common phrase quickly.
+//
+// It also does not stop the repository. **camerondeath/travel is a PUBLIC repo**
+// and github.io serves it publicly, so every page and every past revision is
+// readable by anyone, gate or no gate. An earlier version of this comment
+// claimed the repo was private and that booking references, PINs and phone
+// numbers had been stripped; neither is true today. What is actually published
+// includes hotel and tour booking references, hotel phone numbers, flight and
+// seat numbers, and the dates the house is empty.
+//
+// That may be an acceptable trade for a personal itinerary — but it is a
+// decision to make deliberately, not one this file quietly guarantees. Making
+// the repo private (Pages then needs a paid plan) or removing the reference
+// strings are the two real fixes; this gate is neither.
 //
 // PASSPHRASE_HASH is SHA-256 of the passphrase, trimmed and lower-cased, so the
 // word itself is not in the source. Set it with: python3 tools/passphrase.py "…"

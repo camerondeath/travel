@@ -100,6 +100,14 @@ state — no refresh touches them, and a pinned event that later gets hidden or
 archived quietly drops out of the day until it's back. Only real day chapters
 (`TRIP.days[].id` / `.iso`) are offered as targets.
 
+An entry's identity for hides and pins is `id` if it has one, otherwise
+`url|title|added`. Not the URL alone: one listing article can announce two
+different events, and a re-found entry shares a URL with the archived original,
+so a URL key silently merged their hides and pins. `added` is in the key because
+it is the one field a refresh may never rewrite, which keeps the key stable when
+an entry's dates or blurb change. Give an entry an explicit `id` if you ever
+need to rename it without losing its pin.
+
 **Nothing is ever lost to a refresh.** Four layers, deliberately:
 
 1. **Entries are never deleted, only archived.** A listing that has ended gets
@@ -134,7 +142,8 @@ paper without losing the addresses.
 
 ## Conventions
 
-- Fonts: Fraunces (display), Newsreader (body serif), Inter (labels), served
+- Fonts: Bricolage Grotesque (display), Newsreader (body serif), IBM Plex Mono
+  in two weights (labels, dates, all tabular figures), served
   from `fonts/` as variable woff2 with `font-display: block` — text isn't painted
   until the real font is ready, so nothing resizes on load, and there's no
   dependency on Google Fonts (blocked in mainland China). See the note at the
