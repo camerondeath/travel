@@ -10,17 +10,24 @@
 //     wordlist recovers a common phrase quickly.
 //
 // It also does not stop the repository. **camerondeath/travel is a PUBLIC repo**
-// and github.io serves it publicly, so every page and every past revision is
-// readable by anyone, gate or no gate. An earlier version of this comment
-// claimed the repo was private and that booking references, PINs and phone
-// numbers had been stripped; neither is true today. What is actually published
-// includes hotel and tour booking references, hotel phone numbers, flight and
-// seat numbers, and the dates the house is empty.
+// (confirmed 2026-09-06) and github.io serves it publicly, so every page and
+// every past revision is readable by anyone, gate or no gate.
 //
-// That may be an acceptable trade for a personal itinerary — but it is a
-// decision to make deliberately, not one this file quietly guarantees. Making
-// the repo private (Pages then needs a paid plan) or removing the reference
-// strings are the two real fixes; this gate is neither.
+// As of 2026-09-06 the booking *codes* are out of the working tree: every
+// `ref` on every trip page is now a pointer to where the booking lives ("In
+// the GetYourGuide app", "Collection code in email") rather than the code
+// itself. Two Shanghai entries still carried real codes until that date — a
+// Lost Plate order number and a GetYourGuide booking reference — and they
+// remain in this repo's git history, which is public and cannot be cleaned
+// without a force push. Treat them as disclosed.
+//
+// Still published by design, because an itinerary cannot really avoid it:
+// flight numbers, the hotel and its dates, and therefore the dates the house
+// is empty. That may be an acceptable trade — but it is a decision to make
+// deliberately, not one this file quietly guarantees. Making the repo private
+// (Pages then needs a paid plan) is the only fix for that; this gate is not.
+//
+// **When adding a booking, put a pointer in `ref`, never the code.**
 //
 // PASSPHRASE_HASH is SHA-256 of the passphrase, trimmed and lower-cased, so the
 // word itself is not in the source. Set it with: python3 tools/passphrase.py "…"

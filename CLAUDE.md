@@ -31,6 +31,61 @@ architecture; the short version:
 - `shanghai/events.json` is append/archive only — entries are never deleted,
   only `"archived": true`. Don't "clean it up".
 
+## The verification pass
+
+**Facts on these pages go stale, and they go stale silently.** A single audit on
+2026-09-06 found seven wrong or invented facts on the Shanghai page alone
+(Capsule's opening hour, Xibo's lunch service, Rockbund's closed days, Space 185
+described as free when its shows are ticketed, Da Hu Chun's opening time, the
+Poster Center's building, and a noodle shop with three circulating addresses whose
+menu was described as something it does not serve), plus a restaurant that had
+closed five months earlier while still holding a 9:15am slot, plus a gallery whose
+exhibition closed the day before the visit. None of these announced themselves.
+
+So run a verification pass on any trip page whose dates are still in the future,
+periodically and not only when asked. Monthly is enough while a trip is months
+out; weekly inside the final month. **Verify against live sources, never against
+the page** — the page is the thing being tested.
+
+What the pass covers, in order of how much it costs to get wrong:
+
+1. **Is it still open at all?** Restaurants close. Check every scheduled venue.
+2. **Opening hours and closing day**, against the venue's own site where one
+   exists. Confirm the specific weekday the itinerary uses it on, not the general
+   hours. A place open "daily" can still have a lunch service that ends at 2.
+3. **Exhibitions and runs.** Anything with an end date: confirm it is still on
+   for that day. A show that closes the day before is the same as a closed venue.
+   Where a run ends during the trip, say so and put the visit on a day inside it.
+4. **Addresses.** Where two or more circulate, resolve it or say plainly that it
+   is unresolved. Do not quietly pick one.
+5. **Booking state.** `state: "open"` renders a **"To book"** badge and counts in
+   the progress bar, so it must correspond to a real ledger entry and a real
+   action. Two museums carried it while their own notes correctly said no booking
+   was needed.
+6. **Timings and transport.** Meals against the traveller's own preference, walks
+   against the walking rule, and car estimates against any deadline behind them.
+7. **The `events.json` feed against the schedule.** The feed is refreshed weekly
+   by the agent but nothing reconciles it with the days. Look for collisions
+   (three concerts against a booked dinner) and near-misses (a market that ends
+   before the day reaches its neighbourhood).
+
+Fix what is unambiguous. **Anything that changes what a day is about is the
+owner's call, not the agent's** — surface it and ask. Removing a stop means
+rewriting that day's essay; see the rule above.
+
+Sources that work, and ones that do not:
+
+- `rachelgouk.com` (Nomfluence) carries real opening hours per venue under
+  `/listings/<slug>/`, and flags closures. Fastest first stop for restaurants.
+  Its sitemaps (`/post-sitemap1..5.xml`, `/listdom-listing-sitemap1..3.xml`) list
+  everything it covers.
+- Museum and gallery sites are authoritative for hours and runs, and often the
+  only place a run's end date appears.
+- **`guide.michelin.com` is CloudFront-blocked** to WebFetch and to the in-app
+  browser. Michelin facts have to come from search results or a mirror.
+- Sunrise and sunset in prose must match what `sunTime()` in `site.js` computes
+  for that ISO date; run the function rather than searching for the time.
+
 ## The remote is shared; this checkout is not
 
 A scheduled agent (`shanghai-events-refresh`, Mondays 08:06) refreshes
@@ -60,6 +115,12 @@ sitting uncommitted, and do not ask permission first.
   make.
 - Still stop and ask before anything irreversible: history rewrites, force
   pushes, deleting files or events, or anything that would lose data.
+- **This repo is public** (`camerondeath/travel`, confirmed 2026-09-06), and so
+  is every past revision of it. **Never commit a booking code, PIN, order
+  number or phone number.** A `ref` holds a pointer to where the booking lives
+  ("In the GetYourGuide app", "Collection code in email"), never the value.
+  Two Shanghai entries broke this rule and were stripped on 2026-09-06; they
+  are still in the history and cannot be removed without a force push.
 
 ## A UX or structural change lands on every trip page
 
