@@ -33,19 +33,15 @@ architecture; the short version:
 
 ## The verification pass
 
-**Facts on these pages go stale, and they go stale silently.** A single audit on
-2026-09-06 found seven wrong or invented facts on the Shanghai page alone
-(Capsule's opening hour, Xibo's lunch service, Rockbund's closed days, Space 185
-described as free when its shows are ticketed, Da Hu Chun's opening time, the
-Poster Center's building, and a noodle shop with three circulating addresses whose
-menu was described as something it does not serve), plus a restaurant that had
-closed five months earlier while still holding a 9:15am slot, plus a gallery whose
-exhibition closed the day before the visit. None of these announced themselves.
+**Facts on these pages go stale silently.** One audit (2026-09-06) found seven wrong
+opening times, closed days and addresses on the Shanghai page, a restaurant that had
+shut five months earlier while still holding a 9:15am slot, and a gallery whose show
+closed the day before the visit. None announced itself.
 
 So run a verification pass on any trip page whose dates are still in the future,
-periodically and not only when asked. Monthly is enough while a trip is months
-out; weekly inside the final month. **Verify against live sources, never against
-the page** — the page is the thing being tested.
+periodically and not only when asked — monthly while a trip is months out, weekly
+inside the final month. A scheduled agent now does this on Thursdays. **Verify
+against live sources, never against the page**; the page is what is being tested.
 
 What the pass covers, in order of how much it costs to get wrong:
 
