@@ -83,14 +83,16 @@ function makeDisclosureRow(labelHtml, opts) {
  return { grp, body };
 }
 
-function makeExpand(label, bodyHtml, dropCap) {
+function makeExpand(label, bodyHtml) {
  const wrap = el('div', 'sh26-panel');
  const btn = el('button', 'sh26-panel-btn', `<em class="sh26-chevron">›</em>&nbsp;${label}`);
  btn.type = 'button';
  const body = el('div', 'sh26-panel-body');
- body.innerHTML = `<div class="prose${dropCap ? ' prose-drop' : ''}">${bodyHtml}</div>`;
- const pid = 'x-' + Math.random().toString(36).slice(2, 8);
- body.id = pid; btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', pid);
+ body.innerHTML = `<div class="prose">${bodyHtml}</div>`;
+ // Shares makeDisclosureRow's counter. Two id schemes in one file (a counter
+ // there, Math.random here) was a collision waiting to break an aria pair.
+ body.id = 'x-' + (++discSeq);
+ btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', body.id);
  btn.addEventListener('click', () => {
  const open = btn.classList.toggle('open');
  body.classList.toggle('open');
@@ -144,7 +146,7 @@ function renderPlanePiece() {
  const sf = el('p', 'standfirst', p.standfirst);
  sec.appendChild(sf);
  sec.appendChild(previewDiv);
- sec.appendChild(makeExpand('Continue reading', p.full, false));
+ sec.appendChild(makeExpand('Continue reading', p.full));
 }
 
 function renderChapters() {
@@ -232,7 +234,7 @@ function renderChapters() {
 
  // Essay: explicit teaser shown; full essay revealed on demand. No prose parsing.
  const essayWrap = el('div', null);
- const teaser = day.teaser || (day.essay.match(/<p>([\s\S]*?)<\/p>/) || [,''])[1];
+ const teaser = day.teaser || ((day.essay || '').match(/<p>([\s\S]*?)<\/p>/) || [, ''])[1];
  const teaserDiv = el('div', 'essay-teaser');
  teaserDiv.innerHTML = `<p>${teaser}</p>`;
  essayWrap.appendChild(teaserDiv);
@@ -290,7 +292,7 @@ function renderChapters() {
  ml.href = ev.map; ml.target = '_blank'; ml.rel = 'noopener';
  body.appendChild(ml);
  }
- if (ev.expand) body.appendChild(makeExpand(ev.expand.label, ev.expand.body, false));
+ if (ev.expand) body.appendChild(makeExpand(ev.expand.label, ev.expand.body));
  stop.appendChild(el('div', 'stop-time mono', ev.time));
  stop.appendChild(body);
  spine.appendChild(stop);
@@ -417,7 +419,7 @@ function saveHiddenEvents(ids) { lsSet(EVENTS_HIDDEN_KEY, ids); }
 const EVENTS_PINNED_KEY = 'events_pinned_' + TRIP_SLUG;
 function loadPinned() { return lsGet(EVENTS_PINNED_KEY, {}); }
 function savePinned(map) { lsSet(EVENTS_PINNED_KEY, map); }
-// "Sat 24 Oct" from an ISO date, matching the calendar's day labels.
+
 // --- Sun times -------------------------------------------------------------
 // Late-October Shanghai is dark by a quarter past five, and this itinerary
 // treats that as a hard constraint on several days ("work the afternoon back
@@ -467,6 +469,7 @@ function sunTime(iso, rising) {
  return h12 + ':' + String(m).padStart(2, '0') + ampm;
 }
 
+// "Sat 24 Oct" from an ISO date, matching the calendar's day labels.
 function dayLabel(iso) {
  const ms = evDate(iso);
  if (isNaN(ms)) return iso || '';
@@ -1339,7 +1342,11 @@ document.addEventListener('DOMContentLoaded', () => {
  initSandboxCapture();
  fetchWeather();
 });
-if ('serviceWorker' in navigator) {
+// Only a page that ships a manifest ships a service worker (today, just
+// shanghai/). Registering unconditionally made every other trip page request a
+// sw.js that is not there; the rejection was swallowed, so the 404 never
+// reached the console and showed up only in the network tab.
+if ('serviceWorker' in navigator && document.querySelector('link[rel="manifest"]')) {
  window.addEventListener('load', function () {
   navigator.serviceWorker.register('sw.js').catch(function () {});
  });

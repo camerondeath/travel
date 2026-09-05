@@ -155,7 +155,6 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 }
 .sh26-panel-body.open { display: block; }
 .sh26-panel-body .prose p { font-size: 0.98rem; color: var(--ink-2); max-width: 40em; }
-.sh26-panel-body .prose-drop > p:first-of-type::first-letter { font-size: 3em; color: var(--accent); }
 
 /* ── ESSAY TEASER (closed-day caption, grotesk) ───────────── */
 .essay-teaser { margin-top: 1rem; max-width: var(--measure); }
