@@ -44,8 +44,9 @@ closed the day before the visit. None announced itself.
 
 So run a verification pass on any trip page whose dates are still in the future,
 periodically and not only when asked — monthly while a trip is months out, weekly
-inside the final month. A scheduled agent now does this on Thursdays. **Verify
-against live sources, never against the page**; the page is what is being tested.
+inside the final month. A cloud routine does this every Monday morning, NZ time
+(see "Routines" below). **Verify against live sources, never against the page**;
+the page is what is being tested.
 
 What the pass covers, in order of how much it costs to get wrong:
 
@@ -64,13 +65,12 @@ What the pass covers, in order of how much it costs to get wrong:
    was needed.
 6. **Timings and transport.** Meals against the traveller's own preference, walks
    against the walking rule, and car estimates against any deadline behind them.
-7. **The `events.json` feed.** This is now part of the pass, not a separate job:
-   the `shanghai-events-refresh` agent that used to do it stopped after
-   2026-08-31. Every week, work the whole events source list below — not one or
-   two of them — for what is new, what has moved, and what has quietly ended.
-   Only dates inside the trip window belong in the feed. Then reconcile it with
-   the days: collisions (three concerts against a booked dinner) and near-misses
-   (a market that ends before the day reaches its neighbourhood).
+7. **The `events.json` feed.** Part of the pass, not a separate job. Every week,
+   work the whole events source list below — not one or two of them — for what
+   is new, what has moved, and what has quietly ended, following "What belongs
+   in the feed". Then reconcile the feed with the days: collisions (three
+   concerts against a booked dinner) and near-misses (a market that ends before
+   the day reaches its neighbourhood).
 
 Fix what is unambiguous. **Anything that changes what a day is about is the
 owner's call, not the agent's** — surface it and ask. Removing a stop means
@@ -128,21 +128,61 @@ one-stop job. Work all of it, every week, for dates inside the trip window:
 - Do **not** use `timeoutshanghai.com`; it is dormant and its content is years
   old. And `shanghaijazz.com` is a restaurant in Madison, New Jersey.
 
-## The remote is shared; this checkout is not
+**What belongs in the feed.** The page is a full list Cameron prunes, so be
+generous with coverage and strict with facts: a wrongly dated find is worse than
+a gap.
 
-A scheduled agent (`shanghai-events-refresh`, Mondays 08:06) used to refresh
-`shanghai/events.json` from its own clone (`../travel-events-agent`), pushing to
-the same `origin/main`. **It last ran on 2026-08-31 and is no longer in the
-account's routine list**, so the events feed is the weekly pass's job now (see
-point 7 above). Its commits are still in history as "Refresh Shanghai events
-feed (<date>)" — that is the old agent, not lost work of yours. If it is ever
-restored, the two will both be writing the same file:
+- **Only what is on inside the trip window.** Confirm a run's real closing date
+  before leaving `end` off. "Reinventing Landscape" was once logged open-ended,
+  rendered as running throughout, and in fact shut six days before arrival.
+- **Wordless or English-accessible.** Cameron does not speak Mandarin. Music,
+  dance, visual art, food and markets need no language. Mandarin-only theatre,
+  talks and stand-up belong only when the company or the building is the reason,
+  and then the blurb says so.
+- **Not all galleries, not all evenings.** Keep art shows to about a third of a
+  week's additions, and look for daytime finds (markets, matinees, walks,
+  tastings) as well as evening ones.
+- **No sport. Comedy is not Cameron's thing:** leave existing comedy entries
+  alone, but do not spend a week's research hunting for more.
+- **Empty days first.** The calendar shows every trip day; the ones with nothing
+  dated are where the search should start.
+- **Mechanics.** Dedupe by title and by URL against every entry, live, archived
+  and hidden. `added` is the day of the find and is never rewritten. Before
+  committing, check the file parses and the entry count did not go down. Field
+  meanings live in the file's own `note` and in README.md.
 
-- `git pull` before starting work regardless, or the first push may be rejected
-  as behind.
+## Routines, and where each one lives
+
+There are two kinds, and they are not visible from the same place. **Cloud
+routines** (claude.ai/code/routines) run on Anthropic's servers whether or not
+Cameron's Mac is on. **Desktop scheduled tasks** run through the Claude app on
+the Mac, only when it is running, and a cloud session cannot list them at all.
+On 2026-09-13 a cloud session decided the events agent had been deleted because
+it was missing from the cloud list. It was a desktop task, still enabled, and
+three of its last four runs had stopped at the first shell command, apparently
+waiting for an approval nobody was there to give, while still being marked
+"succeeded". Check both lists before concluding anything about a routine.
+
+As of 2026-09-13:
+
+- **Travel site - weekly pass** (cloud, Monday mornings NZ time): the
+  verification pass above, events feed included. The only scheduled job that
+  writes to this repo.
+- `shanghai-events-refresh` (desktop): **paused**, superseded by the weekly
+  pass. Its instructions predate the `hidden` flag and the current source list,
+  so do not switch it back on as it stands.
+- `shanghai-booking-window` (1 Oct) and `shanghai-pretrip-check` (19 Oct)
+  (desktop, one-off): reminders that quote the plan. When a booking changes, a
+  session on the Mac should update them too; a cloud session cannot.
+
+Other sessions push to the same `origin/main` at any time:
+
+- `git pull` before starting work, or the first push may be rejected as behind.
 - If a pull conflicts on `shanghai/events.json`, merge both sides. The file is
   append/archive only (see above), so a conflict means combining entries —
   never resolve it by picking one version wholesale.
+- Commits titled "Refresh Shanghai events feed (<date>)" are the retired events
+  agent, not lost work of yours.
 
 ## Committing and pushing
 
@@ -153,7 +193,8 @@ sitting uncommitted, and do not ask permission first.
 - **Push means deploy** (GitHub Pages, ~1 min). "Complete" therefore means the
   affected pages still render, and `CACHE_VERSION` in `shanghai/sw.js` is
   bumped if `site.css`, `site.js` or the shanghai page was touched.
-- Pull before starting work; the events agent pushes on Mondays.
+- Pull before starting work; the weekly pass pushes on Monday mornings, and
+  other sessions push whenever.
 - Stage specific files. Never `git add -A`, and never destroy work you did not
   make.
 - Still stop and ask before anything irreversible: history rewrites, force
