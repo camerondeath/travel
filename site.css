@@ -364,6 +364,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .now-time { font-family: var(--mono); font-size: 0.7rem; font-weight: 500; color: var(--ink-2); }
 .now-title { font-family: var(--display); font-size: 1.05rem; font-weight: 700; color: var(--ink); flex: 1 1 auto; min-width: 0; }
 .now-day { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); }
+.now-home { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); }
 .day-controls { display: flex; justify-content: flex-end; padding: 0.7rem 0 0; margin-bottom: -0.3rem; }
 .expand-all-btn { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0.2rem 0; }
 .expand-all-btn:hover { color: var(--accent-2); }
@@ -461,7 +462,7 @@ a:focus-visible, button:focus-visible, .day-chip:focus-visible, .day-pin-control
     lines and a fifth of the screen; hold it to two: label, time and day, then
     the stop on one truncated line. */
  .day-index.now-mode { padding: 0.5rem 0; }
- .now-strip { display: grid; grid-template-columns: auto auto 1fr; align-items: baseline; gap: 0.15rem 0.6rem; padding: 0.5rem 0.75rem; }
+ .now-strip { display: grid; grid-template-columns: auto auto 1fr auto; align-items: baseline; gap: 0.15rem 0.6rem; padding: 0.5rem 0.75rem; }
  .now-title { grid-column: 1 / -1; grid-row: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
  .now-day { justify-self: end; }
 }

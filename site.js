@@ -1260,6 +1260,28 @@ function buildFlatEvents() {
  return flat;
 }
 
+// When home keeps a different clock, the Now strip carries it too: a call home,
+// a meeting in home hours. Derived from the trip's own clock, so the __NOW__
+// test hook moves it as well, and the weekday appears only once home has
+// already moved on to another day.
+function homeClockHtml(now) {
+ const m = TRIP.meta;
+ if (!m.homeTz || m.homeTz === m.tz) return '';
+ try {
+  const p = now.date.split('-').map(Number);
+  const utc = Date.UTC(p[0], p[1] - 1, p[2]) + now.minutes * 60000 - tzOffsetHours(now.date, m.tz) * 3600000;
+  const parts = new Intl.DateTimeFormat('en-US', {
+   timeZone: m.homeTz, weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit',
+   hour: 'numeric', minute: '2-digit', hour12: true
+  }).formatToParts(new Date(utc));
+  const g = t => (parts.find(x => x.type === t) || {}).value || '';
+  const homeISO = g('year') + '-' + g('month') + '-' + g('day');
+  const time = g('hour') + ':' + g('minute') + g('dayPeriod').toLowerCase();
+  return '<span class="now-home">' + esc(m.homeLabel || 'Home') + ' ' + time
+   + (homeISO !== now.date ? ' ' + g('weekday') : '') + '</span>';
+ } catch (e) { return ''; }
+}
+
 function renderNowStrip(wrap, now) {
  const nowAbs = dayDiff(TRIP_START_ISO, now.date) * 1440 + now.minutes;
  const flat = buildFlatEvents();
@@ -1282,7 +1304,8 @@ function renderNowStrip(wrap, now) {
   '<span class="now-label">' + label + '</span>' +
   '<span class="now-time">' + (show.ev.time || '') + '</span>' +
   '<span class="now-title">' + show.ev.title + '</span>' +
-  '<span class="now-day">' + show.day.dow + '</span>';
+  '<span class="now-day">' + show.day.dow + '</span>' +
+  homeClockHtml(now);
  strip.addEventListener('click', function () {
   scrollToEl(document.getElementById(show.day.id), true);
   rememberDay(show.day.id);
