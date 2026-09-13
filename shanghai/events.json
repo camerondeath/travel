@@ -1,5 +1,5 @@
 {
-  "updated": "13 Sep 2026",
+  "updated": "14 Sep 2026",
   "note": "Dated events during 23 Oct – 1 Nov 2026. Sources, best first: SmartShanghai (/events/<category>/?date=YYYY-MM-DD is date-filterable and is the workhorse, but its cards carry an 'Ongoing' promo block that repeats on every date and whose 'until' strings go stale, so confirm end dates elsewhere); the arts festival's own site, artsbird.com/en/calendar/2026-10, whose page payload carries the full dated programme; Dance Reflections by Van Cleef & Arpels, which co-presents a dance strand inside the festival and publishes exact dates that no general listing carries; english.shanghai.gov.cn, official and English, for its monthly 'exhibitions and performances in <month>' roundups; and the venue primaries (Power Station of Art, Museum of Art Pudong at museumofartpd.org.cn, Fotografiska Shanghai, West Bund Museum at wbmshanghai.com, Rockbund, hiveart.cn, Shanghai Culture Square at shcstheatre.com). Then, for the corners the big listings miss: shanghaiconcerts.com for classical and recitals with venue and date in English; 247tickets.com for English ticketing across stage, music and experiences; SmartShanghai's own periodically-updated Shanghai Jazz Guide for the venue-by-venue jazz roster (JZ, Heyday, the Peace Hotel band, Wooden Box); e-flux.com/announcements, which carries institutional art openings before the local listings do; and shanghaitourism.org's festivals and events calendar for date ranges. Two traps recorded so they are not walked into twice: timeoutshanghai.com is dormant, its content years old; and shanghaijazz.com is a restaurant in Madison, New Jersey, nothing to do with this city. Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. An entry nobody wanted gets \"hidden\": true (plus a short \"hiddenNote\" saying why) and drops into the 'Hidden' disclosure for every reader, not just the one whose browser it was rejected in — that is the difference from the × on a row, which is local to one browser. A refresh must not un-hide one or re-add it as a new entry; a reader who disagrees can restore it on their own copy, which is stored locally and never written back here. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Optional `weekdays` (e.g. [\"Wed\",\"Sat\",\"Sun\"]) for recurring patterns, `dates` (ISO list) for specific occurrences, and `closed` (weekday list, e.g. [\"Mon\"]) restrict which trip days the \"Add to a day\" picker offers — so a Wednesday-only night can't be pinned to a Tuesday. Absent all three, eligibility is the run intersected with the trip window. Optional `planned` (a day id like \"d7\") marks a find that is already an itinerary stop on that day: the page then shows \"Already on <day>\" in place of the picker, since there is nothing to add. Git history holds every past version of this file.",
   "events": [
     {
@@ -198,7 +198,7 @@
       "end": "2026-10-25",
       "venue": "Shanghai Culture Square",
       "kind": "theatre",
-      "blurb": "Two performances of highlights from the touring company's ballet repertoire; one date carries an afternoon matinee slot, though the venue listing doesn't specify which. Visual storytelling, nothing to translate.",
+      "blurb": "Highlights from the touring company's ballet repertoire, listed by the festival as The Bolshoi Ballet Gala. Visual storytelling, nothing to translate. The 24th is 7:30pm, landing night; the 25th is a 1:30pm matinee, which is the half of the weekend that does not collide with anything.",
       "url": "https://www.shcstheatre.com/Program/ProgramDetails.aspx?headtype=YanChu&ARTICLE_ID=42036&id=42036",
       "added": "2026-08-31"
     },
@@ -401,7 +401,7 @@
       "end": "2026-11-01",
       "venue": "Theatre YOUNG",
       "kind": "theatre",
-      "blurb": "A Dorian Gray reworking at Theatre YOUNG, opening on the Friday; Friday's evening on this page is already He Who Falls. Language unconfirmed — worth checking before booking.",
+      "blurb": "Gob Squad's Dorian Gray piece, the Anglo-German collective's own ageing set against a cast of local performers a generation either side of them. Performed in German and English, so it reads without Mandarin. Theatre YOUNG is out at Kongjiang Rd in Yangpu; Friday and Saturday are 7:30 and Sunday is a 2pm matinee, and Friday's evening on this page is already He Who Falls.",
       "url": "https://www.smartshanghai.com/event/creation-pictures-for-dorian",
       "added": "2026-09-13"
     },
@@ -450,6 +450,176 @@
       "blurb": "More than 300 Bvlgari jewels chosen for their colour, in a Shanghai edition of the touring show, with work by contemporary Chinese artists alongside. Closed Mondays; tickets at the desk or through PSA's WeChat account.",
       "closed": ["Mon"],
       "url": "https://www.powerstationofart.com/whats-on/exhibitions/bvlgari-kaleidos",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "The Phantom of the Opera — 40th Anniversary Farewell Season",
+      "when": "daily except Mon · 7:30pm, matinees 2pm",
+      "sortDate": "2026-10-24",
+      "start": "2026-09-29",
+      "end": "2026-12-27",
+      "closed": ["Mon"],
+      "venue": "Shanghai Grand Theatre · Lyric Theatre, 300 People's Ave",
+      "kind": "theatre",
+      "blurb": "The original production's fortieth-anniversary farewell run, three months in the main house and the only mainland stop, with Ramin Karimloo in the title role. Sung in English, so nothing to read. It is also the closest theatre on this page to the hotel — People's Avenue, the far side of the square from the museum. Evenings at 7:30 every day but Monday, with 2pm matinees on the 24th, 25th, 31st and 1st; the Saturday matinees are the ones a full evening cannot swallow.",
+      "url": "https://shanghaiconcerts.com/concerts/phantom-of-the-opera-40th-shanghai-farewell",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Dance Drama \"Shudao\" — Sichuan Province Song and Dance Theatre",
+      "when": "Sat 7:30pm · Sun 2pm matinee",
+      "sortDate": "2026-10-25",
+      "start": "2026-10-24",
+      "end": "2026-10-25",
+      "venue": "Shangyin Opera House, 6 Fenyang Rd",
+      "kind": "dance",
+      "blurb": "A dance drama built on the Shu roads, the plank paths cut into the cliffs of Sichuan. Wordless. The Sunday performance is a 2pm matinee, which is the one slot this weekend that does not fight anything: Sunday afternoon is currently five hours of deliberate nothing before the Lost Plate tour at 6:20, and Fenyang Rd is fifteen minutes from Jiashan Rd station.",
+      "url": "https://www.artsbird.com/en/csiaf/a287b027-4c5f-4ee1-9c76-88aaf2f38b24",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Ju Percussion Group — AMPLIFIED+",
+      "when": "one night, 7:30pm",
+      "sortDate": "2026-10-25",
+      "start": "2026-10-25",
+      "end": "2026-10-25",
+      "venue": "Shanghai Symphony Hall · Concert Hall, 1380 Middle Fuxing Rd",
+      "kind": "music",
+      "blurb": "Taiwan's Ju Percussion Group at the arts festival for a fourth time, seven pieces and half of them their own. Percussion, so nothing to translate. On sale since August, 80 to 580 yuan. It clashes head-on with the Lost Plate tour, which is booked and paid.",
+      "url": "https://shanghaiconcerts.com/concerts/ju-percussion-amplified-plus",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Dénes Várjon Recital",
+      "when": "one night, 7:15pm",
+      "sortDate": "2026-10-29",
+      "start": "2026-10-29",
+      "end": "2026-10-29",
+      "venue": "Shanghai Symphony Hall · Chamber Hall, 1380 Middle Fuxing Rd",
+      "kind": "music",
+      "blurb": "The Hungarian pianist in the small hall at Fuxing Rd, tickets out since July. Thursday is the emptiest evening of the trip — it currently ends with a bowl of Wuxi noodles at six — and the hall is about twenty minutes from Yanping Rd.",
+      "url": "https://shanghaiconcerts.com/concerts/d-nes-v-rjon-recital",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Earth and Legends — Lü Shao-Chia, Fazıl Say and the SSO",
+      "when": "one night, 7:30pm",
+      "sortDate": "2026-10-30",
+      "start": "2026-10-30",
+      "end": "2026-10-30",
+      "venue": "Shanghai Symphony Hall · Concert Hall, 1380 Middle Fuxing Rd",
+      "kind": "music",
+      "blurb": "Fazıl Say with the Shanghai Symphony under Lü Shao-Chia. Purely orchestral. Friday evening is already He Who Falls at half past seven, ten minutes away at the dance centre, so this is the alternative rather than an addition.",
+      "url": "https://shanghaiconcerts.com/concerts/earth-and-legends-l-shao-chia-fazil-say-and-sso",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "The Shape of Time — Les Croissants Choir",
+      "when": "one night, 7:30pm",
+      "sortDate": "2026-10-31",
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "venue": "Shanghai Symphony Hall · Concert Hall, 1380 Middle Fuxing Rd",
+      "kind": "music",
+      "blurb": "A young Shanghai chamber choir, founded in 2024, singing nothing but contemporary choral work. Tickets from 80 yuan, on sale since the start of September. Saturday night is the crab and then the Old Jazz Band, so this only works if the Bund half of the evening goes.",
+      "url": "https://shanghaiconcerts.com/concerts/the-shape-of-time-les-croissants-choir",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Dagger Society — Shanghai Opera House",
+      "when": "Fri–Sat 7:30pm · Sun 2pm",
+      "sortDate": "2026-10-30",
+      "start": "2026-10-30",
+      "end": "2026-11-01",
+      "venue": "Majestic Theatre, 66 Jiangning Rd",
+      "kind": "dance",
+      "blurb": "A Chinese dance drama about the Small Swords Society, the 1853 rising that held the walled old town for seventeen months. Wordless, and the ground it is about is the ground Monday morning walks: Fangbang Middle Rd and the blocks south of it. In the 1941 Majestic, the same house as the Beijing People's Art Hamlet the week before.",
+      "url": "https://www.artsbird.com/en/csiaf/a287b383-ad87-4e7c-8bd6-8b897b6ce80a",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Robert Zhao Renhui: Trying to Remember a Tree",
+      "when": "to 6 Nov",
+      "sortDate": "2026-10-24",
+      "start": "2026-06-27",
+      "end": "2026-11-06",
+      "venue": "Fotografiska Shanghai, 127 Guangfu Rd",
+      "kind": "art",
+      "blurb": "The Singaporean artist who represented his country at the 2024 Venice Biennale, working the same seam here: camera traps, salvaged specimens and the secondary forest that grows back over what people abandon. Runs the whole trip. Fotografiska is open to 11pm, which makes it one of the few galleries in this feed that survives a day already spent, and the Wednesday jazz night is in the same building.",
+      "url": "https://shanghai.fotografiska.com/en/whats-on",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Johnny Depp: Figures of the Fringe",
+      "when": "to 13 Dec",
+      "sortDate": "2026-10-24",
+      "start": "2026-08-15",
+      "end": "2026-12-13",
+      "closed": ["Mon"],
+      "venue": "Modern Art Museum Shanghai, West Bund",
+      "kind": "art",
+      "blurb": "Paintings, texts and installations the actor has made over decades, curated by Shai Baitel. It is here because it is on and it is large, not because anyone is claiming it is good; the West Bund is a long way to go on a hunch. Closed Mondays.",
+      "url": "https://www.smartshanghai.com/event/johnny-depp-figures-of-the-fringe",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Carolina Caycedo: Salute of the Whales",
+      "when": "on throughout your stay",
+      "sortDate": "2026-10-24",
+      "start": "2026-02-12",
+      "end": "2027-02-21",
+      "venue": "Museum of Art Pudong · Hall X",
+      "kind": "art",
+      "blurb": "A commission for MAP's double-height Hall X from the Colombian-British artist, who works on rivers, dams and the people displaced by them. Runs past the trip in both directions, and shares a building with the Morandi, which closes on the 28th.",
+      "url": "https://www.museumofartpd.org.cn/en/exhibition/",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Splendors in Flowing Light: Qianlong Artifacts from the Palace Museum",
+      "when": "to 18 Nov",
+      "sortDate": "2026-10-24",
+      "start": "2026-05-18",
+      "end": "2026-11-18",
+      "closed": ["Mon"],
+      "venue": "Fengxian Museum, 333 Hupan Rd, Nanqiao",
+      "kind": "art",
+      "blurb": "121 pieces out of the Palace Museum — imperial seals, ceremonial robes, jade, painting, and the Western clocks Qianlong collected — in the largest Qianlong show Shanghai has staged in years. The catch is the address: Fengxian is fifty kilometres south of the hotel and the museum is not near anything else on this page, so it is a day or it is nothing. Closed Mondays.",
+      "url": "https://english.shanghai.gov.cn/en-Events/20260903/238505ce77da46d0a487311b64d9fe4f.html",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Rising Artists' Works: two exhibitions at The Inlet",
+      "when": "23 Oct – 15 Nov",
+      "sortDate": "2026-10-24",
+      "start": "2026-10-23",
+      "end": "2026-11-15",
+      "venue": "The Inlet, 2/F Building 3, Lane 989 North Sichuan Rd, Hongkou",
+      "kind": "art",
+      "blurb": "The festival's Rising Artists' Works strand puts two shows in one Hongkou building for the length of the trip: the group exhibition Ponder Slowly Swallow Slowly and the solo L'OuLiPo du Media. Small, free-standing and unheralded, and North Sichuan Rd is fifteen minutes from Tilanqiao, which Friday morning already walks.",
+      "url": "https://www.artsbird.com/en/csiaf/a289f4bb-869a-4c28-b89d-296c963ce923",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Old Shanghai on a Moped",
+      "when": "Sat & Sun, half a day",
+      "sortDate": "2026-10-24",
+      "weekdays": ["Sat", "Sun"],
+      "venue": "SmSh Territory, pickup in the old town",
+      "kind": "activity",
+      "blurb": "A half-day sidecar-and-moped run through the lanes of the old town and the Concession, weekends only. A daytime thing on a page that is mostly evenings, and the one way to cover the ground Monday walks without walking it. Saturday the 24th is landing day and Saturday the 31st is the museum and the crab, so realistically this is a Sunday.",
+      "url": "https://www.smartshanghai.com/event/0-5-day-trip-shanghai-discover-old-shanghai-on-a-moped-at-smsh-territory",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Pop Land carnival",
+      "when": "to 1 Nov, daytime",
+      "sortDate": "2026-10-24",
+      "start": "2026-08-31",
+      "end": "2026-11-01",
+      "venue": "Shanghai No. 1 Department Store, E Nanjing Rd at Liuhe Rd",
+      "kind": "activity",
+      "blurb": "Pop Mart's touring carnival, running to the last day of the trip at two sites: an interactive plaza at the Oriental Pearl and an immersive walk-through along Liuhe Rd at the old No. 1 Department Store, which is on the walk between the hotel and the Bund. Free to walk past, and worth ten minutes for what the crowd is like rather than for the toys.",
+      "url": "https://english.shanghai.gov.cn/en-Events/20260908/ec1bcc93c3eb49f7875a931e61c65183.html",
       "added": "2026-09-13"
     }
   ]
