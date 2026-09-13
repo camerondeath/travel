@@ -1,6 +1,6 @@
 {
-  "updated": "31 Aug 2026",
-  "note": "Dated events during 23 Oct – 1 Nov 2026, pulled from multiple sources (SmartShanghai, Time Out, venue sites, ticketing/gig listings). Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Optional `weekdays` (e.g. [\"Wed\",\"Sat\",\"Sun\"]) for recurring patterns, `dates` (ISO list) for specific occurrences, and `closed` (weekday list, e.g. [\"Mon\"]) restrict which trip days the \"Add to a day\" picker offers — so a Wednesday-only night can't be pinned to a Tuesday. Absent all three, eligibility is the run intersected with the trip window. Optional `planned` (a day id like \"d7\") marks a find that is already an itinerary stop on that day: the page then shows \"Already on <day>\" in place of the picker, since there is nothing to add. Git history holds every past version of this file.",
+  "updated": "13 Sep 2026",
+  "note": "Dated events during 23 Oct – 1 Nov 2026. Sources, best first: SmartShanghai (/events/<category>/?date=YYYY-MM-DD is date-filterable and is the workhorse, but its cards carry an 'Ongoing' promo block that repeats on every date and whose 'until' strings go stale, so confirm end dates elsewhere); the arts festival's own site, artsbird.com/en/calendar/2026-10, whose page payload carries the full dated programme; Dance Reflections by Van Cleef & Arpels, which co-presents a dance strand inside the festival and publishes exact dates that no general listing carries; english.shanghai.gov.cn, official and English, for its monthly 'exhibitions and performances in <month>' roundups; and the venue primaries (Power Station of Art, Museum of Art Pudong at museumofartpd.org.cn, Fotografiska Shanghai, West Bund Museum at wbmshanghai.com, Rockbund, hiveart.cn, Shanghai Culture Square at shcstheatre.com). Then, for the corners the big listings miss: shanghaiconcerts.com for classical and recitals with venue and date in English; 247tickets.com for English ticketing across stage, music and experiences; SmartShanghai's own periodically-updated Shanghai Jazz Guide for the venue-by-venue jazz roster (JZ, Heyday, the Peace Hotel band, Wooden Box); e-flux.com/announcements, which carries institutional art openings before the local listings do; and shanghaitourism.org's festivals and events calendar for date ranges. Two traps recorded so they are not walked into twice: timeoutshanghai.com is dormant, its content years old; and shanghaijazz.com is a restaurant in Madison, New Jersey, nothing to do with this city. Entries are never deleted by a refresh: Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Optional `weekdays` (e.g. [\"Wed\",\"Sat\",\"Sun\"]) for recurring patterns, `dates` (ISO list) for specific occurrences, and `closed` (weekday list, e.g. [\"Mon\"]) restrict which trip days the \"Add to a day\" picker offers — so a Wednesday-only night can't be pinned to a Tuesday. Absent all three, eligibility is the run intersected with the trip window. Optional `planned` (a day id like \"d7\") marks a find that is already an itinerary stop on that day: the page then shows \"Already on <day>\" in place of the picker, since there is nothing to add. Git history holds every past version of this file.",
   "events": [
     {
       "title": "On Top of the World Tree",
@@ -84,12 +84,14 @@
     },
     {
       "title": "China Shanghai International Arts Festival",
-      "when": "Oct–Nov",
+      "when": "17 Oct – 15 Nov",
       "sortDate": "2026-10-23",
+      "start": "2026-10-17",
+      "end": "2026-11-15",
       "venue": "Venues citywide",
       "kind": "festival",
-      "blurb": "The 25th edition spreads opera, dance, theatre and music across the city's big stages through October and November. The programme firms up closer in — worth a skim for anything landing in your ten days.",
-      "url": "https://www.artsbird.com/en/about",
+      "blurb": "The 25th edition runs 17 Oct to 15 Nov: around 400 programmes and 1,100 performances and exhibitions, with a main bill of 60 productions across 168 shows. Nearly 90 per cent are Shanghai premieres and thirteen play nowhere else in China. A good share is wordless or in English. The individual shows landing in your ten days are listed separately below rather than left inside this entry; the festival's own calendar at artsbird.com/en/calendar/2026-10 is the place to check for late additions.",
+      "url": "https://www.artsbird.com/en/calendar/2026-10",
       "added": "2026-07-24"
     },
     {
@@ -220,6 +222,210 @@
       "blurb": "Taiwanese singer-songwriter JOYCE plays a solo date on her 2026 tour, the same evening as Tosca across town. Mandarin-language pop — fine as a gig, but don't expect to follow the lyrics.",
       "url": "https://www.showstart.com/event/303565",
       "added": "2026-08-31"
+    },
+    {
+      "title": "Moby Dick — Robert Wilson & Düsseldorfer Schauspielhaus",
+      "when": "Fri–Sun, evenings",
+      "sortDate": "2026-10-24",
+      "start": "2026-10-23",
+      "end": "2026-10-25",
+      "venue": "West Bund Theatre",
+      "kind": "theatre",
+      "blurb": "Robert Wilson's last fully directed production, and its first showing in China: Melville staged as slow-motion tableau, with songs by Anna Calvi. German with surtitles, which matters less than usual here — Wilson's theatre is built to be looked at. The catch is the calendar: the 24th is landing day and Saturday ends at eight, and the 25th is the Lost Plate tour. Part of the Dance Reflections strand inside the arts festival.",
+      "url": "https://www.smartshanghai.com/event/moby-dick-by-robert-wilson-duesseldorfer-schauspielhaus",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Save the Last Dance for Me — Alessandro Sciarroni",
+      "when": "two evenings",
+      "sortDate": "2026-10-29",
+      "dates": ["2026-10-28", "2026-10-29"],
+      "start": "2026-10-28",
+      "end": "2026-10-29",
+      "venue": "Dance Reflections / CSIAF",
+      "kind": "dance",
+      "blurb": "Sciarroni reconstructs Polka Chinata, a near-extinct Bolognese courtship dance for two men who grip each other and spin while folding to the floor. Roughly half an hour, wordless, and the 29th is the one night of the week deliberately left open. A Silver Lion winner working on salvaged folk material: about as close to this trip's argument as a dance piece gets.",
+      "url": "https://www.dancereflections-vancleefarpels.com/en/spectacle/save-last-dance-me",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "He Who Falls — Yoann Bourgeois Art Company",
+      "when": "Fri–Sat, evenings",
+      "sortDate": "2026-10-30",
+      "start": "2026-10-30",
+      "end": "2026-10-31",
+      "venue": "Shanghai International Dance Center",
+      "kind": "dance",
+      "planned": "d7",
+      "blurb": "Six people try to stay upright on a suspended platform that spins, tilts and drops. Wordless, about an hour, and one of the few pieces of contemporary circus that earns the word. Now Friday's evening on the page, at 1650 Hongqiao Rd; the 31st is the crab. Curtain time still to confirm — the house usually starts at half past seven.",
+      "url": "https://www.dancereflections-vancleefarpels.com/en/artist/yoann-bourgeois",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Trisha Brown: In Plain Site",
+      "when": "Sat–Sun",
+      "sortDate": "2026-10-31",
+      "start": "2026-10-31",
+      "end": "2026-11-01",
+      "venue": "Trisha Brown Dance Company / CSIAF",
+      "kind": "dance",
+      "blurb": "The company's site-specific format: Brown's repertory re-set into whatever building it lands in, rather than onto a stage. Wordless, usually short, and the Shanghai venue is the point of it — worth checking where they put it. The 1 Nov date is the flight home.",
+      "url": "https://www.dancereflections-vancleefarpels.com/en/artist/trisha-brown-dance-company",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Numerical Series 15 | 18 — TAO Dance Theater",
+      "when": "Sat–Sun",
+      "sortDate": "2026-10-31",
+      "start": "2026-10-31",
+      "end": "2026-11-01",
+      "venue": "TAO Dance Theater / CSIAF",
+      "kind": "dance",
+      "blurb": "Tao Ye's company counts its works by the number of bodies in them. Pure movement, no narrative, no language, and a Chinese contemporary company with a genuine international standing rather than a local one.",
+      "url": "https://www.dancereflections-vancleefarpels.com/en/china-shanghai-international-arts-festival",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Contre-Nature — Rachid Ouramdane / Compagnie de Chaillot",
+      "when": "Sat–Sun, evenings",
+      "sortDate": "2026-10-24",
+      "start": "2026-10-24",
+      "end": "2026-10-25",
+      "venue": "Shanghai International Dance Center",
+      "kind": "dance",
+      "blurb": "Contemporary dance with aerial work, from the director of Paris's Chaillot. Wordless. Both dates are awkward — the 24th is landing day, the 25th is the food tour — so this is here for completeness rather than as a real candidate.",
+      "url": "https://www.smartshanghai.com/event/contemporary-dance-and-aerial-performance-contre-nature-1",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "The Starry Nights — Argerich, Vengerov, Isserlis and friends",
+      "when": "two evenings",
+      "sortDate": "2026-10-24",
+      "dates": ["2026-10-24", "2026-10-25"],
+      "start": "2026-10-24",
+      "end": "2026-10-25",
+      "venue": "Shanghai Oriental Art Centre, Pudong",
+      "kind": "music",
+      "blurb": "Martha Argerich, Maxim Vengerov and Steven Isserlis playing chamber music on two consecutive nights. The 24th is Liszt, Schumann, Mahler and Beethoven; the 25th is Shostakovich, Beethoven, Kreisler and Ravel. Argerich is 85 and does not tour much. Both nights clash with the page as it stands, which is exactly the sort of thing worth knowing early.",
+      "url": "https://www.smartshanghai.com/event/the-starry-nights-by-martha-argerich-maxim-vengerov-steven-isserlis-and-friends",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Hamlet — Beijing People's Art Theatre",
+      "when": "to 25 Oct, evenings",
+      "sortDate": "2026-10-24",
+      "start": "2026-10-21",
+      "end": "2026-10-25",
+      "venue": "Majestic Theatre",
+      "kind": "theatre",
+      "blurb": "A new main-stage Hamlet from China's most prestigious drama company, co-directed by Feng Yuanzheng, in the 1941 Majestic on Jiangning Rd. Performed in Mandarin and long, so it asks more of you than the wordless work does; the building and the company are the reasons to consider it anyway.",
+      "url": "https://www.artsbird.com/en",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Min Opera: Mr. Painted Hairnet",
+      "when": "one night",
+      "sortDate": "2026-10-27",
+      "start": "2026-10-27",
+      "end": "2026-10-27",
+      "venue": "Fujian Provincial Experimental Min Opera Theatre / CSIAF",
+      "kind": "theatre",
+      "blurb": "Min opera is the regional form of Fuzhou, sung in Eastern Min rather than Mandarin, and it travels out of Fujian rarely. Subtitled in Chinese only, most likely. Here because it is the least exportable thing in the festival and it lands on a Tuesday that currently ends at half past seven.",
+      "url": "https://www.artsbird.com/en/calendar/2026-10",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Giorgio Morandi. Solo",
+      "when": "to 28 Oct",
+      "sortDate": "2026-10-24",
+      "end": "2026-10-28",
+      "venue": "Museum of Art Pudong",
+      "kind": "art",
+      "blurb": "The largest Morandi exhibition anywhere this century: 140-odd originals, over 120 shown in China for the first time, with the Museo Morandi in Bologna. Read the date carefully — it closes on the 28th, and the Pudong day on this page is the 29th. It is a five-minute walk from the Shanghai Museum East stop, on any day except that one.",
+      "url": "https://www.museumofartpd.org.cn/en/exhibitiondetail?id=186",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Lina Bo Bardi: The Poetics of Survival",
+      "when": "to 25 Oct",
+      "sortDate": "2026-10-24",
+      "end": "2026-10-25",
+      "closed": ["Mon"],
+      "venue": "Power Station of Art",
+      "kind": "art",
+      "blurb": "Bo Bardi's first exhibition in China, staged by OPEN Architecture, who have rebuilt the indoor pond from SESC Pompéia in the PSA lobby at full size. Closes on the 25th, so Saturday or Sunday or not at all. PSA is the old power station on the same bank between the Bund and West Bund, which makes Sunday the day it fits.",
+      "url": "https://www.powerstationofart.com/exhibition",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "We Deem We Dream — Estelle Hanania",
+      "when": "on throughout your stay",
+      "sortDate": "2026-10-24",
+      "start": "2026-10-14",
+      "end": "2026-11-14",
+      "venue": "CSIAF / Dance Reflections",
+      "kind": "art",
+      "blurb": "Photography by Estelle Hanania, who has spent years shooting European folk ritual and the dancers of Pina Bausch's company. Runs the whole trip, so it is the one in this batch with no timing problem at all.",
+      "url": "https://www.dancereflections-vancleefarpels.com/en/china-shanghai-international-arts-festival",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "X-TRA Digital Art Project: Terra Nova",
+      "when": "opens 30 Oct",
+      "sortDate": "2026-10-30",
+      "start": "2026-10-30",
+      "end": "2027-01-24",
+      "venue": "CSIAF",
+      "kind": "art",
+      "blurb": "The festival's digital-art commission, opening on the Friday of the trip and running into January. Opening weekends are the worst time to see anything, which is the only argument against it.",
+      "url": "https://www.artsbird.com/en/calendar/2026-10",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Creation — Pictures for Dorian",
+      "when": "Fri–Sun",
+      "sortDate": "2026-10-30",
+      "start": "2026-10-30",
+      "end": "2026-11-01",
+      "venue": "Theatre YOUNG",
+      "kind": "theatre",
+      "blurb": "A Dorian Gray reworking at Theatre YOUNG, opening on the Friday evening the page leaves free. Language unconfirmed — worth checking before booking.",
+      "url": "https://www.smartshanghai.com/event/creation-pictures-for-dorian",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Le Roi Soleil — French musical",
+      "when": "from 30 Oct",
+      "sortDate": "2026-10-30",
+      "start": "2026-10-30",
+      "end": "2026-11-05",
+      "venue": "Shanghai Culture Square",
+      "kind": "music",
+      "blurb": "The Louis XIV pop-musical, sung in French with Chinese surtitles, opening on the Friday. Shanghai Culture Square is the sunken 2,000-seat house south of Huaihai Rd. Big, unsubtle and entirely singable-along if that is the evening you want.",
+      "url": "https://www.smartshanghai.com/event/french-musical-le-roi-soleil",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "ERA2 — Spirit of Shanghai",
+      "when": "nightly except Mon",
+      "sortDate": "2026-10-24",
+      "closed": ["Mon"],
+      "venue": "Shanghai Circus World",
+      "kind": "theatre",
+      "blurb": "The long-running acrobatics spectacular, rebuilt as a second edition. Wordless by definition and runs most nights, so it is the reliable fallback rather than the event — useful to know exists on a night when nothing else lands.",
+      "url": "https://www.smartshanghai.com/event/era2-spirit-of-shanghai-at-shanghai-circus-world",
+      "added": "2026-09-13"
+    },
+    {
+      "title": "Weekly Jam Night",
+      "when": "Mondays, evening",
+      "sortDate": "2026-10-26",
+      "weekdays": ["Mon"],
+      "venue": "Chair Club, Haifang Rd",
+      "kind": "music",
+      "blurb": "An open jam on the one night of the week when most of the city's music rooms are dark. Monday the 26th currently ends with delivery in the room; this is the low-commitment alternative if it stops too hard.",
+      "url": "https://www.smartshanghai.com/event/weekly-jam-night",
+      "added": "2026-09-13"
     }
   ]
 }

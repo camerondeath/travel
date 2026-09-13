@@ -60,14 +60,23 @@ What the pass covers, in order of how much it costs to get wrong:
    was needed.
 6. **Timings and transport.** Meals against the traveller's own preference, walks
    against the walking rule, and car estimates against any deadline behind them.
-7. **The `events.json` feed against the schedule.** The feed is refreshed weekly
-   by the agent but nothing reconciles it with the days. Look for collisions
-   (three concerts against a booked dinner) and near-misses (a market that ends
-   before the day reaches its neighbourhood).
+7. **The `events.json` feed.** This is now part of the pass, not a separate job:
+   the `shanghai-events-refresh` agent that used to do it stopped after
+   2026-08-31. Every week, work the whole events source list below — not one or
+   two of them — for what is new, what has moved, and what has quietly ended.
+   Only dates inside the trip window belong in the feed. Then reconcile it with
+   the days: collisions (three concerts against a booked dinner) and near-misses
+   (a market that ends before the day reaches its neighbourhood).
 
 Fix what is unambiguous. **Anything that changes what a day is about is the
 owner's call, not the agent's** — surface it and ask. Removing a stop means
 rewriting that day's essay; see the rule above.
+
+**Surfacing is not a shrug.** When a find is better than what a day currently
+holds, or a show closes just before the day that would have used it, say what
+the swap would cost: what he gains, what he gives up, and what else moves with
+it (the essay, the neighbours, the booking). A flagged conflict with no tradeoff
+attached makes him do the work twice.
 
 Sources that work, and ones that do not:
 
@@ -84,17 +93,49 @@ Sources that work, and ones that do not:
 - Sunrise and sunset in prose must match what `sunTime()` in `site.js` computes
   for that ISO date; run the function rather than searching for the time.
 
+For `events.json`, the feed is only as good as the list below, and it is not a
+one-stop job. Work all of it, every week, for dates inside the trip window:
+
+- **`smartshanghai.com`** is the workhorse and the only one that is properly
+  queryable: `/events/<category>/?date=YYYY-MM-DD` really does filter by date.
+  Categories worth sweeping: exhibitions, concerts, livemusic, stage, musicals,
+  festivals, comedy, nightlife, markets, activities. Two traps. Every category
+  page also renders an "Ongoing" promo block that repeats on *every* date, so a
+  hit is only a hit if the slug appears on some dates and not others. And the
+  "Daily until Sep 20" strings on the cards go stale badly; confirm end dates at
+  the venue. Its **Shanghai Jazz Guide** article is the standing jazz roster.
+- **`artsbird.com`** is the arts festival's own site, and the festival is the
+  biggest thing in the October window. Use `/en` for English and
+  `/en/calendar/2026-10`, whose page payload carries the full dated programme
+  with ISO dates even though the rendered calendar is client-side. Section pages
+  paginate client-side and cannot be walked with curl.
+- **`dancereflections-vancleefarpels.com`** co-presents a dance strand inside
+  the festival and publishes exact dates that no general listing carries. The
+  kind of source that only turns up if you follow a performer's name outward.
+- **`english.shanghai.gov.cn`** posts a monthly "exhibitions and performances in
+  <month>" roundup plus a Cultural Performances feed. Official and in English.
+- **Venue primaries** for anything with an end date: Power Station of Art,
+  `museumofartpd.org.cn`, Fotografiska Shanghai, `wbmshanghai.com`, Rockbund,
+  `hiveart.cn`, `shcstheatre.com`.
+- **The corners**: `shanghaiconcerts.com` (classical and recitals, English, with
+  venue and date), `247tickets.com` (English ticketing), `e-flux.com/announcements`
+  (institutional art openings, often ahead of local listings), and
+  `shanghaitourism.org`'s festivals calendar.
+- Do **not** use `timeoutshanghai.com`; it is dormant and its content is years
+  old. And `shanghaijazz.com` is a restaurant in Madison, New Jersey.
+
 ## The remote is shared; this checkout is not
 
-A scheduled agent (`shanghai-events-refresh`, Mondays 08:06) refreshes
-`shanghai/events.json`. It works in its own clone (`../travel-events-agent`)
-and never touches this checkout — but it pushes to the same `origin/main`.
-Consequences:
+A scheduled agent (`shanghai-events-refresh`, Mondays 08:06) used to refresh
+`shanghai/events.json` from its own clone (`../travel-events-agent`), pushing to
+the same `origin/main`. **It last ran on 2026-08-31 and is no longer in the
+account's routine list**, so the events feed is the weekly pass's job now (see
+point 7 above). Its commits are still in history as "Refresh Shanghai events
+feed (<date>)" — that is the old agent, not lost work of yours. If it is ever
+restored, the two will both be writing the same file:
 
-- This checkout falls behind on Mondays. `git pull` before starting work, or
-  the first push will be rejected as behind.
-- After a pull its commits appear in `git log` here as "Refresh Shanghai events
-  feed (<date>)". That is the agent, not lost work of yours.
+- `git pull` before starting work regardless, or the first push may be rejected
+  as behind.
 - If a pull conflicts on `shanghai/events.json`, merge both sides. The file is
   append/archive only (see above), so a conflict means combining entries —
   never resolve it by picking one version wholesale.
