@@ -411,6 +411,20 @@ const EVENTS_HIDDEN_KEY = 'events_hidden_' + TRIP_SLUG;
 function loadHiddenEvents() { return lsGet(EVENTS_HIDDEN_KEY, []); }
 function saveHiddenEvents(ids) { lsSet(EVENTS_HIDDEN_KEY, ids); }
 
+// A hide made in a browser stays in that browser, which was right while one
+// person read this and wrong the moment a second one did: their copy shows
+// every find the owner has already rejected, and his own hides die with a
+// cleared cache. So an entry can also carry `hidden: true` in events.json,
+// which hides it for everybody, travels with the file, and survives the
+// device. It is a hide and not an archive: `archived` means the listing has
+// ended and belongs in "Earlier finds", `hidden` means nobody wanted it.
+// Neither deletes. A file-level hide can still be undone locally, which is
+// what `shown` holds — a per-browser override, so a reader can pull one back
+// out of the Hidden list without editing the repo.
+const EVENTS_SHOWN_KEY = 'events_shown_' + TRIP_SLUG;
+function loadShownEvents() { return lsGet(EVENTS_SHOWN_KEY, []); }
+function saveShownEvents(ids) { lsSet(EVENTS_SHOWN_KEY, ids); }
+
 // "Pins" promote a find into a specific day chapter as a suggestion. Stored as
 // { eventKey: dayISO } — one event pins to at most one day. Local and per-trip,
 // like the hides; no refresh ever touches them. The find still shows in
@@ -550,7 +564,7 @@ async function renderEvents() {
   }
 
   const bySort = (a, b) => String(a.sortDate || a.start || '').localeCompare(String(b.sortDate || b.start || ''));
-  const state = { hidden: loadHiddenEvents(), pins: loadPinned(), hiddenOpen: false, earlierOpen: false };
+  const state = { hidden: loadHiddenEvents(), shown: loadShownEvents(), pins: loadPinned(), hiddenOpen: false, earlierOpen: false };
 
   // Every find keyed for lookup, and the trip's real day chapters (the only
   // days a find can be pinned into — one option per chapter that exists).
@@ -563,13 +577,19 @@ async function renderEvents() {
   function hide(ev) {
    const k = eventKey(ev);
    if (k && state.hidden.indexOf(k) === -1) state.hidden.push(k);
+   state.shown = state.shown.filter(x => x !== k);   // drop any override
    saveHiddenEvents(state.hidden);
+   saveShownEvents(state.shown);
    paint();
   }
   function restore(ev) {
    const k = eventKey(ev);
    state.hidden = state.hidden.filter(x => x !== k);
+   // Restoring something the file hides needs a local override to stick;
+   // restoring a purely local hide does not, and must not grow the list.
+   if (k && ev.hidden && state.shown.indexOf(k) === -1) state.shown.push(k);
    saveHiddenEvents(state.hidden);
+   saveShownEvents(state.shown);
    paint();
   }
   function setPin(key, iso) { state.pins[key] = iso; savePinned(state.pins); paint(); }
@@ -734,7 +754,15 @@ async function renderEvents() {
   }
 
   function paint() {
+   // Hidden if the file says so and this browser has not overridden it, or if
+   // this browser hid it locally. Archived wins over both: an ended listing
+   // belongs in "Earlier finds" whatever anyone thought of it.
    const hiddenSet = {};
+   all.forEach(ev => {
+    const k = eventKey(ev);
+    if (!k) return;
+    if (ev.hidden && state.shown.indexOf(k) === -1) hiddenSet[k] = true;
+   });
    state.hidden.forEach(k => { hiddenSet[k] = true; });
    const live = [], hidden = [], archived = [];
    all.forEach(ev => {

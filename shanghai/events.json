@@ -1,6 +1,6 @@
 {
   "updated": "13 Sep 2026",
-  "note": "Dated events during 23 Oct – 1 Nov 2026. Sources, best first: SmartShanghai (/events/<category>/?date=YYYY-MM-DD is date-filterable and is the workhorse, but its cards carry an 'Ongoing' promo block that repeats on every date and whose 'until' strings go stale, so confirm end dates elsewhere); the arts festival's own site, artsbird.com/en/calendar/2026-10, whose page payload carries the full dated programme; Dance Reflections by Van Cleef & Arpels, which co-presents a dance strand inside the festival and publishes exact dates that no general listing carries; english.shanghai.gov.cn, official and English, for its monthly 'exhibitions and performances in <month>' roundups; and the venue primaries (Power Station of Art, Museum of Art Pudong at museumofartpd.org.cn, Fotografiska Shanghai, West Bund Museum at wbmshanghai.com, Rockbund, hiveart.cn, Shanghai Culture Square at shcstheatre.com). Then, for the corners the big listings miss: shanghaiconcerts.com for classical and recitals with venue and date in English; 247tickets.com for English ticketing across stage, music and experiences; SmartShanghai's own periodically-updated Shanghai Jazz Guide for the venue-by-venue jazz roster (JZ, Heyday, the Peace Hotel band, Wooden Box); e-flux.com/announcements, which carries institutional art openings before the local listings do; and shanghaitourism.org's festivals and events calendar for date ranges. Two traps recorded so they are not walked into twice: timeoutshanghai.com is dormant, its content years old; and shanghaijazz.com is a restaurant in Madison, New Jersey, nothing to do with this city. Entries are never deleted by a refresh: Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Optional `weekdays` (e.g. [\"Wed\",\"Sat\",\"Sun\"]) for recurring patterns, `dates` (ISO list) for specific occurrences, and `closed` (weekday list, e.g. [\"Mon\"]) restrict which trip days the \"Add to a day\" picker offers — so a Wednesday-only night can't be pinned to a Tuesday. Absent all three, eligibility is the run intersected with the trip window. Optional `planned` (a day id like \"d7\") marks a find that is already an itinerary stop on that day: the page then shows \"Already on <day>\" in place of the picker, since there is nothing to add. Git history holds every past version of this file.",
+  "note": "Dated events during 23 Oct – 1 Nov 2026. Sources, best first: SmartShanghai (/events/<category>/?date=YYYY-MM-DD is date-filterable and is the workhorse, but its cards carry an 'Ongoing' promo block that repeats on every date and whose 'until' strings go stale, so confirm end dates elsewhere); the arts festival's own site, artsbird.com/en/calendar/2026-10, whose page payload carries the full dated programme; Dance Reflections by Van Cleef & Arpels, which co-presents a dance strand inside the festival and publishes exact dates that no general listing carries; english.shanghai.gov.cn, official and English, for its monthly 'exhibitions and performances in <month>' roundups; and the venue primaries (Power Station of Art, Museum of Art Pudong at museumofartpd.org.cn, Fotografiska Shanghai, West Bund Museum at wbmshanghai.com, Rockbund, hiveart.cn, Shanghai Culture Square at shcstheatre.com). Then, for the corners the big listings miss: shanghaiconcerts.com for classical and recitals with venue and date in English; 247tickets.com for English ticketing across stage, music and experiences; SmartShanghai's own periodically-updated Shanghai Jazz Guide for the venue-by-venue jazz roster (JZ, Heyday, the Peace Hotel band, Wooden Box); e-flux.com/announcements, which carries institutional art openings before the local listings do; and shanghaitourism.org's festivals and events calendar for date ranges. Two traps recorded so they are not walked into twice: timeoutshanghai.com is dormant, its content years old; and shanghaijazz.com is a restaurant in Madison, New Jersey, nothing to do with this city. Entries are never deleted by a refresh: a listing that has ended gets \"archived\": true (plus \"archivedOn\") and moves into the page's 'Earlier finds' disclosure, so nothing is lost. An entry nobody wanted gets \"hidden\": true (plus a short \"hiddenNote\" saying why) and drops into the 'Hidden' disclosure for every reader, not just the one whose browser it was rejected in — that is the difference from the × on a row, which is local to one browser. A refresh must not un-hide one or re-add it as a new entry; a reader who disagrees can restore it on their own copy, which is stored locally and never written back here. `added` drives the New flag for its first 14 days and is never rewritten. `start`/`end` (ISO, either omissible for open-ended runs) place an entry: long runs render under 'Running throughout', short ones slot into the day-by-day calendar on their first in-window day. Optional `weekdays` (e.g. [\"Wed\",\"Sat\",\"Sun\"]) for recurring patterns, `dates` (ISO list) for specific occurrences, and `closed` (weekday list, e.g. [\"Mon\"]) restrict which trip days the \"Add to a day\" picker offers — so a Wednesday-only night can't be pinned to a Tuesday. Absent all three, eligibility is the run intersected with the trip window. Optional `planned` (a day id like \"d7\") marks a find that is already an itinerary stop on that day: the page then shows \"Already on <day>\" in place of the picker, since there is nothing to add. Git history holds every past version of this file.",
   "events": [
     {
       "title": "On Top of the World Tree",
@@ -104,7 +104,9 @@
       "kind": "music",
       "blurb": "Finnish power-metal veterans, in town on Halloween night of all nights. Not remotely jazz — but it's the one dated gig on your Saturday so far, and MAO on a costume night would be a scene.",
       "url": "https://www.songkick.com/metro-areas/28033-china-shanghai/2026",
-      "added": "2026-07-24"
+      "added": "2026-07-24",
+      "hidden": true,
+      "hiddenNote": "Not wanted. Halloween at MAO is a fine scene and the wrong one for this week's last night, which is the crab and then the Old Jazz Band."
     },
     {
       "title": "French Concession, on foot",
@@ -209,7 +211,9 @@
       "kind": "music",
       "blurb": "Bocelli's 30th-anniversary tour lands on Halloween night — the arena option if Stratovarius at MAO Livehouse isn't your thing. Sung mostly in Italian; a concert, not a conversation, so language isn't really the point either way.",
       "url": "https://asia.aegpresents.com/andrea-bocelli-2026-romanza-30th-anniversary/",
-      "added": "2026-08-31"
+      "added": "2026-08-31",
+      "hidden": true,
+      "hiddenNote": "Not wanted. Arena scale on the night the week ends at a twenty-seat counter and a bar in the 1929 Cathay."
     },
     {
       "title": "JOYCE — \"Talent for Peach Blossoms\" Tour",
@@ -272,7 +276,9 @@
       "kind": "dance",
       "blurb": "The company's site-specific format: Brown's repertory re-set into whatever building it lands in, rather than onto a stage. Wordless, usually short, and the Shanghai venue is the point of it — worth checking where they put it. The 1 Nov date is the flight home.",
       "url": "https://www.dancereflections-vancleefarpels.com/en/artist/trisha-brown-dance-company",
-      "added": "2026-09-13"
+      "added": "2026-09-13",
+      "hidden": true,
+      "hiddenNote": "Not wanted. Would have cost Saturday's crab and the Old Jazz Band, and the venue and curtain were never published."
     },
     {
       "title": "Numerical Series 15 | 18 — TAO Dance Theater",
@@ -284,7 +290,9 @@
       "kind": "dance",
       "blurb": "Tao Ye's company counts its works by the number of bodies in them. Pure movement, no narrative, no language, and a Chinese contemporary company with a genuine international standing rather than a local one.",
       "url": "https://www.dancereflections-vancleefarpels.com/en/china-shanghai-international-arts-festival",
-      "added": "2026-09-13"
+      "added": "2026-09-13",
+      "hidden": true,
+      "hiddenNote": "Not wanted, same night and same cost as the Trisha Brown. Sciarroni on the 29th and Bourgeois on the 30th are the dance this week carries."
     },
     {
       "title": "Contre-Nature — Rachid Ouramdane / Compagnie de Chaillot",

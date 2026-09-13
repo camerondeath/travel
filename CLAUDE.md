@@ -29,7 +29,11 @@ architecture; the short version:
   address, how to get there, hours that matter. Notes must not reach for aphorism;
   the thinking belongs in the essay.
 - `shanghai/events.json` is append/archive only — entries are never deleted,
-  only `"archived": true`. Don't "clean it up".
+  only `"archived": true` (the listing ended) or `"hidden": true` with a short
+  `"hiddenNote"` (nobody wanted it). Don't "clean it up", and **never un-hide
+  an entry or re-add it under a new key**: a hide is a decision, and the weekly
+  sweep re-offering something already rejected is the whole reason the flag
+  exists. The × on a row is the local, per-browser version of the same thing.
 
 ## The verification pass
 
