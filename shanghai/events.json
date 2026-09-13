@@ -124,8 +124,9 @@
       "sortDate": "2026-10-24",
       "venue": "Yangpu",
       "kind": "market",
-      "blurb": "Old cameras, Mao-era pins, cultural-revolution ephemera and honest junk, traded from dawn to about noon three mornings a week. No English needed and none offered; it sits near the Saturday's Yangpu riverfront, so an early start folds it in.",
+      "blurb": "Old cameras, cassette recorders, stamps, clocks, jade and honest junk, traded at 701 Longchang Rd from six until about noon on Wednesday, Saturday and Sunday mornings, and shut when it rains. No English needed and none offered.",
       "weekdays": ["Wed", "Sat", "Sun"],
+      "planned": "d9",
       "url": "https://www.smartshanghai.com/venue/33954/yangpu_flea_market",
       "added": "2026-07-24"
     },
