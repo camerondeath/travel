@@ -79,7 +79,6 @@
       "kind": "art",
       "blurb": "Three shows open together on the 22nd: Mombaça's fragmented, planetary-grief opera anchors the museum alongside Kandis Williams' collage piece A Cave and Wong Kit Yi's karaoke-themed companion work. On the Bund, a short hop from People's Square.",
       "closed": ["Mon"],
-      "planned": "d7",
       "url": "https://www.rockbundartmuseum.org/exhibition/jota-mombaca-stuck-in-movement-in-the-tide",
       "added": "2026-07-20"
     },
@@ -353,7 +352,7 @@
       "end": "2026-10-28",
       "venue": "Museum of Art Pudong",
       "kind": "art",
-      "blurb": "The largest Morandi exhibition anywhere this century: 140-odd originals, over 120 shown in China for the first time, with the Museo Morandi in Bologna. Read the date carefully — it closes on the 28th, and the Pudong day on this page is the 29th. It is a five-minute walk from the Shanghai Museum East stop, on any day except that one.",
+      "blurb": "The largest Morandi exhibition anywhere this century: 140-odd originals, over 120 shown in China for the first time, with the Museo Morandi in Bologna. It closes on the 28th.",
       "url": "https://www.museumofartpd.org.cn/en/exhibitiondetail?id=186",
       "added": "2026-09-13"
     },
@@ -447,9 +446,8 @@
       "end": "2026-10-31",
       "venue": "Power Station of Art · 2F",
       "kind": "art",
-      "blurb": "More than 300 Bvlgari jewels chosen for their colour, in a Shanghai edition of the touring show, with work by contemporary Chinese artists alongside. On the page for Thursday afternoon, on the way home from the dance at West Bund. Closed Mondays; tickets at the desk or through PSA's WeChat account.",
+      "blurb": "More than 300 Bvlgari jewels chosen for their colour, in a Shanghai edition of the touring show, with work by contemporary Chinese artists alongside. Closed Mondays; tickets at the desk or through PSA's WeChat account.",
       "closed": ["Mon"],
-      "planned": "d6",
       "url": "https://www.powerstationofart.com/whats-on/exhibitions/bvlgari-kaleidos",
       "added": "2026-09-13"
     }
