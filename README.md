@@ -9,7 +9,9 @@ Every trip page is a thin shell plus a `TRIP` data object. All the behaviour and
 all the design live in **one shared engine** — `site.css` + `site.js` — which
 every trip links. Change the engine once and every trip updates together
 (masthead, plane essay, day index, "Now" strip, day chapters, bookings tracker,
-"What's on" events, back pocket, sandbox, weather).
+"What's on" events, back pocket, sandbox, weather). Each day chapter is
+linkable: `shanghai/#d3` opens that day, and opening a day by hand writes its
+link into the address bar, so a reload comes back to it.
 
 ```
 index.html            The hub. Lists every trip with a live status pill
@@ -114,8 +116,10 @@ need to rename it without losing its pin.
    `"archived": true` (plus `archivedOn`) instead of being removed.
 2. **Archived entries stay on the page**, behind an "Earlier finds (N)"
    disclosure under the live list — muted, but one tap away.
-3. **Hiding is local and reversible** — a hidden entry sits in the "Hidden"
-   disclosure, never leaves the file, and restores with one tap.
+3. **Hiding is reversible** — a hidden entry sits in the "Hidden" disclosure,
+   never leaves the file, and restores with one tap. The × on a row hides it in
+   that browser only; `"hidden": true` (with a `"hiddenNote"`) in the file hides
+   it for every reader, and a reader can still restore it on their own copy.
 4. **Git history** holds every past version of `events.json`, so even a bad
    write is recoverable with `git log -p -- shanghai/events.json`.
 

@@ -133,8 +133,8 @@ const TRIPS = [
  end: "2026-11-01",
  meta: "China · 2026",
  title: "China <em>October 2026</em>",
- desc: "Shanghai, second visit — Yangpu waterfront, small galleries, the old walled city, Hongkou, and hairy crab season, tuned toward Michelin Bib Gourmand and solo counter seats.",
- dates: "Oct 24 – Nov 1, 2026",
+ desc: "Shanghai, second visit — the Yangpu and West Bund waterfronts, the old walled city, Ballard's Amherst Avenue, and hairy crab season, tuned toward Michelin Bib Gourmand and solo counter seats.",
+ dates: "24 Oct – 1 Nov 2026",
  href: "./shanghai/",
  feed: "./shanghai/events.json",
  placeholder: false
@@ -260,7 +260,7 @@ TRIPS.filter(t => t.feed).forEach(t => {
  fetch(t.feed, { cache: "no-cache" }).then(r => r.ok ? r.json() : null).then(data => {
   if (!data || !data.events) return;
   const cutoff = Date.now() - 14 * 86400000;
-  const n = data.events.filter(e => !e.archived && e.added &&
+  const n = data.events.filter(e => !e.archived && !e.hidden && e.added &&
    new Date(e.added + "T00:00:00").getTime() >= cutoff).length;
   if (n) { freshFinds[t.href] = n; renderTrips(); }
  }).catch(() => {});

@@ -162,11 +162,11 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
    Continue reading should carry on in the same voice, not switch face. */
 .essay-teaser p { font-family: var(--serif); font-size: 1.06rem; color: var(--ink-2); line-height: 1.72; margin: 0; display: inline; }
 .essay-continue { display: inline-block; margin-top: 0.5rem; }
-.essay-continue a, .essay-continue-btn, .essay-collapse-btn {
+.essay-continue-btn, .essay-collapse-btn {
  display: inline-block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em;
  text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer;
  padding: 0 0 1px; border-bottom: 1.5px solid var(--accent); text-decoration: none; vertical-align: baseline; }
-.essay-continue a:hover, .essay-continue-btn:hover, .essay-collapse-btn:hover { color: var(--accent-2); border-color: var(--accent-2); }
+.essay-continue-btn:hover, .essay-collapse-btn:hover { color: var(--accent-2); border-color: var(--accent-2); }
 .essay-collapse { margin-top: 0.9rem; }
 
 /* ── CHAPTER (a catalogue day) ────────────────────────────── */
@@ -245,7 +245,6 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .bookings-section, .sh26-section { border-top: 4px solid var(--ink); padding: 1.4rem 0 2rem; scroll-margin-top: 4.5rem; }
 .section-label { font-family: var(--display); font-size: 1.12rem; font-weight: 800; letter-spacing: 0.005em; text-transform: uppercase; color: var(--ink); margin-bottom: 0; }
 .section-sub { font-family: var(--mono); font-size: 0.64rem; font-style: normal; color: var(--ink-3); line-height: 1.6; margin: 0.6rem 0 1.2rem; max-width: 76ch; }
-.section-sub code { font-family: var(--mono); font-size: 0.78rem; background: var(--ground-2); padding: 0.1em 0.35em; }
 
 /* ── BOOKINGS → REGISTER ──────────────────────────────────── */
 .register { border: 2px solid var(--ink); background: var(--ground-2); padding: 1.3rem 1.5rem 1.4rem; margin-top: 1rem; }
@@ -429,6 +428,20 @@ footer { margin-top: 2.4rem; border-top: 2px solid var(--ink); padding: 0.85rem 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 a:focus-visible, button:focus-visible, .day-chip:focus-visible, .day-pin-control:focus-visible, select:focus-visible, .chapter-head:focus-visible, [role="button"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+/* ── TOUCH ────────────────────────────────────────────────────
+   The mono controls are drawn small on purpose, and on a phone a 7px-wide ↗
+   or a 17px-tall "Continue reading" is a hard target. Grow the hit area without
+   moving anything: inline links take padding cancelled by negative margins, the
+   rest an invisible ::after. Insets stay inside the gaps between stacked
+   controls, so neighbours don't take each other's taps.                     */
+@media screen and (pointer: coarse) {
+ .event-link, .sh26-item-link, .ledger-link { padding: 0.5rem; margin: -0.5rem; }
+ .event-link { margin-left: -0.2rem; }   /* keeps its 0.3rem gap from the title */
+ .stop-map, .bib-badge, .essay-continue-btn, .essay-collapse-btn, .sh26-panel-btn, .expand-all-btn, .mast-back { position: relative; }
+ .stop-map::after, .essay-continue-btn::after, .essay-collapse-btn::after, .sh26-panel-btn::after, .expand-all-btn::after, .mast-back::after { content: ''; position: absolute; inset: -0.35rem -0.5rem; }
+ .bib-badge::after { content: ''; position: absolute; inset: -0.35rem -0.2rem; }
+}
+
 /* ── RESPONSIVE ───────────────────────────────────────────── */
 @media (max-width: 640px) {
  :root { --gutter: 4.4rem; }
@@ -441,6 +454,13 @@ a:focus-visible, button:focus-visible, .day-chip:focus-visible, .day-pin-control
  .register { padding: 1.1rem 1.1rem 1.2rem; }
  /* Stacked rows: nudge the mono gutter label down to sit with its content. */
  .stop-time, .event-when, .event-day-date, .day-suggestion-when { padding-top: 0; }
+ /* In-trip the Now strip is the sticky bar. Left to wrap, it grew to three
+    lines and a fifth of the screen; hold it to two: label, time and day, then
+    the stop on one truncated line. */
+ .day-index.now-mode { padding: 0.5rem 0; }
+ .now-strip { display: grid; grid-template-columns: auto auto 1fr; align-items: baseline; gap: 0.15rem 0.6rem; padding: 0.5rem 0.75rem; }
+ .now-title { grid-column: 1 / -1; grid-row: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+ .now-day { justify-self: end; }
 }
 
 /* ── PRINT ────────────────────────────────────────────────────

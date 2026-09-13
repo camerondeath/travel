@@ -16,14 +16,54 @@ function esc(s) {
 // ...and only ever put a real web link in an href.
 function safeUrl(u) { return /^https?:\/\//i.test(String(u || '')) ? String(u) : ''; }
 
+const DAY_MS = 86400000;
+
 // Jumps honour prefers-reduced-motion. The stylesheet already switches
 // scroll-behavior off for those users, but an explicit behavior:'smooth' here
 // overrides the CSS, so the preference has to be read again in script.
 function scrollToEl(target, open) {
  if (!target) return;
- if (open) target.classList.add('open');
+ if (open) setChapterOpen(target, true);
  const still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  target.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
+}
+
+// A day's open state lives in three places: the chapter's class, its head's
+// aria-expanded, and whether the essay shows its teaser or the full text. Every
+// path that opens or closes a day goes through these two, so they cannot drift
+// apart (the day chips used to open a chapter without telling assistive tech).
+function setChapterOpen(ch, open) {
+ ch.classList.toggle('open', open);
+ const head = ch.querySelector('.chapter-head');
+ if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
+ // A closed day goes back to its teaser, so a fully expanded essay can't sit
+ // open inside a collapsed chapter.
+ if (!open) showFullEssay(ch, false);
+}
+function showFullEssay(ch, full) {
+ const body = ch.querySelector('[id^="essay-"]');
+ const teaser = ch.querySelector('.essay-teaser');
+ if (!body || !teaser) return;
+ body.style.display = full ? 'block' : 'none';
+ teaser.style.display = full ? 'none' : '';
+}
+
+// A day opened by hand is written into the address (#d3) without adding a
+// history entry, so a reload, or a phone browser that evicted the tab, comes
+// back to the same day, and one day can be sent to someone as a link.
+function rememberDay(id) {
+ try { history.replaceState(null, '', id ? '#' + id : location.pathname + location.search); } catch (e) {}
+}
+function openDayFromHash() {
+ const id = location.hash.slice(1);
+ const ch = /^[\w-]+$/.test(id) ? document.getElementById(id) : null;
+ if (!ch || !ch.classList.contains('chapter')) return;
+ setChapterOpen(ch, true);
+ // Straight there: a smooth scroll the length of the page on load is a wait.
+ const root = document.documentElement, prev = root.style.scrollBehavior;
+ root.style.scrollBehavior = 'auto';
+ ch.scrollIntoView({ block: 'start' });
+ root.style.scrollBehavior = prev;
 }
 
 // One localStorage namespace per trip (hides, pins, scratchpad), and one place
@@ -110,16 +150,15 @@ function tripStatusMeta() {
  const today = new Date(); today.setHours(0, 0, 0, 0);
  const start = new Date(m.tripStart + 'T00:00:00');
  const end = new Date((m.tripEnd || m.tripStart) + 'T00:00:00');
- const DAY = 86400000;
  if (today < start) {
-  const days = Math.round((start - today) / DAY);
+  const days = Math.round((start - today) / DAY_MS);
   if (days === 0) return { kind: 'next', label: 'Starts today' };
   if (days === 1) return { kind: 'next', label: 'Starts tomorrow' };
   return { kind: 'next', label: 'In ' + days + ' days' };
  }
  if (today <= end) {
-  const dayNum = Math.round((today - start) / DAY) + 1;
-  const total = Math.round((end - start) / DAY) + 1;
+  const dayNum = Math.round((today - start) / DAY_MS) + 1;
+  const total = Math.round((end - start) / DAY_MS) + 1;
   return { kind: 'now', label: 'Day ' + dayNum + ' of ' + total };
  }
  return { kind: 'past', label: 'Past' };
@@ -152,7 +191,9 @@ function renderPlanePiece() {
 function renderChapters() {
  const wrap = document.getElementById('chapters');
 
- const todayStr = new Date().toLocaleString('en-CA', { timeZone: TRIP.meta.tz }).slice(0, 10);
+ // getTripNow rather than the device clock, so the __NOW__ test hook moves the
+ // Today label and the chapter order along with the Now strip.
+ const todayStr = getTripNow().date;
  const tripActive = todayStr >= TRIP.meta.tripStart && todayStr <= TRIP.meta.tripEnd;
  const chapters = [];
  const dayTotal = TRIP.days.length;
@@ -187,8 +228,8 @@ function renderChapters() {
  if (day.arc) dataBits.push(`<span class="arc">${day.arc}</span>`);
  // Seasonal average, shown until the live forecast comes into range (fetchWeather).
  const cn = TRIP.meta.climate && TRIP.meta.climate.byId && TRIP.meta.climate.byId[day.id];
- // Sunset, computed per day — dark by ~5:15 this week, and several days
- // are planned backwards from it.
+ // Sunset, computed per day from the trip's coordinates; days are often
+ // planned backwards from it.
  const sunset = day.iso ? sunTime(day.iso, false) : null;
  const wxInit = cn ? `<span class="day-weather-temps"><span class="hi">${cn[0]}°</span> / ${cn[1]}°</span><span class="wx-avg">avg</span>` : '';
  head.innerHTML =
@@ -209,15 +250,10 @@ function renderChapters() {
  head.setAttribute('tabindex', '0');
  head.setAttribute('aria-expanded', isToday ? 'true' : 'false');
  function toggleChapter() {
- const nowOpen = ch.classList.toggle('open');
- head.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
- // Closing a day puts its essay back to the teaser, so a previously
- // expanded essay can't sit fully open inside a collapsed chapter.
- if (!nowOpen) {
- const full = ch.querySelector('[id^="essay-"]');
- const t = ch.querySelector('.essay-teaser');
- if (full && t) { full.style.display = 'none'; t.style.display = ''; }
- }
+ const open = !ch.classList.contains('open');
+ setChapterOpen(ch, open);
+ if (open) rememberDay(day.id);
+ else if (location.hash === '#' + day.id) rememberDay('');
  }
  // The essay -- with its own Continue reading / Collapse controls and prose
  // links -- lives inside this clickable head, so a click on any of those would
@@ -255,15 +291,11 @@ function renderChapters() {
  fullBody.appendChild(collapseWrap);
  essayWrap.appendChild(fullBody);
  continueSpan.querySelector('button').addEventListener('click', () => {
- fullBody.style.display = 'block';
- teaserDiv.style.display = 'none';
- ch.classList.add('open');
- head.setAttribute('aria-expanded', 'true');
+ setChapterOpen(ch, true);
+ showFullEssay(ch, true);
+ rememberDay(day.id);
  });
- collapseWrap.querySelector('button').addEventListener('click', () => {
- fullBody.style.display = 'none';
- teaserDiv.style.display = 'block';
- });
+ collapseWrap.querySelector('button').addEventListener('click', () => showFullEssay(ch, false));
  }
  content.appendChild(essayWrap);
 
@@ -386,7 +418,6 @@ function renderBookings() {
 // A refresh never deletes: finished listings arrive {archived: true} and move
 // to "Earlier finds", and git history holds every past version of the file.
 const EVENTS_NEW_DAYS = 14;
-const EV_DAY = 86400000;
 const EV_WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const EV_MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -435,12 +466,10 @@ function loadPinned() { return lsGet(EVENTS_PINNED_KEY, {}); }
 function savePinned(map) { lsSet(EVENTS_PINNED_KEY, map); }
 
 // --- Sun times -------------------------------------------------------------
-// Late-October Shanghai is dark by a quarter past five, and this itinerary
-// treats that as a hard constraint on several days ("work the afternoon back
-// from it"). The times had been hand-written into three notes, where nothing
-// stops them drifting. Compute them instead, from the trip's own coordinates,
-// so every day carries its own and none of them can go stale.
-// Standard sunrise/sunset almanac algorithm, official zenith 90deg 50'.
+// Days get planned backwards from sunset, and a time hand-written into a note
+// drifts. Compute it instead, from the trip's own coordinates, so every day
+// carries its own. Standard sunrise/sunset almanac algorithm, official zenith
+// 90deg 50'.
 function tzOffsetHours(iso, tz) {
  try {
   const d = new Date(iso + 'T12:00:00Z');
@@ -460,7 +489,7 @@ function sunTime(iso, rising) {
  if (parts.length !== 3 || parts.some(isNaN)) return null;
  const D = Math.PI / 180;
  const start = Date.UTC(parts[0], 0, 0);
- const N = Math.floor((Date.UTC(parts[0], parts[1] - 1, parts[2]) - start) / 86400000);
+ const N = Math.floor((Date.UTC(parts[0], parts[1] - 1, parts[2]) - start) / DAY_MS);
  const lat = geo.lat * D, lngHour = geo.lon / 15;
  const t = N + ((rising ? 6 : 18) - lngHour) / 24;
  const M = (0.9856 * t) - 3.289;
@@ -495,7 +524,7 @@ function eventRow(ev, opts) {
  const now = Date.now();
  const addedMs = evDate(ev.added);
  const isNew = opts.mode === 'live' && !isNaN(addedMs) &&
-               (now - addedMs) >= 0 && (now - addedMs) <= EVENTS_NEW_DAYS * 86400000;
+               (now - addedMs) >= 0 && (now - addedMs) <= EVENTS_NEW_DAYS * DAY_MS;
  const badge = isNew ? '<span class="event-new">New</span>' : '';
  const safeHref = safeUrl(ev.url);
  const link = safeHref ? ' <a class="event-link" href="' + safeHref + '" target="_blank" rel="noopener">↗</a>' : '';
@@ -548,7 +577,7 @@ async function renderEvents() {
 
   const tripStart = evDate(TRIP.meta.tripStart), tripEnd = evDate(TRIP.meta.tripEnd);
   const hasWindow = !isNaN(tripStart) && !isNaN(tripEnd) && tripEnd >= tripStart;
-  const tripDays = hasWindow ? Math.round((tripEnd - tripStart) / EV_DAY) + 1 : 0;
+  const tripDays = hasWindow ? Math.round((tripEnd - tripStart) / DAY_MS) + 1 : 0;
   // "throughout" = on for most of the trip; short runs get a calendar slot
   const spanMin = Math.max(3, Math.ceil(tripDays * 0.6));
 
@@ -559,7 +588,7 @@ async function renderEvents() {
    const e = ev.end ? evDate(ev.end) : Infinity;
    const os = Math.max(s, tripStart), oe = Math.min(e, tripEnd);
    if (oe < os) return null; // outside the window — keep it visible up top
-   if (Math.round((oe - os) / EV_DAY) + 1 >= spanMin) return null;
+   if (Math.round((oe - os) / DAY_MS) + 1 >= spanMin) return null;
    return evISO(os);
   }
 
@@ -841,7 +870,8 @@ async function renderEvents() {
     e.preventDefault();
     scrollToEl(section, false);
    });
-   idx.appendChild(chip);
+   // Page order: Bookings, What's on, Back pocket (appends if there is no pocket).
+   idx.insertBefore(chip, idx.querySelector('[href="#site-pocket"]'));
   }
  } catch (e) { /* leave hidden */ }
 }
@@ -1166,7 +1196,7 @@ function parseEventMinutes(ev) {
 function dayDiff(isoA, isoB) {
  const a = new Date(isoA + 'T00:00:00Z').getTime();
  const b = new Date(isoB + 'T00:00:00Z').getTime();
- return Math.round((b - a) / 86400000);
+ return Math.round((b - a) / DAY_MS);
 }
 
 function getTripNow() {
@@ -1223,6 +1253,7 @@ function renderNowStrip(wrap, now) {
   '<span class="now-day">' + show.day.dow + '</span>';
  strip.addEventListener('click', function () {
   scrollToEl(document.getElementById(show.day.id), true);
+  rememberDay(show.day.id);
  });
  wrap.appendChild(strip);
  return true;
@@ -1242,6 +1273,7 @@ function renderChips(wrap) {
   chip.addEventListener('click', function (e) {
    e.preventDefault();
    scrollToEl(document.getElementById(day.id), true);
+   rememberDay(day.id);
   });
   wrap.appendChild(chip);
  });
@@ -1278,18 +1310,10 @@ function initExpandAll() {
  btn.addEventListener('click', function () {
   const chapters = Array.from(document.querySelectorAll('.chapter'));
   const anyClosed = chapters.some(function (c) { return !c.classList.contains('open'); });
+  // Opening every day opens every essay too; closing puts them back to teasers.
   chapters.forEach(function (c) {
-   c.classList.toggle('open', anyClosed);
-   const head = c.querySelector('.chapter-head');
-   if (head) head.setAttribute('aria-expanded', anyClosed ? 'true' : 'false');
-   // reveal any collapsed essay bodies when opening all,
-   // and put them back to teasers when closing all
-   const teaser = c.querySelector('.essay-teaser');
-   const full = c.querySelector('[id^="essay-"]');
-   if (teaser && full) {
-    teaser.style.display = anyClosed ? 'none' : '';
-    full.style.display = anyClosed ? 'block' : 'none';
-   }
+   setChapterOpen(c, anyClosed);
+   showFullEssay(c, anyClosed);
   });
   btn.textContent = anyClosed ? 'Close all days' : 'Open all days';
   btn.setAttribute('aria-pressed', anyClosed ? 'true' : 'false');
@@ -1304,7 +1328,7 @@ async function fetchWeather() {
  // reads as wrong no matter how accurate the number technically is.
  const tripStart = new Date(TRIP.meta.tripStartISO);
  const now = new Date();
- const daysUntilTrip = (tripStart - now) / 86400000;
+ const daysUntilTrip = (tripStart - now) / DAY_MS;
  const showCurrent = daysUntilTrip <= 16 && daysUntilTrip >= -8;
 
  const wmoIcon = c => c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
@@ -1330,7 +1354,7 @@ async function fetchWeather() {
  // Per-day forecast: only meaningful once the range is inside the horizon.
  // A finished trip (or one still months out) can only ever get an error back,
  // so don't spend the request at all.
- const daysPastEnd = (now - new Date(TRIP.meta.tripEnd + 'T23:59:59')) / 86400000;
+ const daysPastEnd = (now - new Date(TRIP.meta.tripEnd + 'T23:59:59')) / DAY_MS;
  if (daysUntilTrip > 16 || daysPastEnd > 0) return;
 
  const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${TRIP.meta.geo.lat}&longitude=${TRIP.meta.geo.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&timezone=${encodeURIComponent(TRIP.meta.tz)}&start_date=${TRIP.meta.tripStart}&end_date=${TRIP.meta.tripEnd}`);
@@ -1363,6 +1387,8 @@ document.addEventListener('DOMContentLoaded', () => {
  renderBookings();
  renderDayIndex();
  initExpandAll();
+ openDayFromHash();
+ window.addEventListener('hashchange', openDayFromHash);
  renderPocket();
  renderEvents();
  migrateLegacySandbox();

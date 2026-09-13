@@ -10,15 +10,18 @@
 
   Fields the engine reads from TRIP.meta:
      city, monthLabel, dates      → masthead    ("Tokyo in May", "4–9 May 2027")
-     slug                         → per-trip sandbox storage key (keep unique)
+     slug                         → per-trip storage key: hides, pins, sandbox (keep unique)
      tz                           → IANA timezone, e.g. "Asia/Tokyo"
-     geo {lat, lon}               → weather lookup
+     geo {lat, lon}               → weather lookup + per-day sunset
+     climate {byId: {d1: [hi, lo]}} → seasonal average until the forecast reaches a day
      tripStart / tripEnd (ISO)    → status pill + Now-strip + per-day weather
      tripStartISO                 → start with correct UTC offset
      plane {kicker,title,standfirst,preview,full}  → the "read on the plane" essay
   Each day: id, iso, dow, date, chapter, title, teaser, essay, events[],
-     plus optional arc, hood, hoodShort. Each event: time, title, kind, note,
-     and optional state ("confirmed"|"open"), url, map, ref, bib, bibUrl, expand.
+     plus optional arc, hood, hoodShort. The id is also the day's link:
+     page#d1 opens that day. Each event: time, title, kind, note, and optional
+     state ("confirmed"|"open"), url, map, ref, bib, bibUrl, expand, plus
+     t ("HH:MM") and dayOffset where the Now strip can't read the time.
   ──────────────────────────────────────────────────────────────────────
 -->
 <html lang="en">
