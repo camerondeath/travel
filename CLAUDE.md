@@ -77,8 +77,10 @@ Sources that work, and ones that do not:
   everything it covers.
 - Museum and gallery sites are authoritative for hours and runs, and often the
   only place a run's end date appears.
-- **`guide.michelin.com` is CloudFront-blocked** to WebFetch and to the in-app
-  browser. Michelin facts have to come from search results or a mirror.
+- **`guide.michelin.com` blocks WebFetch and the in-app browser**, but `curl`
+  with a desktop browser user-agent gets through (verified 2026-09-13). The
+  address and the award are in the HTML it returns; the opening hours are
+  rendered client-side and are not. Hours still have to come from elsewhere.
 - Sunrise and sunset in prose must match what `sunTime()` in `site.js` computes
   for that ISO date; run the function rather than searching for the time.
 
