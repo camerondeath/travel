@@ -221,3 +221,33 @@ markup a page must carry for an engine feature to appear.
 The template is the one people forget. A structural change that never reaches
 `_template/` means the next trip is born already inconsistent, and the generator in
 `new/` emits the same stale shape.
+## Claude Code session practices (context and long-running work)
+
+- Redirect script/command output to a log file and read a summary, not the raw output:
+      command_here > some_log.log 2>&1
+      tail -20 some_log.log
+  Full stdout/stderr otherwise burns context fast, and this file is what survives
+  compaction intact - instructions given only in conversation can be lost, so anything
+  load-bearing belongs here.
+- Don't re-read files already in context this session; grep for lookups instead.
+- For a task that can run several turns unattended, use the native `/goal` command
+  rather than a manual retry loop:
+      /goal <condition Claude's own output can prove, e.g. "shanghai/events.json
+      validates as JSON and the weekly source list has been worked">
+  Bound it if needed: "... or stop after 20 turns". It self-clears on: condition met,
+  judged impossible, an auth/credit failure, or a context overflow compaction can't
+  fix - with a reason printed either way.
+- For headless or scheduled runs (e.g. an events-refresh agent):
+      claude -p "/goal ..." --max-turns 40 --max-budget-usd 5.00 \
+        --output-format json > result.json 2> claude.err
+  `--max-turns` and `--max-budget-usd` are real ceilings - set them to the cost of
+  the mistake you can tolerate.
+- If launching in the background with `nohup`, always pipe from `/dev/null`, or
+  `claude -p` will wait ~3s for stdin, get nothing, and exit with an empty log and
+  no obvious error:
+      nohup claude -p "..." < /dev/null > run.log 2>&1 &
+- Prefer `--permission-mode auto` over `--dangerously-skip-permissions` for
+  unattended runs - a classifier reviews each tool call and blocks destructive
+  actions instead of skipping review entirely.
+- Running several things in parallel: `claude agents` shows every running, blocked,
+  and done session in one dashboard instead of separate terminal windows.
