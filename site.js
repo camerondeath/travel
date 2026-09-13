@@ -1244,6 +1244,10 @@ function dayDiff(isoA, isoB) {
  const b = new Date(isoB + 'T00:00:00Z').getTime();
  return Math.round((b - a) / DAY_MS);
 }
+function isoAddDays(iso, n) {
+ const p = iso.split('-').map(Number);
+ return new Date(Date.UTC(p[0], p[1] - 1, p[2] + n)).toISOString().slice(0, 10);
+}
 
 function getTripNow() {
  // allow test override
@@ -1257,17 +1261,28 @@ function getTripNow() {
  return { date: `${g('year')}-${g('month')}-${g('day')}`, minutes: parseInt(hh, 10) * 60 + parseInt(g('minute'), 10) };
 }
 
-// Absolute minute key from trip start, so events sort across days (and past midnight)
-function eventAbsKey(dayIdx, ev) {
+// A stop keeps its own clock: a flight out of home is written in home time.
+// `tz` on the event, then on the day, then the trip's.
+function eventTz(day, ev) { return (ev && ev.tz) || (day && day.tz) || TRIP.meta.tz; }
+
+// Absolute minute key from trip start, in trip time, so events sort across days
+// (and past midnight) even when a stop is written on another clock.
+function eventAbsKey(dayIdx, ev, day) {
  const mins = parseEventMinutes(ev);
  if (mins == null) return null;
- return (dayIdx + (ev.dayOffset || 0)) * 1440 + mins;
+ let key = (dayIdx + (ev.dayOffset || 0)) * 1440 + mins;
+ const tz = eventTz(day, ev);
+ if (tz !== TRIP.meta.tz && day && day.iso) {
+  const iso = isoAddDays(day.iso, ev.dayOffset || 0);
+  key += Math.round((tzOffsetHours(iso, TRIP.meta.tz) - tzOffsetHours(iso, tz)) * 60);
+ }
+ return key;
 }
 
 function buildFlatEvents() {
  const flat = [];
  TRIP.days.forEach((day, i) => (day.events || []).forEach(ev => {
-  const key = eventAbsKey(i, ev);
+  const key = eventAbsKey(i, ev, day);
   if (key != null) flat.push({ key, ev, day, dayIdx: i });
  }));
  flat.sort((a, b) => a.key - b.key);
@@ -1365,13 +1380,14 @@ function renderDayIndex() {
  wrap.innerHTML = '';
  const now = getTripNow();
  const inTrip = now.date >= TRIP_START_ISO && now.date <= TRIP.meta.tripEnd;
+ const expand = document.getElementById('expand-all-btn');
  if (inTrip && renderNowStrip(wrap, now)) {
-  // "Open all days" gives way to the Now strip; the text size control stays,
+  // "Open all days" gives way to the Now strip; the other controls stay,
   // because the trip is when the page gets read on a phone in the street.
-  const expand = document.getElementById('expand-all-btn');
   if (expand) expand.style.display = 'none';
   return;
  }
+ if (expand) expand.style.display = '';
  renderChips(wrap);
 }
 
@@ -1396,6 +1412,86 @@ function initTextSize() {
  });
  paint();
  wrap.insertBefore(btn, wrap.firstChild);
+}
+
+// The week as a calendar file, so the plan sits beside everything else on the
+// phone. Every timed stop becomes an event in UTC (its own clock applied, so no
+// timezone block is needed) and runs until the next timed stop, or an hour when
+// that is under fifteen minutes or over three hours away. Rest stops stay out.
+// UIDs come from the day and the title, so re-importing after the plan changes
+// updates events rather than doubling them.
+const ICS_ENC = typeof TextEncoder !== 'undefined' ? new TextEncoder() : null;
+function icsText(html) {
+ const doc = new DOMParser().parseFromString('<body>' + String(html || '') + '</body>', 'text/html');
+ return (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
+}
+function icsEscape(s) {
+ return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+}
+// RFC 5545 folds lines at 75 octets; count UTF-8 bytes so Chinese names survive.
+function icsFold(line) {
+ const parts = [];
+ let cur = '', bytes = 0;
+ for (const ch of line) {
+  const b = ICS_ENC ? ICS_ENC.encode(ch).length : 1;
+  if (bytes + b > (parts.length ? 74 : 75)) { parts.push(cur); cur = ''; bytes = 0; }
+  cur += ch; bytes += b;
+ }
+ parts.push(cur);
+ return parts.join('\r\n ');
+}
+function icsStamp(ms) { return new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+function buildIcs() {
+ const m = TRIP.meta;
+ const stamp = icsStamp(Date.now());
+ const base = location.href.split('#')[0];
+ const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Trip notes//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+  'X-WR-CALNAME:' + icsEscape(icsText(m.city + (m.monthLabel ? ' ' + m.monthLabel : '')))];
+ TRIP.days.forEach(function (day) {
+  if (!day.iso) return;
+  const timed = [];
+  (day.events || []).forEach(function (ev) {
+   const mins = parseEventMinutes(ev);
+   if (mins == null) return;
+   const iso = isoAddDays(day.iso, ev.dayOffset || 0);
+   const p = iso.split('-').map(Number);
+   const start = Date.UTC(p[0], p[1] - 1, p[2]) + mins * 60000 - tzOffsetHours(iso, eventTz(day, ev)) * 3600000;
+   timed.push({ ev: ev, start: start });
+  });
+  timed.sort(function (a, b) { return a.start - b.start; });
+  timed.forEach(function (x, k) {
+   if (x.ev.kind === 'rest') return;
+   const gap = timed[k + 1] ? timed[k + 1].start - x.start : 0;
+   const end = x.start + (gap >= 15 * 60000 && gap <= 3 * 3600000 ? gap : 3600000);
+   const title = icsText(x.ev.title);
+   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || String(k);
+   let where = '';
+   try { where = x.ev.map ? (new URL(x.ev.map).searchParams.get('q') || '') : ''; } catch (e) {}
+   const desc = [icsText(x.ev.note), x.ev.url ? String(x.ev.url) : '', base + '#' + day.id].filter(Boolean).join('\n\n');
+   lines.push('BEGIN:VEVENT', 'UID:' + icsEscape(TRIP_SLUG + '-' + day.id + '-' + slug) + '@trip-notes',
+    'DTSTAMP:' + stamp, 'DTSTART:' + icsStamp(x.start), 'DTEND:' + icsStamp(end), 'SUMMARY:' + icsEscape(title));
+   if (where) lines.push('LOCATION:' + icsEscape(where));
+   lines.push('DESCRIPTION:' + icsEscape(desc), 'URL:' + base + '#' + day.id, 'END:VEVENT');
+  });
+ });
+ lines.push('END:VCALENDAR');
+ return lines.map(icsFold).join('\r\n') + '\r\n';
+}
+function initCalendarExport() {
+ const wrap = document.getElementById('day-controls-wrap');
+ if (!wrap || !(TRIP.days || []).length) return;
+ const btn = el('button', 'expand-all-btn calendar-btn', 'Calendar');
+ btn.type = 'button';
+ btn.setAttribute('aria-label', 'Download the trip as a calendar file');
+ btn.addEventListener('click', function () {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([buildIcs()], { type: 'text/calendar;charset=utf-8' }));
+  a.download = TRIP_SLUG + '.ics';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+ });
+ wrap.insertBefore(btn, document.getElementById('expand-all-btn'));
 }
 
 function initExpandAll() {
@@ -1454,9 +1550,8 @@ async function fetchWeather() {
   // Ask only for the days the forecast can reach. A range that runs past the
   // horizon is refused outright, so asking for the whole trip left every day on
   // its seasonal average until the last one came into range.
-  const addDaysISO = (iso, n) => { const p = iso.split('-').map(Number); return new Date(Date.UTC(p[0], p[1] - 1, p[2] + n)).toISOString().slice(0, 10); };
   const today = getTripNow().date;
-  const horizon = addDaysISO(today, 15);
+  const horizon = isoAddDays(today, 15);
   const from = TRIP.meta.tripStart > today ? TRIP.meta.tripStart : today;
   const to = TRIP.meta.tripEnd < horizon ? TRIP.meta.tripEnd : horizon;
   if (from > to) return;
@@ -1495,6 +1590,7 @@ document.addEventListener('DOMContentLoaded', () => {
  renderDayIndex();
  initExpandAll();
  initTextSize();
+ initCalendarExport();
  openDayFromHash();
  window.addEventListener('hashchange', openDayFromHash);
  renderPocket();

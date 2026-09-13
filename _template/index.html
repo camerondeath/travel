@@ -20,10 +20,13 @@
      tripStartISO                 → start with correct UTC offset
      plane {kicker,title,standfirst,preview,full}  → the "read on the plane" essay
   Each day: id, iso, dow, date, chapter, title, teaser, essay, events[],
-     plus optional arc, hood, hoodShort. The id is also the day's link:
+     plus optional arc, hood, hoodShort, and tz when the whole day runs on
+     another clock (a travel day that starts at home). The id is also the day's link:
      page#d1 opens that day. Each event: time, title, kind, note, and optional
      state ("confirmed"|"open"), url, map, ref, bib, bibUrl, expand, plus
-     t ("HH:MM") and dayOffset where the Now strip can't read the time.
+     t ("HH:MM") and dayOffset where the Now strip can't read the time, and tz
+     for a single stop on another clock. Timed stops export to the Calendar
+     file; rest stops stay out.
   Each booking: label, sub, state, and optional ref (where it lives, never the
      code), url, due (ISO date to act by, counted down in the ledger), dueLabel.
   ──────────────────────────────────────────────────────────────────────

@@ -8,10 +8,14 @@ Static HTML/CSS/JS, no build step, hosted on GitHub Pages.
 Every trip page is a thin shell plus a `TRIP` data object. All the behaviour and
 all the design live in **one shared engine** — `site.css` + `site.js` — which
 every trip links. Change the engine once and every trip updates together
-(masthead, plane essay, day index, "Now" strip, day chapters, bookings tracker,
-"What's on" events, back pocket, sandbox, weather). Each day chapter is
-linkable: `shanghai/#d3` opens that day, and opening a day by hand writes its
-link into the address bar, so a reload comes back to it.
+(masthead, plane essay, day index, "Now" strip with the clock at home, day
+chapters, bookings tracker with due-date countdowns, "What's on" events, back
+pocket, sandbox, weather with chance of rain, a text size control, and a
+Calendar button that exports every timed stop as an `.ics` file). Each day
+chapter is linkable: `shanghai/#d3` opens that day, and opening a day by hand
+writes its link into the address bar, so a reload comes back to it. A stop
+written on another clock, such as a flight out of home, carries `tz` (on the
+stop, or on the whole day), so the Now strip and the calendar place it right.
 
 ```
 index.html            The hub. Lists every trip with a live status pill

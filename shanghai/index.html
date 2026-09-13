@@ -140,7 +140,7 @@ const TRIP = {
   ],
   days: [
     {
-      id: "d0", iso: "2026-10-23", hood: 'In flight', hoodShort: 'In flight', dow: "Friday", date: "23 October", chapter: "0",
+      id: "d0", iso: "2026-10-23", hood: 'In flight', hoodShort: 'In flight', dow: "Friday", date: "23 October", chapter: "0", tz: "Pacific/Auckland",
       arc: "Transit",
       title: "Two Airports and a Corridor",
       teaser: "The trip begins with a connection, which is the least literary part of any journey and the one most likely to go wrong.",
@@ -531,7 +531,7 @@ const TRIP = {
           note: "45 to 60 minutes depending on the tunnel. Bag drop for NZ288 closes at 12:45, which is the number that sets this whole morning. Leaving now puts you at Terminal 2 by about 11:30 with an hour in hand. Air New Zealand desks, Business Premier check-in." },
         { time: "2:15pm", title: "NZ288 to Auckland", kind: "travel", ref: "Air NZ app",
           note: "Business Premier. 11h 30m. Arrives 6:45am Mon 2 Nov AKL." },
-        { time: "8:50am Mon", t: "08:50", dayOffset: 1, title: "NZ527 to Christchurch", kind: "travel", ref: "Air NZ app",
+        { time: "8:50am Mon", t: "08:50", dayOffset: 1, tz: "Pacific/Auckland", title: "NZ527 to Christchurch", kind: "travel", ref: "Air NZ app",
           note: "Arrives 10:15am CHC." }
       ]
     }

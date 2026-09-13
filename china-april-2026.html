@@ -92,7 +92,7 @@ const TRIP = {
 
   days: [
     {
-      id: "d0", iso: "2026-04-01", hood: "Transit", hoodShort: "CHC&rarr;AKL", dow: "Wednesday", date: "1 April", chapter: "0",
+      id: "d0", iso: "2026-04-01", tz: "Pacific/Auckland", hood: "Transit", hoodShort: "CHC&rarr;AKL", dow: "Wednesday", date: "1 April", chapter: "0",
       arc: "Transit &middot; out",
       title: "Transit day",
       teaser: "CHC &rarr; AKL &middot; overnight at the airport.",
@@ -115,7 +115,7 @@ const TRIP = {
       teaser: "AKL &rarr; Guangzhou &rarr; Shanghai &middot; arrives past midnight.",
       essay: `<p>Two long-haul flights with a Guangzhou transit. First entry immigration in China takes 45&ndash;60 minutes regardless of queue. By the time bags are collected and you reach the hotel it will be close to midnight. There is nothing to do in Shanghai tonight. The city is patient.</p>`,
       events: [
-        { time: "10:00am", title: "CZ336 AKL &rarr; Guangzhou Baiyun", kind: "travel", state: "confirmed",
+        { time: "10:00am", tz: "Pacific/Auckland", title: "CZ336 AKL &rarr; Guangzhou Baiyun", kind: "travel", state: "confirmed",
           note: "Business Class &middot; Seat 11K &middot; B787-9 &middot; arrives 4:40pm.",
           expand: { label: "Details", body: `<ul class="fact-list"><li><span class="k">Flight</span><span class="v">CZ 336</span></li><li><span class="k">Aircraft</span><span class="v">Boeing 787-9</span></li><li><span class="k">Class</span><span class="v">Business &middot; Fare D</span></li><li><span class="k">Seat</span><span class="v">11K</span></li><li><span class="k">Check-in counter</span><span class="v">C201</span></li><li><span class="k">Baggage</span><span class="v">2 pieces free</span></li><li><span class="k">Duration</span><span class="v">11h 40min</span></li></ul><p>Flat-bed seat on the long haul. Guangzhou layover is 3h20m. Chinese meal options are typically better than the Western alternatives on this route.</p>` } },
         { time: "8:00pm", title: "CZ3595 Guangzhou &rarr; Shanghai Hongqiao T2", kind: "travel", state: "confirmed",
@@ -492,7 +492,7 @@ const TRIP = {
     },
 
     {
-      id: "d10", iso: "2026-04-11", hood: "Raglan", hoodShort: "Raglan", dow: "Saturday", date: "11 April", chapter: "X",
+      id: "d10", iso: "2026-04-11", tz: "Pacific/Auckland", hood: "Raglan", hoodShort: "Raglan", dow: "Saturday", date: "11 April", chapter: "X",
       arc: "New Zealand &middot; I",
       title: "Land + drive to Raglan",
       teaser: "Two hours of highway is the right kind of decompression.",
@@ -511,7 +511,7 @@ const TRIP = {
     },
 
     {
-      id: "d11", iso: "2026-04-12", hood: "Home", hoodShort: "Home", dow: "Sunday", date: "12 April", chapter: "XI",
+      id: "d11", iso: "2026-04-12", tz: "Pacific/Auckland", hood: "Home", hoodShort: "Home", dow: "Sunday", date: "12 April", chapter: "XI",
       arc: "New Zealand &middot; II",
       title: "Home",
       teaser: "Raglan &rarr; Hamilton &rarr; Christchurch.",
