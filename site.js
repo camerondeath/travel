@@ -78,20 +78,6 @@ function lsSet(key, value) {
  try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
 }
 
-// Reading size belongs to the reader, not the trip: one key for every page,
-// applied before anything renders so nothing jumps. Screen only; print keeps
-// its own size.
-const TEXT_SIZES = ['m', 'l', 'xl'];
-const TEXT_SIZE_KEY = 'text_size_v1';
-function applyTextSize(size) {
- if (size === 'm') document.documentElement.removeAttribute('data-textsize');
- else document.documentElement.setAttribute('data-textsize', size);
-}
-(function () {
- const saved = lsGet(TEXT_SIZE_KEY, 'm');
- applyTextSize(TEXT_SIZES.includes(saved) ? saved : 'm');
-})();
-
 // Names of stops actually scheduled in the week, derived from day events.
 // Used to mark Back-pocket entries that are already committed vs genuine spares.
 const SCHEDULED_NAMES = (function () {
@@ -1380,118 +1366,13 @@ function renderDayIndex() {
  wrap.innerHTML = '';
  const now = getTripNow();
  const inTrip = now.date >= TRIP_START_ISO && now.date <= TRIP.meta.tripEnd;
- const expand = document.getElementById('expand-all-btn');
+ const controls = document.getElementById('day-controls-wrap');
  if (inTrip && renderNowStrip(wrap, now)) {
-  // "Open all days" gives way to the Now strip; the other controls stay,
-  // because the trip is when the page gets read on a phone in the street.
-  if (expand) expand.style.display = 'none';
+  if (controls) controls.style.display = 'none';
   return;
  }
- if (expand) expand.style.display = '';
+ if (controls) controls.style.display = '';
  renderChips(wrap);
-}
-
-function initTextSize() {
- const wrap = document.getElementById('day-controls-wrap');
- if (!wrap) return;
- const labels = { m: 'Text M', l: 'Text L', xl: 'Text XL' };
- const names = { m: 'standard', l: 'large', xl: 'largest' };
- const nextOf = s => TEXT_SIZES[(TEXT_SIZES.indexOf(s) + 1) % TEXT_SIZES.length];
- let size = document.documentElement.getAttribute('data-textsize') || 'm';
- const btn = el('button', 'expand-all-btn text-size-btn');
- btn.type = 'button';
- function paint() {
-  btn.textContent = labels[size];
-  btn.setAttribute('aria-label', 'Text size ' + names[size] + ', switch to ' + names[nextOf(size)]);
- }
- btn.addEventListener('click', function () {
-  size = nextOf(size);
-  applyTextSize(size);
-  lsSet(TEXT_SIZE_KEY, size);
-  paint();
- });
- paint();
- wrap.insertBefore(btn, wrap.firstChild);
-}
-
-// The week as a calendar file, so the plan sits beside everything else on the
-// phone. Every timed stop becomes an event in UTC (its own clock applied, so no
-// timezone block is needed) and runs until the next timed stop, or an hour when
-// that is under fifteen minutes or over three hours away. Rest stops stay out.
-// UIDs come from the day and the title, so re-importing after the plan changes
-// updates events rather than doubling them.
-const ICS_ENC = typeof TextEncoder !== 'undefined' ? new TextEncoder() : null;
-function icsText(html) {
- const doc = new DOMParser().parseFromString('<body>' + String(html || '') + '</body>', 'text/html');
- return (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
-}
-function icsEscape(s) {
- return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
-}
-// RFC 5545 folds lines at 75 octets; count UTF-8 bytes so Chinese names survive.
-function icsFold(line) {
- const parts = [];
- let cur = '', bytes = 0;
- for (const ch of line) {
-  const b = ICS_ENC ? ICS_ENC.encode(ch).length : 1;
-  if (bytes + b > (parts.length ? 74 : 75)) { parts.push(cur); cur = ''; bytes = 0; }
-  cur += ch; bytes += b;
- }
- parts.push(cur);
- return parts.join('\r\n ');
-}
-function icsStamp(ms) { return new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
-function buildIcs() {
- const m = TRIP.meta;
- const stamp = icsStamp(Date.now());
- const base = location.href.split('#')[0];
- const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Trip notes//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
-  'X-WR-CALNAME:' + icsEscape(icsText(m.city + (m.monthLabel ? ' ' + m.monthLabel : '')))];
- TRIP.days.forEach(function (day) {
-  if (!day.iso) return;
-  const timed = [];
-  (day.events || []).forEach(function (ev) {
-   const mins = parseEventMinutes(ev);
-   if (mins == null) return;
-   const iso = isoAddDays(day.iso, ev.dayOffset || 0);
-   const p = iso.split('-').map(Number);
-   const start = Date.UTC(p[0], p[1] - 1, p[2]) + mins * 60000 - tzOffsetHours(iso, eventTz(day, ev)) * 3600000;
-   timed.push({ ev: ev, start: start });
-  });
-  timed.sort(function (a, b) { return a.start - b.start; });
-  timed.forEach(function (x, k) {
-   if (x.ev.kind === 'rest') return;
-   const gap = timed[k + 1] ? timed[k + 1].start - x.start : 0;
-   const end = x.start + (gap >= 15 * 60000 && gap <= 3 * 3600000 ? gap : 3600000);
-   const title = icsText(x.ev.title);
-   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || String(k);
-   let where = '';
-   try { where = x.ev.map ? (new URL(x.ev.map).searchParams.get('q') || '') : ''; } catch (e) {}
-   const desc = [icsText(x.ev.note), x.ev.url ? String(x.ev.url) : '', base + '#' + day.id].filter(Boolean).join('\n\n');
-   lines.push('BEGIN:VEVENT', 'UID:' + icsEscape(TRIP_SLUG + '-' + day.id + '-' + slug) + '@trip-notes',
-    'DTSTAMP:' + stamp, 'DTSTART:' + icsStamp(x.start), 'DTEND:' + icsStamp(end), 'SUMMARY:' + icsEscape(title));
-   if (where) lines.push('LOCATION:' + icsEscape(where));
-   lines.push('DESCRIPTION:' + icsEscape(desc), 'URL:' + base + '#' + day.id, 'END:VEVENT');
-  });
- });
- lines.push('END:VCALENDAR');
- return lines.map(icsFold).join('\r\n') + '\r\n';
-}
-function initCalendarExport() {
- const wrap = document.getElementById('day-controls-wrap');
- if (!wrap || !(TRIP.days || []).length) return;
- const btn = el('button', 'expand-all-btn calendar-btn', 'Calendar');
- btn.type = 'button';
- btn.setAttribute('aria-label', 'Download the trip as a calendar file');
- btn.addEventListener('click', function () {
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([buildIcs()], { type: 'text/calendar;charset=utf-8' }));
-  a.download = TRIP_SLUG + '.ics';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
- });
- wrap.insertBefore(btn, document.getElementById('expand-all-btn'));
 }
 
 function initExpandAll() {
@@ -1589,8 +1470,6 @@ document.addEventListener('DOMContentLoaded', () => {
  renderBookings();
  renderDayIndex();
  initExpandAll();
- initTextSize();
- initCalendarExport();
  openDayFromHash();
  window.addEventListener('hashchange', openDayFromHash);
  renderPocket();

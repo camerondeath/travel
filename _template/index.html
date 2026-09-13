@@ -6,8 +6,7 @@
      needs editing — site.css and site.js (one level up) do all the work.
   3. Add one entry to the TRIPS array in ../index.html so the hub links here.
   4. That's it. Weather, the day index, the "Now / In N days" status, the
-     bookings tracker, the text size control and the sandbox all come from
-     the shared engine.
+     bookings tracker and the sandbox all come from the shared engine.
 
   Fields the engine reads from TRIP.meta:
      city, monthLabel, dates      → masthead    ("Tokyo in May", "4–9 May 2027")
@@ -25,8 +24,7 @@
      page#d1 opens that day. Each event: time, title, kind, note, and optional
      state ("confirmed"|"open"), url, map, ref, bib, bibUrl, expand, plus
      t ("HH:MM") and dayOffset where the Now strip can't read the time, and tz
-     for a single stop on another clock. Timed stops export to the Calendar
-     file; rest stops stay out.
+     for a single stop on another clock.
   Each booking: label, sub, state, and optional ref (where it lives, never the
      code), url, due (ISO date to act by, counted down in the ledger), dueLabel.
   ──────────────────────────────────────────────────────────────────────
