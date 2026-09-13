@@ -67,6 +67,9 @@ What the pass covers, in order of how much it costs to get wrong:
    sale, last safe day), and keep it in step with the booking-window reminder.
 6. **Timings and transport.** Meals against the traveller's own preference, walks
    against the walking rule, and car estimates against any deadline behind them.
+   A stop written in another clock (a flight out of NZ, a day spent at home)
+   needs `tz` on the stop or the day, or the Now strip and the Calendar export
+   place it hours out.
 7. **The `events.json` feed.** Part of the pass, not a separate job. Every week,
    work the whole events source list below — not one or two of them — for what
    is new, what has moved, and what has quietly ended, following "What belongs
