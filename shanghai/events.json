@@ -438,6 +438,20 @@
       "blurb": "An open jam on the one night of the week when most of the city's music rooms are dark. Monday the 26th currently ends with delivery in the room; this is the low-commitment alternative if it stops too hard.",
       "url": "https://www.smartshanghai.com/event/weekly-jam-night",
       "added": "2026-09-13"
+    },
+    {
+      "title": "Bvlgari Kaleidos: Colors, Cultures and Crafts",
+      "when": "to 31 Oct",
+      "sortDate": "2026-10-24",
+      "start": "2026-09-05",
+      "end": "2026-10-31",
+      "venue": "Power Station of Art · 2F",
+      "kind": "art",
+      "blurb": "More than 300 Bvlgari jewels chosen for their colour, in a Shanghai edition of the touring show, with work by contemporary Chinese artists alongside. On the page for Thursday afternoon, on the way home from the dance at West Bund. Closed Mondays; tickets at the desk or through PSA's WeChat account.",
+      "closed": ["Mon"],
+      "planned": "d6",
+      "url": "https://www.powerstationofart.com/whats-on/exhibitions/bvlgari-kaleidos",
+      "added": "2026-09-13"
     }
   ]
 }
