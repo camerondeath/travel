@@ -78,6 +78,20 @@ function lsSet(key, value) {
  try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
 }
 
+// Reading size belongs to the reader, not the trip: one key for every page,
+// applied before anything renders so nothing jumps. Screen only; print keeps
+// its own size.
+const TEXT_SIZES = ['m', 'l', 'xl'];
+const TEXT_SIZE_KEY = 'text_size_v1';
+function applyTextSize(size) {
+ if (size === 'm') document.documentElement.removeAttribute('data-textsize');
+ else document.documentElement.setAttribute('data-textsize', size);
+}
+(function () {
+ const saved = lsGet(TEXT_SIZE_KEY, 'm');
+ applyTextSize(TEXT_SIZES.includes(saved) ? saved : 'm');
+})();
+
 // Names of stops actually scheduled in the week, derived from day events.
 // Used to mark Back-pocket entries that are already committed vs genuine spares.
 const SCHEDULED_NAMES = (function () {
@@ -1351,12 +1365,37 @@ function renderDayIndex() {
  wrap.innerHTML = '';
  const now = getTripNow();
  const inTrip = now.date >= TRIP_START_ISO && now.date <= TRIP.meta.tripEnd;
- const controls = document.getElementById('day-controls-wrap');
  if (inTrip && renderNowStrip(wrap, now)) {
-  if (controls) controls.style.display = 'none';
+  // "Open all days" gives way to the Now strip; the text size control stays,
+  // because the trip is when the page gets read on a phone in the street.
+  const expand = document.getElementById('expand-all-btn');
+  if (expand) expand.style.display = 'none';
   return;
  }
  renderChips(wrap);
+}
+
+function initTextSize() {
+ const wrap = document.getElementById('day-controls-wrap');
+ if (!wrap) return;
+ const labels = { m: 'Text M', l: 'Text L', xl: 'Text XL' };
+ const names = { m: 'standard', l: 'large', xl: 'largest' };
+ const nextOf = s => TEXT_SIZES[(TEXT_SIZES.indexOf(s) + 1) % TEXT_SIZES.length];
+ let size = document.documentElement.getAttribute('data-textsize') || 'm';
+ const btn = el('button', 'expand-all-btn text-size-btn');
+ btn.type = 'button';
+ function paint() {
+  btn.textContent = labels[size];
+  btn.setAttribute('aria-label', 'Text size ' + names[size] + ', switch to ' + names[nextOf(size)]);
+ }
+ btn.addEventListener('click', function () {
+  size = nextOf(size);
+  applyTextSize(size);
+  lsSet(TEXT_SIZE_KEY, size);
+  paint();
+ });
+ paint();
+ wrap.insertBefore(btn, wrap.firstChild);
 }
 
 function initExpandAll() {
@@ -1455,6 +1494,7 @@ document.addEventListener('DOMContentLoaded', () => {
  renderBookings();
  renderDayIndex();
  initExpandAll();
+ initTextSize();
  openDayFromHash();
  window.addEventListener('hashchange', openDayFromHash);
  renderPocket();

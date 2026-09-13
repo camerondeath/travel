@@ -16,6 +16,8 @@
 <meta name="theme-color" content="#ecedea" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#131513" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="site.css">
+<!-- The hub has no engine, so it only honours the reading size chosen on a trip page. -->
+<script>try { var ts = JSON.parse(localStorage.getItem('text_size_v1')); if (ts === 'l' || ts === 'xl') document.documentElement.setAttribute('data-textsize', ts); } catch (e) {}</script>
 <script src="gate.js"></script>
 <style>
 /* ── HUB (index) ───────────────────────────────────────────────

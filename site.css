@@ -83,6 +83,10 @@
    held back for long essay prose. One per-trip signal, --accent.            */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; font-size: 18px; }
+@media screen {
+ html[data-textsize="l"] { font-size: 20px; }
+ html[data-textsize="xl"] { font-size: 22px; }
+}
 body { background: var(--ground); color: var(--ink); font-family: var(--sans); line-height: 1.55;
  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 @media (prefers-reduced-motion: reduce) {
@@ -366,7 +370,7 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .now-title { font-family: var(--display); font-size: 1.05rem; font-weight: 700; color: var(--ink); flex: 1 1 auto; min-width: 0; }
 .now-day { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); }
 .now-home { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); }
-.day-controls { display: flex; justify-content: flex-end; padding: 0.7rem 0 0; margin-bottom: -0.3rem; }
+.day-controls { display: flex; justify-content: flex-end; gap: 1.4rem; padding: 0.7rem 0 0; margin-bottom: -0.3rem; }
 .expand-all-btn { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0.2rem 0; }
 .expand-all-btn:hover { color: var(--accent-2); }
 
