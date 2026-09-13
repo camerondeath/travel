@@ -96,6 +96,9 @@ Sources that work, and ones that do not:
   with a desktop browser user-agent gets through (verified 2026-09-13). The
   address and the award are in the HTML it returns; the opening hours are
   rendered client-side and are not. Hours still have to come from elsewhere.
+  It is not dependable: later that same day the same request came back HTTP
+  202 with an empty body (a bot check). When it does, take the address and
+  hours from Nomfluence and do not claim a current award.
 - Sunrise and sunset in prose must match what `sunTime()` in `site.js` computes
   for that ISO date; run the function rather than searching for the time.
 
