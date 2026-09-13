@@ -134,9 +134,9 @@ function makeExpand(label, bodyHtml) {
  body.id = 'x-' + (++discSeq);
  btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', body.id);
  btn.addEventListener('click', () => {
- const open = btn.classList.toggle('open');
- body.classList.toggle('open');
- btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const open = btn.classList.toggle('open');
+  body.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
  });
  wrap.appendChild(btn);
  wrap.appendChild(body);
@@ -199,151 +199,151 @@ function renderChapters() {
  const dayTotal = TRIP.days.length;
 
  TRIP.days.forEach((day, dayIdx) => {
- const ch = el('section', 'chapter');
- ch.id = day.id;
- const dayDate = day.iso;
+  const ch = el('section', 'chapter');
+  ch.id = day.id;
+  const dayDate = day.iso;
 
- let isToday = false;
+  let isToday = false;
+  if (tripActive) {
+   if (dayDate < todayStr) ch.classList.add('is-past');
+   else if (dayDate === todayStr) {
+    ch.classList.add('is-today');
+    isToday = true;
+    ch.appendChild(el('div', 'chapter-label', 'Today'));
+   }
+  }
+  if (isToday) ch.classList.add('open');
+
+  // Real document outline. The visible title sits inside the role=button head,
+   // where its heading semantics would be stripped, so the chapter carries its
+  // own heading for assistive tech and reader modes.
+  const srHead = el('h2', 'sr-only', [day.title, day.dow, day.date].filter(Boolean).join(' \u00b7 '));
+  ch.appendChild(srHead);
+
+  // Weekday leads (it is the useful fact); date and ordinal are whispers below.
+  const wdAbbr = (day.dow || '').slice(0, 3);
+  const head = el('div', 'chapter-head lg');
+  const dataBits = [];
+  if (day.hood) dataBits.push(`<span class="hood">${day.hood}</span>`);
+  if (day.arc) dataBits.push(`<span class="arc">${day.arc}</span>`);
+  // Seasonal average, shown until the live forecast comes into range (fetchWeather).
+  const cn = TRIP.meta.climate && TRIP.meta.climate.byId && TRIP.meta.climate.byId[day.id];
+  // Sunset, computed per day from the trip's coordinates; days are often
+  // planned backwards from it.
+  const sunset = day.iso ? sunTime(day.iso, false) : null;
+  const wxInit = cn ? `<span class="day-weather-temps"><span class="hi">${cn[0]}°</span> / ${cn[1]}°</span><span class="wx-avg">avg</span>` : '';
+  head.innerHTML =
+   `<div class="daymark">`
+   + `<span class="wd">${wdAbbr}</span>`
+   + `<span class="dt">${day.date}</span>`
+   + `<span class="day-weather" id="wx-${day.id}">${wxInit}</span>`
+   + (sunset ? `<span class="day-sun" title="Sunset in ${TRIP.meta.city}">\u2193 ${sunset}</span>` : '')
+   + `<span class="ord">Day ${dayIdx + 1} / ${dayTotal}</span>`
+   + `</div>`
+   + `<div class="chapter-content">`
+   + `<div class="chapter-top"><div class="chapter-title">${day.title}</div>`
+   + `<div class="chapter-toggle"><em class="chev">\u203a</em></div></div>`
+   + `<div class="chapter-data">${dataBits.join('')}</div>`
+   + `</div>`;
+  const content = head.querySelector('.chapter-content');
+  head.setAttribute('role', 'button');
+  head.setAttribute('tabindex', '0');
+  head.setAttribute('aria-expanded', isToday ? 'true' : 'false');
+  function toggleChapter() {
+   const open = !ch.classList.contains('open');
+   setChapterOpen(ch, open);
+   if (open) rememberDay(day.id);
+   else if (location.hash === '#' + day.id) rememberDay('');
+  }
+  // The essay -- with its own Continue reading / Collapse controls and prose
+  // links -- lives inside this clickable head, so a click on any of those would
+  // otherwise bubble up here and re-toggle the day, undoing the control's action.
+  head.addEventListener('click', e => {
+   if (e.target.closest('a, button')) return;
+   toggleChapter();
+  });
+  head.addEventListener('keydown', e => {
+   if (e.target.closest('a, button')) return;
+   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleChapter(); }
+  });
+  ch.appendChild(head);
+
+  // Essay: explicit teaser shown; full essay revealed on demand. No prose parsing.
+  const essayWrap = el('div', null);
+  const teaser = day.teaser || ((day.essay || '').match(/<p>([\s\S]*?)<\/p>/) || [, ''])[1];
+  const teaserDiv = el('div', 'essay-teaser');
+  teaserDiv.innerHTML = `<p>${teaser}</p>`;
+  essayWrap.appendChild(teaserDiv);
+  if (day.essay) {
+   const continueSpan = el('span', 'essay-continue');
+   continueSpan.innerHTML = `<button type="button" class="essay-continue-btn">Continue reading</button>`;
+   // A sibling of the teaser, not a child -- the teaser clamps to 2 lines when
+   // the day is closed, and a button living inside that clamp only survives
+   // truncation by luck (visible for a short teaser, clipped away for a long
+   // one). Kept outside, it always renders.
+   essayWrap.appendChild(continueSpan);
+   const fullBody = el('div', null);
+   fullBody.id = 'essay-' + day.id;
+   fullBody.style.display = 'none';
+   fullBody.innerHTML = `<div class="prose prose-drop" style="margin-top:0.9rem;">${day.essay}</div>`;
+   const collapseWrap = el('div', 'essay-collapse');
+   collapseWrap.innerHTML = `<button type="button" class="essay-collapse-btn">Collapse</button>`;
+   fullBody.appendChild(collapseWrap);
+   essayWrap.appendChild(fullBody);
+   continueSpan.querySelector('button').addEventListener('click', () => {
+    setChapterOpen(ch, true);
+    showFullEssay(ch, true);
+    rememberDay(day.id);
+   });
+   collapseWrap.querySelector('button').addEventListener('click', () => showFullEssay(ch, false));
+  }
+  content.appendChild(essayWrap);
+
+  // Schedule: each stop is a row on the shared gutter grid — the mono time
+  // sits in the gutter, aligned under the weekday, the rest in the content.
+  const spine = el('div', 'spine');
+  day.events.forEach(ev => {
+   const stop = el('div', 'lg stop');
+   stop.dataset.kind = ev.kind;
+
+   const tag = ev.state === 'confirmed' ? '<span class="stop-tag confirmed">Booked</span>'
+    : ev.state === 'open' ? '<span class="stop-tag open">To book</span>' : '';
+   const bibBadge = ev.bib ? (ev.bibUrl ? `<a class="bib-badge" href="${ev.bibUrl}" target="_blank" rel="noopener">Bib</a>` : '<span class="bib-badge">Bib</span>') : '';
+
+   // Title -- link if url provided
+   const titleHtml = ev.url
+    ? `<a href="${ev.url}" target="_blank" rel="noopener">${ev.title}</a>`
+    : ev.title;
+
+   const body = el('div', 'stop-body');
+   body.appendChild(el('div', 'stop-head', `<span class="stop-title">${titleHtml}</span>${bibBadge}${tag}`));
+   if (ev.note) body.appendChild(el('div', 'stop-note', ev.note));
+   if (ev.ref) body.appendChild(el('div', 'stop-ref', `<span>${ev.ref}</span>`));
+   if (ev.map) {
+    const ml = el('a', 'stop-map', '↗ Map');
+    ml.href = ev.map; ml.target = '_blank'; ml.rel = 'noopener';
+    body.appendChild(ml);
+   }
+   if (ev.expand) body.appendChild(makeExpand(ev.expand.label, ev.expand.body));
+   stop.appendChild(el('div', 'stop-time mono', ev.time));
+   stop.appendChild(body);
+   spine.appendChild(stop);
+  });
+
+  ch.appendChild(spine);
+  chapters.push({ el: ch, date: dayDate });
+ });
+
  if (tripActive) {
- if (dayDate < todayStr) ch.classList.add('is-past');
- else if (dayDate === todayStr) {
- ch.classList.add('is-today');
- isToday = true;
- ch.appendChild(el('div', 'chapter-label', 'Today'));
+  chapters.sort((a, b) => {
+   const aT = a.date === todayStr, bT = b.date === todayStr;
+   const aP = a.date < todayStr, bP = b.date < todayStr;
+   if (aT && !bT) return -1; if (bT && !aT) return 1;
+   if (!aP && bP) return -1; if (aP && !bP) return 1;
+   return a.date < b.date ? -1 : 1;
+  });
  }
- }
- if (isToday) ch.classList.add('open');
-
- // Real document outline. The visible title sits inside the role=button head,
- // where its heading semantics would be stripped, so the chapter carries its
- // own heading for assistive tech and reader modes.
- const srHead = el('h2', 'sr-only', [day.title, day.dow, day.date].filter(Boolean).join(' \u00b7 '));
- ch.appendChild(srHead);
-
- // Weekday leads (it is the useful fact); date and ordinal are whispers below.
- const wdAbbr = (day.dow || '').slice(0, 3);
- const head = el('div', 'chapter-head lg');
- const dataBits = [];
- if (day.hood) dataBits.push(`<span class="hood">${day.hood}</span>`);
- if (day.arc) dataBits.push(`<span class="arc">${day.arc}</span>`);
- // Seasonal average, shown until the live forecast comes into range (fetchWeather).
- const cn = TRIP.meta.climate && TRIP.meta.climate.byId && TRIP.meta.climate.byId[day.id];
- // Sunset, computed per day from the trip's coordinates; days are often
- // planned backwards from it.
- const sunset = day.iso ? sunTime(day.iso, false) : null;
- const wxInit = cn ? `<span class="day-weather-temps"><span class="hi">${cn[0]}°</span> / ${cn[1]}°</span><span class="wx-avg">avg</span>` : '';
- head.innerHTML =
-  `<div class="daymark">`
-  + `<span class="wd">${wdAbbr}</span>`
-  + `<span class="dt">${day.date}</span>`
-  + `<span class="day-weather" id="wx-${day.id}">${wxInit}</span>`
-  + (sunset ? `<span class="day-sun" title="Sunset in ${TRIP.meta.city}">\u2193 ${sunset}</span>` : '')
-  + `<span class="ord">Day ${dayIdx + 1} / ${dayTotal}</span>`
-  + `</div>`
-  + `<div class="chapter-content">`
-  + `<div class="chapter-top"><div class="chapter-title">${day.title}</div>`
-  + `<div class="chapter-toggle"><em class="chev">\u203a</em></div></div>`
-  + `<div class="chapter-data">${dataBits.join('')}</div>`
-  + `</div>`;
- const content = head.querySelector('.chapter-content');
- head.setAttribute('role', 'button');
- head.setAttribute('tabindex', '0');
- head.setAttribute('aria-expanded', isToday ? 'true' : 'false');
- function toggleChapter() {
- const open = !ch.classList.contains('open');
- setChapterOpen(ch, open);
- if (open) rememberDay(day.id);
- else if (location.hash === '#' + day.id) rememberDay('');
- }
- // The essay -- with its own Continue reading / Collapse controls and prose
- // links -- lives inside this clickable head, so a click on any of those would
- // otherwise bubble up here and re-toggle the day, undoing the control's action.
- head.addEventListener('click', e => {
- if (e.target.closest('a, button')) return;
- toggleChapter();
- });
- head.addEventListener('keydown', e => {
- if (e.target.closest('a, button')) return;
- if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleChapter(); }
- });
- ch.appendChild(head);
-
- // Essay: explicit teaser shown; full essay revealed on demand. No prose parsing.
- const essayWrap = el('div', null);
- const teaser = day.teaser || ((day.essay || '').match(/<p>([\s\S]*?)<\/p>/) || [, ''])[1];
- const teaserDiv = el('div', 'essay-teaser');
- teaserDiv.innerHTML = `<p>${teaser}</p>`;
- essayWrap.appendChild(teaserDiv);
- if (day.essay) {
- const continueSpan = el('span', 'essay-continue');
- continueSpan.innerHTML = `<button type="button" class="essay-continue-btn">Continue reading</button>`;
- // A sibling of the teaser, not a child -- the teaser clamps to 2 lines when
- // the day is closed, and a button living inside that clamp only survives
- // truncation by luck (visible for a short teaser, clipped away for a long
- // one). Kept outside, it always renders.
- essayWrap.appendChild(continueSpan);
- const fullBody = el('div', null);
- fullBody.id = 'essay-' + day.id;
- fullBody.style.display = 'none';
- fullBody.innerHTML = `<div class="prose prose-drop" style="margin-top:0.9rem;">${day.essay}</div>`;
- const collapseWrap = el('div', 'essay-collapse');
- collapseWrap.innerHTML = `<button type="button" class="essay-collapse-btn">Collapse</button>`;
- fullBody.appendChild(collapseWrap);
- essayWrap.appendChild(fullBody);
- continueSpan.querySelector('button').addEventListener('click', () => {
- setChapterOpen(ch, true);
- showFullEssay(ch, true);
- rememberDay(day.id);
- });
- collapseWrap.querySelector('button').addEventListener('click', () => showFullEssay(ch, false));
- }
- content.appendChild(essayWrap);
-
- // Schedule: each stop is a row on the shared gutter grid — the mono time
- // sits in the gutter, aligned under the weekday, the rest in the content.
- const spine = el('div', 'spine');
- day.events.forEach(ev => {
- const stop = el('div', 'lg stop');
- stop.dataset.kind = ev.kind;
-
- const tag = ev.state === 'confirmed' ? '<span class="stop-tag confirmed">Booked</span>'
- : ev.state === 'open' ? '<span class="stop-tag open">To book</span>' : '';
- const bibBadge = ev.bib ? (ev.bibUrl ? `<a class="bib-badge" href="${ev.bibUrl}" target="_blank" rel="noopener">Bib</a>` : '<span class="bib-badge">Bib</span>') : '';
-
- // Title -- link if url provided
- const titleHtml = ev.url
- ? `<a href="${ev.url}" target="_blank" rel="noopener">${ev.title}</a>`
- : ev.title;
-
- const body = el('div', 'stop-body');
- body.appendChild(el('div', 'stop-head', `<span class="stop-title">${titleHtml}</span>${bibBadge}${tag}`));
- if (ev.note) body.appendChild(el('div', 'stop-note', ev.note));
- if (ev.ref) body.appendChild(el('div', 'stop-ref', `<span>${ev.ref}</span>`));
- if (ev.map) {
- const ml = el('a', 'stop-map', '↗ Map');
- ml.href = ev.map; ml.target = '_blank'; ml.rel = 'noopener';
- body.appendChild(ml);
- }
- if (ev.expand) body.appendChild(makeExpand(ev.expand.label, ev.expand.body));
- stop.appendChild(el('div', 'stop-time mono', ev.time));
- stop.appendChild(body);
- spine.appendChild(stop);
- });
-
- ch.appendChild(spine);
- chapters.push({ el: ch, date: dayDate });
- });
-
- if (tripActive) {
- chapters.sort((a, b) => {
- const aT = a.date === todayStr, bT = b.date === todayStr;
- const aP = a.date < todayStr, bP = b.date < todayStr;
- if (aT && !bT) return -1; if (bT && !aT) return 1;
- if (!aP && bP) return -1; if (aP && !bP) return 1;
- return a.date < b.date ? -1 : 1;
- });
- }
-  chapters.forEach(c => wrap.appendChild(c.el));
+ chapters.forEach(c => wrap.appendChild(c.el));
 }
 
 function renderBookings() {
@@ -880,14 +880,14 @@ function renderPocket() {
  const wrap = document.getElementById('site-pocket-wrap');
  if (!wrap || !TRIP.pocket) return;
  TRIP.pocket.forEach(g => {
- const d = makeDisclosureRow(`${g.group} <span class="sh26-count">${g.items.length}</span>`);
- g.items.forEach(([n, desc, u]) => {
- const link = u ? ` <a class="sh26-item-link" href="${u}" target="_blank" rel="noopener">↗</a>` : '';
- const onWeek = SCHEDULED_NAMES.some(t => namesMatch(n, t));
- const tag = onWeek ? ` <span class="pocket-tag">On the week</span>` : '';
- d.body.appendChild(el('div', 'sh26-item', `<div class="n">${n}${tag}${link}</div><div class="d">${desc}</div>`));
- });
- wrap.appendChild(d.grp);
+  const d = makeDisclosureRow(`${g.group} <span class="sh26-count">${g.items.length}</span>`);
+  g.items.forEach(([n, desc, u]) => {
+   const link = u ? ` <a class="sh26-item-link" href="${u}" target="_blank" rel="noopener">↗</a>` : '';
+   const onWeek = SCHEDULED_NAMES.some(t => namesMatch(n, t));
+   const tag = onWeek ? ` <span class="pocket-tag">On the week</span>` : '';
+   d.body.appendChild(el('div', 'sh26-item', `<div class="n">${n}${tag}${link}</div><div class="d">${desc}</div>`));
+  });
+  wrap.appendChild(d.grp);
  });
 }
 
@@ -1322,61 +1322,61 @@ function initExpandAll() {
 
 async function fetchWeather() {
  try {
- // Open-Meteo's forecast window is ~16 days; the masthead's "current" reading only
- // means anything once we're inside that window relative to trip start, otherwise
- // it would show today's real weather next to the trip dates, which
- // reads as wrong no matter how accurate the number technically is.
- const tripStart = new Date(TRIP.meta.tripStartISO);
- const now = new Date();
- const daysUntilTrip = (tripStart - now) / DAY_MS;
- const showCurrent = daysUntilTrip <= 16 && daysUntilTrip >= -8;
+  // Open-Meteo's forecast window is ~16 days; the masthead's "current" reading only
+  // means anything once we're inside that window relative to trip start, otherwise
+  // it would show today's real weather next to the trip dates, which
+  // reads as wrong no matter how accurate the number technically is.
+  const tripStart = new Date(TRIP.meta.tripStartISO);
+  const now = new Date();
+  const daysUntilTrip = (tripStart - now) / DAY_MS;
+  const showCurrent = daysUntilTrip <= 16 && daysUntilTrip >= -8;
 
- const wmoIcon = c => c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
+  const wmoIcon = c => c===0?'☀':c<=2?'⛅':c===3?'☁':c<=49?'🌫':c<=59?'🌦':c<=69?'🌧':c<=79?'❄':c<=82?'🌦':'⛈';
 
- // Two separate requests. The daily range sits in October and will 400 while
- // it is beyond Open-Meteo's ~16-day forecast horizon; keeping it apart from
- // the current-conditions call means a rejected range never blanks the masthead.
- if (showCurrent) {
- try {
- const rc = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${TRIP.meta.geo.lat}&longitude=${TRIP.meta.geo.lon}&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=${encodeURIComponent(TRIP.meta.tz)}`);
- if (rc.ok) {
- const dc = await rc.json();
- if (dc.current) {
- const cur = Math.round(dc.current.temperature_2m);
- const curIcon = wmoIcon(dc.current.weather_code);
- document.getElementById('m-weather').innerHTML =
- `${curIcon} <span class="mast-weather-temp">${cur}°</span>`;
- }
- }
- } catch (e) {}
- }
+  // Two separate requests. The daily range sits in October and will 400 while
+  // it is beyond Open-Meteo's ~16-day forecast horizon; keeping it apart from
+  // the current-conditions call means a rejected range never blanks the masthead.
+  if (showCurrent) {
+   try {
+    const rc = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${TRIP.meta.geo.lat}&longitude=${TRIP.meta.geo.lon}&current=temperature_2m,weather_code&temperature_unit=celsius&timezone=${encodeURIComponent(TRIP.meta.tz)}`);
+    if (rc.ok) {
+     const dc = await rc.json();
+     if (dc.current) {
+      const cur = Math.round(dc.current.temperature_2m);
+      const curIcon = wmoIcon(dc.current.weather_code);
+      document.getElementById('m-weather').innerHTML =
+       `${curIcon} <span class="mast-weather-temp">${cur}°</span>`;
+     }
+    }
+   } catch (e) {}
+  }
 
- // Per-day forecast: only meaningful once the range is inside the horizon.
- // A finished trip (or one still months out) can only ever get an error back,
- // so don't spend the request at all.
- const daysPastEnd = (now - new Date(TRIP.meta.tripEnd + 'T23:59:59')) / DAY_MS;
- if (daysUntilTrip > 16 || daysPastEnd > 0) return;
+  // Per-day forecast: only meaningful once the range is inside the horizon.
+  // A finished trip (or one still months out) can only ever get an error back,
+   // so don't spend the request at all.
+  const daysPastEnd = (now - new Date(TRIP.meta.tripEnd + 'T23:59:59')) / DAY_MS;
+  if (daysUntilTrip > 16 || daysPastEnd > 0) return;
 
- const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${TRIP.meta.geo.lat}&longitude=${TRIP.meta.geo.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&timezone=${encodeURIComponent(TRIP.meta.tz)}&start_date=${TRIP.meta.tripStart}&end_date=${TRIP.meta.tripEnd}`);
- if (!r.ok) return;
- const d = await r.json();
- if (!d.daily || !d.daily.time) return;
+  const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${TRIP.meta.geo.lat}&longitude=${TRIP.meta.geo.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&timezone=${encodeURIComponent(TRIP.meta.tz)}&start_date=${TRIP.meta.tripStart}&end_date=${TRIP.meta.tripEnd}`);
+  if (!r.ok) return;
+  const d = await r.json();
+  if (!d.daily || !d.daily.time) return;
 
- // Derive date->id from the trip data itself
- const dateToId = {};
- TRIP.days.forEach(dd => { dateToId[dd.iso] = dd.id; });
- d.daily.time.forEach((date, i) => {
- const id = dateToId[date];
- if (!id) return;
- const slot = document.getElementById('wx-' + id);
- if (!slot) return;
- const hiRaw = d.daily.temperature_2m_max[i];
- const loRaw = d.daily.temperature_2m_min[i];
- // Days past the ~16-day horizon come back null -- keep their seasonal average.
- if (hiRaw == null || loRaw == null) return;
- const icon = wmoIcon(d.daily.weather_code[i]);
- slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${Math.round(hiRaw)}°</span> / ${Math.round(loRaw)}°</span>`;
- });
+  // Derive date->id from the trip data itself
+  const dateToId = {};
+  TRIP.days.forEach(dd => { dateToId[dd.iso] = dd.id; });
+  d.daily.time.forEach((date, i) => {
+   const id = dateToId[date];
+   if (!id) return;
+   const slot = document.getElementById('wx-' + id);
+   if (!slot) return;
+   const hiRaw = d.daily.temperature_2m_max[i];
+   const loRaw = d.daily.temperature_2m_min[i];
+   // Days past the ~16-day horizon come back null -- keep their seasonal average.
+   if (hiRaw == null || loRaw == null) return;
+   const icon = wmoIcon(d.daily.weather_code[i]);
+   slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${Math.round(hiRaw)}°</span> / ${Math.round(loRaw)}°</span>`;
+  });
  } catch(e) {}
 }
 
