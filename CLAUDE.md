@@ -62,7 +62,9 @@ What the pass covers, in order of how much it costs to get wrong:
 5. **Booking state.** `state: "open"` renders a **"To book"** badge and counts in
    the progress bar, so it must correspond to a real ledger entry and a real
    action. Two museums carried it while their own notes correctly said no booking
-   was needed.
+   was needed. An open booking's `due` date counts down in the ledger and opens
+   the group inside a week: check it is still the real day to act (tickets on
+   sale, last safe day), and keep it in step with the booking-window reminder.
 6. **Timings and transport.** Meals against the traveller's own preference, walks
    against the walking rule, and car estimates against any deadline behind them.
 7. **The `events.json` feed.** Part of the pass, not a separate job. Every week,

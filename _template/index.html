@@ -121,9 +121,12 @@ const TRIP = {
     }
   },
 
+  // A booking's `ref` says where the confirmation lives, never the code itself.
+  // `due` is the day an open booking needs acting on (tickets on sale, last safe
+  // day); it counts down in the ledger. `dueLabel` defaults to "Book by".
   bookings: [
     { label: "Flights", sub: "Ref …", state: "confirmed" },
-    { label: "Something to book", sub: "date · note", state: "open" }
+    { label: "Something to book", sub: "date · note", state: "open", due: "2027-04-01", dueLabel: "Book by" }
   ],
 
   days: [

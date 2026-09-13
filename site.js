@@ -368,12 +368,36 @@ function renderBookings() {
   + '<div class="ledger-progress-bar"><div class="ledger-progress-fill" style="width:' + pct + '%"></div></div>';
  reg.appendChild(prog);
 
+ // `due` (an ISO date) is when an open booking needs acting on: the day
+ // tickets go on sale, or the last safe day to book. `dueLabel` names the
+ // action and defaults to "Book by". Days count in the trip's own time zone,
+ // through getTripNow, so the __NOW__ test hook moves them too.
+ function daysUntil(iso) {
+  const ms = evDate(iso);
+  return isNaN(ms) ? null : Math.round((ms - evDate(getTripNow().date)) / DAY_MS);
+ }
+ function relDays(n) {
+  if (n === 0) return 'today';
+  if (n === 1) return 'tomorrow';
+  if (n > 1) return 'in ' + n + ' days';
+  return n === -1 ? 'yesterday' : -n + ' days ago';
+ }
+ function dueLine(b) {
+  const n = b.state === 'confirmed' ? null : daysUntil(b.due);
+  if (n == null) return '';
+  const d = new Date(evDate(b.due));
+  const when = EV_WD[d.getDay()] + ' ' + d.getDate() + ' ' + EV_MO[d.getMonth()];
+  const cls = n < 0 ? ' late' : n <= 7 ? ' soon' : '';
+  return '<div class="ledger-due' + cls + '">' + esc(b.dueLabel || 'Book by') + ' ' + when + ' · ' + relDays(n) + '</div>';
+ }
+
  function bookingRow(b) {
   const row = el('div', 'ledger-row');
   row.innerHTML = '<span class="ldot ' + b.state + '"></span>'
    + '<div class="ledger-body">'
    + '<div class="ledger-label">' + b.label + '</div>'
    + '<div class="ledger-sub">' + b.sub + '</div>'
+   + dueLine(b)
    + (b.ref ? '<div class="ledger-ref"><span>' + b.ref + '</span></div>' : '')
    + '</div>'
    + '<span class="ledger-state ' + b.state + '">' + (b.state === 'confirmed' ? 'Booked' : 'To book') + '</span>'
@@ -385,10 +409,18 @@ function renderBookings() {
  // line above already gives the at-a-glance status, so the itemised ledger
  // (logistics reference, not something to scan on every visit) stays out of
  // the way until asked for. What still needs action lists first.
- const stillOpen = bookings.filter(b => b.state !== 'confirmed');
+ // Dated items sort soonest first, and anything due within a week opens the
+ // group, because a deadline folded out of sight is how one gets missed.
+ const dueKey = b => { const n = daysUntil(b.due); return n == null ? Infinity : n; };
+ const stillOpen = bookings.filter(b => b.state !== 'confirmed')
+  .sort((a, b) => { const x = dueKey(a), y = dueKey(b); return x === y ? 0 : x < y ? -1 : 1; });
  const confirmed = bookings.filter(b => b.state === 'confirmed');
+ const soonest = stillOpen.length ? dueKey(stillOpen[0]) : Infinity;
+ if (soonest !== Infinity) {
+  prog.querySelector('.ledger-progress-text').insertAdjacentHTML('beforeend', ' · next due ' + relDays(soonest));
+ }
  if (stillOpen.length) {
-  const d = makeDisclosureRow('Still to book <span class="sh26-count">' + stillOpen.length + '</span>');
+  const d = makeDisclosureRow('Still to book <span class="sh26-count">' + stillOpen.length + '</span>', { open: soonest <= 7 });
   stillOpen.forEach(b => d.body.appendChild(bookingRow(b)));
   reg.appendChild(d.grp);
  }

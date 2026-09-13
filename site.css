@@ -262,6 +262,9 @@ body { background: var(--ground); color: var(--ink); font-family: var(--sans); l
 .ledger-body { flex: 1; min-width: 0; }
 .ledger-label { font-family: var(--display); font-size: 0.98rem; font-weight: 700; color: var(--ink); }
 .ledger-sub { font-family: var(--mono); font-size: 0.6rem; color: var(--ink-3); margin-top: 0.12rem; letter-spacing: 0.02em; }
+.ledger-due { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.02em; color: var(--ink-2); margin-top: 0.2rem; }
+.ledger-due.soon, .ledger-due.late { color: var(--accent); }
+.ledger-due.late { font-weight: 600; }
 .ledger-ref { font-family: var(--mono); font-size: 0.58rem; color: var(--ink-3); margin-top: 0.15rem; }
 .ledger-ref span { color: var(--accent); }
 .ledger-state { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.04em; text-transform: uppercase; flex-shrink: 0; align-self: center; padding: 0.2em 0.5em; border: 1px solid currentColor; }
