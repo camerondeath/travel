@@ -317,7 +317,9 @@
       "kind": "music",
       "blurb": "Martha Argerich, Maxim Vengerov and Steven Isserlis playing chamber music on two consecutive nights. The 24th is Liszt, Schumann, Mahler and Beethoven; the 25th is Shostakovich, Beethoven, Kreisler and Ravel. Argerich is 85 and does not tour much. Both nights clash with the page as it stands, which is exactly the sort of thing worth knowing early.",
       "url": "https://www.smartshanghai.com/event/the-starry-nights-by-martha-argerich-maxim-vengerov-steven-isserlis-and-friends",
-      "added": "2026-09-13"
+      "added": "2026-09-13",
+      "hidden": true,
+      "hiddenNote": "Not wanted. The 25th is the Lost Plate tour, kept over this, and the 24th is landing day."
     },
     {
       "title": "Hamlet — Beijing People's Art Theatre",
