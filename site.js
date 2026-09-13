@@ -1412,7 +1412,16 @@ async function fetchWeather() {
   const daysPastEnd = (now - new Date(TRIP.meta.tripEnd + 'T23:59:59')) / DAY_MS;
   if (daysUntilTrip > 16 || daysPastEnd > 0) return;
 
-  const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${TRIP.meta.geo.lat}&longitude=${TRIP.meta.geo.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=celsius&timezone=${encodeURIComponent(TRIP.meta.tz)}&start_date=${TRIP.meta.tripStart}&end_date=${TRIP.meta.tripEnd}`);
+  // Ask only for the days the forecast can reach. A range that runs past the
+  // horizon is refused outright, so asking for the whole trip left every day on
+  // its seasonal average until the last one came into range.
+  const addDaysISO = (iso, n) => { const p = iso.split('-').map(Number); return new Date(Date.UTC(p[0], p[1] - 1, p[2] + n)).toISOString().slice(0, 10); };
+  const today = getTripNow().date;
+  const horizon = addDaysISO(today, 15);
+  const from = TRIP.meta.tripStart > today ? TRIP.meta.tripStart : today;
+  const to = TRIP.meta.tripEnd < horizon ? TRIP.meta.tripEnd : horizon;
+  if (from > to) return;
+  const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${TRIP.meta.geo.lat}&longitude=${TRIP.meta.geo.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=celsius&timezone=${encodeURIComponent(TRIP.meta.tz)}&start_date=${from}&end_date=${to}`);
   if (!r.ok) return;
   const d = await r.json();
   if (!d.daily || !d.daily.time) return;
@@ -1430,7 +1439,11 @@ async function fetchWeather() {
    // Days past the ~16-day horizon come back null -- keep their seasonal average.
    if (hiRaw == null || loRaw == null) return;
    const icon = wmoIcon(d.daily.weather_code[i]);
-   slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${Math.round(hiRaw)}°</span> / ${Math.round(loRaw)}°</span>`;
+   // Chance of rain only once it is worth planning around: walks, parks and
+   // the river are most of these days.
+   const rain = (d.daily.precipitation_probability_max || [])[i];
+   slot.innerHTML = `<span class="day-weather-icon">${icon}</span><span class="day-weather-temps"><span class="hi">${Math.round(hiRaw)}°</span> / ${Math.round(loRaw)}°</span>`
+    + (rain != null && rain >= 30 ? `<span class="day-weather-rain" title="Chance of rain">☂ ${rain}%</span>` : '');
   });
  } catch(e) {}
 }
